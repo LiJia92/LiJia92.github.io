@@ -1,0 +1,91 @@
+---
+title: 干货
+date: 2016-03-28 17:55:33
+---
+
+在这个版块中，主要放一些自己觉得不错的文章，方便后面回顾。
+
+会不定期更新。
+
+## Android Studio
+1. [倍数提高工作效率的Android Studio奇技](http://zlv.me/posts/2015/07/13/14_android-studio-tips/)
+2. [如何使用Android Studio把自己的Android library分发到jCenter和Maven Central](http://www.open-open.com/lib/view/open1435109824278.html)
+3. [如何选择 compileSdkVersion, minSdkVersion 和 targetSdkVersion](http://chinagdg.org/2016/01/picking-your-compilesdkversion-minsdkversion-targetsdkversion/)
+4. [Android Studio插件整理](https://ydmmocoo.github.io/2016/06/28/Android-Studio%E6%8F%92%E4%BB%B6%E6%95%B4%E7%90%86/)
+5. [基于Android Studio的内存泄漏检测与解决全攻略](http://wetest.qq.com/lab/view/?id=99)
+6. [Android Studio相见恨晚的操作锦集](http://www.jianshu.com/p/bc8f6bfe12c6)
+7. [50个Android Studio秘诀、技巧和资源](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112873&idx=1&sn=667188f0f320a4c0550340138783aae3)
+
+## 日常开发
+1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
+2. [Android 中Parcelable接口用法](http://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html)
+3. [那些你应该知道却不一定知道的——View坐标分析汇总](http://blog.csdn.net/mr_immortalz/article/details/51168278)
+4. [那些值得你去细细研究的Drawable适配](http://blog.csdn.net/wrg_20100512/article/details/51295317)
+5. [Android屏幕适配全攻略(最权威的官方适配指导)](http://blog.csdn.net/zhaokaiqiang1992/article/details/45419023)
+6. [安卓开发技术：监听软键盘的显示与隐藏](http://toughcoder.net/blog/2015/10/09/android-trick-detect-soft-keyboard-show-slash-hide/)
+7. [Activity 横竖屏切换](http://www.cnblogs.com/yishujun/p/5395266.html)
+8. [Android 横竖屏切换小结](http://www.cnblogs.com/franksunny/p/3714442.html)
+9. [LeakCanary 中文使用说明](http://www.liaohuqiu.net/cn/posts/leak-canary-read-me/)
+10. [Android 基础 VideoView](http://www.jianshu.com/p/2d3b221a2ee7)
+11. [Android 单元测试之Mockito浅析](http://hlong.xyz/2016/06/16/Android%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E4%B9%8BMockito%E6%B5%85%E6%9E%90/)
+12. [关于Adapter的The content of the adapter has changed问题分析](http://www.cnblogs.com/monodin/p/3874147.html)
+13. [Android状态栏微技巧，带你真正理解沉浸式模式](http://blog.csdn.net/guolin_blog/article/details/51763825)
+14. [Java中的自动装箱与拆箱](http://droidyue.com/blog/2015/04/07/autoboxing-and-autounboxing-in-java/)
+15. [掌握 Android 中的 tools 命名空间](http://android.jobbole.com/83207/)
+16. [两分钟理解Android中SP与DP的区别](http://droidyue.com/blog/2016/09/05/dp-vs-sp-in-android/)
+17. [Android 6.0 运行时权限管理最佳实践](http://blog.csdn.net/yanzhenjie1003/article/details/52503533)
+18. [Android ListView与RecyclerView对比浅析--缓存机制](http://mp.weixin.qq.com/s?__biz=MzAwNDY1ODY2OQ==&mid=2649286405&idx=1&sn=414e2d2eb577884ccee5c9076e8b8357&chksm=8334c387b4434a9124f5acd93f331968a44256b8374eeafb4b1857671072b3b6364e5ec38485&scene=0#rd)
+19. [Android 开发之 App 启动时间统计](http://www.jianshu.com/p/c967653a9468?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
+20. [单播，组播(多播)，广播以及任播](http://colobu.com/2014/10/21/udp-and-unicast-multicast-broadcast-anycast/)
+21. [Android 爬坑之旅：软键盘挡住输入框问题的终极解决方案](http://www.diycode.cc/topics/383)
+22. [写给Android开发者的混淆使用手册](http://www.jianshu.com/p/158aa484da13)
+23. [Android 内存泄漏分析心得](http://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=2649796884&idx=1&sn=92b4e344060362128e4a86d6132c3736)
+
+## 框架设计
+1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
+2. [Android MVP 详解（下）](http://www.jianshu.com/p/0590f530c617)
+3. [Android App的设计架构：MVC,MVP,MVVM与架构经验谈](https://www.sdk.cn/news/2501)
+4. [Android 编码规范](http://www.jianshu.com/p/0a984f999592)
+5. [一步一步实现Android的MVP框架](http://dev.qq.com/topic/5799d7844bef22a823b3ad44)
+
+## 技术学习
+1. [Android Vector曲折的兼容之路](http://www.jianshu.com/p/e3614e7abc03)
+2. [关于 Android 进程保活，你所需要知道的一切](http://www.jianshu.com/p/63aafe3c12af#)
+3. [Android 应用性能剖析全攻略](http://toughcoder.net/blog/2015/09/11/android-performance-profiling-made-easy/)
+4. [Android 客户端性能优化](http://blog.tingyun.com/web/article/detail/155)
+5. [开发第三方库最佳实践](http://www.jianshu.com/p/0aacd419cb7e)
+6. [Android 自动清理无用资源工具](http://blog.csdn.net/honjane/article/details/41351183)
+7. [Android 内存泄漏的八种可能](http://www.jianshu.com/p/ac00e370f83d?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
+8. [阿里Weex框架Android平台初体验](http://smilevenus.com/2016/07/03/%E9%98%BF%E9%87%8CWeex%E6%A1%86%E6%9E%B6Android%E5%B9%B3%E5%8F%B0%E5%88%9D%E4%BD%93%E9%AA%8C/)
+9. [与 .so 有关的一个长年大坑](https://zhuanlan.zhihu.com/p/213599847)
+10. [WebSocket 是什么原理？为什么可以实现持久连接？](https://www.zhihu.com/question/20215561/answer/40316953)
+11. [Android 消息处理机制(Handler、Looper、MessageQueue与Message)](http://www.cnblogs.com/angeldevil/p/3340644.html)
+12. [Android 应用进程启动流程](http://www.woaitqs.cc/android/2016/06/21/activity-service.html)
+13. [Android 内存优化之OOM](http://hukai.me/android-performance-oom/)
+14. [PathMeasure之迷径追踪](http://blog.csdn.net/eclipsexys/article/details/51992473)
+15. [Android App国际化](https://mp.weixin.qq.com/s?__biz=MzI1NjEwMTM4OA==&mid=2651232086&idx=1&sn=8894da8393bac3c50c3a93b9bd7f4102&scene=1&srcid=0822olNZUAyrHj8taaARWJFl&key=8dcebf9e179c9f3a14dfaaf49e391fe1723547d2fdd2d25769b9e06df5b19e8356b7533efd7e6c12ba895531f23fdf20&ascene=0&uin=Mjc3OTU3Nzk1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.10.5+build%2814F1909%29&version=11020201&pass_ticket=93ppXY%2FQxuOZivwZLgIhWpNIrGPcMB69uUsPDLQROrzXxXQP47pjLwNhXgvIcZH9)
+16. [Atlas：手淘Native容器化框架和思考](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112809&idx=1&sn=8d45d8960acde6128b121fb10a6d7bb7&chksm=844c6cb4b33be5a24cd462aa2fa96ce206877e0a87959df9aba03826d6be045dcaf6b9748739&scene=0#rd)
+17. [Android热修复技术选型——三大流派解析](http://mp.weixin.qq.com/s?__biz=MzA4MjA0MTc4NQ==&mid=2651574060&idx=1&sn=5978a774a6f74535497b2643e92fd124&chksm=8474a1fab30328ec012795809482d286d63da557c0efcae066bb0bee62b43a8a2f1dc372ed2b&scene=0#rd)
+18. [Android 深入理解Loader机制 让APP轻装上阵](http://www.jianshu.com/p/385327e35711)
+19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
+20. [大幅提高Android开发效率之Android项目模板化（上）](http://www.jianshu.com/p/e8ac0c284601/comments/5435137#comment-5435137)
+21. [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
+22. [RxJava系列1(简介)](https://zhuanlan.zhihu.com/p/20687178)
+
+## 音视频专题
+1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
+2. [Jhuster的专栏](https://zhuanlan.zhihu.com/jhuster)
+3. [移动直播技术秒开优化经验](http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547042&idx=1&sn=26d8728548a6b5b657079eeab121e283&scene=1&srcid=0428msEitG9LJ3JaKGaRCEjg&from=groupmessage&isappinstalled=0#wechat_redirect)
+4. [Android 视频播放总结](http://blog.qiji.tech/archives/7908)
+
+## 鸡汤
+1. [专业程序员必习：最牛B的编码套路](http://www.cocoachina.com/programmer/20151125/14365.html)
+2. [编程的智慧](http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy)
+3. [分享一些自己的学习历程和学习建议](http://mp.weixin.qq.com/s?__biz=MzA3MDQ2OTQ3Mw==&mid=2652591829&idx=1&sn=defd4cfb64adc6dfbf0b8c63c7420768&scene=0#wechat_redirect)
+
+## 其他
+1. [音乐随机播放算法](http://blog.csdn.net/asce1885/article/details/7582735)
+2. [GitHub 排名前 100 的安卓、iOS项目简介](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0524/4297.html)
+3. [一个随机播放的算法](http://www.jianshu.com/p/472fed76690a)
+4. [程序员不可不知的版权协议](http://www.gcssloop.com/tips/choose-license)
+5. [张小龙最新内部演讲：警惕KPI和流程，支持内部轮岗](http://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691313899&idx=1&sn=afc65a6b6ca228c7738fd184c9b1c17c&chksm=a9eb8f309e9c062673e47591e8512fee2d3919d60526881c30ae8bf517e41c4e1d47df7e0a10&mpshare=1&scene=1&srcid=1029PNbtw3LymhIHAXZKtrJo#rd)
