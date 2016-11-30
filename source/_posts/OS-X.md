@@ -35,6 +35,10 @@ Mission Control会提供一个所有已打开的窗口、桌面空间、全屏�
 后续的日常开发肯定离不开终端，例如查看Git版本。按下``Command + Space``可以出现``spotlight``搜索，输入``terminal``回车即可运行终端。
 ![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx6.jpg)
 
+## 屏幕取词
+选中单词，按下``Command + Control + D``即可即时翻译。
+![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc4.png))
+
 ## 常用快捷键
 首先了解下符号与按键的对应关系
 1. Command ⌘
