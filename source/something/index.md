@@ -16,7 +16,7 @@ date: 2016-03-28 17:55:33
 6. [Android Studio相见恨晚的操作锦集](http://www.jianshu.com/p/bc8f6bfe12c6)
 7. [50个Android Studio秘诀、技巧和资源](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112873&idx=1&sn=667188f0f320a4c0550340138783aae3)
 
-## 日常开发
+## 日常开发（Android）
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
 2. [Android 中Parcelable接口用法](http://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html)
 3. [那些你应该知道却不一定知道的——View坐标分析汇总](http://blog.csdn.net/mr_immortalz/article/details/51168278)
