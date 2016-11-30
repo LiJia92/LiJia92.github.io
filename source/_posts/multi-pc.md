@@ -87,6 +87,12 @@ git branch -mv master source
 ```
 再push即可。也可以在init之后就直接checkout branch source。
 
+再者，在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了``lijia@lijiadeiMac.local``，利用``git log``可以看到相关的记录。
+![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png)
+这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。
+
+
 ## 参考
 [通过 git 实现多台电脑同步博客](https://juzi.in/2016/04/17/the-blog-sync-multi-pc.html)
 [Hexo利用Github分支在不同电脑上写博客](http://www.dxjia.cn/2016/01/27/hexo-write-everywhere/)
+[为什么Github没有记录你的Contributions](https://segmentfault.com/a/1190000004318632)
