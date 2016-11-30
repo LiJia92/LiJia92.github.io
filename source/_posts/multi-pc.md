@@ -90,7 +90,9 @@ git branch -mv master source
 再者，在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了``lijia@lijiadeiMac.local``，利用``git log``可以看到相关的记录。
 ![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png)
 这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。
-
+```
+git config --global user.email 你的邮件地址
+```
 
 ## 参考
 [通过 git 实现多台电脑同步博客](https://juzi.in/2016/04/17/the-blog-sync-multi-pc.html)
