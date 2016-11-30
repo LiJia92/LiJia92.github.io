@@ -9,13 +9,22 @@ tags:
 iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。
 
 ## 原理
-先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该如何做呢？我们知道，发不到Github pages上的东西是静态内容，这些是Hexo生成的，这些东西其实不需要我们管，我们只要在``hexo d``的时候就会帮我们生成然后上传到github。所以我们需要同步的只是``源文件``。这里的源文件指的就是``md文件、theme相关文件、以及博客配置文件``等``一切跟Hexo无关的文件``。举个栗子，这里看看Hexo目录。
+先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该如何做呢？我们知道，发不到Github pages上的东西是静态内容，这些是Hexo生成的，这些东西其实不需要我们管，我们只要在``hexo d``的时候就会帮我们生成然后上传到github。所以我们需要同步的只是``源文件``。这里的源文件指的就是``md文件、theme相关文件、以及博客配置文件``等``一切跟Hexo无关的文件``。
 
 <!-- more -->
 
+举个栗子，这里看看Hexo目录。
 ![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc1.png)
 我们需要同步的就是``suorce、themes、以及_config.yml``了，其他都是Hexo生成的。
-那么接下来便是同步这些文件了。同步的话我们可以在github.io的仓库下建个分支source（也可以建仓库，原理是一样的），然后将这些源文件同步到source分支，当另一台电脑要写博客时，先从该分支pull最新的数据，然后hexo new，当部署完之后将自己新建的源文件push到该分支。反正就是记住一点，每次写博客的时候先pull，完毕的时候push。
+那么接下来便是同步这些文件了。同步的话我们可以在github.io的仓库下建个分支source（也可以建仓库，原理是一样的），然后将这些源文件同步到source分支，当另一台电脑要写博客时，先从该分支pull最新的数据，然后hexo new，当部署完之后将自己新建的源文件push到该分支。
+而``hexo d``的时候，根据我们_config.yml中的配置，会推到master分支，2个分支是互不影响的。
+```
+deploy:
+  type: git
+  repository: https://github.com/LiJia92/LiJia92.github.io.git
+  branch: master
+```
+记住一点，每次写博客的时候先pull，完毕的时候push。
 
 ## A 电脑操作
 首先，我们要同步themes，就把theme文件夹下面对应的``.git``删掉，删掉之后便是没有之前的版本控制了，意味着你不能再更新主题了-。-，但是其实一般主题我们再配置后就很少修改它了，所以为了``同步主题设置``姑且删掉吧。
@@ -67,6 +76,16 @@ git push origin source
 
 ## Tip
 看到一些博客说是要设置github的默认branch，这个设置只是针对采用git clone方式拷贝代码的，如果通过我文中的方法是不需要设置默认branch的。
+另外，我在B电脑git push的时候出错了：
+```
+error: src refspec source does not match any.
+error: failed to push some refs to 'https://github.com/LiJia92/LiJia92.github.io.git'
+```
+查了一下，是因为我直接本地git init的分支名字叫master，然后要push的分支名为source，不一致导致的。通过下面的指令重命名分支：
+```
+git branch -mv master source
+```
+再push即可。也可以在init之后就直接checkout branch source。
 
 ## 参考
 [通过 git 实现多台电脑同步博客](https://juzi.in/2016/04/17/the-blog-sync-multi-pc.html)
