@@ -58,7 +58,7 @@ git init
 git remote add origin https://github.com/LiJia92/LiJia92.github.io.git
 git pull origin source    # 从source分支拉取内容
 ```
-建议先将hexo目录下的source、themes等source分支上有的内容删掉，避免冲突。
+建议先将hexo目录下的``source、themes等source分支上有的内容``删掉，避免冲突。
 这样B电脑便具备了和A电脑一样的源文件环境了，接下来便可以进行写博客了。
 
 ## 最后
@@ -75,7 +75,7 @@ git push origin source
 记得带上分支名称source。
 
 ## Tip
-看到一些博客说是要设置github的默认branch，这个设置只是针对采用git clone方式拷贝代码的，如果通过我文中的方法是不需要设置默认branch的。
+1. 看到一些博客说是要设置github的默认branch，这个设置只是针对采用git clone方式拷贝代码的，如果通过我文中的方法是不需要设置默认branch的。
 另外，我在B电脑git push的时候出错了：
 ```
 error: src refspec source does not match any.
@@ -86,13 +86,17 @@ error: failed to push some refs to 'https://github.com/LiJia92/LiJia92.github.io
 git branch -mv master source
 ```
 再push即可。也可以在init之后就直接checkout branch source。
-
-再者，在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了``lijia@lijiadeiMac.local``，利用``git log``可以看到相关的记录。
+2. 在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了``lijia@lijiadeiMac.local``，利用``git log``可以看到相关的记录。
 ![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png)
 这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。
 ```
 git config --global user.email 你的邮件地址
 ```
+3. hexo d提示``Deployer not found:git``，执行：
+```
+npm install hexo-deployer-git --save
+```
+然后重新deploy即可。
 
 ## 参考
 [通过 git 实现多台电脑同步博客](https://juzi.in/2016/04/17/the-blog-sync-multi-pc.html)
