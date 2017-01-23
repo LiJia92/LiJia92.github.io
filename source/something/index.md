@@ -40,6 +40,7 @@ date: 2016-03-28 17:55:33
 21. [Android 爬坑之旅：软键盘挡住输入框问题的终极解决方案](http://www.diycode.cc/topics/383)
 22. [写给Android开发者的混淆使用手册](http://www.jianshu.com/p/158aa484da13)
 23. [Android 内存泄漏分析心得](http://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=2649796884&idx=1&sn=92b4e344060362128e4a86d6132c3736)
+24. [RecyclerView 必知必会](http://mp.weixin.qq.com/s/CzrKotyupXbYY6EY2HP_dA)
 
 ## 框架设计
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
