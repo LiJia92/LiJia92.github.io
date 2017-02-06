@@ -72,6 +72,8 @@ date: 2016-03-28 17:55:33
 20. [大幅提高Android开发效率之Android项目模板化（上）](http://www.jianshu.com/p/e8ac0c284601/comments/5435137#comment-5435137)
 21. [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
 22. [RxJava系列1(简介)](https://zhuanlan.zhihu.com/p/20687178)
+23. [人人车Android客户端架构演进实录](http://mp.weixin.qq.com/s/lqkqNv7BW2F7dPKOTzlxQw?utm_source=tuicool&utm_medium=referral)
+24. [这个项目碉堡了](http://stormzhang.com/2017/02/03/airbnb-lottie-android/)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
