@@ -56,9 +56,13 @@ duoshuo: lastwarmth
 #smart_menu:
 #  friends: false
 
+# slider的设置
+slider:
+  # 是否默认展开tags板块
+  showTags: true
+
 smart_menu:
-  # innerArchive: '所有文章'
-  tagcloud: '标签'
+  innerArchive: '搜索'
   friends: '友链'
   aboutme: '关于我'
 
