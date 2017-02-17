@@ -16,7 +16,7 @@ date: 2016-03-28 17:55:33
 6. [Android Studio相见恨晚的操作锦集](http://www.jianshu.com/p/bc8f6bfe12c6)
 7. [50个Android Studio秘诀、技巧和资源](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112873&idx=1&sn=667188f0f320a4c0550340138783aae3)
 
-## 日常开发（Android）
+## 日常开发
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
 2. [Android 中Parcelable接口用法](http://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html)
 3. [那些你应该知道却不一定知道的——View坐标分析汇总](http://blog.csdn.net/mr_immortalz/article/details/51168278)
@@ -81,17 +81,18 @@ date: 2016-03-28 17:55:33
 2. [Jhuster的专栏](https://zhuanlan.zhihu.com/jhuster)
 3. [移动直播技术秒开优化经验](http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547042&idx=1&sn=26d8728548a6b5b657079eeab121e283&scene=1&srcid=0428msEitG9LJ3JaKGaRCEjg&from=groupmessage&isappinstalled=0#wechat_redirect)
 4. [Android 视频播放总结](http://blog.qiji.tech/archives/7908)
+5. [AudioKit 教程：入门](http://blog.csdn.net/kmyhy/article/details/53519809)
 
-## 鸡汤
+## 阅读
 1. [专业程序员必习：最牛B的编码套路](http://www.cocoachina.com/programmer/20151125/14365.html)
 2. [编程的智慧](http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy)
 3. [分享一些自己的学习历程和学习建议](http://mp.weixin.qq.com/s?__biz=MzA3MDQ2OTQ3Mw==&mid=2652591829&idx=1&sn=defd4cfb64adc6dfbf0b8c63c7420768&scene=0#wechat_redirect)
+4. [张小龙最新内部演讲：警惕KPI和流程，支持内部轮岗](http://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691313899&idx=1&sn=afc65a6b6ca228c7738fd184c9b1c17c&chksm=a9eb8f309e9c062673e47591e8512fee2d3919d60526881c30ae8bf517e41c4e1d47df7e0a10&mpshare=1&scene=1&srcid=1029PNbtw3LymhIHAXZKtrJo#rd)
+5. [程序员们也该知道的事——“期权和股票”](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=2653578381&idx=2&sn=ec63e4196ff6d5d9978596e6990dc980&chksm=84b3b68ab3c43f9c6b889429f2cfacd387044218efb3fcfb2be8affbd551b27a7d281e2ae6c2&mpshare=1&scene=1&srcid=1216iS6yRPFAJfkU30UMCrGw&key=c81d77271180a0e6d71c78f258dd687c6ab03e43f3c6383884ddc97cf3ae629f2a166ce20666b0787c350db6361fdff71d025fc902ea84a7ff6eb586d82db922090cc3e7e8408ebaaeae53e7cfd95e13&ascene=0&uin=MTYzMjY2MTE1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.12.2+build)
+6. [2016 移动应用质量大数据报告](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=2653578648&idx=1&sn=8fecce896bf881334507e7f3f3486c54&chksm=84b3b79fb3c43e89c98ed2e7f60c3c59f00324f53fef012ed33cb8fc6b37e430e83a52dc5f68&mpshare=1&scene=1&srcid=0217rmCWpmGfRrhd17zEsGJJ&key=1020c6e683cdee292c769fedd7552973ca5b07f60aa440a203015a88a9c8bc3242fa177a94309d4eda784912ceb46bb44a0a10cfffd07b9be900fc2c88047b55e8cf407a3f4a91f2c72453911591ea72)
 
 ## 其他
 1. [音乐随机播放算法](http://blog.csdn.net/asce1885/article/details/7582735)
 2. [GitHub 排名前 100 的安卓、iOS项目简介](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0524/4297.html)
 3. [一个随机播放的算法](http://www.jianshu.com/p/472fed76690a)
 4. [程序员不可不知的版权协议](http://www.gcssloop.com/tips/choose-license)
-5. [张小龙最新内部演讲：警惕KPI和流程，支持内部轮岗](http://mp.weixin.qq.com/s?__biz=Mjc1NjM3MjY2MA==&mid=2691313899&idx=1&sn=afc65a6b6ca228c7738fd184c9b1c17c&chksm=a9eb8f309e9c062673e47591e8512fee2d3919d60526881c30ae8bf517e41c4e1d47df7e0a10&mpshare=1&scene=1&srcid=1029PNbtw3LymhIHAXZKtrJo#rd)
-6. [程序员们也该知道的事——“期权和股票”](https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=2653578381&idx=2&sn=ec63e4196ff6d5d9978596e6990dc980&chksm=84b3b68ab3c43f9c6b889429f2cfacd387044218efb3fcfb2be8affbd551b27a7d281e2ae6c2&mpshare=1&scene=1&srcid=1216iS6yRPFAJfkU30UMCrGw&key=c81d77271180a0e6d71c78f258dd687c6ab03e43f3c6383884ddc97cf3ae629f2a166ce20666b0787c350db6361fdff71d025fc902ea84a7ff6eb586d82db922090cc3e7e8408ebaaeae53e7cfd95e13&ascene=0&uin=MTYzMjY2MTE1&devicetype=iMac+MacBookPro10%2C1+OSX+OSX+10.12.2+build)
-7. [AudioKit 教程：入门](http://blog.csdn.net/kmyhy/article/details/53519809)
