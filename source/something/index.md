@@ -75,6 +75,8 @@ date: 2016-03-28 17:55:33
 22. [RxJava系列1(简介)](https://zhuanlan.zhihu.com/p/20687178)
 23. [人人车Android客户端架构演进实录](http://mp.weixin.qq.com/s/lqkqNv7BW2F7dPKOTzlxQw?utm_source=tuicool&utm_medium=referral)
 24. [这个项目碉堡了](http://stormzhang.com/2017/02/03/airbnb-lottie-android/)
+25. [android中跨进程通讯的4种方式](http://www.cnblogs.com/sevenyuan/archive/2013/03/22/2975122.html)
+26. [Android捕获崩溃异常](http://www.cnblogs.com/cpacm/p/3948991.html)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
