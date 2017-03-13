@@ -42,6 +42,9 @@ smart_menu:
 ![](http://7xryow.com1.z0.glb.clouddn.com/2017/02/3.png)
 
 说明很简单明了了，照着操作一遍后即可。
+
+当执行后仍然如此的话，那就是``Node.js的版本``与``jsonContent``不兼容导致，要么升级Node.js版本，要么降低jsonContent版本。
+
 此次更新后，博客整体变得更好看了~
 
 PS：只是以后如果博客主题要更新，就得这样来一次了，着实有点蛋疼>.<。。。
