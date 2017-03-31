@@ -77,6 +77,7 @@ date: 2016-03-28 17:55:33
 24. [这个项目碉堡了](http://stormzhang.com/2017/02/03/airbnb-lottie-android/)
 25. [android中跨进程通讯的4种方式](http://www.cnblogs.com/sevenyuan/archive/2013/03/22/2975122.html)
 26. [Android捕获崩溃异常](http://www.cnblogs.com/cpacm/p/3948991.html)
+27. [一文让你明白Java字节码 ](http://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247483835&idx=1&sn=68eabd1942b04c7bff8f8cfa63378996&chksm=96cda0f6a1ba29e0ced05a08f2468fd3eaa7785f3cb5821150aae3401f06a6511b7292665664&mpshare=1&scene=23&srcid=0320XHoLsiJgc4k13ZbepW7h#rd)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
