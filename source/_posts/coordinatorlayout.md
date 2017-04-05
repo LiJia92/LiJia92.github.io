@@ -501,6 +501,19 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
 
 </android.support.design.widget.CoordinatorLayout>
 ```
+下拉刷新加载 RecyclerView 那里实际效果看起来很怪，最后调整将 SwipeRefreshLayout 作为根节点， CoordinatorLayout 作为其子 View ，这个时候下拉刷新会有问题，因为2者都实现了 NestedScrollParent 接口，采取的方法是监听 AppBarLayout 的 offset，根据这个值来是否禁用 SwipeRefreshLayout。
+```
+mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset >= 0) {
+            mRefreshLayout.setEnabled(true);
+        } else {
+            mRefreshLayout.setEnabled(false);
+        }
+    }
+});
+```
 
 [示例代码](https://github.com/LiJia92/CoordinatorLayoutDemo)
 
@@ -511,3 +524,4 @@ demo为了速成，很多代码都是从以下参考文章中直接拿的-。-
 3. [(译)掌握 Coordinator Layout](https://www.aswifter.com/2015/11/12/mastering-coordinator/)
 4. [CoordinatorLayout高级用法-自定义Behavior](http://blog.csdn.net/qibin0506/article/details/50290421)
 5. [NestedScrolling机制(二)——实例](http://blog.csdn.net/al4fun/article/details/53889075)
+6. [SwipeRefreshLayout 与 CoordinatorLayout 嵌套刷新](https://my.oschina.net/smuswc/blog/612697)
