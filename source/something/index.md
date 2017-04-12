@@ -42,6 +42,7 @@ date: 2016-03-28 17:55:33
 23. [Android 内存泄漏分析心得](http://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=2649796884&idx=1&sn=92b4e344060362128e4a86d6132c3736)
 24. [RecyclerView 必知必会](http://mp.weixin.qq.com/s/CzrKotyupXbYY6EY2HP_dA)
 25. [贝塞尔Loading——化学风暴](http://mp.weixin.qq.com/s?__biz=MzAxNzMxNzk5OQ==&mid=2649485066&idx=1&sn=6f9e3b2fc27835aa3cdf8d88103383d9&chksm=83f8260ab48faf1cbf90aa0e174ed7c0522b887fc9c0f1becb221b701d7e317dca572069ecbb#rd)
+26. [仅使用一张资源图片为 View 设置具有按下效果的背景 - OneDrawable](http://gudong.name/2017/04/05/OneDrawable.html)
 
 ## 框架设计
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
