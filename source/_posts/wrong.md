@@ -11,7 +11,6 @@ tags:
 <!-- more -->
 
 有三种打印机类型，每种类型可以添加、删除对应类型的打印机。
-
 按照以往，我写的Adapter是这样的:
 ```
 public class PrinterManagerAdapter extends BaseAdapter {
@@ -239,7 +238,6 @@ public class PrinterManagerAdapter extends BaseAdapter {
 然后发现一个问题：
 **当我删除一个打印机之后，刷新界面的时候崩溃了**
 问题其实很简单：就是删除的打印机（BLUETOOTH_PRINTER Type）convertView 进入到缓存里面，然后下个 Item 的 Type 是 NET_HEADER Type，由于重用机制，这个 Item 会重用 convertView，此时这个 convertView 绑定的 ViewHoloder 是 Printer 部分，而自己要使用的是 Header 部分，其 view 都为 null了，导致空指针崩溃。
-
 解决办法：添加代码
 ```
 @Override
@@ -248,11 +246,8 @@ public int getViewTypeCount() {
 }
 ```
 ListView 的缓存机制是可以针对不同 Type 来进行缓存的，当不复写这个方法的时候，其默认的实现是 **返回1** ,所以导致``getItemViewType``返回的 Type 实际上是没有用的，不管是什么 Type， ListView 填充的 convertView 永远是一样的。所以，当改成 **返回6** 的时候， ListView 便会填充 6 种 convertView 了，所绑定的 ViewHoloder 具有的属性也会一样，就避免了空指针崩溃了。
-
 当和同事讨论这点的时候，同事指出： **有几种布局，就用几种 Type，几种 ViewHoloder，一一对应才是官方推荐的行为。**
-
 自己想了下，确实是的。当网络打印机这个 Item 要显示的时候，如果缓存中有蓝牙打印机的 convertView，我是用不了的，因为他们的 Type 不一样。这样的一个做法，就是自己把 ListView 的缓存机制整乱了。
-
 修改后的代码如下：
 ```
 public class PrinterManagerAdapter extends BaseAdapter {
@@ -481,9 +476,6 @@ public class PrinterManagerAdapter extends BaseAdapter {
         return 3;
     }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
     }
 
     @Override
@@ -512,6 +504,65 @@ public class PrinterManagerAdapter extends BaseAdapter {
 
 }
 ```
-这样的话，结构其实会更加清晰，拆分得更具体。同理， RecyclerView 应该也是类似的。
-
+这样的话，结构其实会更加清晰，拆分得更具体。
+另外，注意一点： **代码中的 Type 类型 TYPE_HEADER 是从0开始的**。这是因为不从 0 开始当 Adapter notifyDataSetChanged 时就会报错。举个栗子：
+```
+private final static int TYPE_HEADER = 5;
+private final static int TYPE_PRINTER = 6;
+```
+报错信息：
+```
+FATAL EXCEPTION: main
+Process: com.maimairen.app.jinchuhuo.dev, PID: 15967
+java.lang.ArrayIndexOutOfBoundsException: length=2; index=5
+    at android.widget.AbsListView$RecycleBin.addScrapView(AbsListView.java:6726)
+    at android.widget.ListView.layoutChildren(ListView.java:1644)
+    at android.widget.AbsListView.onLayout(AbsListView.java:2148)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1743)
+    at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1586)
+    at android.widget.LinearLayout.onLayout(LinearLayout.java:1495)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.FrameLayout.layoutChildren(FrameLayout.java:336)
+    at android.widget.FrameLayout.onLayout(FrameLayout.java:273)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1743)
+    at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1586)
+    at android.widget.LinearLayout.onLayout(LinearLayout.java:1495)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.FrameLayout.layoutChildren(FrameLayout.java:336)
+    at android.widget.FrameLayout.onLayout(FrameLayout.java:273)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.LinearLayout.setChildFrame(LinearLayout.java:1743)
+    at android.widget.LinearLayout.layoutVertical(LinearLayout.java:1586)
+    at android.widget.LinearLayout.onLayout(LinearLayout.java:1495)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.widget.FrameLayout.layoutChildren(FrameLayout.java:336)
+    at android.widget.FrameLayout.onLayout(FrameLayout.java:273)
+    at com.android.internal.policy.PhoneWindow$DecorView.onLayout(PhoneWindow.java:2678)
+    at android.view.View.layout(View.java:16653)
+    at android.view.ViewGroup.layout(ViewGroup.java:5438)
+    at android.view.ViewRootImpl.performLayout(ViewRootImpl.java:2198)
+    at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:1958)
+    at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:1134)
+    at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:6050)
+    at android.view.Choreographer$CallbackRecord.run(Choreographer.java:860)
+    at android.view.Choreographer.doCallbacks(Choreographer.java:672)
+    at android.view.Choreographer.doFrame(Choreographer.java:608)
+    at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:846)
+    at android.os.Handler.handleCallback(Handler.java:739)
+    at android.os.Handler.dispatchMessage(Handler.java:95)
+    at android.os.Looper.loop(Looper.java:148)
+    at android.app.ActivityThread.main(ActivityThread.java:5438)
+    at java.lang.reflect.Method.invoke(Native Method)
+    at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:739)
+    at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:629)
+```
+可以看到，ListView 从缓存中去取 view 的时候，是用的 Type 的值来作为 index 的，所以 **Type 类型一定是从0开始的**。
 因为自己长期以来一直是之前的那种做法，错了太多次了，却没有及时发现错误，经过这次同事的指正，总算是纠正过来了。写篇博客备忘，忘性太大了～
