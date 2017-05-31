@@ -46,13 +46,16 @@ date: 2016-03-28 17:55:33
 27. [Android自定义动画酷炫的提交按钮](http://www.jianshu.com/p/3eb9777f6ab7)
 28. [Android 多状态加载布局的开发 Tips](http://gudong.name/2017/04/26/loading_layout_practice.html)
 29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
+30. [一个简单实用的Android调试应用技巧](http://droidyue.com/blog/2017/05/14/a-little-but-useful-debug-skill_for_android/)
+31. [控制RecyclerView Item的宽度](http://droidyue.com/blog/2017/03/21/control-item-width-in-recyclerview/)
 
-## 框架设计
+## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
 2. [Android MVP 详解（下）](http://www.jianshu.com/p/0590f530c617)
 3. [Android App的设计架构：MVC,MVP,MVVM与架构经验谈](https://www.sdk.cn/news/2501)
-4. [Android 编码规范](http://www.jianshu.com/p/0a984f999592)
-5. [一步一步实现Android的MVP框架](http://dev.qq.com/topic/5799d7844bef22a823b3ad44)
+4. [一步一步实现Android的MVP框架](http://dev.qq.com/topic/5799d7844bef22a823b3ad44)
+5. [Android 编码规范](http://www.jianshu.com/p/0a984f999592)
+6. [Google Java编程风格指南](http://www.hawstein.com/posts/google-java-style.html)
 
 ## 技术学习
 1. [Android Vector曲折的兼容之路](http://www.jianshu.com/p/e3614e7abc03)
