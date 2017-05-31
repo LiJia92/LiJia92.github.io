@@ -85,6 +85,7 @@ date: 2016-03-28 17:55:33
 28. [Android灵魂画家的18种混合模式](http://www.jianshu.com/p/4bdf7d034dee)
 29. [Android性能优化（八）之网络优化](http://www.jianshu.com/p/d5a843cb7ab1)
 30. [Lottie -- 轻松实现动态加载直播礼物动画](http://www.liujun.info/2017/04/25/Lottie%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9B%B4%E6%92%AD%E7%A4%BC%E7%89%A9%E5%8A%A8%E7%94%BB/)
+31. [带你学开源项目：LeakCanary-如何检测 Activity 是否泄漏](http://wingjay.com/2017/05/14/dig_into_leakcanary/)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
