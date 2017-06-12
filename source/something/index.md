@@ -48,6 +48,7 @@ date: 2016-03-28 17:55:33
 29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
 30. [一个简单实用的Android调试应用技巧](http://droidyue.com/blog/2017/05/14/a-little-but-useful-debug-skill_for_android/)
 31. [控制RecyclerView Item的宽度](http://droidyue.com/blog/2017/03/21/control-item-width-in-recyclerview/)
+32. [简单高效的实现Android App全局字体替换](http://www.jianshu.com/p/4e1e96fe6d26)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
@@ -89,6 +90,7 @@ date: 2016-03-28 17:55:33
 29. [Android性能优化（八）之网络优化](http://www.jianshu.com/p/d5a843cb7ab1)
 30. [Lottie -- 轻松实现动态加载直播礼物动画](http://www.liujun.info/2017/04/25/Lottie%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9B%B4%E6%92%AD%E7%A4%BC%E7%89%A9%E5%8A%A8%E7%94%BB/)
 31. [带你学开源项目：LeakCanary-如何检测 Activity 是否泄漏](http://wingjay.com/2017/05/14/dig_into_leakcanary/)
+32. [Java并发编程：volatile关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
