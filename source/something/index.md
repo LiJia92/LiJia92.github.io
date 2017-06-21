@@ -49,6 +49,7 @@ date: 2016-03-28 17:55:33
 30. [一个简单实用的Android调试应用技巧](http://droidyue.com/blog/2017/05/14/a-little-but-useful-debug-skill_for_android/)
 31. [控制RecyclerView Item的宽度](http://droidyue.com/blog/2017/03/21/control-item-width-in-recyclerview/)
 32. [简单高效的实现Android App全局字体替换](http://www.jianshu.com/p/4e1e96fe6d26)
+33. [Picasso，Glide，Fresco对比分析](http://blog.csdn.net/github_33304260/article/details/70213300)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
