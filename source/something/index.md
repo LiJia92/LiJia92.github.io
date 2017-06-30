@@ -42,13 +42,24 @@ date: 2016-03-28 17:55:33
 23. [Android 内存泄漏分析心得](http://mp.weixin.qq.com/s?__biz=MzI1MTA1MzM2Nw==&mid=2649796884&idx=1&sn=92b4e344060362128e4a86d6132c3736)
 24. [RecyclerView 必知必会](http://mp.weixin.qq.com/s/CzrKotyupXbYY6EY2HP_dA)
 25. [贝塞尔Loading——化学风暴](http://mp.weixin.qq.com/s?__biz=MzAxNzMxNzk5OQ==&mid=2649485066&idx=1&sn=6f9e3b2fc27835aa3cdf8d88103383d9&chksm=83f8260ab48faf1cbf90aa0e174ed7c0522b887fc9c0f1becb221b701d7e317dca572069ecbb#rd)
+26. [仅使用一张资源图片为 View 设置具有按下效果的背景 - OneDrawable](http://gudong.name/2017/04/05/OneDrawable.html)
+27. [Android自定义动画酷炫的提交按钮](http://www.jianshu.com/p/3eb9777f6ab7)
+28. [Android 多状态加载布局的开发 Tips](http://gudong.name/2017/04/26/loading_layout_practice.html)
+29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
+30. [一个简单实用的Android调试应用技巧](http://droidyue.com/blog/2017/05/14/a-little-but-useful-debug-skill_for_android/)
+31. [控制RecyclerView Item的宽度](http://droidyue.com/blog/2017/03/21/control-item-width-in-recyclerview/)
+32. [简单高效的实现Android App全局字体替换](http://www.jianshu.com/p/4e1e96fe6d26)
+33. [Picasso，Glide，Fresco对比分析](http://blog.csdn.net/github_33304260/article/details/70213300)
+34. [Android-使用RecyclerView的ItemDecoration 实现炫酷的 吸顶效果](http://blog.csdn.net/cjm2484836553/article/details/53453982)
+35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
 
-## 框架设计
+## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
 2. [Android MVP 详解（下）](http://www.jianshu.com/p/0590f530c617)
 3. [Android App的设计架构：MVC,MVP,MVVM与架构经验谈](https://www.sdk.cn/news/2501)
-4. [Android 编码规范](http://www.jianshu.com/p/0a984f999592)
-5. [一步一步实现Android的MVP框架](http://dev.qq.com/topic/5799d7844bef22a823b3ad44)
+4. [一步一步实现Android的MVP框架](http://dev.qq.com/topic/5799d7844bef22a823b3ad44)
+5. [Android 编码规范](http://www.jianshu.com/p/0a984f999592)
+6. [Google Java编程风格指南](http://www.hawstein.com/posts/google-java-style.html)
 
 ## 技术学习
 1. [Android Vector曲折的兼容之路](http://www.jianshu.com/p/e3614e7abc03)
@@ -77,6 +88,12 @@ date: 2016-03-28 17:55:33
 24. [这个项目碉堡了](http://stormzhang.com/2017/02/03/airbnb-lottie-android/)
 25. [android中跨进程通讯的4种方式](http://www.cnblogs.com/sevenyuan/archive/2013/03/22/2975122.html)
 26. [Android捕获崩溃异常](http://www.cnblogs.com/cpacm/p/3948991.html)
+27. [一文让你明白Java字节码 ](http://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247483835&idx=1&sn=68eabd1942b04c7bff8f8cfa63378996&chksm=96cda0f6a1ba29e0ced05a08f2468fd3eaa7785f3cb5821150aae3401f06a6511b7292665664&mpshare=1&scene=23&srcid=0320XHoLsiJgc4k13ZbepW7h#rd)
+28. [Android灵魂画家的18种混合模式](http://www.jianshu.com/p/4bdf7d034dee)
+29. [Android性能优化（八）之网络优化](http://www.jianshu.com/p/d5a843cb7ab1)
+30. [Lottie -- 轻松实现动态加载直播礼物动画](http://www.liujun.info/2017/04/25/Lottie%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9B%B4%E6%92%AD%E7%A4%BC%E7%89%A9%E5%8A%A8%E7%94%BB/)
+31. [带你学开源项目：LeakCanary-如何检测 Activity 是否泄漏](http://wingjay.com/2017/05/14/dig_into_leakcanary/)
+32. [Java并发编程：volatile关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
