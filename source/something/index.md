@@ -94,6 +94,10 @@ date: 2016-03-28 17:55:33
 30. [Lottie -- 轻松实现动态加载直播礼物动画](http://www.liujun.info/2017/04/25/Lottie%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9B%B4%E6%92%AD%E7%A4%BC%E7%89%A9%E5%8A%A8%E7%94%BB/)
 31. [带你学开源项目：LeakCanary-如何检测 Activity 是否泄漏](http://wingjay.com/2017/05/14/dig_into_leakcanary/)
 32. [Java并发编程：volatile关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
+33. [这可能是最好的RxJava 2.x 教程（完结版）](http://www.apkbus.com/home.php?mod=space&uid=898535&do=blog&id=68185)
+34. [Android界面性能调优手册](https://androidtest.org/android-graphics-performance-pattens/)
+35. [TabLayout高端用法（一）](http://www.jianshu.com/p/be1e8a1da639)
+36. [重新理解响应式编程](http://www.jianshu.com/p/c95e29854cb1)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
