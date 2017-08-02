@@ -98,6 +98,7 @@ date: 2016-03-28 17:55:33
 34. [Android界面性能调优手册](https://androidtest.org/android-graphics-performance-pattens/)
 35. [TabLayout高端用法（一）](http://www.jianshu.com/p/be1e8a1da639)
 36. [重新理解响应式编程](http://www.jianshu.com/p/c95e29854cb1)
+37. [Java NIO 简明教程](https://java-nio.avenwu.net/java-nio-tutorial.html)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)

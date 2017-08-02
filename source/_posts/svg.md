@@ -25,7 +25,7 @@ tags:
 特殊说明一下，SVG 相比 Bitmap，它最大的优点就是放大不会失真。当 Bitmap 需要为不同分辨率适配多套图标时，一套 SVG 即可搞定一切分辨率。
 
 ## 如何使用
-这里说一下最简单的使用方法。
+这里说一下最简单的使用方法：
 1. 首先去[阿里巴巴矢量图标库](http://www.iconfont.cn/)(当然也有其他的网站)搜索需要的图标。
 2. 下载需要图标的 SVG 图像。
 3. 到[Android SVG to VectorDrawable](http://inloop.github.io/svg2android/)将下载的 SVG 图像转成 XML（也可通过 Android Studio 本身的支持进行转换），然后直接用到 Android Studio 中的 drawable 中即可。
