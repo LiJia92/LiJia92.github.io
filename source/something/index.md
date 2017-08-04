@@ -52,6 +52,8 @@ date: 2016-03-28 17:55:33
 33. [Picasso，Glide，Fresco对比分析](http://blog.csdn.net/github_33304260/article/details/70213300)
 34. [Android-使用RecyclerView的ItemDecoration 实现炫酷的 吸顶效果](http://blog.csdn.net/cjm2484836553/article/details/53453982)
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
+36. [用一张图片实现按钮按下和普通效果的样式](http://www.cnblogs.com/tianzhijiexian/p/4505190.html)
+37. [Android高效安全的本地广播LocalBroadcast完全解析](http://www.jianshu.com/p/6f1ea19a17ed)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
