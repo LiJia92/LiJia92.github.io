@@ -78,6 +78,14 @@ signingConfigs {
 添加``wxapi``的包名，在这个包名下必须要有``WXPayEntryActivity``这个Activity，支付成功后会显示此界面。
 ![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk6.png)
 
+另外，声明此 Activity 需要添加如下属性：
+```
+<activity
+    android:name=".wxapi.WXPayEntryActivity"
+    android:exported="true"
+    android:launchMode="singleTop" />
+```
+
 调用接口相关参数以及返回值参考[开发者手册](https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1)。
 
 
