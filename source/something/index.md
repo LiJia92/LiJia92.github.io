@@ -57,6 +57,7 @@ date: 2016-03-28 17:55:33
 38. [动手打造史上最简单的 Recycleview 侧滑菜单](http://blog.csdn.net/yhaolpz/article/details/77366154)
 39. [RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
 40. [让你明明白白的使用RecyclerView——SnapHelper详解](http://www.jianshu.com/p/e54db232df62)
+41. [自定义View：播放、暂停按钮优雅的过渡](http://www.jianshu.com/p/74f38e9b16fc)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
