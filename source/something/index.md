@@ -54,6 +54,9 @@ date: 2016-03-28 17:55:33
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
 36. [用一张图片实现按钮按下和普通效果的样式](http://www.cnblogs.com/tianzhijiexian/p/4505190.html)
 37. [Android高效安全的本地广播LocalBroadcast完全解析](http://www.jianshu.com/p/6f1ea19a17ed)
+38. [动手打造史上最简单的 Recycleview 侧滑菜单](http://blog.csdn.net/yhaolpz/article/details/77366154)
+39. [RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
+40. [让你明明白白的使用RecyclerView——SnapHelper详解](http://www.jianshu.com/p/e54db232df62)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
