@@ -58,8 +58,7 @@ date: 2016-03-28 17:55:33
 39. [RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
 40. [让你明明白白的使用RecyclerView——SnapHelper详解](http://www.jianshu.com/p/e54db232df62)
 41. [自定义View：播放、暂停按钮优雅的过渡](http://www.jianshu.com/p/74f38e9b16fc)
-42. [Toolbar的Title与NavigationIcon距离异常
-](http://www.jianshu.com/p/27563ef79c0e)
+42. [Toolbar的Title与NavigationIcon距离异常](http://www.jianshu.com/p/27563ef79c0e)
 43. [Android Toolbar，你想知道的都在这里了](http://yifeng.studio/2016/10/12/android-toolbar/)
 
 ## 框架规范
@@ -108,6 +107,8 @@ date: 2016-03-28 17:55:33
 35. [TabLayout高端用法（一）](http://www.jianshu.com/p/be1e8a1da639)
 36. [重新理解响应式编程](http://www.jianshu.com/p/c95e29854cb1)
 37. [Java NIO 简明教程](https://java-nio.avenwu.net/java-nio-tutorial.html)
+38. [Android夜间模式的实现方案](http://mp.weixin.qq.com/s/Mki2bTWCWggmfYLMODGnWA)
+39. [拒绝拖拽 使用ConstraintLayout优化你的布局吧](http://mp.weixin.qq.com/s/vI-fPaNoJ7ZBlZcMkEGdLQ)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
