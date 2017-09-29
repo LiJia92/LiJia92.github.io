@@ -60,6 +60,7 @@ date: 2016-03-28 17:55:33
 41. [自定义View：播放、暂停按钮优雅的过渡](http://www.jianshu.com/p/74f38e9b16fc)
 42. [Toolbar的Title与NavigationIcon距离异常](http://www.jianshu.com/p/27563ef79c0e)
 43. [Android Toolbar，你想知道的都在这里了](http://yifeng.studio/2016/10/12/android-toolbar/)
+44. [Transition学习笔记](http://rkhcy.github.io/2017/09/21/TransitionNote/)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
