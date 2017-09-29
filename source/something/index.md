@@ -109,6 +109,7 @@ date: 2016-03-28 17:55:33
 37. [Java NIO 简明教程](https://java-nio.avenwu.net/java-nio-tutorial.html)
 38. [Android夜间模式的实现方案](http://mp.weixin.qq.com/s/Mki2bTWCWggmfYLMODGnWA)
 39. [拒绝拖拽 使用ConstraintLayout优化你的布局吧](http://mp.weixin.qq.com/s/vI-fPaNoJ7ZBlZcMkEGdLQ)
+40. [Android 8.0 功能和 API](https://developer.android.google.cn/about/versions/oreo/android-8.0.html)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)
