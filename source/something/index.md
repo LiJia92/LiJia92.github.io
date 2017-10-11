@@ -61,6 +61,9 @@ date: 2016-03-28 17:55:33
 42. [Toolbar的Title与NavigationIcon距离异常](http://www.jianshu.com/p/27563ef79c0e)
 43. [Android Toolbar，你想知道的都在这里了](http://yifeng.studio/2016/10/12/android-toolbar/)
 44. [Transition学习笔记](http://rkhcy.github.io/2017/09/21/TransitionNote/)
+45. [理解 Android 新的依赖方式](http://mp.weixin.qq.com/s?__biz=MzI3MTEzMDI2MA==&mid=2654088950&idx=1&sn=4a3c249128d18694969b2b563da54d51)
+46. [Android 中注解的使用](https://juejin.im/post/59bf5e1c518825397176d126)
+47. [Java代码优化（长期更新）](http://www.cnblogs.com/xrq730/p/4865416.html)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)
