@@ -15,6 +15,7 @@ date: 2016-03-28 17:55:33
 5. [基于Android Studio的内存泄漏检测与解决全攻略](http://wetest.qq.com/lab/view/?id=99)
 6. [Android Studio相见恨晚的操作锦集](http://www.jianshu.com/p/bc8f6bfe12c6)
 7. [50个Android Studio秘诀、技巧和资源](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112873&idx=1&sn=667188f0f320a4c0550340138783aae3)
+8. [Android Studio你不知道的调试技巧](http://www.jianshu.com/p/62663b065594)
 
 ## 日常开发
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
