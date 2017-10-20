@@ -5,7 +5,7 @@ tags:
  - 日常开发
 ---
 
-之前写过一篇[状态栏小记](http://lastwarmth.site/2016/08/04/statusbar/)，这里加入虚拟按键重新做一下总结。
+之前写过一篇[状态栏小记](http://lastwarmth.win/2016/08/04/statusbar/)，这里加入虚拟按键重新做一下总结。
 
 <!-- more -->
 

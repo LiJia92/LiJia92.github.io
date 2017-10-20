@@ -5,7 +5,7 @@ tags:
  - 事件分发
 ---
 
-项目开发中，碰到这样一个情形：在点击页面空白处时会弹出状态栏，效果就如我[上一篇博客](http://lastwarmth.site/2016/08/04/statusbar/)一样。
+项目开发中，碰到这样一个情形：在点击页面空白处时会弹出状态栏，效果就如我[上一篇博客](http://lastwarmth.win/2016/08/04/statusbar/)一样。
 那么何为空白处呢？
 我的理解是：若是你这个点击事件没有其他View消费，那么便算是点击空白处了。
 大致画一下页面布局：
@@ -187,7 +187,7 @@ public interface DealClickEventListener {
     void onClickEvent(MotionEvent event);
 }
 ```
-我们必须在ACTION_DOWN的时候返回true，才会继续收到ACTION_MOVE、ACTION_UP等事件，否则是收不到的。至于为什么，可以参考我之前的一篇博客[Android事件分发机制学习小记](http://lastwarmth.site/2015/11/14/touch-event/)。
+我们必须在ACTION_DOWN的时候返回true，才会继续收到ACTION_MOVE、ACTION_UP等事件，否则是收不到的。至于为什么，可以参考我之前的一篇博客[Android事件分发机制学习小记](http://lastwarmth.win/2015/11/14/touch-event/)。
 我们再ACTION_UP的时候执行我们弹出状态栏的操作即可。
 ```
 holder.interactLayout.setListener(new HorizontalFrameLayout.DealClickEventListener() {
@@ -281,7 +281,7 @@ public class HorizontalFrameLayout extends FrameLayout {
 ```
 
 ## 题外话
-在我的另一篇博客[一个关于Android滑动“因缺斯厅”的想法](http://lastwarmth.site/2016/04/22/android-scroll/)中说到一个点，顶部布局采用透明的，那么便会引发一个问题：需要透传``关注``按钮的点击事件，因为透明布局是在顶部，会拦截掉点击事件，需要透传才能执行关注的响应事件。
+在我的另一篇博客[一个关于Android滑动“因缺斯厅”的想法](http://lastwarmth.win/2016/04/22/android-scroll/)中说到一个点，顶部布局采用透明的，那么便会引发一个问题：需要透传``关注``按钮的点击事件，因为透明布局是在顶部，会拦截掉点击事件，需要透传才能执行关注的响应事件。
 ```
 public class CustomRecyclerView extends RecyclerView {
 
