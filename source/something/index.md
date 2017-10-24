@@ -65,6 +65,7 @@ date: 2016-03-28 17:55:33
 45. [理解 Android 新的依赖方式](http://mp.weixin.qq.com/s?__biz=MzI3MTEzMDI2MA==&mid=2654088950&idx=1&sn=4a3c249128d18694969b2b563da54d51)
 46. [Android 中注解的使用](https://juejin.im/post/59bf5e1c518825397176d126)
 47. [Java代码优化（长期更新）](http://www.cnblogs.com/xrq730/p/4865416.html)
+48. [Android基础：Fragment，看这篇就够了](http://mp.weixin.qq.com/s/dUuGSVhWinAnN9uMiBaXgw)
 
 ## 框架规范
 1. [Android MVP 详解（上）](http://www.jianshu.com/p/9a6845b26856)

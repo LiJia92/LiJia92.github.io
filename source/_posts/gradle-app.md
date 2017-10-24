@@ -1,5 +1,5 @@
 ---
-title: Gradle多版本管理
+title: Gradle 多版本管理
 date: 2017-03-16 16:54:10
 tags:
  - gradle

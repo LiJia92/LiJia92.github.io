@@ -1,5 +1,5 @@
 ---
-title: Android Studio使用Gradle进行多渠道打包
+title: Android Studio 使用 Gradle 进行多渠道打包
 date: 2016-03-09 14:39:58
 tags:
  - gradle
