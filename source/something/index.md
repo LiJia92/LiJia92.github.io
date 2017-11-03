@@ -16,6 +16,8 @@ date: 2016-03-28 17:55:33
 6. [Android Studio相见恨晚的操作锦集](http://www.jianshu.com/p/bc8f6bfe12c6)
 7. [50个Android Studio秘诀、技巧和资源](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=2651112873&idx=1&sn=667188f0f320a4c0550340138783aae3)
 8. [Android Studio你不知道的调试技巧](http://www.jianshu.com/p/62663b065594)
+9. [必会 | 手把手带你体验Android Studio 3.0的新功能](https://mp.weixin.qq.com/s/2XmVG4mKEDX6-bvZ0vvmcw)
+10. [《阿里巴巴Java开发规约》插件使用详细指南](https://mp.weixin.qq.com/s/81oBdbNATkkTXShQAfWFJg)
 
 ## 日常开发
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
@@ -59,6 +61,8 @@ date: 2016-03-28 17:55:33
 43. [Android Toolbar，你想知道的都在这里了](http://yifeng.studio/2016/10/12/android-toolbar/)
 44. [Transition学习笔记](http://rkhcy.github.io/2017/09/21/TransitionNote/)
 48. [Android基础：Fragment，看这篇就够了](http://mp.weixin.qq.com/s/dUuGSVhWinAnN9uMiBaXgw)
+1. [Android Gradle 使用大全](http://mp.weixin.qq.com/s/hCXLz-9BnAOGWyZ2eRikKg)
+1. [30多个Android开发者超赞的工具](http://mp.weixin.qq.com/s/26Nl13n4PXHx83F18UlgXA)
 
 ## 技术学习
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
