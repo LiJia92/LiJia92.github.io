@@ -19,6 +19,7 @@ date: 2016-03-28 17:55:33
 9. [必会 | 手把手带你体验Android Studio 3.0的新功能](https://mp.weixin.qq.com/s/2XmVG4mKEDX6-bvZ0vvmcw)
 10. [《阿里巴巴Java开发规约》插件使用详细指南](https://mp.weixin.qq.com/s/81oBdbNATkkTXShQAfWFJg)
 11. [带你玩转Android Studio 3.0的性能分析工具](https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247487907&idx=1&sn=202a662ccf28a9b00d7daf2067eb22d6)
+12. [Gradle Implementation vs API configuration](https://stackoverflow.com/questions/44413952/gradle-implementation-vs-api-configuration)
 
 ## 日常开发
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
