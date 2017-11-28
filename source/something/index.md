@@ -65,6 +65,7 @@ date: 2016-03-28 17:55:33
 48. [Android基础：Fragment，看这篇就够了](http://mp.weixin.qq.com/s/dUuGSVhWinAnN9uMiBaXgw)
 1. [Android Gradle 使用大全](http://mp.weixin.qq.com/s/hCXLz-9BnAOGWyZ2eRikKg)
 1. [30多个Android开发者超赞的工具](http://mp.weixin.qq.com/s/26Nl13n4PXHx83F18UlgXA)
+1. [适配三星Galaxy S8 及 S8+](https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247488324&idx=1&sn=e043220e37d6eaaff217769f4061c04e)
 
 ## 技术学习
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
@@ -145,3 +146,4 @@ date: 2016-03-28 17:55:33
 2. [GitHub 排名前 100 的安卓、iOS项目简介](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2016/0524/4297.html)
 3. [一个随机播放的算法](http://www.jianshu.com/p/472fed76690a)
 4. [程序员不可不知的版权协议](http://www.gcssloop.com/tips/choose-license)
+5. [一个故事告诉你比特币的原理及运作机制](http://blog.codinglabs.org/articles/bitcoin-mechanism-make-easy.html)
