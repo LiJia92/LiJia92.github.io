@@ -80,3 +80,4 @@ androidExtensions {
 
 ## 参考
 [Kotlin 中文教程](https://www.kotlincn.net/docs/tutorials/)
+[《Kotlin for android developers》中文版翻译](https://wangjiegulu.gitbooks.io/kotlin-for-android-developers-zh/content/)
