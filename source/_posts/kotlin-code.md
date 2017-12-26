@@ -53,7 +53,8 @@ private val menus: Array<String> by lazy { arrayOf(MENU_PRINT_MANAGE) }
 ```
 private val menus by Delegates.notNull<Array<String>>()
 ```
-利用``Delegates.notNull``可直接声明非空变量，并在其他地方进行初始化。关于属性委托的更多信息，请查阅官网。
+利用``Delegates.notNull``可直接声明非空变量，并在其他地方进行初始化。关于属性委托的更多信息，请参考[委托属性](https://www.kotlincn.net/docs/reference/delegated-properties.html)。
+**注意：val 修饰的变量并不代表就是常量**，具体请参考[Kotlin中常量的探究](http://droidyue.com/blog/2017/11/05/dive-into-kotlin-constants/index.html)。
 
 ## 静态方法
 之前的 Java 代码使用 Activity 跳转的时候经常在目标 Activity 中定义 navigateTo 方法，就像这样：
