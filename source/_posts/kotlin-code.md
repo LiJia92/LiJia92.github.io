@@ -124,6 +124,48 @@ override fun showTableRegions(tableRegionList: MutableList<TableRegion>) {
 ```
 集合操作符 mapTo 接收一个函数 transform 作为参数，将自身的 item 转化为另外一个对象，然后 add 到 destination 目标集合中。
 一个有用的约定：**如果函数字面值只有一个参数， 那么它的声明可以省略（连同 ->），其名称是 it。** 就像我实例中的代码一样。
+再举个很实用的例子：列表定义 Adapter，如果有点击事件，我们一般会在 Adapter 中定义一个接口，然后在 Adapter 初始化的时候传入接口的实现类，就像这样：
+```
+class Adapter extends BaseAdapter {
+
+    public Adapter(Context context, OnFunctionClickListener listener) {
+        mListener = listener;
+    }
+
+    public View getView(int position, View convertView, ViewGroup parent) {
+        holder.moreIv.setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onFunctionClick(data);
+            }
+        });
+    }
+
+    public interface OnFunctionClickListener {
+        onFunctionClick(Object obj);
+    }
+}
+```
+当使用 Kotlin 之后，我们可以直接忽略接口的定义，直接传入一个匿名函数，就可以实现这样的功能了，简单很多，就像这样：
+```
+class LogTimeAdapter(private val context: Context, dataList: ArrayList<TimeBean>, private val onClick: (TimeBean) -> Unit)
+    : RecyclerView.Adapter<LogTimeAdapter.ViewHolder>() {
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val timeBean = dataList[position]
+        val timeDesc = DateUtils.getDateString(timeBean.beginTime.toInt()) + " 至 " + DateUtils.getDateString(timeBean.endTime.toInt())
+        with(holder.itemView) {
+            // 注意这里，onClick 是在构造函数中直接传入的匿名函数，省去了接口的定义
+            setOnClickListener {
+                onClick(timeBean)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int = dataList.size
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+}
+```
 
 ## lambda
 Kotlin 的使用是离不开 lambda 表达式的。最典型的例子：
@@ -172,3 +214,4 @@ fragment.toast("Hello world!")
 ```
 扩展函数并不是真正地修改了原来的类，它是以静态导入的方式来实现的。扩展函数可以被声明在任何文件中，因此有个通用的实践是把一系列有关的函数放在一个新建的文件里。
 3. 集合操作符：forEach、max、filter、mapTo等等，Kotlin 中的集合为我们提供了很多的操作符，但是你大可不必去背它。当我们用 Java 写出一些集合操作的代码时， Android Studio 会智能识别我们的代码，然后提示可以被哪些操作符给替代，这个时候转一下就好了。
+4. 其他操作符：Kotlin 还提供了很多其他的操作符，let、with、apply等等，这些操作符都可以简化我们的代码。
