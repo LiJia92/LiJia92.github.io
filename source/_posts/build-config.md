@@ -26,7 +26,7 @@ App 作为 Application，其他作为 Library。
 <!-- more -->
 
 现在需要在收银机登录页打上版本的标识，方便调试（因为经常搞混...）。例如 v3.1.0(debug)，v3.1.0(beta)，正式版本则是 v3.1.0。
-那么现在就需要在收银机 Module 中获取 BuildConfig 的信息，一个是 BuildConfig.DEBUG，以及 BuildConfig.BUILD_TYPE。但是无论我 App 切换成 debug，beta，还是 release，收银机中获取到的值都是``BuildConfig.DEBUG = false，BuildConfig.BUILD_TYPE = "release"``。可以看出来，**BuildConfig 信息是根据当前 Module 来的，每个 Module 的 BuildConfig 是各自进行配置的**。而作为 Library Module，我们直接直接把 debug 给忽略了，所以 Library Module 一直是 release 版本。
+那么现在就需要在收银机 Module 中获取 BuildConfig 的信息，一个是 BuildConfig.DEBUG，以及 BuildConfig.BUILD_TYPE。但是无论我 App 切换成 debug，beta，还是 release，收银机中获取到的值都是``BuildConfig.DEBUG = false，BuildConfig.BUILD_TYPE = "release"``。可以看出来，**BuildConfig 信息是根据当前 Module 来的，每个 Module 的 BuildConfig 是各自进行配置的**。而作为 Library Module，我们直接把 debug 给忽略了，所以 Library Module 一直是 release 版本。
 ```
 variantFilter { variant ->
     def buildType = variant.buildType.name
