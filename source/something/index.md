@@ -66,6 +66,7 @@ date: 2016-03-28 17:55:33
 1. [Android Gradle 使用大全](http://mp.weixin.qq.com/s/hCXLz-9BnAOGWyZ2eRikKg)
 1. [30多个Android开发者超赞的工具](http://mp.weixin.qq.com/s/26Nl13n4PXHx83F18UlgXA)
 1. [适配三星Galaxy S8 及 S8+](https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247488324&idx=1&sn=e043220e37d6eaaff217769f4061c04e)
+1. [Android 冷兵器 之 tools](https://www.jianshu.com/p/52ba7800d3b9)
 
 ## 技术学习
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
