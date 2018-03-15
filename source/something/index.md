@@ -148,4 +148,4 @@ date: 2016-03-28 17:55:33
 3. [一个随机播放的算法](http://www.jianshu.com/p/472fed76690a)
 4. [程序员不可不知的版权协议](http://www.gcssloop.com/tips/choose-license)
 5. [一个故事告诉你比特币的原理及运作机制](http://blog.codinglabs.org/articles/bitcoin-mechanism-make-easy.html)
-6. [hexo博客深度使用](http://www.yellowmax2001.com/2017/08/08/hexo%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8/)
+6. [hexo 博客深度使用](http://www.yellowmax2001.com/2017/08/08/hexo%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8/)
