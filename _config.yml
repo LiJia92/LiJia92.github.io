@@ -70,7 +70,7 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/LiJia92/LiJia92.github.io.git
+  repository: git@github.com:LiJia92/LiJia92.github.io.git
   branch: master
 
 # 配置yilia搜索模块
