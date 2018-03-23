@@ -1,12 +1,12 @@
 ---
 title: Gradle 多版本管理（续）
-date: ２017-10-２4 10:２0:01
+date: 2017-10-24 10:20:01
 tags:
  - gradle
 ---
-之前写过一篇[Gradle多版本管理](http://lastwarmth.win/２017/03/16/gradle-app/)，主要是通过``productFlavors``来控制产品版本。这篇文章将结合``buildTypes``来说一下多版本管理。
-在正常开发中，我们一般会有至少２个环境：Debug、Release，即测试环境和生产环境。显然这２个环境要用２套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：**利用 buildTypes 来控制编译类型。**
-buildTypes 默认会有 debug、release ２个类型，当然我们还可以添加自己的。比如有个beta环境，用于外网测试。当对接一些三方平台的接口时，有的只能用外网，那么只能整一套外网的测试环境了，比如美团外卖。好，现在假设我们有 debug、beta、release 3 个 buildTypes，然后 pad、phone、custom ３个 productFlavors，接下来就是针对这些环境做配置了：
+之前写过一篇[Gradle多版本管理](http://lastwarmth.win/2017/03/16/gradle-app/)，主要是通过``productFlavors``来控制产品版本。这篇文章将结合``buildTypes``来说一下多版本管理。
+在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：**利用 buildTypes 来控制编译类型。**
+buildTypes 默认会有 debug、release 2 个类型，当然我们还可以添加自己的。比如有个beta环境，用于外网测试。当对接一些三方平台的接口时，有的只能用外网，那么只能整一套外网的测试环境了，比如美团外卖。好，现在假设我们有 debug、beta、release 3 个 buildTypes，然后 pad、phone、custom ３个 productFlavors，接下来就是针对这些环境做配置了：
 
 <!-- more -->
 
@@ -14,9 +14,9 @@ buildTypes 默认会有 debug、release ２个类型，当然我们还可以添�
 signingConfigs {
     lijia {
         keyAlias 'lijia'
-        keyPassword '1２3456'
+        keyPassword '123456'
         storeFile file('../lijia.jks')
-        storePassword '1２3456'
+        storePassword '123456'
     }
 }
 
@@ -33,7 +33,7 @@ buildTypes {
     }
 
     beta {
-        buildConfigField("Integer", "HOST_TYPE", '２')
+        buildConfigField("Integer", "HOST_TYPE", '2')
         signingConfig signingConfigs.lijia
     }
 }
@@ -53,7 +53,7 @@ productFlavors {
     }
 }
 ```
-除了 debug 版不需要签名，其他的编译版本都需要签名。这里随便生成一个，配置在 grandl e中。可以看到我们通过``buildConfigField("Integer", "HOST_TYPE", '２')``来进行配置``HOST_TYPE``，配置好了后需要在应用启动的时候进行设置。一般放在 Application 中：
+除了 debug 版不需要签名，其他的编译版本都需要签名。这里随便生成一个，配置在 grandl e中。可以看到我们通过``buildConfigField("Integer", "HOST_TYPE", '2')``来进行配置``HOST_TYPE``，配置好了后需要在应用启动的时候进行设置。一般放在 Application 中：
 ```
 public class MyApplication extends Application {
 
@@ -72,7 +72,7 @@ public class AppCore {
 
     private final static int TYPE_RELEASE = 0;
     private final static int TYPE_DEBUG = 1;
-    private final static int TYPE_BETA = ２;
+    private final static int TYPE_BETA = 2;
 
     private static int mHostType = TYPE_DEBUG;
 

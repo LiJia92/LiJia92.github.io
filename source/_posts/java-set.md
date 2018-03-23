@@ -139,11 +139,11 @@ public void remove() {
     }
 }
 ```
-如此便一目了然了，**ArrayList 本身的 remove 方法执行完之后没有同步 modCount 与 expectedModCount，而 Iterator 有同步。在遍历的时候会 checkForComodification，当使用的非 Iterator 的 remove 方法，会造成２个 count 不相等，如此便会抛出异常了**。
+如此便一目了然了，**ArrayList 本身的 remove 方法执行完之后没有同步 modCount 与 expectedModCount，而 Iterator 有同步。在遍历的时候会 checkForComodification，当使用的非 Iterator 的 remove 方法，会造成 2 个 count 不相等，如此便会抛出异常了**。
 那么细想一下：为什么 Java 集合在遍历的时候要做这样的检查呢？这里引用一下网友的想法，大家自行思考吧～
 > 设置modCount和expectedModCount的目的是为了检测iterator的有效性，检测是否有其它操作对HashMap的结构进行了修改，由于这些操作不是通过当前iterator进行的，因此有可能破坏iterator的有效性。通过iterator执行remove只能删除当前iterator所在的元素，不会让iterator失效。而通过HashMap.remove()实际上可以删除任意元素，这个元素有可能正是iterator内部的next变量已经引用了的元素，造成iterator失效。
 
-最后说２点题外话：
+最后说 2 点题外话：
 1. ``Arrays.asList``不接受 Java 基本数据类型数组作为参数。原因``asList``接受的参数为``Object``，而基本数据类型不是。但是代码``List list = Arrays.asList(new int[]{1,2,3})``不会报错，因为``int[]``是``Object``，此代码会生产一个``size = 1``的列表。
 2. 通过``Arrays.asList``方法返回的``List``是不能修改的。
 
