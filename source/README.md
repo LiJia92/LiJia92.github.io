@@ -4,6 +4,6 @@
 - 使用``Hexo``搭建，并部署在Github上。
 
 ## 其他
-使用的``Next``主题。
+使用的``yilia``主题。
 
 作者：[lastwarmth](http://lijia92.github.io/)
