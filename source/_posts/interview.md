@@ -10,6 +10,7 @@ tags:
 [超详细Android面试的准备与经历分享 | 百度(offer)](https://mp.weixin.qq.com/s/YVvV3-RUjbqYo-DYY3E6nA)
 [阿里、腾讯、百度、华为、京东、搜狗和滴滴最新面试题汇集](https://mp.weixin.qq.com/s/rSV2IFpIQxwDaTfhof-CNA)
 [我所经历的Android面试](https://juejin.im/post/5ab7a9cd6fb9a028c812d24b)
+[BAT大厂面试题整理](http://mp.weixin.qq.com/s/p3l9wr4DX976Lr62-dYe8w)
 
 ### Hanlder
 [Android Handler消息机制实现原理](https://www.jianshu.com/p/6cc4d4b4676b)

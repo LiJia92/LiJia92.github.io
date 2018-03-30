@@ -18,6 +18,7 @@ date: 2016-03-28 17:55:33
 10. [《阿里巴巴Java开发规约》插件使用详细指南](https://mp.weixin.qq.com/s/81oBdbNATkkTXShQAfWFJg)
 11. [带你玩转Android Studio 3.0的性能分析工具](https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247487907&idx=1&sn=202a662ccf28a9b00d7daf2067eb22d6)
 12. [Gradle Implementation vs API configuration](https://stackoverflow.com/questions/44413952/gradle-implementation-vs-api-configuration)
+13. [Android小技巧 提升开发效率](https://mp.weixin.qq.com/s/wTOyYuMqkX9ezNvbixXquQ)
 
 ## 日常开发
 1. [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498&extra=page%3D1)
@@ -147,3 +148,4 @@ date: 2016-03-28 17:55:33
 4. [程序员不可不知的版权协议](http://www.gcssloop.com/tips/choose-license)
 5. [一个故事告诉你比特币的原理及运作机制](http://blog.codinglabs.org/articles/bitcoin-mechanism-make-easy.html)
 6. [hexo 博客深度使用](http://www.yellowmax2001.com/2017/08/08/hexo%E6%B7%B1%E5%BA%A6%E4%BD%BF%E7%94%A8/)
+7. [Android程序员面试会遇到的算法 part 1](http://mp.weixin.qq.com/s/msj314u5U2v5477cgkzojg)
