@@ -73,6 +73,7 @@ date: 2016-03-28 17:55:33
 37. [Java NIO 简明教程](https://java-nio.avenwu.net/java-nio-tutorial.html)
 1. [为什么说Java中只有值传递](http://mp.weixin.qq.com/s/OfkwrsoE6OPagWiFlaGcVg)
 1. [Java 到底是值传递还是引用传递？](https://www.zhihu.com/question/31203609)
+1. [Java 泛型，你了解类型擦除吗？](https://blog.csdn.net/briblue/article/details/76736356)
 
 ## 技术学习
 35. [仿Nice首页图片列表9图样式，并实现拖拽效果](http://www.jianshu.com/p/0ea96b952170)
@@ -110,6 +111,7 @@ date: 2016-03-28 17:55:33
 39. [RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
 21. [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
 22. [RxJava系列1(简介)](https://zhuanlan.zhihu.com/p/20687178)
+11. [探索专为 Android 而设计的 RxJava 2](https://academy.realm.io/cn/posts/gotocph-jake-wharton-exploring-rxjava2-android/)
 33. [这可能是最好的RxJava 2.x 教程（完结版）](http://www.apkbus.com/home.php?mod=space&uid=898535&do=blog&id=68185)
 30. [Lottie -- 轻松实现动态加载直播礼物动画](http://www.liujun.info/2017/04/25/Lottie%E5%BA%93%E5%AE%9E%E7%8E%B0%E7%9B%B4%E6%92%AD%E7%A4%BC%E7%89%A9%E5%8A%A8%E7%94%BB/)
 31. [带你学开源项目：LeakCanary-如何检测 Activity 是否泄漏](http://wingjay.com/2017/05/14/dig_into_leakcanary/)
@@ -129,6 +131,8 @@ date: 2016-03-28 17:55:33
 47. [Java代码优化（长期更新）](http://www.cnblogs.com/xrq730/p/4865416.html)
 20. [大幅提高Android开发效率之Android项目模板化（上）](http://www.jianshu.com/p/e8ac0c284601/comments/5435137#comment-5435137)
 23. [人人车Android客户端架构演进实录](http://mp.weixin.qq.com/s/lqkqNv7BW2F7dPKOTzlxQw?utm_source=tuicool&utm_medium=referral)
+1. [Android 开发规范（完结版）](https://blankj.com/2017/03/08/android-standard-dev-final/)
+1. [Java执行顺序](http://rkhcy.github.io/2017/10/12/Java%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F/)
 
 ## 音视频专题
 1. [雷霄骅(leixiaohua1020)的专栏](http://blog.csdn.net/leixiaohua1020?viewmode=contents)

@@ -43,6 +43,7 @@ tags:
 ### 类的加载机制 & 插件化
 [Android动态加载基础 ClassLoader工作机制](https://segmentfault.com/a/1190000004062880)
 [Android中的ClassLoader](https://juejin.im/post/59e73b3cf265da432e5b1b29)
+[热修复入门：Android 中的 ClassLoader](https://jaeger.itscoder.com/android/2016/08/27/android-classloader)
 
 ### 集合
 [Java 8系列之重新认识HashMap](https://tech.meituan.com/java-hashmap.html)
