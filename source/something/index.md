@@ -108,6 +108,7 @@ date: 2016-03-28 17:55:33
 40. [Android 8.0 功能和 API](https://developer.android.google.cn/about/versions/oreo/android-8.0.html)
 11. [VasDolly实现原理](https://github.com/Tencent/VasDolly/wiki/VasDolly%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
 11. [让预览 RecyclerView 效果更方便的一个小技巧](https://zhuanlan.zhihu.com/p/33373572?utm_source=androidweekly&utm_medium=website)
+11. [轻松打造一个自己的注解框架](https://mp.weixin.qq.com/s/ljJ1uBCinBLhCU6MtOApYA)
 
 # 三方库
 19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
