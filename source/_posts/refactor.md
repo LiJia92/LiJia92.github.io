@@ -112,3 +112,4 @@ public RoundCornerButton(Context context, AttributeSet attrs, int defStyleAttr) 
 2. 没有替代方案，在时间充足的情况下，可尝试读懂代码，自己寻找替代方案；若时间不充足则只能 copy 代码了。
 3. 注意自定义 View 相关内容。
 4. 在开发过程中，碰到 @Deprecated 标记的类或者方法尽早整改吧，不然万一哪天版本升级这个类或者方法没了，在量大的情况下，就很蛋疼了。
+5. Saturn 作为一个 Lib，在对外提供 SDK 的情况下，最好不要删除、改变现有方法，尽量提供新的方法保证兼容。
