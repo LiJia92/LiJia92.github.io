@@ -65,6 +65,8 @@ date: 2016-03-28 17:55:33
 1. [适配三星Galaxy S8 及 S8+](https://mp.weixin.qq.com/s?__biz=MzIwMzYwMTk1NA==&mid=2247488324&idx=1&sn=e043220e37d6eaaff217769f4061c04e)
 1. [Android 冷兵器 之 tools](https://www.jianshu.com/p/52ba7800d3b9)
 11. [插件化、热补丁中绕不开的Proguard的坑](https://tech.meituan.com/mt_proguard.html)
+1. [探索 Design Support Library V28 新增内容](https://mp.weixin.qq.com/s/_tfd7VOfj2xtDnOAtM5uiA)
+1. [这一次彻底弄明白Gradle相关配置](https://mp.weixin.qq.com/s/1UHcYOudViMhpUYeREZzGA)
 
 ## Java
 29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
@@ -109,6 +111,7 @@ date: 2016-03-28 17:55:33
 11. [VasDolly实现原理](https://github.com/Tencent/VasDolly/wiki/VasDolly%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86)
 11. [让预览 RecyclerView 效果更方便的一个小技巧](https://zhuanlan.zhihu.com/p/33373572?utm_source=androidweekly&utm_medium=website)
 11. [轻松打造一个自己的注解框架](https://mp.weixin.qq.com/s/ljJ1uBCinBLhCU6MtOApYA)
+11. [Android Flutter 内存机制初探](https://mp.weixin.qq.com/s/QxdpQaoPN7z0AvaDZ5OkUg?utm_source=androidweekly&utm_medium=website)
 
 # 三方库
 19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
