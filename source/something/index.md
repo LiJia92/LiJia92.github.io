@@ -114,6 +114,7 @@ date: 2016-03-28 17:55:33
 11. [Android Flutter 内存机制初探](https://mp.weixin.qq.com/s/QxdpQaoPN7z0AvaDZ5OkUg?utm_source=androidweekly&utm_medium=website)
 11. [Kotlin代码检查在美团的探索与实践](https://tech.meituan.com/Kotlin_code_inspect.html)
 11. [美团外卖Android Crash治理之路](https://mp.weixin.qq.com/s/FoimQL9XsgnM8gKtsC5jRA?utm_source=androidweekly.io&utm_medium=website)
+11. [Android 进程保活招式大全](https://segmentfault.com/a/1190000006251859)
 
 # 三方库
 19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
