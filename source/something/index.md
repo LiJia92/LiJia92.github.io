@@ -67,6 +67,9 @@ date: 2016-03-28 17:55:33
 11. [插件化、热补丁中绕不开的Proguard的坑](https://tech.meituan.com/mt_proguard.html)
 1. [探索 Design Support Library V28 新增内容](https://mp.weixin.qq.com/s/_tfd7VOfj2xtDnOAtM5uiA)
 1. [这一次彻底弄明白Gradle相关配置](https://mp.weixin.qq.com/s/1UHcYOudViMhpUYeREZzGA)
+1. [Android Design Support Library v28 新控件尝鲜
+阅读 1236](https://juejin.im/entry/5b026bb9f265da0b82631645)
+1. [一种巧妙的drawable.xml替代方案](https://juejin.im/post/5b95c6a0e51d450e664b0aa0)
 
 ## Java
 29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
@@ -115,6 +118,9 @@ date: 2016-03-28 17:55:33
 11. [Kotlin代码检查在美团的探索与实践](https://tech.meituan.com/Kotlin_code_inspect.html)
 11. [美团外卖Android Crash治理之路](https://mp.weixin.qq.com/s/FoimQL9XsgnM8gKtsC5jRA?utm_source=androidweekly.io&utm_medium=website)
 11. [Android 进程保活招式大全](https://segmentfault.com/a/1190000006251859)
+11. [Android消息总线的演进之路：用LiveDataBus替代RxBus、EventBus](https://tech.meituan.com/Android_LiveDataBus.html)
+11. [Kotlin代码检查在美团的探索与实践](https://mp.weixin.qq.com/s/b9Dp9tdU-Ymh0JzC3rpUag?utm_source=androidweekly.io&utm_medium=website)
+11. [Android 9 Pie 现已面向全球正式发布！](https://mp.weixin.qq.com/s/Kc99l_nOfxbMRUnrU3tDuA?utm_source=androidweekly.io&utm_medium=website)
 
 # 三方库
 19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
