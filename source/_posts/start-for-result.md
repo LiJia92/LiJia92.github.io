@@ -4,7 +4,7 @@ date: 2018-10-10 16:59:25
 tags:
  - 日常开发
 ---
-StartActivityForResult 相信大家都用过，调用和返回结果是分散开的，使用起来最好还是封装一下比较好。这里利用一个空的 Fragment 进行封装，代码比较简单。
+startActivityForResult 相信大家都用过，调用和返回结果是分散开的，使用起来最好还是封装一下比较好。这里利用一个空的 Fragment 进行封装，代码比较简单。
 封装的回调类 StartForResultListener：
 ```
 public interface StartForResultListener {
