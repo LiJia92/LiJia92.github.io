@@ -115,14 +115,16 @@ date: 2016-03-28 17:55:33
 11. [让预览 RecyclerView 效果更方便的一个小技巧](https://zhuanlan.zhihu.com/p/33373572?utm_source=androidweekly&utm_medium=website)
 11. [轻松打造一个自己的注解框架](https://mp.weixin.qq.com/s/ljJ1uBCinBLhCU6MtOApYA)
 11. [Android Flutter 内存机制初探](https://mp.weixin.qq.com/s/QxdpQaoPN7z0AvaDZ5OkUg?utm_source=androidweekly&utm_medium=website)
-11. [Kotlin代码检查在美团的探索与实践](https://tech.meituan.com/Kotlin_code_inspect.html)
 11. [美团外卖Android Crash治理之路](https://mp.weixin.qq.com/s/FoimQL9XsgnM8gKtsC5jRA?utm_source=androidweekly.io&utm_medium=website)
 11. [Android 进程保活招式大全](https://segmentfault.com/a/1190000006251859)
 11. [Android消息总线的演进之路：用LiveDataBus替代RxBus、EventBus](https://tech.meituan.com/Android_LiveDataBus.html)
-11. [Kotlin代码检查在美团的探索与实践](https://mp.weixin.qq.com/s/b9Dp9tdU-Ymh0JzC3rpUag?utm_source=androidweekly.io&utm_medium=website)
 11. [Android 9 Pie 现已面向全球正式发布！](https://mp.weixin.qq.com/s/Kc99l_nOfxbMRUnrU3tDuA?utm_source=androidweekly.io&utm_medium=website)
 
-# 三方库
+## Kotlin
+11. [Kotlin代码检查在美团的探索与实践](https://tech.meituan.com/Kotlin_code_inspect.html)
+11. [有点意思的Kotlin的默认参数与JVMOverloads](https://droidyue.com/blog/2018/10/14/dive-into-kotlin-default-arguments-and-jvmoverloads/)
+
+## 三方库
 19. [给 Android 开发者的 RxJava 详解](http://gank.io/post/560e15be2dca930e00da1083)
 39. [RxJava2 学习资料推荐](http://mp.weixin.qq.com/s/UAEgdC2EtqSpEqvog0aoZQ)
 21. [ReactiveX/RxJava文档中文版](https://mcxiaoke.gitbooks.io/rxdocs/content/)
