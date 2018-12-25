@@ -7,7 +7,11 @@ tags:
 前些日子购买了一波[极客时间](https://time.geekbang.org/)的几门课程，贴下二维码，扫码购买返现互惠~
 
 <!-- more -->
+Android 开发高手课：
+![](http://note.youdao.com/yws/res/9100/52cee2c1ad93f0c94c31b8ea3fb1608d)
 
-![](https://note.youdao.com/yws/res/9083/WEBRESOURCEf4588a348be01e47ecaaeb7dadecbb5a)
-![](https://note.youdao.com/yws/res/9085/WEBRESOURCE5f4f831af61d86a6bb2e395a4b0297da)
-![](http://note.youdao.com/yws/res/9090/0901135f210f018788d7b986ff1ac29a)
+程序员的数学基础课：
+![](https://note.youdao.com/yws/res/9106/WEBRESOURCE9a631d43adc8a3ea348525d908c74b0c)
+
+数据结构与算法之美：
+![](https://note.youdao.com/yws/res/9104/WEBRESOURCE317b05df74d3d8bcc1a1091da5ff1d15)
