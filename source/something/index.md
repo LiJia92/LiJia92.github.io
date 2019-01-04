@@ -70,6 +70,7 @@ date: 2016-03-28 17:55:33
 1. [Android Design Support Library v28 新控件尝鲜
 阅读 1236](https://juejin.im/entry/5b026bb9f265da0b82631645)
 1. [一种巧妙的drawable.xml替代方案](https://juejin.im/post/5b95c6a0e51d450e664b0aa0)
+1. [Android 9 适配怎么做？ “QQ音乐”优化实录](https://mp.weixin.qq.com/s/2EPTrPHnTwkqifZqy7I-Rg?utm_source=androidweekly.io&utm_medium=website)
 
 ## Java
 29. [Java里如何实现线程间通信？ ](http://wingjay.com/2017/04/09/Java%E9%87%8C%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%9F/)
