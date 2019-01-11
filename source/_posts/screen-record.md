@@ -5,7 +5,7 @@ tags:
  - 日常开发
 ---
 最近 Keep 更新了一个轨迹动画的分享，可以生成一个看起来高大上的视频。项目产品也提出了一样的需求，便参照着实现了一波。效果如下（虚拟机跑动画就已经很卡了，然后还要录 gif 就更卡了，凑合看~）：
-![](http://note.youdao.com/yws/res/9022/WEBRESOURCE96a34665c08389a1e0642f6418c03e82)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/trackAnimation.gif)
 
 <!-- more -->
 

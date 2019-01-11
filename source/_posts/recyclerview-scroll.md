@@ -4,7 +4,7 @@ date: 2018-12-12 10:25:19
 tags:
 ---
 先看一下设计稿：
-![](https://note.youdao.com/yws/res/9034/WEBRESOURCEc6b18f58bc3968f790eb06524aacb408)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png)
 最底层是个地图，再上面有一些按钮，最上层是路线信息 UI，页面可以滑动，滑动时地图和按钮不动，自然而然想到的 RecyclerView 来实现。
 早些时候只有 2 个按钮，使用了一种很笨拙的方式，与之前写过的一篇文章类似：[一个关于Android滑动“因缺斯厅”的想法](http://lastwarmth.win/2016/04/22/android-scroll/)。
 这种方式，相当于有四层：地图->按钮->RecyclerView->与按钮相同位置的View，但是是透明的。界面布局就像这样：

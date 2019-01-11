@@ -8,10 +8,10 @@ tags:
 
 <!-- more -->
 Android 开发高手课：
-![](http://note.youdao.com/yws/res/9100/52cee2c1ad93f0c94c31b8ea3fb1608d)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/52cee2c1ad93f0c94c31b8ea3fb1608d.jpg)
 
 程序员的数学基础课：
-![](https://note.youdao.com/yws/res/9106/WEBRESOURCE9a631d43adc8a3ea348525d908c74b0c)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/1545728104412.jpg)
 
 数据结构与算法之美：
-![](https://note.youdao.com/yws/res/9104/WEBRESOURCE317b05df74d3d8bcc1a1091da5ff1d15)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/1545728115113.jpg)

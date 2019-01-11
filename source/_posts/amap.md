@@ -46,7 +46,7 @@ public void changeScaleControlsPosition(float translationX, float translationY) 
 
 ## Polyline 与底图之间加蒙层
 需求是这样的：
-![](https://note.youdao.com/yws/res/9061/WEBRESOURCE4df80ad1894fb1551e973e9ec163a6df)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE%20%281%29.png)
 绘制的 Ployline、Marker 与底图之间有个蒙层，如何来实现？翻到[一篇文章](https://www.jianshu.com/p/4c851ddc78a3?tdsourcetag=s_pctim_aiomsg)写了高德地图覆盖物的层级压盖关系：
 > 1、基础底图（包括底图、底图道路、卫星图等）；
 2、地形图图层（GroundOverlay）；
@@ -87,7 +87,7 @@ aMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), 15
 ## 多"InfoWindow"展示
 高德地图 Marker 可绑定一个 Infowindow，但是全局只能有一个 Infowindow 显示，所以如果要展示多个 Infowindow，只能使用其他方式。
 给 Marker 设置 icon，有个工厂类``BitmapDescriptorFactory``来提供。
-![](https://note.youdao.com/yws/res/9063/WEBRESOURCE5ae13910d47b6e9cd35c3b53b3875f62)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE%20%282%29.png)
 所以可以自己填充 View，然后通过 fromView 设置到 Marker 上。看到 fromView 的源码：
 ```
 public static BitmapDescriptor fromView(View var0) {
@@ -127,7 +127,7 @@ public static Bitmap a(View var0) {
 
 ## 屏幕位置、地图位置映射
 贴一下文档说明：
-![](https://note.youdao.com/yws/res/9065/WEBRESOURCEf82dcfb0764d2de038bc8a0ecddf7829)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE%20%283%29.png)
 
 参考文档：
 [Android地图SDK简介](https://lbs.amap.com/api/android-sdk/summary)
