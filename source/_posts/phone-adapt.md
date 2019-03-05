@@ -129,9 +129,28 @@ public static boolean vivoNavigationGestureEnabled(Context context) {
     return val != NAVIGATION_GESTURE_OFF;
 }
 ```
+但是这样针对不同的 Rom 要做很多种判断，总感觉不靠谱。后面找到一种方式来判断是否展示导航栏：
+```
+/**
+ * 判断是否显示导航栏
+ */
+private fun isNavigationBarExist(activity: Activity): Boolean {
+    val vp = activity.window.decorView as? ViewGroup
+    if (vp != null) {
+        for (i in 0 until vp.childCount) {
+            if (vp.getChildAt(i).id != NO_ID && "navigationBarBackground" == activity.resources.getResourceEntryName(vp.getChildAt(i).id)) {
+                return true
+            }
+        }
+    }
+    return false
+}
+```
+经测试，在我的 MIX2 及同事的华为手机上，展示正常，在一些测试机上展示也 ok，便先采取这种方式了。
 
 参考：
 [MIX2 获取屏幕高度Bug](http://www.miui.com/thread-13296153-1-1.html)
 [判断用户是否打开了全面屏手势](http://www.miui.com/thread-13012674-1-1.html)
 [Android获取系统的硬件信息、系统版本以及如何检测ROM类型](https://blog.csdn.net/xx326664162/article/details/52438706)
 [Android APP适配全面屏手机的技术要点](https://blog.csdn.net/weelyy/article/details/79284332)
+[Android全面屏虚拟导航栏适配](https://juejin.im/post/5bb5c4e75188255c72285b54)
