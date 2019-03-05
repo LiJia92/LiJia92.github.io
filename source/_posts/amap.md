@@ -129,6 +129,22 @@ public static Bitmap a(View var0) {
 贴一下文档说明：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE%20%283%29.png)
 
+## Marker 覆盖点击
+多个 Marker 覆盖显示在地图上，点击 Marker 覆盖重叠的部分，并不是视觉上最上层的 Marker 在响应（Marker 的 zIndex 值一致），一直是最后绘制的 Marker 在响应。**通过设置 Marker 的 zIndex 可以解决这个问题。**
+```
+private var zIndex = 0F
+    get() {
+        field++
+        return field
+    }
+
+override fun onMarkerClick(marker: Marker): Boolean {
+    marker.zIndex = zIndex
+    // do something...
+    return true
+}
+```
+
 参考文档：
 [Android地图SDK简介](https://lbs.amap.com/api/android-sdk/summary)
 [参考手册](http://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
