@@ -122,6 +122,7 @@ date: 2016-03-28 17:55:33
 11. [Android 9 Pie 现已面向全球正式发布！](https://mp.weixin.qq.com/s/Kc99l_nOfxbMRUnrU3tDuA?utm_source=androidweekly.io&utm_medium=website)
 11. [基本功 | Litho的使用及原理剖析](https://tech.meituan.com/2019/03/14/litho-use-and-principle-analysis.html)
 11. [知无涯，行者之路莫言终（我的编程之路）](https://juejin.im/post/5c2881c95188252b5627475b)
+11. [Android M新特性Doze and App Standby模式详解](https://zhuanlan.zhihu.com/p/20323263#!)
 
 ## Kotlin
 11. [Kotlin代码检查在美团的探索与实践](https://tech.meituan.com/Kotlin_code_inspect.html)

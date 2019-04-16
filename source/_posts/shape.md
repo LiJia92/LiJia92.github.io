@@ -9,7 +9,7 @@ tags:
 
 <!-- more -->
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/09/27/1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/shape.png)
 现在做的项目还是个新项目，看着这日益增多的 shape 文件感觉还是得采取点措施处理一下。本着不重复造轮子的原则，Google 了一波，发现这是广大开发者都面对过的一个问题，目前看到的有几个方案。
 ##  自定义View
 通过自定义 View 或 ViewGroup，解析对应的 xml 属性，来生成相应的 BackgroundDrawable，这种方式不太灵活，即使用到 Android 自带的 TextView 等控件也得在 xml 中声明自定义的 View，比较蛋疼。
