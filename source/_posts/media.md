@@ -279,3 +279,10 @@ private fun readVideoPixel(filePath: String?): Pair<Int, Int>? {
 }
 ```
 视频数量一般比较少，耗时问题暂时可以不考虑。使用此种方案后，照片、视频的横竖问题基本准确。Over~
+
+## 题外话
+当手机视频、照片数量特别多了之后，一次加载全部就耗时有些久了，手机里 50 多个视频耗时 2 秒多，2000 多张照片耗时 5 秒左右，所以需要调整成为分页加载。利用 limit + offset 来实现：
+```
+val order = ORDER_BY + " limit " + PAGE_SIZE + " offset " + (page - 1) * PAGE_SIZE
+```
+有了分页就可能出现重复数据了（第一页加载完后，又拍了 2 张照片，下一页加载的数据会有 2 条重复），所以要**注意去重**。
