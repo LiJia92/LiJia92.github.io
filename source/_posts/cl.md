@@ -20,94 +20,121 @@ ConstraintLayout 出来蛮久了，但是一直没怎么用，说是可以直接
 见名思意，都很直接明了，还是很方便使用的。和 RelativeLayout 很相似，但是还有着 LinearLayout 的特性，可以说是结合了两大布局的特性，用起来爽歪歪。用这些基础属性已经可以实现大部分的布局了，而且布局嵌套层级就一级。举个例子：
 ```
 <android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="44dp"
-    android:paddingLeft="14dp"
-    android:paddingRight="20dp"
-    tools:background="#f00">
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="4dp"
+        tools:background="#f00">
 
-    <ImageView
-        android:id="@+id/backIv"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:paddingLeft="6dp"
-        android:src="@drawable/vyg__icon_back_white"
-        android:tint="#fff"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:paddingLeft="6dp"
+            android:src="@drawable/vyg__icon_back_white"
+            android:tint="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/catalogTv"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:paddingLeft="16dp"
-        android:text="目录"
-        android:textColor="@color/vyg__white"
-        android:textSize="14sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"/>
+        <TextView
+            android:id="@+id/catalogTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="目录"
+            android:textColor="@color/vyg__white"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
 
-    <ImageView
-        android:id="@+id/avatarIv"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="12dp"
-        android:src="@drawable/vyg__user_avatar_default"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/backIv"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <ImageView
+            android:id="@+id/avatarIv"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/vyg__user_avatar_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/backIv"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/nameTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:textColor="@color/vyg__363A3E"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/timeTv"
-        app:layout_constraintLeft_toRightOf="@id/avatarIv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="小孩子的故事"/>
+        <TextView
+            android:id="@+id/nameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/vyg__363A3E"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/timeTv"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@+id/avatarIv"
+            app:layout_constraintRight_toLeftOf="@+id/followTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="小孩子的故事小孩子的故事小孩子的故事小孩子的故事"/>
 
-    <TextView
-        android:id="@+id/timeTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/vyg__A0A9B9"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/nameTv"
-        app:layout_constraintTop_toBottomOf="@id/nameTv"
-        tools:text="2012-11-12"/>
+        <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/vyg__A0A9B9"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/nameTv"
+            app:layout_constraintTop_toBottomOf="@id/nameTv"
+            tools:text="2012-11-12"/>
 
-    <TextView
-        android:id="@+id/followTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/vyg__shape_f8e71c_r100"
-        android:drawablePadding="4dp"
-        android:gravity="center"
-        android:paddingBottom="6dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="6dp"
-        android:text="关注"
-        android:textColor="@color/vyg__font_363a3e"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/catalogTv"
-        app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+            android:id="@+id/followTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/vyg__shape_f8e71c_r100"
+            android:drawablePadding="4dp"
+            android:gravity="center"
+            android:paddingBottom="6dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="6dp"
+            android:text="关注"
+            android:textColor="@color/vyg__font_363a3e"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/catalogTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginRight="16dp"/>
 
-</android.support.constraint.ConstraintLayout>
+        <android.support.constraint.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="avatarIv,nameTv,timeTv,followTv"
+            tools:visibility="visible"/>
+
+    </android.support.constraint.ConstraintLayout>
 ```
 界面效果如下：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/cl.png)
+
+## goneMargin
+如上图的界面中，为了加大「目录」两字的点击相应区域，给它设置了左右 16dp 的 padding，但是某些情况下，这个「目录」不需要展示，设置为 GONE 之后「关注」按钮距离右边的距离就只剩 4dp 了，需要手动改为 16dp，这样就得写一句很蛋疼的代码：
+```
+(followTv.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = DimenUtils.dp2px(16F)
+```
+但是利用 ConstraintLayout 之后，你会发现一句 xml 代码即可搞定，给「关注」设置如下属性
+```
+app:layout_goneMarginRight="16dp"
+```
+当它依赖的 View 变为 GONE 时，仍然能保留 margin，ConstraintLayout 流弊！
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/cl1.png)
 
 ## chainStyle
 上述代码中有一个属性：
