@@ -145,6 +145,72 @@ override fun onMarkerClick(marker: Marker): Boolean {
 }
 ```
 
+## 自定义地图
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/map.png)
+
+需要展示上图效果的地图，可以使用自定义地图实现。
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/map1.png)
+
+进入官网自定义地图页面，可以自定义地图展示样式，然后保存，后面可以在自己的自定义样式界面进行使用。
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/map2.png)
+
+针对 Android 下载下来的是一个 zip 文件，6.6.0 版本及以后会有 2 个文件，``style.data``、``style_extra.data``。
+然后使用地图加载：
+```
+val options = CustomMapStyleOptions()
+options.styleDataPath = copyCustomStyleFile("style.data")
+options.styleExtraPath = copyCustomStyleFile("style_extra.data")
+options.isEnable = true
+
+/**
+ * 拷贝自定义样式文件到私有文件目录
+ */
+private fun copyCustomStyleFile(fileName: String): String? {
+    var outputStream: FileOutputStream? = null
+    var inputStream: InputStream? = null
+    var file: File? = null
+    try {
+        inputStream = controller.mapView.context.assets.open("map/footprint/$fileName")
+        val b = ByteArray(inputStream!!.available())
+        inputStream.read(b)
+
+        file = File(DirUtils.getMapPath(), fileName)
+        if (file.exists()) {
+            file.delete()
+        }
+        file.createNewFile()
+        outputStream = FileOutputStream(file)
+        outputStream.write(b)
+    } catch (e: Exception) {
+        LogUtils.e("ShareInfoMapPresenter", e.toString())
+    } finally {
+        IOUtils.close(inputStream)
+        IOUtils.close(outputStream)
+    }
+    return file?.absolutePath
+}
+```
+
+## Polyline Click 和 Map Click 冲突
+当 AMap setOnPolylineClickListener 又设置 setOnMapClickListener，点击 Polyline 还会响应到 onMapClick，调试后发现 Polyline 的点击事件在前，所以可以这样处理一下：
+```
+@Override
+public void onMapClick(LatLng latLng) {
+    if (clickPolyline) {
+        clickPolyline = false;
+        return;
+    }
+
+    // do something
+}
+
+@Override
+public void onPolylineClick(Polyline polyline) {
+    clickPolyline = true;
+    // do something
+}
+```
+
 参考文档：
 [Android地图SDK简介](https://lbs.amap.com/api/android-sdk/summary)
 [参考手册](http://a.amap.com/lbs/static/unzip/Android_Map_Doc/index.html)
