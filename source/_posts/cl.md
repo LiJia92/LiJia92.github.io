@@ -9,11 +9,13 @@ ConstraintLayout 出来蛮久了，但是一直没怎么用，说是可以直接
 ## 基本属性
 1. layout_constraintRight_toLeftOf
 2. layout_constraintRight_toRightOf
-3. layout_constraintTop_toTopOf
-4. layout_constraintTop_toBottomOf
-5. layout_constraintBottom_toTopOf
-6. layout_constraintBottom_toBottomOf
-7. layout_constraintBaseline_toBaselineOf
+3. layout_constraintLeft_toLeftOf
+4. layout_constraintLeft_toRightOf
+5. layout_constraintTop_toTopOf
+6. layout_constraintTop_toBottomOf
+7. layout_constraintBottom_toTopOf
+8. layout_constraintBottom_toBottomOf
+9. layout_constraintBaseline_toBaselineOf
 
 <!-- more -->
 
@@ -230,6 +232,52 @@ ConstraintLayout 利用 layout_constraintHorizontal_weight 或 layout_constraint
 ```
 然后使用 group.visibility 即可设置 ids 里面所有 id 对应的 View 了。
 注：**Group 只有在 1.1 及以上的版本才添加进来。**
+
+## constrainedWidth
+先看两张图：
+![](https://codimd.mucang.cn/uploads/upload_d30980d97c56b4dbaf8517b3abe31b26.png)
+
+![](https://codimd.mucang.cn/uploads/upload_c3c501aa370768ffb6213acceb5a51c4.png)
+
+文章 RecyclerView 处于微信图标的左侧，且从右边开始布局，嵌套布局很容易实现，看下约束布局如何实现：
+```
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/articleRoot"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="112dp">
+
+    <ImageView
+        android:id="@+id/wxIconIv"
+        android:layout_width="62dp"
+        android:layout_height="57dp"
+        android:layout_marginLeft="6dp"
+        android:paddingRight="8dp"
+        android:src="@drawable/vyg__article_icon_wx"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/articleRv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintLeft_toRightOf="@+id/wxIconIv"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
+```
+将控件的尺寸设置为 wrap_content，那么对控件设置的 maxWidth、minHeight 这些约束是不起作用的，而强制约束就用于使控件在设置 wrap_content 的情况下约束依然生效。
 
 ## 小结
 ConstraintLayout 还有很多我没用到特性，目前为止，我：真香！已经不想再用原始的三大布局了，嘿嘿嘿。
