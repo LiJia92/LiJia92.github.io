@@ -291,4 +291,4 @@ motionLayout.setTransitionListener(object : MotionLayout.TransitionListener {
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/cl3.gif)
 效果还不错，只是如果前后动画的插值器不一致，或有其他定制的需求时，MotionLayout 是否能满足呢？
 
-本文只是简单介绍了一下 MotionLayout 的使用，它其实还有很多东西，比如 OnSwipe，以及 app:transitionEasing、app:transitionPathRotate、app:drawPath 等一些比较有意思的熟悉，有空的时候可以再多看看。MotionLayout 当前还只是测试版，期待正式版本出来的那一天！
+本文只是简单介绍了一下 MotionLayout 的使用，它其实还有很多东西，比如 OnSwipe，以及 app:transitionEasing、app:transitionPathRotate、app:drawPath 等一些比较有意思的属性，有空的时候可以再多看看。MotionLayout 当前还只是测试版，期待正式版本出来的那一天！
