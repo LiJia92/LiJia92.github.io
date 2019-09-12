@@ -7,7 +7,7 @@ tags:
 
 本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于[买卖人](http://www.maimairen.com/)这个应用，3个室友有2个做安卓，而且都在``买卖人``，所以我也跟着实现了一波。
 效果如下：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard1.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif)
 
 <!-- more -->
 
@@ -137,17 +137,17 @@ public class DashboardView extends View {
 ## 画笔相关
 Style有三种。
 STROKE：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.png)
 FILL：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard2.png)
 FILL_AND_STROKE：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard3.png)
 StrokeCap也有三种。
 BUTT：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard4.png)
 SQUARE:
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard5.png)
 ROUND：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/dashboard6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard6.png)
 ## 最后
 代码比较简单，在实现带动画的View时，最好先进行拆分，找出变化的部分和不变的部分，然后各自实现，将大问题拆分成若干个小问题，逐个击破。

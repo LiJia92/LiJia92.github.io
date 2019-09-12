@@ -14,26 +14,26 @@ tags:
 ### 创建开发者账号
 接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个``开发者账号``。
 要创建极光推送开发者帐号，请访问[极光推送官方网站](http://jpush.cn)。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush1.png)
 
 <!-- more -->
 
 ### 创建应用
 使用注册账号登录，进入极光控制台后，点击``创建应用``。创建帐号进入极光推送后，首先显示的是创建应用的界面。填上你的应用程序的名称，以及 Android包名这二顶就可以了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush2.png)
 
 ### 下载应用Example
 点击``下载Android Example``。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush3.png)
 
 ### 启动项目
 下载后得到一个Zip，可直接解压导入到Android Studio中，然后编译运行项目，安装到手机运行即可。gradle配置可能需要依据你当前开发极其做些修改。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush4.png)
 
 ### 推送消息
 填写要推送的内容，选择推送对象，点击发送即可推送消息了。这时手机便能接受到推送的消息了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush5.png)
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush6.png)
 
 ## 接入JPush到实际项目
 ### 导入sdk

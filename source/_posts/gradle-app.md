@@ -40,7 +40,7 @@ productFlavors {
 ```
 然后我们看到``Build Variant``:
 3个版本对应debug release，6个编译指令。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png)
 在不同版本的编译指令中，我们可以做不同的事情。比如替换包名：
 ```
 productFlavors {
@@ -63,7 +63,7 @@ productFlavors {
 
 依然继续上面的栗子。
 在app src目录下，新建目录，与main目录平行，目录名称与gradle中配置的一致。然后继续创建java、res文件夹，再就是写代码了。注意多个文件夹中的文件名以及路径要一样，代码必须添加java文件夹，资源必须添加res文件夹。**公共模块中不能包含与其一样的类，否则当切到相应的版本会导致类重复。**
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 当我们选择一个版本时候，另外不可用的代码就会变成``红色J标志``。如上图中，我选的custom版本，那么pad与phone目录下的代码都变成``红色J``了，代表当前版本没有用到此代码。
 改变Build Variant，然后运行，将3个版本都装到设备上，运行后可以看到每个版本的内容是不一样的。（ubuntu录制gif还没找到很好的方法，就不放图了，可以自己跑代码看。）运行都是各自的代码，main下面的代码则是公共模块。

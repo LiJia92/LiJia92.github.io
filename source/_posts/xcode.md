@@ -37,12 +37,12 @@ tags:
 
 ## 调试
 可以和Android studio一样点击左侧栏，设置断点。右键断点，可以弹出断点设置。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/6.png)
 F6单步调试、F7跳入，F8继续。
 在调试时，也可以看下面的调试栏进行操作。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/7.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/7.png)
 可以直接拖拽断点到编辑区就能删除断点了，类似QQ的消息数目提示。
 
 ## 代码块管理
 利用``#pragma``注释，管理代码块。如下图，可以很清晰知道代码块内的方法。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/115.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/115.png)

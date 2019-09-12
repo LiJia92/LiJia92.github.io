@@ -14,7 +14,7 @@ iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客
 <!-- more -->
 
 举个栗子，这里看看Hexo目录。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc1.png)
 我们需要同步的就是``suorce、themes、以及_config.yml``了，其他都是Hexo生成的。
 那么接下来便是同步这些文件了。同步的话我们可以在github.io的仓库下建个分支source（也可以建仓库，原理是一样的），然后将这些源文件同步到source分支，当另一台电脑要写博客时，先从该分支pull最新的数据，然后hexo new，当部署完之后将自己新建的源文件push到该分支。
 而``hexo d``的时候，根据我们_config.yml中的配置，会推到master分支，2个分支是互不影响的。
@@ -49,7 +49,7 @@ git remote add origin https://github.com/LiJia92/LiJia92.github.io.git
 git push origin source
 ```
 执行完毕后再github.io上便能看到source分支了，这个分支里的内容便是源文件了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc2.png)
 
 ## B 电脑操作
 假设新电脑已经装好Git，Node，Hexo这些环境，那么只需要同步下来source分支的内容即可。
@@ -87,7 +87,7 @@ git branch -mv master source
 ```
 再push即可。也可以在init之后就直接checkout branch source。
 2. 在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了``lijia@lijiadeiMac.local``，利用``git log``可以看到相关的记录。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc3.png)
 这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。
 ```
 git config --global user.email 你的邮件地址

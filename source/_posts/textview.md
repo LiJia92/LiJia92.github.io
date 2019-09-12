@@ -74,4 +74,4 @@ public static class FontMetrics {
     }
 ```
 这五个属性分别是什么呢？看如下的图便能一目了然了：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/07/textview1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/textview1.png)

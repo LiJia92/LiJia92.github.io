@@ -24,18 +24,18 @@ tags:
 
 ### 上传图片
 2. 创建空间。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools1.png)
 3. 长传图片。
 选择空间后，点击内容管理。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools4.png)
 点击上传文件。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools2.png)
 在长传文件时，建议加入路径前缀，方便后面进行查找。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools3.png)
 
 ### 使用图片
 1. 在七牛中预览图片，点击复制外链。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools5.png)
 2. 在Markdown中引用
 ```
 ![这里输入图片描述](图片外链地址)
@@ -60,5 +60,5 @@ tags:
 2. windows下使用快捷键 ctrl + shift + p，打开命令输入框；
 3. 输入``Markdown Preview Toggle``(可以偷懒只输入mdpt，支持模糊匹配)。也可以通过菜单栏Packages->Markdown Preview->Toggle Treview。按enter键即可看到预览，左边编辑，右边实时预览。也可以直接使用快捷键``Ctrl + Shift + M``。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tools6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tools6.png)
 如此便能非常方便的编辑、预览我们的博客了。

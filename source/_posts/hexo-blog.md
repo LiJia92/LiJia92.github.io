@@ -40,7 +40,7 @@ GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空�
 ## 搭建博客
 ### 安装Hexo
 在本地新建一个blog文件夹，右键，选择Git Bash。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog3.png)
 输入指令安装Hexo：
 
 ```
@@ -52,7 +52,7 @@ npm install -g hexo
 hexo init Hexo
 ```
 完成之后，便能在blog文件夹下看到hexo文件夹了。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog4.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog4.png)
 
 进入到hexo目录，输入指令npm install，安装依赖文件
 
@@ -67,24 +67,24 @@ $ hexo generate
 $ hexo server
 ```
 此时打开浏览器，输入``http://localhost:4000/``便可看到最原始的博客了。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog1.png)
 
 此时，Hexo已搭建完毕。
 
 ### GitHub创建仓库
 登录Github，点击New respository。
 
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog6.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog6.png)
 
 输入仓库名：你的Github名称.github.io。然后点击Create repository。
 图中因为我已经创建，故给出提示，不用管。
 
 ### 托管到Github
 打开hexo配置文件_config.yml。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog5.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog5.png)
 
 编辑deploy属性：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-blog7.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-blog7.png)
 repository属性改成你的git地址即可。
 
 然后Git Bash进入到hexo文件夹，输入指令即可完成部署：

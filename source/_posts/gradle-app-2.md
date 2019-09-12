@@ -144,10 +144,10 @@ productFlavors {
 }
 ```
 这是我们项目中配置的，然后区分文件夹放置不同的资源：
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata)
 
 注意这种配置并不是只有``3 * 3 = 9``个变种，而是有１５个。buildTypes 默认包含 debug，release，尽管我们没有显示的配置，所以应该是``5 * 3 = 15``个变种。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png)
 当不需要某些变种时，可以直接忽略掉：
 ```
 variantFilter { variant ->
@@ -168,5 +168,5 @@ variantFilter { variant ->
 }
 ```
 重新编译，就可以看到变种只剩６个了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png)
 Gradle 的功能真的是太强大了，需要持续学习。

@@ -8,26 +8,26 @@ tags:
 
 ## 注册开发者账号
 进入[讯飞开放平台](http://passport.xfyun.cn/login)注册账号。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png)
 
 <!-- more -->
 
 ## 创建应用
 登录账号，进入``控制台``，选择``创建新应用``。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png)
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png)
 
 ## 下载SDK
 点击``SDK下载``。选择下载服务、平台、应用，然后点击下载。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png)
 我这里只选择了在线语音合成，免费的。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png)
 然后得到SDK：
-![](http://7xryow.com1.z0.glb.clouddn.com/%E9%80%89%E5%8C%BA_170.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png)
 
 ## 集成SDK
 首先将``对应手机CPU平台的 so 文件``导入到工程中，jar 包导入到 libs 中。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png)
 
 在 Application 中初始化讯飞语音：
 ```

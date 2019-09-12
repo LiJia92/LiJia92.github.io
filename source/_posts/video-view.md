@@ -77,7 +77,7 @@ public class VideoPlayActivity extends AppCompatActivity {
 ```
 
 实际效果：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/video_vieweffect.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/video_vieweffect.gif)
 
 因为是虚拟机，效果看起来可能不太满意，但是至少视频是能播放了。
 后续可能还有屏幕视频适配的问题，现在就不多说了，后面解决了再来更新。

@@ -5,7 +5,7 @@ tags:
  - 日常开发
 ---
 有这样一个需求：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113729.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113729.png)
 作为一个 Android 开发者，首先想到的就是用 PopupWindow 来实现。底部阴影的高度固定，剩余的高度全部填充到 PopupWindow，然后调用 PopupWindow 的 showAsDropDown 让它在应用标题栏下面显示就行了。
 
 <!-- more -->
@@ -27,7 +27,7 @@ class FilterPopup(val context: Activity) : PopupWindow(context) {
 }
 ```
 本以为就结束了，结果在我的「小米MIX2」手机上显示有问题，底部会有一条白边，十分难受。
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113734.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113734.jpg)
 于是我尝试把 height 设置成 MATCH_PARENT，白边是没了，但是整个 PopupWindow 占据了整个屏幕的高度，直接覆盖住了应用的标题栏。
 于是我开始设置 root 的 paddingTop 为标题栏的高度，嗯，显示刚刚好。可是在全国加点击事件时就尴尬了：点击事件给 PopupWindow 吃掉了。如果只有一个按钮，可以在 PopupWindow 上面覆盖个同样位置的 View fake 一下，可是标题栏还有搜索，想想比较麻烦就打消这个念头了。
 设置 MATCH_PARENT 不行，我直接设置真正的高度行不行呢？

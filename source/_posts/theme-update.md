@@ -5,13 +5,13 @@ tags:
  - blog
 ---
 之前一直用的是``next``主题，后面看到过``yilia``主题，感觉也不错，便切换到了``yilia``主题。但是在用的时候有个问题一直让我很不爽：空行的处理让代码上下空出很多行。就像这样：
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/02/984899F5-CB20-4A44-B7EF-5F311A4E2B48.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/02/984899F5-CB20-4A44-B7EF-5F311A4E2B48.png)
 
 <!-- more -->
 
 到主题的[issues#339](https://github.com/litten/hexo-theme-yilia/issues/339)里面也找到了跟我遇到一样问题的朋友。是yilia主题中的一个bug，作者也回复了已经修改，更新后这个bug便没有了。
 接下来，我就很尴尬了：我当时为了多电脑在同步博客的同时，也删除了主题的git版本管理，导致此时我无法更新主题了,囧。。。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/02/34F818B7-2D4E-4C08-A171-E02D8AE51DEB.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/02/34F818B7-2D4E-4C08-A171-E02D8AE51DEB.png)
 
 那么该怎么办呢？感觉只能用死办法重新下一次了-.-。
 首先直接删除主题目录下的yilia文件夹（删除前备份一下，因为yilia中也有_config.yml），然后执行命令：
@@ -39,7 +39,7 @@ smart_menu:
   aboutme: '关于我'
 ```
 重新部署后，界面如下：
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/02/3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/02/3.png)
 
 说明很简单明了了，照着操作一遍后即可。
 

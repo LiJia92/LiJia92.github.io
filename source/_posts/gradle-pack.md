@@ -47,9 +47,9 @@ productFlavors {
 至此，所有的配置已经完成。下面开始编译出包了。
 
 在Android Studio中打开Terminal：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack1.png)
 输入指令``gradlew assembleRelease``便可以生成所有的渠道包了。但是此次命令中使用的gradle版本无法控制，很有可能会去下其他的gradle版本，gradle的下载需要翻墙，若是没翻则会一直下载，耽误时间。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack2.png)
 这里我们直接ctrl+c，再输入y，终止操作。使用下面的方法。
 
 先找到gralde的根目录，在系统变量里添加两个环境变量：
@@ -59,13 +59,13 @@ productFlavors {
 然后在系统变量path里面添加gradle的bin目录%GRADLE_HOME%\bin。
 
 这里配置完成了，接着在Terminal中敲下``gradle assembleRelease``就可以一次性生成所有的渠道包了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack3.png)
 build成功后，便可生成所有渠道的渠道包了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack4.png)
 若是想单独生成某一个渠道包，先打开Android Studio右侧的Gradle栏：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack5.png)
 点到相应项目的build task中。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/gradle-pack6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/gradle-pack6.png)
 要生成什么渠道包，双击相应的栏目即可。
 
 ---

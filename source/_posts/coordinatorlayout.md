@@ -8,7 +8,7 @@ tags:
 ## 背景
 项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/ListviewHack-listview-1.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif)
 
 在``Material Design``出来之前，我们可能会有方案一：
 >给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。
@@ -17,7 +17,7 @@ tags:
 
 正如我此时的项目中的一样，但是项目中的B是一个搜索框，类似这样：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png)
 
 可以看到 B 的构成是相对复杂的，B 相关的事件操作也会写 2 遍，很显然的会导致整个代码结构非常臃肿，所以需要寻找方案二。
 

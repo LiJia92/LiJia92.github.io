@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 运行效果如下图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/system1.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/system1.gif)
 
 1. 可以看到，在我点击依次"Hello World"之后，button往下移了一点点，同时状态栏也显示了。（初始的时候虚拟按键就已经显示）
 2. 再点击一下，进行隐藏操作，状态栏、虚拟按键同时消失。当点击中间的button弹出dialog时，虚拟按键与状态栏会同时出来。然后关掉dialog后要连着点2次，状态栏、虚拟按键才会消失。

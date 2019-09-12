@@ -20,7 +20,7 @@ buildTypes {
 ```
 通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。
 项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png)
 App 作为 Application，其他作为 Library。
 
 <!-- more -->

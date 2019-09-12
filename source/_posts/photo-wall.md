@@ -6,7 +6,7 @@ tags:
 ---
 
 项目开发中，有一个这样的需求：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/photo-wall1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/photo-wall1.png)
 在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。
 
 ---

@@ -7,7 +7,7 @@ tags:
 
 ## 前言
 手机QQ应该是很普及的App了，看到QQ消息栏对话框列表的每个子项左滑的时候会弹出删除、置顶图标。like this：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/11/swipe-listview1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/swipe-listview1.png)
 于是突发奇想：想要自己实现一个这样的效果。
 很显然的，这样的效果实现要依赖Android的事件分发机制，于是我先从Android事件分发入手。对于事件分发还不太熟悉的朋友可以参考[Android事件分发机制学习](http://lijia92.github.io/2015/11/14/touch-event/)。
 下面开工！
@@ -565,7 +565,7 @@ public class MyListView extends ListView {
 
 ## 最后
 下面上效果图：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/11/swipe-listview2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/swipe-listview2.png)
 看起来效果也还不错，是吧？
 
 <font size=5>[源码下载](https://github.com/LiJia92/MyListView)</font>

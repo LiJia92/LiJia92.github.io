@@ -23,7 +23,7 @@ Facebook 于 2015 年 9 月 15 日发布了 React Native for Android， 把 Web 
 ## 实践
 ### 安装Node.js
 react native依赖Node.js，第一步便是下载Node.js。去官网下载，对应电脑系统版本。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native1.png)
 我是Win 10，下载的64位。下载完成后，直接安装。
 
 可以随意创建一个一个test.js，来测试Node.js是否安装成功。
@@ -39,7 +39,7 @@ http.createServer(function(req, res) {
 console.log("HTTP server is listening at port 8080.");
 ```
 然后进入到响应的目录，执行cmd，键入命令：``node test.js``，然后浏览器打开"localhost:8080"，显示如下则是安装成功。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native2.png)
 
 ### 安装native环境
 使用npm指令安装``react-native-cli``。打开命令行，执行指令：
@@ -56,9 +56,9 @@ npm install -g react-native-cli
 react-native init HelloWorld
 ```
 HelloWorld便是项目名，可自己随意取。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native3.png)
 执行完毕之后便会生成HelloWorld文件夹。目录结构是这样的：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native4.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native4.png)
 可以看到生成的项目既包含IOS，也包含Android。因为我是Android开发，所以就暂时不管IOS了。
 
 ### 运行项目
@@ -66,24 +66,24 @@ HelloWorld便是项目名，可自己随意取。
 ```
 react-native run-android
 ```
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native5.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native5.png)
 图上所示便是在进行编译，准备安装了。
 编译成功后，安装运行，界面如下：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native6.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native6.png)
 提示不能下载JS bundle。这里我们注意一下编译时的黄色提示：``Starting the packager in a new window is not supported on Windows yet.Please start it manually using 'react-native start'.``就是说不支持在Windows上自动开启packager，需要我们自己先启动。
 
 照着提示来，执行命令：
 ```
 react-native start
 ```
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native7.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native7.png)
 可以看到React packager ready.
 
 OK，再来运行我们的程序。
 此时界面变显示正常了：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native8.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native8.png)
 同时React packager会打印一些信息：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native9.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native9.png)
 很多东西都还不懂，暂时就先不管了，后面再慢慢了解，至少现在看起来没出什么错。
 
 ## js代码初探
@@ -160,9 +160,9 @@ class HelloWorld extends Component {
 }
 ```
 我们把之前3个Text标签去掉，写一个显示Hello World的Text标签。那么改好之后如何看到效果呢？？？请注意，这便是React Native框架非常厉害的地方，你不需要重新编译安装apk，更新包等操作，直接虚拟机点出Menu，点击Roload JS即可实现更新：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native10.png)
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native11.png)
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native12.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native10.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native11.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native12.png)
 可以看到，界面确实是变成了我们预想的样子。
 
 下面我从官网复制了一份index.android.js代码：
@@ -287,21 +287,21 @@ var styles = StyleSheet.create({
 AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
 ```
 然后Reload JS，界面如下：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native13.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native13.png)
 呀，出错了。我们看到是在registerComponent的时候出错了。想起来我们的项目名称是HelloWorld，将最后一句代码改掉。
 ```
 AppRegistry.registerComponent('HelloWorld', () => AwesomeProject);
 ```
 Reload JS。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native14.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native14.png)
 加载完毕后的显示界面：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native15.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native15.png)
 但是将代码改成：
 ```
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
 ```
 执行又出错了：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native16.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native16.png)
 看来东西不能乱改呀，至于是什么原因，就放在以后慢慢去发现去解决了。另外这种JS代码的写法也是需要在实践中慢慢积累，学习，才能逐步掌握。
 
 今天就到这里了，代码都是自动生成的，便不上传了。Have a nice weekend~

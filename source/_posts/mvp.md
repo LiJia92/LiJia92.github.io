@@ -10,17 +10,17 @@ tags:
 
 ## 代码准备
 Github上打开[googlesamples/android-architecture](https://github.com/googlesamples/android-architecture)，打开分支，选择``todo-mvp``（Basic Model-View-Presenter architecture），然后下载zip，解压后导入到AS中。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvp3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp3.png)
 
 <!-- more -->
 
 ## 代码分析
 首先贴一张官方的MVP示意图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvp1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp1.png)
 在分析代码之前，我们先简单的运行一下App，大致有一个感觉，App里有哪些功能。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvpeffect.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvpeffect.gif)
 ok，下面进入到代码里，先上一下代码结构图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvp2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp2.png)
 可以看到分包是根据模块进行的分包，通过gif图大概可以知道分为添加（编辑）、统计、详情、主页List。
 本文只为了分析mvp的使用，所以我选取最简单的AddEditTask来进行分析。
 
@@ -314,7 +314,7 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
 看到P中``saveTask``的具体实现，他会判断当前是否是一个新任务，若是则调用``createTask``创建新的Task，若标题与内容都为空，则会回调V的``showEmptyTaskError``方法来显示相关的UI，若不为空，则执行M的操作：``mTasksRepository.saveTask(newTask);``保存相应的数据，然后回调V的``showTasksList``方法来显示相关UI。若不是一个新的Task（编辑），则调用``updateTask``，执行M操作``mTasksRepository.saveTask``来操作数据。
 至此，一个完整的业务操作（新建或编辑一个新的Task）分析完毕。可以看到在V中，我们只调用P的相关的接口，然后实现上层V的接口就可以了。由P来调用M中的方法，来操作数据，然后通过回调来使V展示相应的界面。V与M完全分离，整套业务都由P来执行。
 最后上一张分析图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvp5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp5.png)
 
 ## MVP的优缺点
 优点：
@@ -417,7 +417,7 @@ public class AddEditTaskPresenterTest {
 }
 ```
 来执行一下吧：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/mvp4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp4.png)
 可以看到测试成功。
 那么假设我们采用传统的开发模式，代码全在Activity里，要怎么样测试呢？噢，想想就觉得头大了，是吗？
 

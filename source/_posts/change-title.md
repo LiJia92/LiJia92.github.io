@@ -7,7 +7,7 @@ tags:
 
 最近用美团外卖点餐看到这样一个效果：
 
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/change-title1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/change-title1.png)
 
 顶部的title栏伴随着滑动有这样的一个效果，看起来很不错。
 
@@ -22,7 +22,7 @@ tags:
 ---
 先上一下最终的效果图：
 
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/change-title2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/change-title2.png)
 
 项目中并没有使用ToolBar这种控件，而是全部自己写的xml文件当做title，整个页面又是由ListView构成。顶部的遮罩背景是添加的一个HeaderView。
 

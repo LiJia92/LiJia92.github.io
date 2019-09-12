@@ -12,9 +12,9 @@ tags:
 <!-- more -->
 
 但是iOS的MC框架与Android的Wifi Direct不兼容，通过苹果开发者论坛[iOS and Wi-Fi Direct](https://forums.developer.apple.com/message/49337#49337)了解：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video7.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png)
 关于不同技术在iOS、Android上的兼容性，如下图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video8.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video8.png)
 
 ## 蓝牙
 1. 经典蓝牙阶段：在蓝牙4.0（Bluetooth Low Energy）之前，也就是所谓的经典蓝牙，苹果的蓝牙拒绝接入不信任的设备。也就是说，没得连。

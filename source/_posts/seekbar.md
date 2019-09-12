@@ -7,7 +7,7 @@ tags:
 
 ## 前言
 项目开发中有这样一个需求：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar4.png)
 通过滑动SeekBar来控制打赏金额，金额设置5个档次。
 
 看到设计稿的时候，除了自定义View想不到什么更好的方法了。自定义View一直是我的短板，内心总会有点抗拒，总感觉自己做不出来。最近一段时间，也是有意无意的练习自定义View。最后决定还是用自定义View来实现这次的需求。
@@ -22,7 +22,7 @@ tags:
 ## 画弧线
 ### 圆弧
 起初的想法是根据自定义View的宽高，创建一个正方形，然后画一个内切圆，截取其中的一段圆弧。大致就是这样的：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar1.png)
 假设这样的圆存在，那么对于View的宽高有一个要求:
 假定宽为a，高为b，x为半径。取一个直角三角形，勾股定理能得出这样的公式：
 ```
@@ -46,7 +46,7 @@ a > 2b
 第二天。
 
 网上一查，没查到android关于画抛物线的方法。我的内心：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar3.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg)
 于是便也放弃了这种做法。
 
 ### 贝塞尔
@@ -78,7 +78,7 @@ paint.setStyle(Paint.Style.FILL);
 canvas.drawCircle(x, y, RADIUS, paint);
 ```
 二阶贝塞尔曲线的公式是这样的：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar2.png)
 我们把当前的横坐标currentX对于View宽度的比例作为t。
 
 ## 触摸事件处理&对外接口
@@ -268,7 +268,7 @@ seekBar.setListener(new CustomArcSeekBar.OnProgressChangedListener() {
 });
 ```
 最终效果：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbareffect.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbareffect.gif)
 算是达到我的预期。
 
 <font size=5>[源码链接](https://github.com/LiJia92/CustomArcSeekBar)</font>

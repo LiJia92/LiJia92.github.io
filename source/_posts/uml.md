@@ -10,9 +10,9 @@ tags:
 
 看下两个软件作图的比较：
 ProcessOn：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/5/8/2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/2.png)
 PlantUML：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/5/8/1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/1.png)
 高下立判啊！当然，在用 PlantUML 绘图时又重新仔细思考了下类的结构，所以两张图在结构上不一样。
 使用 PlantUML，后续若需要维护，修改起来十分方便！**但是貌似有个缺点：不能表示内部类,或者是我还没找到使用的方式。**
 

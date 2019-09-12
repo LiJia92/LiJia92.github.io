@@ -7,21 +7,21 @@ tags:
 
 ## 前言
 在项目实际开发过程中，需要实现一个这样的需求：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/android-srcoll1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/android-srcoll1.png)
 在屏幕上进行上滑时，顶端``大图背景``不动，下面的``正在直播``、``数字专辑``等模块进行滑动，并且``大图背景``慢慢模糊。
 
 起初想着是自定义View，重写onTouchEvent来进行滑动事件的处理，如果是手指滑一点，界面跟着滑一点还好。如果还要计算加速度、阻尼效果等这些因素，就会显得非常复杂了。于是跟基友讨论了一下，有个因缺斯厅的idea，先上一下最后实现的一个效果图。
 
 <!-- more -->
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/android-srcoll3.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/android-srcoll3.gif)
 擦，好端端的妹子录Gif被录得完全看不清...
 
 ## 方案
 通过FrameLayout叠加2个布局，第1个布局就是``大图背景``，第2个布局就是原生ScrollView，ScrollView顶部使用一个透明的View，与第2个布局完全重叠，因为是透明的，所以尽管是叠加上去的，``大图背景``依然能正常显示，底部的``正在直播``、``数字专辑``等模块也能正常显示。FrameLayout的特性是后面的View叠加在前面的View之上。所以ScrollView处于界面的顶端，能够全屏接收触摸事件，然后进行滑动即可。并且ScrollView是android原生用来滑动的View，滑动起来会比较流畅。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/android-srcoll4.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/android-srcoll4.jpg)
 特意整了一个示意图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/android-srcoll2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/android-srcoll2.png)
 
 ## 实现
 ### 布局

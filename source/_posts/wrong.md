@@ -6,7 +6,7 @@ tags:
 ---
 项目中，有这样的一个需求：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/04/18/QQ%E5%9B%BE%E7%89%8720170412161938.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/18/QQ%E5%9B%BE%E7%89%8720170412161938.png)
 
 <!-- more -->
 

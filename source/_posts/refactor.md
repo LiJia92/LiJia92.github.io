@@ -5,7 +5,7 @@ tags:
  - 重构
 ---
 关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png)
 Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多``Deprecated``标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。
 
 <!-- more -->
@@ -22,12 +22,12 @@ Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大�
     android:layout_height="match_parent"
     android:layout_below="@+id/divider" />
 ```
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507103810.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507103810.png)
 注意去掉图中的 import！
 
 ## @Deprecated 类或方法删除
 一般我们标记一个类或者方法为 @Deprecated 时，都会指出它的替代方案，就像这样：
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/5/7/1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/1.png)
 这种情况就很简单了，根据替代方案进行相应修改即可。
 但是这个比较依赖人工注释，如若有同事忘记写这个了，那么就很头疼了：你不知道用什么方法来替代它。若能询问到标记 @Deprecated 的同事那也还好，万一同事离职了或他自己都忘记了，那如何处理呢？
 1. 读懂代码，自己寻找替代方案

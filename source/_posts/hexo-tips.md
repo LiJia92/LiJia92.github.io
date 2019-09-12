@@ -238,7 +238,7 @@ duoshuo_shortname: lastwarmth
 ```
 这个ShortName怎么来？
 进入[多说](http://duoshuo.com/create-site/)
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tipsduoshuo-create-site.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tipsduoshuo-create-site.png)
 红色方框填写的即是ShortName
 
 ### 代码高亮

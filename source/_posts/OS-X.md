@@ -11,33 +11,33 @@ tags:
 
 ## Finder
 Finder便是类似Windows中的文件管理器了吧，只不过OS X不分什么C、D、E、F盘什么的，感觉就是只有简单的几个分类：应用程序、下载、桌面、文稿。同事说有什么东西全部往桌面丢就行了，也不知是真是假。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx1.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx1.jpg)
 
 ## 鼠标
 打开系统偏好设置，选择鼠标项，会有一些设置，还有一些手势，在你打钩后边能生效，也是类似Mackbook的一些手势，方便做一些操作。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx2.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx2.jpg)
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx3.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx3.jpg)
 
 ## Mission Control
 Mission Control会提供一个所有已打开的窗口、桌面空间、全屏应用和Split View空间的鸟瞰图，让你能轻松在它们之间进行切换。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx5.png)
 
 ## 触摸角
 打开系统偏好设置，选择Mission Control项，左下角会有触摸角的设置。当把鼠标移到屏幕的角落的时候可以触发一些操作，4个角可以设置4个操作。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx4.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx4.jpg)
 
 ## App Store
 这个就是苹果软件商店了，没什么好说的。需要安装QQ、微信、Xcode等软件直接在里面搜索后购买就行了。购买的时候是需要绑定Apple ID的，这个直接绑定就好了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx7.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx7.jpg)
 
 ## 终端
 后续的日常开发肯定离不开终端，例如查看Git版本。按下``Command + Space``可以出现``spotlight``搜索，输入``terminal``回车即可运行终端。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11/osx6.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11/osx6.jpg)
 
 ## 屏幕取词
 选中单词，按下``Command + Control + D``即可即时翻译。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc4.png))
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc4.png))
 
 ## 常用快捷键
 首先了解下符号与按键的对应关系

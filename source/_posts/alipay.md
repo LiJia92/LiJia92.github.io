@@ -16,7 +16,7 @@ tags:
 
 秘钥的生成：
 下载SDK资源压缩包，解压后，里面会有openssl的文件夹，里面有个``openssl.exe``，双击运行。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay1.png)
 输入如下指令生成私钥:
 ```
 genrsa -out rsa_private_key.pem 1024
@@ -26,7 +26,7 @@ genrsa -out rsa_private_key.pem 1024
 pkcs8 -topk8 -inform PEM -in rsa_private_key.pem -outform PEM -nocrypt
 ```
 可以看到下面的界面：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay2.png)
 ``右键点击openssl窗口上边边缘，选择“编辑→标记”，选中要复制的文字``，将PKCS8格式私钥复制下来，保存到一个文本中，后面会用到。
 继续执行指令：
 ```
@@ -36,9 +36,9 @@ rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 
 秘钥的上传：
 登录支付宝商户账户，进入到``我的商家服务``。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay3.png)
 点击``查询PID、KEY``，输入支付密码，进入到下面的页面：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay4.png)
 记录下``PID``。
 点击RSA加密后面的``添加密码``，这里我已经添加过，所以显示的查看秘钥。将生成步骤中生成的公钥文本粘贴进编辑框，点击保存，若显示``上传成功``则代表成功。
 

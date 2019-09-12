@@ -6,7 +6,7 @@ tags:
 ---
 
 项目中有这样一个需求：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/popupwindow1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow1.png)
 
 用户点击送礼物，会弹出一个礼物选择对话框，然后在选择一个礼物之后，可以选择礼物数量，按照图中的意思，选择数量很自然的想到了用``PopupWindow``来做了。但是这里有一个问题就是：弹出来的数量选择框是需要在数量显示栏的上方的。
 
@@ -137,14 +137,14 @@ tags:
 </LinearLayout>
 ```
 对应界面的预览如下图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/popupwindow4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow4.png)
 
 这里贴一下Android中的坐标体系：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/popupwindow3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow3.png)
 根据这个图，再来计算坐标值。
 
 这里我在图中做了一下标注：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/popupwindow2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow2.png)
 popupwindow的y坐标应该是``1的高度 + 2的高度 - popupwindow的高度``。
 
 1的高度即是gift_recharge_layout对应view.getTop()，2的高度即是choose_gift_count对应view.getTop()。

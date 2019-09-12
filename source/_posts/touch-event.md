@@ -72,9 +72,9 @@ textView.setOnTouchListener(new View.OnTouchListener() {
         });
 ```
 点击Button，log如下：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/11/touch-event2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/touch-event2.png)
 点击ImageView，log如下：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/11/touch-event3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/touch-event3.png)
 可以看到Button的所有事件都执行了，而TextView只执行了ACTION_DOWN事件。针对ACTION_DOWN事件，Button的dispatchTouchEvent()返回的是true（onTouch返回false后会继续执行onTouchEvent，由于可点击，所以返回true），而TextView返回false。
 
 - 修改textView的onTouch如下：
@@ -129,7 +129,7 @@ if (!canceled && !intercepted) {
  -  ViewGroup的onInterceptTouchEvent()默认返回false。
 
 下面贴一张总结图：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/11/touch-event1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/touch-event1.png)
 <font color=red>注：文中源码的if判断都是以一般情况为前提，提取我们比较关注的点进行判断来得出的结论。</font>
 
 ---

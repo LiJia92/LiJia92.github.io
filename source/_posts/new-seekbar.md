@@ -9,12 +9,12 @@ tags:
 在我的[上一篇文章](http://lastwarmth.win/2016/04/27/seekbar/)中，写了自定义弧形SeekBar，效果达到了自己的预期，于是高高兴兴回家了。但是后面手贱，在家里自己随意玩了玩，发现SeekBar滑动几下之后再滑动就会变得特别卡。然后查看代码，短时间内没什么头绪。
 
 没错，这个时候又要祭出我的室友了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/new-seekbar1.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/new-seekbar1.jpg)
 室友之前是做rom相关的，对于android系统工具用得很熟。然后他拿着我的手机打开开发者选项中的``GPU呈现模式分析``，运行了一下程序，滑了一会之后就这样了：
 
 <!-- more -->
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/new-seekbar3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/new-seekbar3.png)
 我们可以看到一条绿线，这条绿线代表的是60帧，超过这条线就代表不足60帧，那么人眼看起来就会感觉卡顿，可以看到超出了好多了，难怪会很卡~。
 
 那么问题可以大致定位到``绘制View的方法不够科学``。
@@ -311,7 +311,7 @@ public class SeekBarBallView extends View {
 </com.android.lovesixgod.customarcseekbar.seekbar.ArcSeekBarParent>
 ```
 然后运行，进行滑动。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/new-seekbar2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/new-seekbar2.png)
 可以看到GPU分析显示的线条基本不会超过绿线，滑起来也没有明显的卡顿，问题应该算是解决了~
 
 代码已更新至[Github](https://github.com/LiJia92/CustomArcSeekBar)。

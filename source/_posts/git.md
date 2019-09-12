@@ -19,7 +19,7 @@ tags:
 
 此时``git log``可以看到 3 次提交：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/07%E9%80%89%E5%8C%BA_001.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_001.png)
 
 执行指令：
 ```
@@ -27,11 +27,11 @@ git revert 10ffa5
 ```
 ``10ffa5``为需要回退的 commit id，即上图中``feature B``那次提交，版本号没必要写全，前几位就可以了，Git会自动去找。填写提交信息：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/07%E9%80%89%E5%8C%BA_002.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_002.png)
 
 执行结束后，代码便回退到``feature A``的提交了,可以安心打包了。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/07%E9%80%89%E5%8C%BA_003.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_003.png)
 
 打完包后，可以基于``develop/1.0.0``分支 new branch``develop/1.0.1``，然后切到``develop/1.0.1``执行指令：
 ```
@@ -49,7 +49,7 @@ git cherry-pick a89acbe4
 ```
 因为我的例子中，2 个分支都对同一个文件同一个位置做了修改，所以冲突了。提示：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/07%E9%80%89%E5%8C%BA_004.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_004.png)
 
 所以需要先解决冲突，然后执行：
 ```

@@ -7,7 +7,7 @@ tags:
 
 ## 介绍
 最近的项目中，需要用到Notification。上一下效果图：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/notification1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/notification1.png)
 
 首先，学习一下关于Notification的基本知识。
 

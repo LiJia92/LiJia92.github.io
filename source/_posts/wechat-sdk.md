@@ -12,10 +12,10 @@ tags:
 ### 微信开放平台
 1. 注册[微信开放平台](https://open.weixin.qq.com/)账号。
 2. 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk1.png)
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png)
 3. 进入应用详情，获取``AppID``，以及申请开通微信支付能力。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png)
 4. 等待审核通过。
 
 <!--more-->
@@ -23,15 +23,15 @@ tags:
 ### 微信商户平台
 1. 注册[微信商户平台](https://pay.weixin.qq.com)账号。
 2. 登录账号，在基本信息中获得``微信支付商户号``。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk3.png)
 3. 安装操作证书，然后进入API安全设置``秘钥``，最好使用UUID自动生成的，记住这个``秘钥``。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk4.png)
 OK，前期准备做完，下面进行代码接入。
 
 ## 工程接入SDK
 ### 新建应用工程
 以AS为例，新建工程，注意包名与使用的签名要与微信开放平台申请应用时填写的一致。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk8.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png)
 ### 引入libs
 将``libammsdk.jar``放到libs文件夹下。
 ### 配置debug、release的签名文件
@@ -76,7 +76,7 @@ signingConfigs {
 获取到prepay_id之后，调用``IWXAPI``的``sendReq``方法即可完成支付。
 ### 添加支付成功回调Activity
 添加``wxapi``的包名，在这个包名下必须要有``WXPayEntryActivity``这个Activity，支付成功后会显示此界面。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png)
 
 另外，声明此 Activity 需要添加如下属性：
 ```
@@ -96,7 +96,7 @@ signingConfigs {
 3. 签名、包名必须跟微信开放平台申请的一致.
 4. 获取prepay_id最好是在服务器完成，由服务器去跟微信服务器交互，客户端不需要参与，以免泄露重要信息。
 5. 与微信接口交互时，参数都需要签名。签名方法如下图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk7.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png)
 这里重点说一下。
  - 参数名ASCII码从小到大排序（字典序）
  - 参数名区分大小写，包括sign。

@@ -66,7 +66,7 @@ button.setOnClickListener(new View.OnClickListener() {
 });
 ```
 运行代码，点击按钮。会发现Log中有如下的Log：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/retrofit1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/retrofit1.png)
 
 可见，网络请求成功。
 

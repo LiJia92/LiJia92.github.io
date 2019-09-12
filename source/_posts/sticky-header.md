@@ -7,7 +7,7 @@ tags:
 现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。
 页面大致如下：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2018/07/231.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png)
 
 <!-- more -->
 

@@ -14,15 +14,15 @@ tags:
 <!-- more -->
 
 之前的代码结构是这样的：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/wheel1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel1.png)
 引用的时候是这样的：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/wheel2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel2.png)
 这显然是非常笨重的引用方式，那么改如何改进呢？
 
 ## Library
 第一个最先想到的自然是将代码抽成一个library。然后项目要引用时候，直接gradle添加依赖即可。
 选择``New Module``，选择``Android Library``即可，然后将代码放在``src/main/java/包名``文件夹下，添加``compile project(':library')``依赖即可。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/wheel3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel3.png)
 
 ## 精简引用方式
 之前的代码要用，我需要xml中引入三个自定义View，显得很繁杂。站在使用者的角度，若是只用引入一个自定义View，便简单多了。

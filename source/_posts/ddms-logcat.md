@@ -34,7 +34,7 @@ cd /system/etc/init.d && grep -r "rm /dev/log/main"
 ```
 找到该文件：03MTKTweakElse文件。
 
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/10/ddms-logcat1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat1.png)
 
 #### 修改脚本
 利用pull指令将该文件拷贝到电脑上。
@@ -43,7 +43,7 @@ abd pull /system/ect/init.d/03MTKTweakElse  L:\
 ```
 利用文本编辑工具（editplus、notepad++等）打开03MTKTweakElse文件，找到``rm    /dev/log/main``，然后注释掉该行。
 
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/10/ddms-logcat2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat2.png)
 
 #### 将文件替换到之前的路径中
 ```
@@ -51,7 +51,7 @@ adb push L:\03MTKTweakElse  /system/etc/init.d
 ```
 
 #### 重启手机
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/10/ddms-logcat3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat3.png)
 
 经过以上几个步骤，应该就可以输出logcat了。
 

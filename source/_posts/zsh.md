@@ -19,23 +19,23 @@ tags:
 ## git支持
 很直接的一个体现就是进入到有 git 版本控制的目录，会显示出当前所在的分支。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09%E9%80%89%E5%8C%BA_006.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_006.png)
 
 再也不同``git branch``来看当前是什么分支了。
 另外，``oh-my-zsh``也配置了很多 git 命令别名，方便使用。比如``gst``代表``git status``，``gco``代表``git checkout``，还有许许多多的配置，可以参考[Plugin:git](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git)。
 
 ## Tab自动补全
 比如我想进入到 blog 目录，我敲``cd b``然后按``Tab``，``zsh``变回把所有 b 开头的目录列出来，然后再按``Tab``，它会帮你选择目录，当选到自己想要的目录时，按回车就可以进入了，是不是非常方便！！！
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09GIF.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF.gif)
 
 ## 大小写忽略
 大小写切换是很常见的，在上个例子中，即使我敲成``cd B``也能找到``blog``目录。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09GIF1.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF1.gif)
 
 ## autojump
 当目录层级很深的时候，想要进入到那个目录得一直``cd--ls--cd--ls``，就像这样：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09%E9%80%89%E5%8C%BA_009.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_009.png)
 
 看着就觉得头疼，因为实在无法记住那么长的目录。对此，``autojump``可谓是一大神作。
 先安装：
@@ -48,12 +48,12 @@ plugins=(git autojump)
 ```
 之后便是这种姿势打开目录了：
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09%E9%80%89%E5%8C%BA_011.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_011.png)
 
 怎么样，是不是简直爽爆了！？再也不用臃肿的敲着蛋疼的``cd``了。
 当在一次终端行为中，有了多个进入的目录，可以直接输入``d``来看到目录，然后直接``输入数字``便可以快捷进入到相应的目录中了。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09%E9%80%89%E5%8C%BA_012.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_012.png)
 
 简直就是方便！又多了一个不得不用``zsh``的理由了！！！
 
@@ -64,7 +64,7 @@ alias o="nautilus ."
 ```
 当命令行处于某个文件夹下时，直接键入``o``即可打开当前文件夹。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09GIF2.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF2.gif)
 
 这其实只是给``zsh``配置了一个别名，任何我们常用的操作都可以根据自己喜好配置别名，方便使用。
 
@@ -141,4 +141,4 @@ source $ZSH/oh-my-zsh.sh
 最后安利一波 Ubuntu 下录制 Gif 的方案：
 **安装 Wine，下载 GifCam.exe，然后直接运行 GifCam.exe。**
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/06/09%E9%80%89%E5%8C%BA_007.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_007.png)

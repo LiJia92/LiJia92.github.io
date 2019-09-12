@@ -12,7 +12,7 @@ tags:
 ## 注册Binatry
 到[Binatry官网](https://bintray.com)注册账号。
 然后到``Your Profile``点击``Edit``，在下面会看到``API Key``，记录下这个Key备用。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter2.png)
 
 ## 配置gradle
 我是使用的``gradle-bintray-plugin``插件来上传项目的，在项目的``build.gradle``下添加如下配置:
@@ -145,22 +145,22 @@ build成功后在执行指令：
 gradlew bintrayUpload
 ```
 成功后便能在binatry上看到自己上传的项目了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter3.png)
 
 ## 同步到JCenter
 点开自己的项目，有一个``Add to JCenter``，点击后填写描述即可提交申请给binatry了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter4.png)
 最后便是等待审核了，审核通过后会收到如下的消息：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter5.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter5.png)
 然后我们进入到项目详情页，会看到``Add to JCenter``按钮消失了，说明审核已经通过。
 点到Gradle便能看到gradle依赖的代码：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter6.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter6.png)
 迫不及待的在AS中试了一下，真的可以用了，成就感十足，哈哈。
 
 ## 问题
 1. 看[Hongyang大神的博客](http://blog.csdn.net/lmj623565791/article/details/51148825)，打算使用``bintray-release``插件来进行上传的，但是出现了GBK中文编码乱码的问题，除了将代码中的中文全部换成英文之外，没找到其他好的方法，便放弃了这个方法，采用的``gradle-bintray-plugin``插件可通过配置javadoc的编码来解决这个问题。
 2. 包名非常不好看，以后得起个好点的包名。而且不能瞎用“com.android....”，这是google android团队的。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/09/jcenter7.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter7.png)
 3. 出现如下的错误：
 ```
 Execution failed for task ':library:bintrayUpload'.

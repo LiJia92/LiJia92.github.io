@@ -24,19 +24,19 @@ tags:
 
 ### 拷贝工程
 通过github看到的项目是Eclipse结构，这里我把代码拷贝下来后，通过AS打开，配置一些信息后项目结构如下：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video1.png)
 
 [streaming](https://github.com/fyhertz/libstreaming)是作者封装的一套库。
 > A solution for streaming H.264, H.263, AMR, AAC using RTP on Android
 
 ### 运行
 项目拷贝到AS后，有部分错误，修复后成功运行在MI 4LTE。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video2.png)
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video3.png)
 它可以通过http，也可以通过rtsp进行推流，打开rtsp推流的开关，首页会多了一个VLC的地址。
 我在Win 10上使用Chrome接收失败，打开网站后Connect一直连不上。所以采取的VLC方式。
 打开VLC输入首页提示的地址，即可看到推流成功了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/10/video4.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video4.png)
 demo跑通后，便有了一个直观的感受，接下来便是看代码了。
 
 ### 代码

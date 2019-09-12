@@ -117,5 +117,5 @@ public boolean filterEquals(Intent other) {
 ## 问题
 对于即时性比较强的应用，比如直播类，闹钟定的时间要与正在直播的推送分开，不然用户就有可能收到2次通知了，所以闹钟就要定提前一点：XXX即将开始直播，类似这样。那么就会有一个问题：用户看到闹钟的这个通知后，进入应用，但是XXX是没有直播的（即将开始直播），所以对于用户当前是没有正确信息来显示的，这种体验可能不太好。如果将闹钟设置退后，XXX已经开始直播，又会显得非常怪异。
 我的心情：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar3.jpg)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg)
 求同学们支招~

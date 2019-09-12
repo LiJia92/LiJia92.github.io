@@ -12,7 +12,7 @@ tags:
 ### 下拉刷新
 实现思路：自定义View，通过设置进度值进行缩放。
 用SeekBar来模仿一下下拉距离的进度。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/refresh-listview3.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview3.gif)
 
 <!-- more -->
 
@@ -448,7 +448,7 @@ public class MeiTuanListView extends ListView implements AbsListView.OnScrollLis
 写完之后运行，发现有2个地方可以改进。
 ### 下拉白块
 在下拉刷新的时候，若下拉的高度很高，那么松开刷新后，再次下拉，会出现很大的一个空白块，影响视觉。
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/refresh-listview4.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview4.gif)
 导致该问题的原因是在``RELEASE_TO_REFRESH``状态下``ACTION_UP``时，只是利用smoothScrollBy滑动到headerView的显示位置。但是此时，headerView的paddingTop属性依然是``ACTION_MOVE``中设置的``headerView.setPadding(0,(int)(-headerViewHeight+offsetY/RATIO) ,0, 0);``，其值跟offsetY有关，offsetY越大，那么paddingTop值就会越大，导致再次下拉会出现很大的空白块。
 
 改进办法：利用Scroller滑动辅助类替换smoothScrollBy，在滑动的过程中不停设置headerView的paddingTop值。当滑动结束时，headerView的paddingTop正好等于0，即刚刚好显示。
@@ -778,9 +778,9 @@ public class RefreshListView extends ListView implements ListView.OnScrollListen
 
 后面我找了一下下拉刷新相关的库，都有类似setOnRefreshComplete的方法。
 XListView：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/refresh-listview1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview1.png)
 SwipeRefreshLayout:
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/04/refresh-listview2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview2.png)
 希望有想法的大神不吝赐教~
 
 ## 感受

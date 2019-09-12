@@ -27,7 +27,7 @@ compile 'com.android.support:recyclerview-v7:23.1.0'
 AppBarLayout是继承LinearLayout实现的一个ViewGroup容器组件，它是为了Material Design设计的App Bar,支持手势滑动操作。默认的AppBarLayout是垂直方向的，它的作用是把AppBarLayout包裹的内容都作为AppBar。
 
 常用效果：将Toolbar 和Tablayout的组合部分共同构成 AppBar的效果。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design1.png)
 
 ### CoordinatorLayout
 CoordinatorLayout是一个增强型的FrameLayout。它的作用有两个：
@@ -36,31 +36,31 @@ CoordinatorLayout是一个增强型的FrameLayout。它的作用有两个：
  2. 最后一个为子视图之间相互协调手势效果的一个协调布局
 
 我们可以用过上滑将顶部的ToolBar移出屏幕，下滑时再显示。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design2.png)
 
 ### NavigationView
 用于侧滑菜单中的menu布局。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design3.png)
 
 ### FloatingActionButton
 悬浮按钮，给人一种Z轴的空间感。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design4.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design4.png)
 
 ### SnackBar
 当Snackbar在显示的时候，往往出现在屏幕的底部。为了给Snackbar留出空间，浮动操作按钮需要向上移动。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design5.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design5.png)
 
 ### CardView
 CardView继承自FrameLayout类，可以在一个卡片布局中一致性的显示内容，卡片可以包含圆角和阴影。CardView是一个Layout，可以布局其他View。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design6.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design6.png)
 
 ### RecyclerView
 RecyclerView用于展示数据集，与ListView、GridView类似，但是它更灵活。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design7.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design7.png)
 
 ### SwipeRefreshLayout
 Google官方推出的下拉刷新控件，使用非常简便。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design8.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design8.png)
 
 ## 布局文件
 首先是activity_main布局文件：
@@ -268,7 +268,7 @@ recyclerView.setLayoutManager(layoutManager);
 
 ## 最后
 最终效果：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design9.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design9.png)
 源码地址：https://github.com/LiJia92/showlove
 
 Tips：本文只对这些新的特性做了最基本的说明及非常简单的使用，至于更加复杂的使用及效果，则需要在使用过程中慢慢发现、慢慢学习了。

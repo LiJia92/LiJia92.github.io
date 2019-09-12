@@ -5,10 +5,10 @@ tags:
  - 日常开发
 ---
 最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png)
 
 然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到[官网](https://developer.android.com/studio/run/device.html#setting-up)来解决。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png)
 跟到网站中可以看到
 > 如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配置的 udev 规则文件。
 
@@ -75,7 +75,7 @@ chmod a+r /etc/udev/rules.d/51-android.rules
 |Toshiba|930 |
 |ZTE|19d2 |
 当你不知道自己的 USB 设备属于哪个供应商时，可以通过``lsusb``指令查看所有的 USB 设备，然后拔掉 USB，再次执行指令，然后对比一下看少了哪条记录，就能知道 USB 设备的 idVendor 了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/TIM%E5%9B%BE%E7%89%8720171101152639.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/TIM%E5%9B%BE%E7%89%8720171101152639.png)
 
 可以看到是``Qualcomm -> 05c6``。当知道供应商时直接查询表格就可以了。
 
@@ -83,4 +83,4 @@ chmod a+r /etc/udev/rules.d/51-android.rules
 本来不想贴表格的，觉得 Markdown 弄表格贼麻烦，但是还是搜了一下，找到一个比较方便的方法。
 [Markdown 快速生成表格](http://www.jianshu.com/p/abaff828100d)
 第三种方式很简单，先粘到 excel 中，然后执行 exe， Linux 下只需要在指令前面加个 wine 即可（安装过 wine 环境）。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/%E9%80%89%E5%8C%BA_237.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_237.png)

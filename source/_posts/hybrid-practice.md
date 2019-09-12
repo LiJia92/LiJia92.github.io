@@ -27,7 +27,7 @@ tags:
 </html>
 ```
 可以看到img标签的src属性跟一串字符。”data:image/jpg;base64“表示数据的类型，之后的一大长串就是Base64串。直接浏览器打开，显示如下：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/hybrid-practice1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice1.png)
 可以看到图片正常显示了。
 
 有了这个基础之后，后面的思路就很清楚了：Android层选择好图片后，返回图片的Base64格式的String对象到H5，H5回调拿来显示即可。
@@ -219,13 +219,13 @@ getToken方法很简单，仅仅是返回一个”Hello world“。getPictures�
 在JS中处理回调参数的代码是``var imgs = JSON.parse(responseData).data.imgs;``，所以我们返回的String对象也需要时JSON格式，并且包含data、imgs属性。类似这样：{"data":{"imgs":["string1", "string2"]}}。所以我在onActivityResult中进行了拼接处理。
 
 最后运行程序，得到的效果大致是这样的。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/hybrid-practice2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice2.png)
 可以看到，在我们的H5页面确实显示了图片。
 
 ## 题外话
 ### 话题1
 在引入PhotoPicker的时候，若在选择图片碰到很长的图片，例如微博长图，400*8000px这样的图，会导致在时容易出现OOM。
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2016/01/hybrid-practice3.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice3.png)
 在原来库中进行压缩的inSampleSize是这样计算的：
 ```
 private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {

@@ -12,7 +12,7 @@ tags:
 
 ## 代码
 首先，新建一个新的AS module，然后新建assets目录，至于src/main文件夹下。如下图：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/12/hybrid-introduction1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction1.png)
 我们再assets目录下，新建一个hello.html，编辑内容如下：
 ```
 <html>
@@ -92,7 +92,7 @@ FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         });
 ```
 启动应用，看下效果：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/12/hybrid-introduction2.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction2.png)
 可以看到，点击“click me”的时候，弹出了Toast，并且button的text改变了，这即是android与js的交互。当然，这个交互十分简单，后面还有很多的坑要踩~
 
 ## Tips

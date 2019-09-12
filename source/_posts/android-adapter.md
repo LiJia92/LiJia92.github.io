@@ -81,7 +81,7 @@ decorView.setSystemUiVisibility(
 
 ## Android4.4横屏弹出的对话框顶部被状态栏遮盖
 效果就像这样：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png)
 初步感觉是Android4.4的一个BUG，可以在Dialog创建的时候，添加如下代码来解决问题：
 ```
 /**
@@ -97,7 +97,7 @@ if (Build.VERSION.SDK_INT == 19) {
 
 ## 联想K3 Note中GridView自带分隔线
 效果就像这样：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png)
 在GridViewz中添加``horizontalSpacing``、``verticalSpacing``2条属性来解决问题：
 ```
 <?xml version="1.0" encoding="utf-8"?>
@@ -130,5 +130,5 @@ public void onConfigurationChanged(Configuration newConfig) {
 }
 ```
 但是在部分机型会导致切换后视屏尺寸没有自适应，如图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter3.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif)
 利用如上代码``videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());``即可解决问题。

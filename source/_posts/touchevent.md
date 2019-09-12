@@ -9,7 +9,7 @@ tags:
 那么何为空白处呢？
 我的理解是：若是你这个点击事件没有其他View消费，那么便算是点击空白处了。
 大致画一下页面布局：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/08/touchevent1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/touchevent1.png)
 那么在点击图中画框的其他地方，应该都能算上是空白处了，也就是在点击这些地方的时候，需要执行状态栏弹出的操作。
 
 <!-- more -->

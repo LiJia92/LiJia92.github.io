@@ -11,12 +11,12 @@ tags:
 
 <!-- more -->
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png)
 安装插件后，选择一个 Java 文件，点击 Code -> Convert Java File To Kotlin File，即可转换成 Kotlin 文件了。
 
 ## 配置 Kotlin 环境
 在 kt 文件中，随便使用一下 Kotlin 的特性，例如 List 的 filter 操作符，然后报错按下 Alt + Enter 弹出的方框中就有配置 Kotlin 的选项。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png)
 如上图，选择要配置的 Module，确定后就会有自动配置了。
 项目根目录的 build.gradle 中：
 ```
@@ -76,7 +76,7 @@ androidExtensions {
 }
 ```
 然后选择对应的 buildVariant，我们可以直接导入对应的布局了。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png)
 
 ## 参考
 [Kotlin 中文教程](https://www.kotlincn.net/docs/tutorials/)

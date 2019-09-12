@@ -7,7 +7,7 @@ tags:
 
 最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。
 最后做出的效果如下图：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/08/statusbar1.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif)
 
 <!-- more -->
 
@@ -103,7 +103,7 @@ if (Build.VERSION.SDK_INT > 16) {
 那么问题来了，当状态栏显示的时候，他会盖在我们的布局上，那么如果布局顶部有View，那么就会被遮盖住，要如何解决呢？
 网上查了很多，说是在activity的根布局设置属性``android:fitsSystemWindows="true"``，确实，设置后就不会遮盖在布局了，但是它会单独占据空间，设置的半透明的黑色背景也无作用了，另外界面会被压缩，然后屏幕会跳一下。
 发个图感受一下：
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/08/statusbar2.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar2.gif)
 可以看到界面会跳，而且视频这种具有一定长宽比的可能会自适应，导致黑边，所以这不是一个解决方案，所以我没有添加这个属性。
 那么到底要怎么解决呢？
 其实是一个很笨的方法，上面的代码已经写到了：``在状态栏显示的时候，直接将被挡住的View下移``。
@@ -116,5 +116,5 @@ top.setTranslationY(0);
 
 ## 疑问
 在android4.4上达不到半透明这样的效果，设置的``colorPrimaryDark``是不起作用的，他会是一整个黑条（黑色和rom有关吧），看起来效果就会差一些了，不知道该要怎么解决，望了解的朋友可以指导一下~
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/08/statusbar3.gif)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar3.gif)
 Tip：找到很多修改颜色的文章，但是都是用到了``android:fitsSystemWindows="true"``属性，故不是我的解决方案~

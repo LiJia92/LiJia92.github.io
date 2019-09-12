@@ -168,7 +168,7 @@ public void ImageClicked(ArrayList<String> imagePath, int position) {
 ```
 imagePath是原图的路径数组，position代表当前显示第几张。
 点击事件设置好之后，便能实现网络图片浏览功能了。下面上效果图：
-![这里写图片描述](http://7xryow.com1.z0.glb.clouddn.com/2015/12/picture-view1.png)
+![这里写图片描述](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/picture-view1.png)
 
 ## 小结
 

@@ -5,7 +5,7 @@ tags:
  - java
 ---
 最近写过一个界面，涉及到排序。
-![](http://7xryow.com1.z0.glb.clouddn.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png)
 用到了 Collections 中的 sort 方法：
 ```
 Collections.sort(mData, new Comparator<BookMemberReport>() {

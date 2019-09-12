@@ -42,7 +42,7 @@ public void onConfigurationChanged(Configuration newConfig) {
 ```
 之所以会重新调用``setContentView(R.layout.activity_room);``是因为我的RoomActivity有横、竖两套布局，需要重新设置一下（布局名称名字一样，横屏的布局文件写在land文件下即可）。
 
-![](http://7xryow.com1.z0.glb.clouddn.com/2016/06/screent1.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/screent1.png)
 
 如此便解决了横竖屏切换导致的问题了，特此小记一下。
 
