@@ -96,3 +96,26 @@ tags:
 </selector>
 ```
 selector 可以添加各种 item 实现不用的效果，item 内部可以使用 layer-list 来达到不同的效果覆盖。
+
+## TextView 走马灯
+```
+<TextView
+    android:id="@+id/titleTv"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginLeft="28dp"
+    android:layout_marginTop="230dp"
+    android:ellipsize="marquee"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:marqueeRepeatLimit="marquee_forever"
+    android:maxWidth="200dp"
+    android:singleLine="true"
+    android:textColor="#000"
+    android:textSize="21sp"
+    android:textStyle="bold"
+    app:layout_behavior=".paid_video.behavior.ExamPlaceNameBehavior"
+    tools:text="芳草地考场" />
+```
+可以使用 titleTv.isSelected = true 来开启走马灯效果。
