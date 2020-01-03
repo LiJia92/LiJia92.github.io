@@ -232,6 +232,30 @@ ConstraintLayout 利用 layout_constraintHorizontal_weight 或 layout_constraint
 ```
 然后使用 group.visibility 即可设置 ids 里面所有 id 对应的 View 了。
 注：**Group 只有在 1.1 及以上的版本才添加进来。**
+再注：**Group 添加后的 id 再针对子 View 单独操作 visibility 是无效的。**
+代码：
+```
+public void updatePreLayout(ConstraintLayout container) {
+    int visibility = this.getVisibility();
+    float elevation = 0.0F;
+    if (VERSION.SDK_INT >= 21) {
+        elevation = this.getElevation();
+    }
+
+    for(int i = 0; i < this.mCount; ++i) {
+        int id = this.mIds[i];
+        View view = container.getViewById(id);
+        if (view != null) {
+            view.setVisibility(visibility);
+            if (elevation > 0.0F && VERSION.SDK_INT >= 21) {
+                view.setElevation(elevation);
+            }
+        }
+    }
+
+}
+```
+界面绘制时，Group 关联的所有 View 的 visibility 只会根据 Group 来，**要么全看得见，要么全看不见。**
 
 ## constrainedWidth
 先看两张图：
