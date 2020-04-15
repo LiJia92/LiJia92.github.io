@@ -73,6 +73,11 @@ deploy:
   repository: git@github.com:LiJia92/LiJia92.github.io.git
   branch: master
 
+# Security
+##
+encrypt:
+  enable: true
+
 # 配置yilia搜索模块
 jsonContent:
     meta: false
