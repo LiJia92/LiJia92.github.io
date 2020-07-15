@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="本文主要讲述一下使用Hexo搭建博客的一些Tips。 hexo基本指令 hexo clean 清除 hexo new page “menu name” 新建菜单 hexo g == hexo generate 生成 hexo d == hexo deploy 部署 hexo s == hexo server 启动本地 hexo n == hexo new 新建  首页文章显示在md文件中添加&amp;lt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tipsduoshuo-create-site.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.097Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tipsduoshuo-create-site.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo-Tips">
 <meta name="twitter:description" content="本文主要讲述一下使用Hexo搭建博客的一些Tips。 hexo基本指令 hexo clean 清除 hexo new page “menu name” 新建菜单 hexo g == hexo generate 生成 hexo d == hexo deploy 部署 hexo s == hexo server 启动本地 hexo n == hexo new 新建  首页文章显示在md文件中添加&amp;lt">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tipsduoshuo-create-site.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tipsduoshuo-create-site.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -217,7 +217,7 @@
 <h3 id="Schemes"><a href="#Schemes" class="headerlink" title="Schemes"></a>Schemes</h3><p><code>hexo/themes/hexo-theme-next/_config.yml</code>的配置中。<br>Next主题有三种Scheme，可随意切换。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">scheme: Muse</span></span><br><span class="line"><span class="meta">#</span><span class="bash">scheme: Mist</span></span><br><span class="line">scheme: Pisces</span><br></pre></td></tr></table></figure></p>
 <h3 id="网站图标"><a href="#网站图标" class="headerlink" title="网站图标"></a>网站图标</h3><p>与设置个人图像类似。<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Place your favicon.ico to /source directory.</span></span><br><span class="line">favicon: <span class="regexp">/images/</span>avatar.png</span><br></pre></td></tr></table></figure></p>
 <h3 id="集成多说"><a href="#集成多说" class="headerlink" title="集成多说"></a>集成多说</h3><p><code>hexo/themes/hexo-theme-next/_config.yml</code>的配置中。<br>设置<code>duoshuo_shortname</code>字段。<br><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># Duoshuo ShortName</span></span><br><span class="line"><span class="symbol">duoshuo_shortname:</span> lastwarmth</span><br></pre></td></tr></table></figure></p>
-<p>这个ShortName怎么来？<br>进入<a href="http://duoshuo.com/create-site/" target="_blank" rel="noopener">多说</a><br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/hexo-tipsduoshuo-create-site.png" alt="这里写图片描述"><br>红色方框填写的即是ShortName</p>
+<p>这个ShortName怎么来？<br>进入<a href="http://duoshuo.com/create-site/" target="_blank" rel="noopener">多说</a><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/hexo-tipsduoshuo-create-site.png" alt="这里写图片描述"><br>红色方框填写的即是ShortName</p>
 <h3 id="代码高亮"><a href="#代码高亮" class="headerlink" title="代码高亮"></a>代码高亮</h3><p><code>hexo/_config.yml</code>的配置中。<br>修改<code>auto_detect</code>字段为<code>true</code><br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line"><span class="attr">  enable:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  line_number:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  auto_detect:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">  tab_replace:</span></span><br></pre></td></tr></table></figure></p>
 <p><code>hexo/themes/hexo-theme-next/_config.yml</code>的配置中。<br>修改<code>highlight_theme: normal</code>字段。NexT使用<code>Tomorrow Theme</code>作为代码高亮，共有5款主题供你选择，可选的值有 normal，night， night blue， night bright， night eighties。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Code Highlight theme</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Available value:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">    normal | night | night eighties | night blue | night bright</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> https://github.com/chriskempson/tomorrow-theme</span></span><br><span class="line">highlight_theme: normal</span><br></pre></td></tr></table></figure></p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><blockquote>
@@ -362,7 +362,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -441,11 +441,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,6 +458,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,7 +485,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,11 +501,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,7 +513,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

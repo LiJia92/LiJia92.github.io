@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter3.gif">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.061Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.208Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Andoird开发中适配小记">
 <meta name="twitter:description" content="Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -191,10 +191,10 @@
 <p>然后通过如下方法获取虚拟按键的高度：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取虚拟按键的高度</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getNavigationBarHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Resources resources = context.getResources();</span><br><span class="line">    <span class="keyword">int</span> resourceId = resources.getIdentifier(<span class="string">"navigation_bar_height"</span>, <span class="string">"dimen"</span>, <span class="string">"android"</span>);</span><br><span class="line">    <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> resources.<span class="title">getDimensionPixelSize</span><span class="params">(resourceId)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>获得到高度之后，便能代码控制之前的“硬编码”了，依情况减去或者加上虚拟按键的高度便可以解决这类问题的适配的。示例如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果有虚拟按键，则加上虚拟按键的高度</span></span><br><span class="line"><span class="keyword">if</span> (checkDeviceHasNavigationBar(context)) &#123;</span><br><span class="line">    <span class="keyword">int</span> navigationBarHeight = getNavigationBarHeight();</span><br><span class="line">    RecyclerView.LayoutParams <span class="keyword">params</span> = (RecyclerView.LayoutParams) holder.root.getLayoutParams();</span><br><span class="line">    <span class="keyword">params</span>.bottomMargin = (<span class="keyword">int</span>) (context.getResources().getDimension(R.dimen.minus_living_card_height) - navigationBarHeight);</span><br><span class="line">    holder.root.setLayoutParams(<span class="keyword">params</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>当然你也可以简单粗暴的隐藏掉虚拟按键。代码如下：<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">View</span> decorView = getWindow().getDecorView()<span class="comment">;</span></span><br><span class="line">decorView.setSystemUiVisibility(</span><br><span class="line">           <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_HIDE_NAVIGATION <span class="comment">// hide nav bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_FULLSCREEN <span class="comment">// hide status bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_IMMERSIVE)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="Android4-4横屏弹出的对话框顶部被状态栏遮盖"><a href="#Android4-4横屏弹出的对话框顶部被状态栏遮盖" class="headerlink" title="Android4.4横屏弹出的对话框顶部被状态栏遮盖"></a>Android4.4横屏弹出的对话框顶部被状态栏遮盖</h2><p>效果就像这样：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter1.png" alt=""><br>初步感觉是Android4.4的一个BUG，可以在Dialog创建的时候，添加如下代码来解决问题：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 针对Android 4.4在横屏下顶部被状态栏遮挡的问题</span><br><span class="line"> * 暂没有4.4以下的手机进行测试</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">if</span> <span class="params">(Build.VERSION.<span class="attr">SDK_INT</span> == 19)</span> &#123;</span><br><span class="line">    mWindow.<span class="keyword">set</span>Flags<span class="params">(</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN,</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="联想K3-Note中GridView自带分隔线"><a href="#联想K3-Note中GridView自带分隔线" class="headerlink" title="联想K3 Note中GridView自带分隔线"></a>联想K3 Note中GridView自带分隔线</h2><p>效果就像这样：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter2.png" alt=""><br>在GridViewz中添加<code>horizontalSpacing</code>、<code>verticalSpacing</code>2条属性来解决问题：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="attribute">version</span>=<span class="string">"1.0"</span> <span class="attribute">encoding</span>=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;CustomGridView xmlns:<span class="attribute">android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">horizontalSpacing</span>=<span class="string">"0dp"</span></span><br><span class="line">    android:<span class="attribute">listSelector</span>=<span class="string">"@color/transparent"</span></span><br><span class="line">    android:<span class="attribute">numColumns</span>=<span class="string">"3"</span></span><br><span class="line">    android:<span class="attribute">scrollbars</span>=<span class="string">"none"</span></span><br><span class="line">    android:<span class="attribute">verticalSpacing</span>=<span class="string">"0dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Android4-4横屏弹出的对话框顶部被状态栏遮盖"><a href="#Android4-4横屏弹出的对话框顶部被状态栏遮盖" class="headerlink" title="Android4.4横屏弹出的对话框顶部被状态栏遮盖"></a>Android4.4横屏弹出的对话框顶部被状态栏遮盖</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png" alt=""><br>初步感觉是Android4.4的一个BUG，可以在Dialog创建的时候，添加如下代码来解决问题：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 针对Android 4.4在横屏下顶部被状态栏遮挡的问题</span><br><span class="line"> * 暂没有4.4以下的手机进行测试</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">if</span> <span class="params">(Build.VERSION.<span class="attr">SDK_INT</span> == 19)</span> &#123;</span><br><span class="line">    mWindow.<span class="keyword">set</span>Flags<span class="params">(</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN,</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="联想K3-Note中GridView自带分隔线"><a href="#联想K3-Note中GridView自带分隔线" class="headerlink" title="联想K3 Note中GridView自带分隔线"></a>联想K3 Note中GridView自带分隔线</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png" alt=""><br>在GridViewz中添加<code>horizontalSpacing</code>、<code>verticalSpacing</code>2条属性来解决问题：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="attribute">version</span>=<span class="string">"1.0"</span> <span class="attribute">encoding</span>=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;CustomGridView xmlns:<span class="attribute">android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">horizontalSpacing</span>=<span class="string">"0dp"</span></span><br><span class="line">    android:<span class="attribute">listSelector</span>=<span class="string">"@color/transparent"</span></span><br><span class="line">    android:<span class="attribute">numColumns</span>=<span class="string">"3"</span></span><br><span class="line">    android:<span class="attribute">scrollbars</span>=<span class="string">"none"</span></span><br><span class="line">    android:<span class="attribute">verticalSpacing</span>=<span class="string">"0dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
 <h2 id="VideoView切换横竖屏"><a href="#VideoView切换横竖屏" class="headerlink" title="VideoView切换横竖屏"></a>VideoView切换横竖屏</h2><p>VideoView在切换横竖屏，如果是Activity跳转，那么就会重新加载，导致切换前后不连贯。<br>所以我的做法是：只有一个Activity，点击全屏按钮将其置为横屏状态，每次切换的时候，显示一套布局，隐藏一套布局。配置activity的<code>android:configChanges=&quot;orientation|screenSize&quot;</code>，这样在切换的时候就不会重新布局，然后在<code>onConfigurationChanged</code>中进行相关操作：<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> void onConfigurationChanged(Configuration <span class="keyword">new</span><span class="type">Config</span>) &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 适配部分机型在旋转的时候，视频尺寸没有自适应的问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">new</span><span class="type">Config</span>.orientation == Configuration.ORIENTATION_LANDSCAPE) &#123;</span><br><span class="line">        <span class="comment">// 横屏时隐藏竖屏布局</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 竖屏时隐藏横屏布局</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(<span class="keyword">new</span><span class="type">Config</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>但是在部分机型会导致切换后视屏尺寸没有自适应，如图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/07/adapter3.gif" alt=""><br>利用如上代码<code>videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</code>即可解决问题。</p>
+<p>但是在部分机型会导致切换后视屏尺寸没有自适应，如图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif" alt=""><br>利用如上代码<code>videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</code>即可解决问题。</p>
 
       
 
@@ -332,7 +332,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -411,11 +411,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -428,6 +428,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -451,7 +455,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +471,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,7 +483,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

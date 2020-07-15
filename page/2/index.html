@@ -158,90 +158,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-comparator" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-media-mix2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/20/comparator/">Java 中的 Comparator</a>
+      <a class="article-title" href="/2019/09/19/media-mix2/">无声视频合成音频（续）</a>
     </h1>
   
 
         
-        <a href="/2017/12/20/comparator/" class="archive-article-date">
-  	<time datetime="2017-12-20T08:04:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-20</time>
+        <a href="/2019/09/19/media-mix2/" class="archive-article-date">
+  	<time datetime="2019-09-19T08:30:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近写过一个界面，涉及到排序。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png" alt=""><br>用到了 Collections 中的 sort 方法：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(mData, <span class="keyword">new</span> Comparator&lt;BookMemberReport&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(BookMemberReport lhs, BookMemberReport rhs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sortFlag == SORT_FLAG_SALE_DESCENDING) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (rhs.saleAmount - lhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_SALE_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (lhs.saleAmount - rhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_DESCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> rhs.orderCount - lhs.orderCount;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lhs.orderCount - rhs.orderCount;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>Collections 根据传入的 Comparator 进行排序。刚开始写的时候通过不停的试，把正确的结果给试出来了。但是对于其原理却不是很清晰，今天便稍微扒一扒其源码。</p>
+        <p>之前有一个音视频合成的需求，还写了一篇文章<a href="http://lastwarmth.win/2018/11/23/media-mix/" target="_blank" rel="noopener">无声视频合成音频</a>。之前的需求是，视频整体时间控制在 10s（便于发布到朋友圈），现在朋友圈的限制改为 15s 了，所以产品决定不再限制视频的时长为 10s 了，改为最长 40s，若有发布到朋友圈的需求，则自己裁剪。大部分情况下，生成的视频长度会小于 15s，也不需要裁剪。需求调整后，之前文章里的音视频合成的方案就需要略作修改了。</p>
+<p>说下之前的方案：利用录屏生成 10s 的无声视频，与正好 10s 的音频 aac 文件进行合成。之前的代码最终生成的文件长度为音视频文件的最大值（若视频为 10s，音频为 15s，则会生成 15s 的视频，视频最后 5s 一直展示视频的最后一帧，同时播放音乐）。现在调整视频时长后，产品定的需求是视频时长增加，然后音频循环播放。所以可能就是 24s 的无声视频合成 10s 的音频。所以之前的代码就得调整了：</p>
         
-          <a class="article-more-a" href="/2017/12/20/comparator/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-support-version" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/support-version/">Support 库，注意你的版本号</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/15/support-version/" class="archive-article-date">
-  	<time datetime="2017-12-15T09:18:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发，引进了一个新的三方库，导致之前能运行的代码出现问题，错误堆栈：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FATAL EXCEPTION: main</span><br><span class="line">Process: com<span class="selector-class">.lijia</span><span class="selector-class">.app</span><span class="selector-class">.catering</span><span class="selector-class">.dev</span>, PID: <span class="number">29387</span></span><br><span class="line">java<span class="selector-class">.lang</span><span class="selector-class">.NoClassDefFoundError</span>: android<span class="selector-class">.support</span><span class="selector-class">.v4</span><span class="selector-class">.animation</span><span class="selector-class">.AnimatorCompatHelper</span></span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.DefaultItemAnimator</span><span class="selector-class">.resetAnimation</span>(DefaultItemAnimator<span class="selector-class">.java</span>:<span class="number">514</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.DefaultItemAnimator</span><span class="selector-class">.animateAdd</span>(DefaultItemAnimator<span class="selector-class">.java</span>:<span class="number">217</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.SimpleItemAnimator</span><span class="selector-class">.animateAppearance</span>(SimpleItemAnimator<span class="selector-class">.java</span>:<span class="number">114</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.animateAppearance</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3243</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.access</span>$<span class="number">800</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">147</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span>$<span class="number">4</span>.processAppeared(RecyclerView<span class="selector-class">.java</span>:<span class="number">436</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.ViewInfoStore</span><span class="selector-class">.process</span>(ViewInfoStore<span class="selector-class">.java</span>:<span class="number">249</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.dispatchLayoutStep3</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3098</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.dispatchLayout</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">2917</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.onLayout</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3283</span>)</span><br><span class="line">    at android<span class="selector-class">.view</span><span class="selector-class">.View</span><span class="selector-class">.layout</span>(View.java)</span><br><span class="line">    at android<span class="selector-class">.view</span><span class="selector-class">.ViewGroup</span><span class="selector-class">.layout</span>(ViewGroup.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.setChildFrame</span>(LinearLayout.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.layoutVertical</span>(LinearLayout.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.onLayout</span>(LinearLayout.java)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2017/12/15/support-version/#more">more >></a>
+          <a class="article-more-a" href="/2019/09/19/media-mix2/#more">more >></a>
         
       
 
@@ -279,30 +219,29 @@
 
 
   
-    <article id="post-kotlin-config" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-adjust" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/05/kotlin-config/">Kotlin - 配置篇</a>
+      <a class="article-title" href="/2019/09/12/adjust/">博客图片迁移</a>
     </h1>
   
 
         
-        <a href="/2017/12/05/kotlin-config/" class="archive-article-date">
-  	<time datetime="2017-12-05T10:05:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-05</time>
+        <a href="/2019/09/12/adjust/" class="archive-article-date">
+  	<time datetime="2019-09-12T08:05:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近随着 Google 的大力推荐，越来越多开发者开始使用 Kotlin 了。其实我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。我接触 Kotlin 的主要原因是：<strong>业务代码太无聊啦</strong>。相信很多开发者都跟我有同样的感触，在一个公司待久了，技术框架摸透之后，后面的开发就基本是纯业务开发了，写界面，写业务代码，对于技术提升没有什么实质的帮助，就是真正的码农。为了改变这一现状，我不断在新需求中使用一些新的技术，比如 RxJava、Retrofit 等等，说是新技术其实也不新了，都出来都很久了，只是自己在项目中没有用到，接触得不多。在新需求中引入这些技术，<strong>可以边开发边学习，解决写业务代码的无聊，还能拓宽视野，学习新知识。虽然不一定会成为主流，但学习一下总是没问题的</strong>，因此开始接触 Kotlin。这篇文章主要先讲讲 Kotlin 的配置。</p>
-<h2 id="Kotlin-插件"><a href="#Kotlin-插件" class="headerlink" title="Kotlin 插件"></a>Kotlin 插件</h2><p>最新的 Android Studio 已默认装了 Kotlin 插件了，在旧版本可自己手动安装 Kotlin 插件。</p>
+        <p>早期博客图床使用的七牛图床，七牛图床被黄图给搞了，所以现在测试域名都只有一个月的使用期限，早些阵子就已经过期回收了，所以之前的测试域名绑定的图片全部失效了，2018-10-10 之前的博客图片全部看不了了，阿西吧~<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh118.gif" alt="">若要继续使用七牛图床，需要自己绑定加速域名，重新迁移才行。而绑定加速域名是需要已经备案过的，备案又需要实名制，而我的域名还没有实名制QAQ，不巧的是阿里域名根据工信部的条款，关闭了 .win 域名后缀的实名制认证，这就很尴尬了<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh132.gif" alt="">。然后一直等阿里云开放域名实名认证，等到现在也还没开放，今天下定决心把图片都迁移一下，不用七牛了。<br>图片所在的旧 Bucket 测试域名被回收之后，就彻底看不到图片资源了，也下载不了，只能借助七牛官方工具 <a href="https://github.com/qiniu/qshell" target="_blank" rel="noopener">qshell</a> 来进行相关操作。</p>
         
-          <a class="article-more-a" href="/2017/12/05/kotlin-config/#more">more >></a>
+          <a class="article-more-a" href="/2019/09/12/adjust/#more">more >></a>
         
       
 
@@ -316,7 +255,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
         		</li>
       		
 		</ul>
@@ -340,29 +279,29 @@
 
 
   
-    <article id="post-constraint" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-keepalive" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/20/constraint/">Android 约束布局的使用</a>
+      <a class="article-title" href="/2019/09/06/keepalive/">Android 保活设置适配</a>
     </h1>
   
 
         
-        <a href="/2017/11/20/constraint/" class="archive-article-date">
-  	<time datetime="2017-11-20T02:00:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-20</time>
+        <a href="/2019/09/06/keepalive/" class="archive-article-date">
+  	<time datetime="2019-09-06T06:39:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>习惯了用 LinearLayout、RelativeLayout 等布局，但是在某些界面的优化上这些布局很难做到。说下我项目中的实际例子：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/11/20/%E9%80%89%E5%8C%BA_254.png" alt=""><br>一件商品有品名、数量、单价、金额等几条属性，要显示在一行。 <strong>注意，图中金额属性没有显示全，但这不是本文要写的内容。当文本过长显示不下，这是个历史难题。</strong> 本文要讲述的是如何利用约束布局来优化界面的显示。<br>看到图中，我们通长使用 LinearLayout 的 weight 属性，给每一列设置一个 weight，相信大多数人都是这么做的，就像这样：</p>
+        <p>随着 Android 开发的越来越规范，那些“黑科技”的保活手段基本没什么用了，所以只能通过引导，让用户自己去设置相关保活的选项，就像 Rom 的白名单。只不过白名单是系统帮你设置，没有白名单就得自己去引导了。保活相关的一般包含<strong>自启动</strong>和<strong>防睡眠</strong>，当然功能在各个 Rom 的描述不尽相同，不用纠结于此。<br>针对各大厂商，做了一些准备工作，如下。</p>
         
-          <a class="article-more-a" href="/2017/11/20/constraint/#more">more >></a>
+          <a class="article-more-a" href="/2019/09/06/keepalive/#more">more >></a>
         
       
 
@@ -400,348 +339,414 @@
 
 
   
-    <article id="post-retrofit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-livedata" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/15/retrofit-code/">Retrofit 学习小结</a>
+      <a class="article-title" href="/2019/09/02/livedata/">使用 LiveData 实现消息总线</a>
     </h1>
   
 
         
-        <a href="/2017/11/15/retrofit-code/" class="archive-article-date">
-  	<time datetime="2017-11-15T10:40:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-15</time>
+        <a href="/2019/09/02/livedata/" class="archive-article-date">
+  	<time datetime="2019-09-02T05:46:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前的一篇文章<a href="http://lastwarmth.win/2016/06/23/retrofit/" target="_blank" rel="noopener">Retrofit初识</a>尝试用了下 Retrofit。说来惭愧，到现在才写这篇文章。由于项目中没有使用的缘故，一直停留在了解的程度。最近自己学习做了个<a href="https://github.com/LiJia92/Gank" target="_blank" rel="noopener">Gank</a>客户端，一点点学习当前主流的技术，今天研究了下 Retrofit 的源码，颇有感触，便记录下来。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>关于正常的使用，参考之前的那篇文章。这里再写一下结合 RxJava 的使用。</p>
+        <p>作为 Android 开发，对消息总线总不会陌生，当需要告知某些界面进行一些操作的时候，都会通过发送消息来做。早期的可以有广播，或者回调的方式，但是写起来都会比较麻烦，所以才会出现 EventBus 这种三方库，它使用起来非常方便，极大的解耦了我们的代码，所以当它一出现就受到了广大开发者的青睐。那用了这么久的 EventBus，香确实是很香，但是感觉还可以有优化的地方：</p>
 <ol>
-<li><p>定义接口：</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">GankService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"day/&#123;year&#125;/&#123;month&#125;/&#123;day&#125;"</span>)</span><br><span class="line">    Observable&lt;GankDailyResult&gt; getDailyData(<span class="variable">@Path</span>(<span class="string">"year"</span>) int year, <span class="variable">@Path</span>(<span class="string">"month"</span>) int month, <span class="variable">@Path</span>(<span class="string">"day"</span>) int day);</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"data/&#123;type&#125;/&#123;count&#125;/&#123;page&#125;"</span>)</span><br><span class="line">    Observable&lt;GankCategoryResult&gt; getCategoryData(<span class="variable">@Path</span>(<span class="string">"type"</span>) String type, <span class="variable">@Path</span>(<span class="string">"count"</span>) int count, <span class="variable">@Path</span>(<span class="string">"page"</span>) int page);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>初始化 Retrofit，生成代理对象：</p>
-<figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Retrofit</span> retrofit = <span class="function"><span class="keyword">new</span> <span class="title">Retrofit</span>.<span class="title">Builder</span>()</span></span><br><span class="line"><span class="function">        .<span class="title">baseUrl</span>(<span class="type">BASE_GANK_URL</span>)</span></span><br><span class="line"><span class="function">        .<span class="title">addConverterFactory</span>(<span class="type">GsonConverterFactory</span>.create())</span></span><br><span class="line"><span class="function">        .<span class="title">addCallAdapterFactory</span>(<span class="type">RxJava2CallAdapterFactory</span>.create())</span></span><br><span class="line"><span class="function">        .<span class="title">client</span>(okHttpClient.build())</span></span><br><span class="line"><span class="function">        .<span class="title">build</span>();</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="title">mService</span> = <span class="title">retrofit</span>.<span class="title">create</span>(<span class="type">GankService</span>.class);</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>调用接口：</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GankRequestManager.getInstance().getCategory(<span class="class"><span class="keyword">type</span>, <span class="title">PAGE_SIZE</span>, <span class="title">mPage</span>)</span></span><br><span class="line">        .subscribeOn(Schedulers.io())</span><br><span class="line">        .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">        .subscribe(<span class="keyword">new</span> Consumer&lt;GankCategoryResult&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> accept(GankCategoryResult gankCategoryResult) throws Exception &#123;</span><br><span class="line">                mPage++;</span><br><span class="line">                <span class="keyword">if</span> (mView != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    mView.showList(<span class="class"><span class="keyword">type</span>, <span class="title">gankCategoryResult</span>.<span class="title">results</span>);</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-</li>
+<li>只在界面可见的时候进行处理（生命周期感知功能）；</li>
+<li>每次都得显式 register，unregister；</li>
+<li>回调方法名称固定为 onEventMainThread 等等几个规定的名称，在 Android Studio 里会显示成 <strong>xxx is never used</strong>，警告也是很烦人的；</li>
+<li>多个同类型消息不能只处理一次，这其实也和第 1 点呼应；</li>
+<li>不同类型的消息，但是导致的业务操作其实是一致的，这种情景其实只需要处理一次即可，但 EventBus 做不到；</li>
+</ol>
+<p>所以，在新出了 LiveData 之后，基于它的特性，是否可以进行改造呢？当然是可以的。</p>
+        
+          <a class="article-more-a" href="/2019/09/02/livedata/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">JetPack</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cl-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/cl-2/">MotionLayout 使用介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/13/cl-2/" class="archive-article-date">
+  	<time datetime="2019-08-13T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MotionLayout 是 ConstraintLayout 2.0 版本引入进来的，目前还在测试版本中，但感觉还挺有意思的，就写一篇记录一下。</p>
+<blockquote>
+<p>MotionLayout 类继承自 ConstraintLayout 类，允许你为各种状态之间的布局设置过渡动画。由于 MotionLayout 继承了 ConstraintLayout，因此可以直接在 XML 布局文件中使用 MotionLayout 替换 ConstraintLayout。MotionLayout 是完全声明式的，你可以完全在 XML 文件中描述一个复杂的过渡动画而无需任何代码。</p>
+</blockquote>
+<p>MotionLayout 与 ConstraintLayout 不同的是 MotionLayout 需要链接到一个 MotionScene 文件。使用 MotionLayout 的 app:layoutDescription 属性将 MotionLayout 链接到一个 MotionScene 文件。另外，<strong>MotionLayout 所有的直接子 View 需要指定 id</strong>，不然会报错：<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">All</span> children <span class="keyword">of</span> ConstraintLayout must have ids <span class="keyword">to</span> <span class="keyword">use</span> ConstraintSet.</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2019/08/13/cl-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-handlerthread" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/05/handlerthread/">高德地图 Marker 聚合</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/05/handlerthread/" class="archive-article-date">
+  	<time datetime="2019-08-05T06:36:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>高德地图有个<a href="https://github.com/amap-demo/android-cluster-marker" target="_blank" rel="noopener">官方 Demo</a>用来实现 Marker 聚合，但不是在 SDK 里。项目里也有这个需求，但是比较简单，不用做到数量计算，只需要当 Marker 数量很多的的时候，只展示部分 Marker，显示了会覆盖的 Marker 则直接不显示。每次移动地图都会请求新的数据，然后来进行展示，为了避免移动地图导致频繁请求数据，可以做个简单的优化：移动后延迟一定时间再去请求数据，在延迟时间内再次移动地图，则取消上次请求的动作，重新请求。综合考虑，使用 HandlerThread 便是不二之选了，在这里记录一下，以后或许用得到。</p>
+        
+          <a class="article-more-a" href="/2019/08/05/handlerthread/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-multi-form" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/12/multi-form/">Android 实现大文件分片上传</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/12/multi-form/" class="archive-article-date">
+  	<time datetime="2019-07-12T07:57:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中有视频上传的功能，但一直没做断点续传，针对大视频上传不友好，最近的版本需求将断点续传加上了，服务端采用的是 multipart/form-data 编码方式来实现，那么客户端也依照这个方式来做就好了。</p>
+<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h2><p>multipart/form-data 方式用于大数据 Post 请求，用做分片正好合适。它对数据有一定的格式，参照示例：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">POST</span> http://www.example.com <span class="type">HTTP</span>/<span class="number">1.1</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Type</span>:multipart/form-<span class="class"><span class="keyword">data</span>; boundary=<span class="comment">----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Disposition</span>: form-<span class="class"><span class="keyword">data</span>; name="text"</span></span><br><span class="line"></span><br><span class="line"><span class="title">title</span></span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Disposition</span>: form-<span class="class"><span class="keyword">data</span>; name="file"; filename="chrome.png"</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Type</span>: image/png</span><br><span class="line"></span><br><span class="line"><span class="type">PNG</span> ... content <span class="keyword">of</span> chrome.png ...</span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span></span><br></pre></td></tr></table></figure></p>
+<p>每部分都是以<code>--boundary</code>开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（文本或二进制）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以<code>--boundary--</code>标示结束。</p>
+        
+          <a class="article-more-a" href="/2019/07/12/multi-form/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-anr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/04/anr/">记一次 ANR 寻根之旅</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/04/anr/" class="archive-article-date">
+  	<time datetime="2019-07-04T07:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。<br>在 SplashActivity onCreate 的方法里打断点进都进不去，有点懵，所以将目标定位到 Application 初始化了。看着 Application 相关初始化的代码，没发现什么大问题。打断点逐步调试，运行到某一行时直接就无响应了，后面的代码也不执行了，logcat 也看不到有用的信息，有点摸不着头脑。后面 Google 发现可以直接看到手机 ANR 的日志，路径为：/data/anr/traces.txt，于是很欢快的将日志导出到电脑：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull <span class="regexp">/data/</span>anr<span class="regexp">/traces.txt d:/</span>test</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2019/07/04/anr/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/cat/">养猫一个星期后</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/28/cat/" class="archive-article-date">
+  	<time datetime="2019-06-28T08:40:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我有一个梦想：养一只二哈，或者柴犬、金毛也可以，哈哈。<br>但是狗的话，天性好动，需要每天带出去溜溜（或许是狗溜我）。我现在一个人住，普遍情况下家里是没人的，养一只狗确实没太多的时间和精力。退而求其次，养只猫或许可行？猫的话，比较爱干净，也能一整天待在家里不需要你带出去溜，只要我在家的时间能陪陪他便好了。也做了很久的思想斗争，养不好怎么办，这不是耽误猫生吗？最后还是开悟了，人生不就是这样吗？要多多体验没经历过的事情，之前没养过猫，现在养一只，也是一种经历，会养慢慢学习总能变好的。<br>早些日子就找过一家猫舍看过猫，也加了微信，总能在朋友圈看到各种各样的小猫咪，内心总是蠢蠢欲动。心动不如行动，就在上周日，我去猫舍买了一只美短虎斑，很调皮的一个小家伙，我给他取名「土豆」。</p>
+        
+          <a class="article-more-a" href="/2019/06/28/cat/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">cat</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/13/cl/">ConstraintLayout 真香</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/13/cl/" class="archive-article-date">
+  	<time datetime="2019-06-13T02:37:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ConstraintLayout 出来蛮久了，但是一直没怎么用，说是可以直接进行拖拽来实现布局，但是 xml 里全是写死的 dp，不实用。然后用代码吧，属性都贼长贼多，有些难记。最近同学强力安利，说多写写就熟悉了，于是项目新的布局基本都用 ConstraintLayout 来写了，刚开始写的时候确实比较慢，很多属性不知道，有些属性有什么用也不晓得，但是用了几天后，发现真好用！人类的本质啊，真香怪！</p>
+<h2 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h2><ol>
+<li>layout_constraintRight_toLeftOf</li>
+<li>layout_constraintRight_toRightOf</li>
+<li>layout_constraintLeft_toLeftOf</li>
+<li>layout_constraintLeft_toRightOf</li>
+<li>layout_constraintTop_toTopOf</li>
+<li>layout_constraintTop_toBottomOf</li>
+<li>layout_constraintBottom_toTopOf</li>
+<li>layout_constraintBottom_toBottomOf</li>
+<li>layout_constraintBaseline_toBaselineOf</li>
 </ol>
         
-          <a class="article-more-a" href="/2017/11/15/retrofit-code/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-device" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/01/device/">在硬件设备上运行应用</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/01/device/" class="archive-article-date">
-  	<time datetime="2017-11-01T06:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png" alt=""></p>
-<p>然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到<a href="https://developer.android.com/studio/run/device.html#setting-up" target="_blank" rel="noopener">官网</a>来解决。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png" alt=""><br>跟到网站中可以看到</p>
-<blockquote>
-<p>如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配置的 udev 规则文件。</p>
-</blockquote>
-<p>这个便是问题所在了，跟着描述进行操作后面便可以使用 USB 调试了。</p>
-        
-          <a class="article-more-a" href="/2017/11/01/device/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-gradle-app-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/24/gradle-app-2/">Gradle 多版本管理（续）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/24/gradle-app-2/" class="archive-article-date">
-  	<time datetime="2017-10-24T02:20:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前写过一篇<a href="http://lastwarmth.win/2017/03/16/gradle-app/" target="_blank" rel="noopener">Gradle多版本管理</a>，主要是通过<code>productFlavors</code>来控制产品版本。这篇文章将结合<code>buildTypes</code>来说一下多版本管理。<br>在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：<strong>利用 buildTypes 来控制编译类型。</strong><br>buildTypes 默认会有 debug、release 2 个类型，当然我们还可以添加自己的。比如有个beta环境，用于外网测试。当对接一些三方平台的接口时，有的只能用外网，那么只能整一套外网的测试环境了，比如美团外卖。好，现在假设我们有 debug、beta、release 3 个 buildTypes，然后 pad、phone、custom ３个 productFlavors，接下来就是针对这些环境做配置了：</p>
-        
-          <a class="article-more-a" href="/2017/10/24/gradle-app-2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-classloader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/19/classloader/">Android 中的 ClassLoader</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/19/classloader/" class="archive-article-date">
-  	<time datetime="2017-10-19T11:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天发现了一个在对象序列化时的错误。<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">E/Parcel: <span class="keyword">Class</span> <span class="keyword">not</span> found when unmarshalling: com.lijia.study.InventoryDetail</span><br><span class="line">java.lang.ClassNotFoundException: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.classForName(Native <span class="function"><span class="keyword">Method</span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">Class</span>.<span class="title">forName</span><span class="params">(<span class="keyword">Class</span>.java:309)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelableCreator</span><span class="params">(Parcel.java:2281)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelable</span><span class="params">(Parcel.java:2245)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readValue</span><span class="params">(Parcel.java:2152)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readMapInternal</span><span class="params">(Parcel.java:2468)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readHashMap</span><span class="params">(Parcel.java:1678)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelable</span><span class="params">(Parcel.java:2252)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readValue</span><span class="params">(Parcel.java:2152)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readArrayMapInternal</span><span class="params">(Parcel.java:2485)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">BaseBundle</span>.<span class="title">unparcel</span><span class="params">(BaseBundle.java:221)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Bundle</span>.<span class="title">getParcelable</span><span class="params">(Bundle.java:755)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">content</span>.<span class="title">Intent</span>.<span class="title">getParcelableExtra</span><span class="params">(Intent.java:5088)</span></span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function"> <span class="title">Caused</span> <span class="title">by</span>:</span> java.lang.ClassNotFoundException: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.classForName(Native <span class="function"><span class="keyword">Method</span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">BootClassLoader</span>.<span class="title">findClass</span><span class="params">(ClassLoader.java:781)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">BootClassLoader</span>.<span class="title">loadClass</span><span class="params">(ClassLoader.java:841)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">ClassLoader</span>.<span class="title">loadClass</span><span class="params">(ClassLoader.java:469)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">Class</span>.<span class="title">classForName</span><span class="params">(Native <span class="keyword">Method</span>)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">Class</span>.<span class="title">forName</span><span class="params">(<span class="keyword">Class</span>.java:309)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelableCreator</span><span class="params">(Parcel.java:2281)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelable</span><span class="params">(Parcel.java:2245)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readValue</span><span class="params">(Parcel.java:2152)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readMapInternal</span><span class="params">(Parcel.java:2468)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readHashMap</span><span class="params">(Parcel.java:1678)</span></span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readParcelable</span><span class="params">(Parcel.java:2252)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readValue</span><span class="params">(Parcel.java:2152)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Parcel</span>.<span class="title">readArrayMapInternal</span><span class="params">(Parcel.java:2485)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">BaseBundle</span>.<span class="title">unparcel</span><span class="params">(BaseBundle.java:221)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">os</span>.<span class="title">Bundle</span>.<span class="title">getParcelable</span><span class="params">(Bundle.java:755)</span> </span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">android</span>.<span class="title">content</span>.<span class="title">Intent</span>.<span class="title">getParcelableExtra</span><span class="params">(Intent.java:5088)</span> </span></span><br><span class="line"><span class="function">    ...</span></span><br><span class="line"><span class="function"> <span class="title">Caused</span> <span class="title">by</span>:</span> java.lang.NoClassDefFoundError: <span class="keyword">Class</span> <span class="keyword">not</span> found <span class="keyword">using</span> the boot <span class="keyword">class</span> loader; no stack available</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2017/10/19/classloader/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">code</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-xunfei" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/26/xunfei/">Android 集成讯飞语音SDK</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/26/xunfei/" class="archive-article-date">
-  	<time datetime="2017-09-26T08:42:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发需要用到<code>文字转语音</code>的功能，利用 Android 系统自带的<code>Text-to-Speech</code>可以实现<code>英文转语音</code>，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的<code>Pico TTS</code>是不支持的，我的小米手机是<code>度秘语音引擎</code>支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的<code>TTS</code>，考虑接入<code>讯飞语音SDK</code>。</p>
-<h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a href="http://passport.xfyun.cn/login" target="_blank" rel="noopener">讯飞开放平台</a>注册账号。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/09/26/xunfei/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-presentation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/13/presentation/">Android 双屏异显</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/13/presentation/" class="archive-article-date">
-  	<time datetime="2017-09-13T10:42:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做收银机相关的开发，涉及到<code>双屏异显</code>的一些东西，之前也没有接触过，在查阅一番资料之后，把功能走通了，这里小记一下。</p>
-<h2 id="Presentation"><a href="#Presentation" class="headerlink" title="Presentation"></a>Presentation</h2><p>Presentation 是一种特殊的对话框，主要用于在另外一块屏幕上显示内容。默认为克隆模式，即副屏显示和正屏一样的内容。当需要显示不同内容时，需要自定义 Presentation，并为其指定一个 Display。这里随便定义一个 Presentation：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyPresentation</span> <span class="keyword">extends</span> <span class="title">Presentation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="type">MyPresentation</span>(<span class="type">Context</span> outerContext, <span class="type">Display</span> display) &#123;</span><br><span class="line">        <span class="keyword">super</span>(outerContext, display);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.presentation_second_screen);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2017/09/13/presentation/#more">more >></a>
+          <a class="article-more-a" href="/2019/06/13/cl/#more">more >></a>
         
       
 
@@ -781,7 +786,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -793,7 +798,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -872,11 +877,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -889,6 +894,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -912,7 +921,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -920,11 +937,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -932,7 +949,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

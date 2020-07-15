@@ -16,20 +16,20 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言大年初十，相信许多人都已经过完年，在上班的路上或者已经上班了。在这里跟大家说一声：新年好~ 新年新气象，今天打算写一篇关于Android新特性：Material Design的文章。Material Design作为android 5.0的重头戏，说是新特性，但是其实已经算不上“新”了，毕竟android 6.0都出来了呢。 情人节刚过，我便以“秀恩爱”为主题，做一个新特性的使用例子。废话少说">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design3.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design4.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design5.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design6.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design7.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design8.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design9.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.120Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design3.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design4.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design5.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design6.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design7.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design8.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design9.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Android新特性：Material Design">
 <meta name="twitter:description" content="前言大年初十，相信许多人都已经过完年，在上班的路上或者已经上班了。在这里跟大家说一声：新年好~ 新年新气象，今天打算写一篇关于Android新特性：Material Design的文章。Material Design作为android 5.0的重头戏，说是新特性，但是其实已经算不上“新”了，毕竟android 6.0都出来了呢。 情人节刚过，我便以“秀恩爱”为主题，做一个新特性的使用例子。废话少说">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -197,19 +197,19 @@
 <h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>使用新特性需要添加依赖：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:design:23.0.1'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:cardview-v7:23.1.0'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:recyclerview-v7:23.1.0'</span></span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
 <h2 id="新组件介绍"><a href="#新组件介绍" class="headerlink" title="新组件介绍"></a>新组件介绍</h2><h3 id="AppBarlayout"><a href="#AppBarlayout" class="headerlink" title="AppBarlayout"></a>AppBarlayout</h3><p>AppBarLayout是继承LinearLayout实现的一个ViewGroup容器组件，它是为了Material Design设计的App Bar,支持手势滑动操作。默认的AppBarLayout是垂直方向的，它的作用是把AppBarLayout包裹的内容都作为AppBar。</p>
-<p>常用效果：将Toolbar 和Tablayout的组合部分共同构成 AppBar的效果。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design1.png" alt="这里写图片描述"></p>
+<p>常用效果：将Toolbar 和Tablayout的组合部分共同构成 AppBar的效果。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design1.png" alt="这里写图片描述"></p>
 <h3 id="CoordinatorLayout"><a href="#CoordinatorLayout" class="headerlink" title="CoordinatorLayout"></a>CoordinatorLayout</h3><p>CoordinatorLayout是一个增强型的FrameLayout。它的作用有两个：</p>
 <ol>
 <li>作为一个布局的根布局</li>
 <li>最后一个为子视图之间相互协调手势效果的一个协调布局</li>
 </ol>
-<p>我们可以用过上滑将顶部的ToolBar移出屏幕，下滑时再显示。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design2.png" alt="这里写图片描述"></p>
-<h3 id="NavigationView"><a href="#NavigationView" class="headerlink" title="NavigationView"></a>NavigationView</h3><p>用于侧滑菜单中的menu布局。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design3.png" alt="这里写图片描述"></p>
-<h3 id="FloatingActionButton"><a href="#FloatingActionButton" class="headerlink" title="FloatingActionButton"></a>FloatingActionButton</h3><p>悬浮按钮，给人一种Z轴的空间感。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design4.png" alt="这里写图片描述"></p>
-<h3 id="SnackBar"><a href="#SnackBar" class="headerlink" title="SnackBar"></a>SnackBar</h3><p>当Snackbar在显示的时候，往往出现在屏幕的底部。为了给Snackbar留出空间，浮动操作按钮需要向上移动。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design5.png" alt="这里写图片描述"></p>
-<h3 id="CardView"><a href="#CardView" class="headerlink" title="CardView"></a>CardView</h3><p>CardView继承自FrameLayout类，可以在一个卡片布局中一致性的显示内容，卡片可以包含圆角和阴影。CardView是一个Layout，可以布局其他View。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design6.png" alt="这里写图片描述"></p>
-<h3 id="RecyclerView"><a href="#RecyclerView" class="headerlink" title="RecyclerView"></a>RecyclerView</h3><p>RecyclerView用于展示数据集，与ListView、GridView类似，但是它更灵活。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design7.png" alt="这里写图片描述"></p>
-<h3 id="SwipeRefreshLayout"><a href="#SwipeRefreshLayout" class="headerlink" title="SwipeRefreshLayout"></a>SwipeRefreshLayout</h3><p>Google官方推出的下拉刷新控件，使用非常简便。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design8.png" alt="这里写图片描述"></p>
+<p>我们可以用过上滑将顶部的ToolBar移出屏幕，下滑时再显示。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design2.png" alt="这里写图片描述"></p>
+<h3 id="NavigationView"><a href="#NavigationView" class="headerlink" title="NavigationView"></a>NavigationView</h3><p>用于侧滑菜单中的menu布局。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design3.png" alt="这里写图片描述"></p>
+<h3 id="FloatingActionButton"><a href="#FloatingActionButton" class="headerlink" title="FloatingActionButton"></a>FloatingActionButton</h3><p>悬浮按钮，给人一种Z轴的空间感。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design4.png" alt="这里写图片描述"></p>
+<h3 id="SnackBar"><a href="#SnackBar" class="headerlink" title="SnackBar"></a>SnackBar</h3><p>当Snackbar在显示的时候，往往出现在屏幕的底部。为了给Snackbar留出空间，浮动操作按钮需要向上移动。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design5.png" alt="这里写图片描述"></p>
+<h3 id="CardView"><a href="#CardView" class="headerlink" title="CardView"></a>CardView</h3><p>CardView继承自FrameLayout类，可以在一个卡片布局中一致性的显示内容，卡片可以包含圆角和阴影。CardView是一个Layout，可以布局其他View。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design6.png" alt="这里写图片描述"></p>
+<h3 id="RecyclerView"><a href="#RecyclerView" class="headerlink" title="RecyclerView"></a>RecyclerView</h3><p>RecyclerView用于展示数据集，与ListView、GridView类似，但是它更灵活。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design7.png" alt="这里写图片描述"></p>
+<h3 id="SwipeRefreshLayout"><a href="#SwipeRefreshLayout" class="headerlink" title="SwipeRefreshLayout"></a>SwipeRefreshLayout</h3><p>Google官方推出的下拉刷新控件，使用非常简便。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design8.png" alt="这里写图片描述"></p>
 <h2 id="布局文件"><a href="#布局文件" class="headerlink" title="布局文件"></a>布局文件</h2><p>首先是activity_main布局文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.v4.widget.DrawerLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/drawer_layout"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">layout</span>=<span class="string">"@layout/content_main"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.NavigationView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/navigation"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"left"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v4.widget.DrawerLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>看到content_main.xml：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.design.widget.CoordinatorLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.AppBarLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:theme</span>=<span class="string">"@style/AppTheme.AppBarOverlay"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">android.support.v7.widget.Toolbar</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/toolbar"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"?attr/actionBarSize"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:background</span>=<span class="string">"?attr/colorPrimary"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:layout_scrollFlags</span>=<span class="string">"scroll|enterAlways"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:popupTheme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.Light"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:theme</span>=<span class="string">"@style/ThemeOverlay.AppCompat.ActionBar"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:title</span>=<span class="string">""</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">android.support.design.widget.TabLayout</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:id</span>=<span class="string">"@+id/tab_layout"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:tabGravity</span>=<span class="string">"fill"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">app:tabIndicatorColor</span>=<span class="string">"#ffffff"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">android.support.design.widget.AppBarLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v4.view.ViewPager</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/view_pager"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.design.widget.FloatingActionButton</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/floating_button"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_gravity</span>=<span class="string">"bottom|end"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_margin</span>=<span class="string">"@dimen/fab_margin"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@android:drawable/ic_dialog_email"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.design.widget.CoordinatorLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>ViewPager对应的fragment布局：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">android.support.v4.widget.SwipeRefreshLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/swipe_refresh"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">app:layout_behavior</span>=<span class="string">"@string/appbar_scrolling_view_behavior"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">android.support.v7.widget.RecyclerView</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/recycler_view"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">android.support.v4.widget.SwipeRefreshLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
@@ -245,7 +245,7 @@
 </li>
 </ol>
 <p>在我的布局中给Toolbar设置了app:layout_scrollFlags属性，因此，Toolbar是可以滚动出屏幕，且向下滚动有可以出现。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最终效果：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/material-design9.png" alt="这里写图片描述"><br>源码地址：<a href="https://github.com/LiJia92/showlove" target="_blank" rel="noopener">https://github.com/LiJia92/showlove</a></p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最终效果：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/material-design9.png" alt="这里写图片描述"><br>源码地址：<a href="https://github.com/LiJia92/showlove" target="_blank" rel="noopener">https://github.com/LiJia92/showlove</a></p>
 <p>Tips：本文只对这些新的特性做了最基本的说明及非常简单的使用，至于更加复杂的使用及效果，则需要在使用过程中慢慢发现、慢慢学习了。</p>
 
       
@@ -384,7 +384,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -463,11 +463,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -480,6 +480,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -503,7 +507,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -511,11 +523,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -523,7 +535,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

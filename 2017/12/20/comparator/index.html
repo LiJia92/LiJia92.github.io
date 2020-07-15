@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近写过一个界面，涉及到排序。用到了 Collections 中的 sort 方法：123456789101112131415Collections.sort(mData, new Comparator&amp;lt;BookMemberReport&amp;gt;() &amp;#123;    @Override    public int compare(BookMemberReport lhs, BookMemb">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.074Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 中的 Comparator">
 <meta name="twitter:description" content="最近写过一个界面，涉及到排序。用到了 Collections 中的 sort 方法：123456789101112131415Collections.sort(mData, new Comparator&amp;lt;BookMemberReport&amp;gt;() &amp;#123;    @Override    public int compare(BookMemberReport lhs, BookMemb">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -183,7 +183,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近写过一个界面，涉及到排序。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png" alt=""><br>用到了 Collections 中的 sort 方法：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(mData, <span class="keyword">new</span> Comparator&lt;BookMemberReport&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(BookMemberReport lhs, BookMemberReport rhs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sortFlag == SORT_FLAG_SALE_DESCENDING) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (rhs.saleAmount - lhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_SALE_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (lhs.saleAmount - rhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_DESCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> rhs.orderCount - lhs.orderCount;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lhs.orderCount - rhs.orderCount;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+        <p>最近写过一个界面，涉及到排序。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png" alt=""><br>用到了 Collections 中的 sort 方法：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(mData, <span class="keyword">new</span> Comparator&lt;BookMemberReport&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(BookMemberReport lhs, BookMemberReport rhs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sortFlag == SORT_FLAG_SALE_DESCENDING) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (rhs.saleAmount - lhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_SALE_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (lhs.saleAmount - rhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_DESCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> rhs.orderCount - lhs.orderCount;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lhs.orderCount - rhs.orderCount;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p>Collections 根据传入的 Comparator 进行排序。刚开始写的时候通过不停的试，把正确的结果给试出来了。但是对于其原理却不是很清晰，今天便稍微扒一扒其源码。</p>
 <a id="more"></a>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List&lt;T&gt; <span class="built_in">list</span>, Comparator&lt;? super T&gt; c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">list</span>.getClass() == ArrayList.class) &#123;</span><br><span class="line">        Arrays.sort(((ArrayList) <span class="built_in">list</span>).elementData, <span class="number">0</span>, <span class="built_in">list</span>.size(), (Comparator) c);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Object[] a = <span class="built_in">list</span>.toArray();</span><br><span class="line">    Arrays.sort(a, (Comparator)c);</span><br><span class="line">    ListIterator&lt;T&gt; i = <span class="built_in">list</span>.listIterator();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;a.length; j++) &#123;</span><br><span class="line">        i.next();</span><br><span class="line">        i.<span class="built_in">set</span>((T)a[j]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -333,7 +333,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -412,11 +412,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,6 +429,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -452,7 +456,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -460,11 +472,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,7 +484,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

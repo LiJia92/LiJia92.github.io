@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近随着 Google 的大力推荐，越来越多开发者开始使用 Kotlin 了。其实我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。我接触 Kotlin 的主要原因是：业务代码太无聊啦。相信很多开发者都跟我有同样的感触，在一个公司待久了，技术框架摸透之后，后面的开发就基本是纯业务">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.111Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin - 配置篇">
 <meta name="twitter:description" content="最近随着 Google 的大力推荐，越来越多开发者开始使用 Kotlin 了。其实我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。我接触 Kotlin 的主要原因是：业务代码太无聊啦。相信很多开发者都跟我有同样的感触，在一个公司待久了，技术框架摸透之后，后面的开发就基本是纯业务">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -188,8 +188,8 @@
         <p>最近随着 Google 的大力推荐，越来越多开发者开始使用 Kotlin 了。其实我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。我接触 Kotlin 的主要原因是：<strong>业务代码太无聊啦</strong>。相信很多开发者都跟我有同样的感触，在一个公司待久了，技术框架摸透之后，后面的开发就基本是纯业务开发了，写界面，写业务代码，对于技术提升没有什么实质的帮助，就是真正的码农。为了改变这一现状，我不断在新需求中使用一些新的技术，比如 RxJava、Retrofit 等等，说是新技术其实也不新了，都出来都很久了，只是自己在项目中没有用到，接触得不多。在新需求中引入这些技术，<strong>可以边开发边学习，解决写业务代码的无聊，还能拓宽视野，学习新知识。虽然不一定会成为主流，但学习一下总是没问题的</strong>，因此开始接触 Kotlin。这篇文章主要先讲讲 Kotlin 的配置。</p>
 <h2 id="Kotlin-插件"><a href="#Kotlin-插件" class="headerlink" title="Kotlin 插件"></a>Kotlin 插件</h2><p>最新的 Android Studio 已默认装了 Kotlin 插件了，在旧版本可自己手动安装 Kotlin 插件。</p>
 <a id="more"></a>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png" alt=""><br>安装插件后，选择一个 Java 文件，点击 Code -&gt; Convert Java File To Kotlin File，即可转换成 Kotlin 文件了。</p>
-<h2 id="配置-Kotlin-环境"><a href="#配置-Kotlin-环境" class="headerlink" title="配置 Kotlin 环境"></a>配置 Kotlin 环境</h2><p>在 kt 文件中，随便使用一下 Kotlin 的特性，例如 List 的 filter 操作符，然后报错按下 Alt + Enter 弹出的方框中就有配置 Kotlin 的选项。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png" alt=""><br>如上图，选择要配置的 Module，确定后就会有自动配置了。<br>项目根目录的 build.gradle 中：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="comment">// kotlin 版本</span></span><br><span class="line">    ext.kotlin_version = <span class="string">'1.2.0'</span></span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">        google()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:3.0.0'</span></span><br><span class="line">        <span class="comment">// 依赖 kotlin 插件</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_280.png" alt=""><br>安装插件后，选择一个 Java 文件，点击 Code -&gt; Convert Java File To Kotlin File，即可转换成 Kotlin 文件了。</p>
+<h2 id="配置-Kotlin-环境"><a href="#配置-Kotlin-环境" class="headerlink" title="配置 Kotlin 环境"></a>配置 Kotlin 环境</h2><p>在 kt 文件中，随便使用一下 Kotlin 的特性，例如 List 的 filter 操作符，然后报错按下 Alt + Enter 弹出的方框中就有配置 Kotlin 的选项。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_279.png" alt=""><br>如上图，选择要配置的 Module，确定后就会有自动配置了。<br>项目根目录的 build.gradle 中：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildscript</span> &#123;</span><br><span class="line">    <span class="comment">// kotlin 版本</span></span><br><span class="line">    ext.kotlin_version = <span class="string">'1.2.0'</span></span><br><span class="line">    <span class="keyword">repositories</span> &#123;</span><br><span class="line">        jcenter()</span><br><span class="line">        google()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">dependencies</span> &#123;</span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:3.0.0'</span></span><br><span class="line">        <span class="comment">// 依赖 kotlin 插件</span></span><br><span class="line">        <span class="keyword">classpath</span> <span class="string">"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后 Module 的 build.gradle 中：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apply</span> plugin: <span class="string">'kotlin-android'</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    <span class="attribute">implementation</span> <span class="string">"org.jetbrains.kotlin:kotlin-stdlib-jre7:<span class="variable">$kotlin_version</span>"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>当然，你可以自己做这些配置。<br>注意到<code>apply plugin: &#39;kotlin-android&#39;</code>，这个配置是针对 Module 的。如果有多个 Module 都需要用到 Kotlin，则每个 Module 都需要做这个配置。<br>比如 app -&gt; library -&gt; core，app、library 中都使用了 kotlin，那么 app、library 2个 Module 都需要配置<code>apply plugin: &#39;kotlin-android&#39;</code>，否则会提示<code>找不到符号:xxx（xxx为 Kotlin 编写的类）</code>。</p>
 <h2 id="Kotlin-拓展"><a href="#Kotlin-拓展" class="headerlink" title="Kotlin 拓展"></a>Kotlin 拓展</h2><p>Kotlin 团队研发的可以让开发更简单的插件是 Kotlin Android Extensions。这个插件可以自动绑定 View，再也不用 findViewById 了。<br>要使用这个插件，在 Module 的 build.gradle 中配置：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'kotlin-android-extensions'</span></span><br></pre></td></tr></table></figure></p>
@@ -197,7 +197,7 @@
 <p>假设当前布局文件是<code>activity_main.xml</code>，我们只需要引入<code>kotlinx.android.synthetic.main.activity_main.*。</code><br>导入完成后即可调用在 xml 文件中以视图控件命名属性的对应扩展，比如下例：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/hello"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"fill_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
 <p>然后 activity 中可以直接如下使用：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello<span class="selector-class">.text</span> = <span class="string">"Hello World!"</span></span><br></pre></td></tr></table></figure></p>
 <p>再也不用 findViewById 了。当然你如果引用 ButterKnife 也可以省去 findViewById，只不过实现方式不一样。<strong>如此使用需要注意生命周期，在 view 还没创建时调用肯定是会失败的。</strong><br>注意到<code>import kotlinx.android.synthetic.main.＜布局＞.*</code>中的<code>main</code>，这是因为大多数时候我们的布局都是在 main 文件夹下，当我们定义了多种 buildVariant 时，就像<a href="http://lastwarmth.win/2017/10/24/gradle-app-2/" target="_blank" rel="noopener">Gradle 多版本管理（续）</a>中写到的一样，那么我们就会有很多文件夹来分别对应这些 buildVariant 以实现多版本控制的需求了。那么这个时候我们的布局就不是在<code>main</code>文件夹中了。此时我们需要开启 <strong>Experimental Mode</strong>。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">androidExtensions</span> &#123;</span><br><span class="line">    <span class="attribute">experimental</span> = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后选择对应的 buildVariant，我们可以直接导入对应的布局了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png" alt=""></p>
+<p>然后选择对应的 buildVariant，我们可以直接导入对应的布局了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/05/%E9%80%89%E5%8C%BA_278.png" alt=""></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.kotlincn.net/docs/tutorials/" target="_blank" rel="noopener">Kotlin 中文教程</a><br><a href="https://wangjiegulu.gitbooks.io/kotlin-for-android-developers-zh/content/" target="_blank" rel="noopener">《Kotlin for android developers》中文版翻译</a></p>
 
       
@@ -336,7 +336,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -415,11 +415,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -432,6 +432,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,7 +459,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -463,11 +475,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -475,7 +487,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

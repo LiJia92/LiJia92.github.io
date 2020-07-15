@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="背景项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：  在Material Design出来之前，我们可能会有方案一：  给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/ListviewHack-listview-1.gif">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.078Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.217Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CoordinatorLayout之Behavior认识">
 <meta name="twitter:description" content="背景项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：  在Material Design出来之前，我们可能会有方案一：  给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/ListviewHack-listview-1.gif">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -185,14 +185,14 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/ListviewHack-listview-1.gif" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif" alt=""></p>
 <p>在<code>Material Design</code>出来之前，我们可能会有方案一：</p>
 <blockquote>
 <p>给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。</p>
 </blockquote>
 <a id="more"></a>
 <p>正如我此时的项目中的一样，但是项目中的B是一个搜索框，类似这样：</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png" alt=""></p>
 <p>可以看到 B 的构成是相对复杂的，B 相关的事件操作也会写 2 遍，很显然的会导致整个代码结构非常臃肿，所以需要寻找方案二。</p>
 <h2 id="嵌套滚动机制"><a href="#嵌套滚动机制" class="headerlink" title="嵌套滚动机制"></a>嵌套滚动机制</h2><p>在我早些的一篇文章<a href="http://lastwarmth.win/2016/02/17/material-design/" target="_blank" rel="noopener">使用Android新特性：Material Design</a>中有说起一个控件：<code>CoordinatorLayout</code>。它是一个增强型的 FrameLayout。它的作用有两个：</p>
 <ol>
@@ -363,7 +363,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -442,11 +442,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,6 +459,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -482,7 +486,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -490,11 +502,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,7 +514,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

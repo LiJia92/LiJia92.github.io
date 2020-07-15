@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近在做一个主播类的App，里面涉及到视频播放，之前没有接触过，在探索一阵后能够播放基本视频了。特此写下小记，方便日后查看。 首先，确定使用VideoView进行视频播放。 步骤：  在界面布局文件中定义VideoView组件，或在程序中创建VideoView组件。 调用VideoView的如下两个方法来加载指定的视频: setVidePath(String path)：加载path文件代表的视频">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/04/video_vieweffect.gif">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.170Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/video_vieweffect.gif">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android使用VideoView进行视频播放">
 <meta name="twitter:description" content="最近在做一个主播类的App，里面涉及到视频播放，之前没有接触过，在探索一阵后能够播放基本视频了。特此写下小记，方便日后查看。 首先，确定使用VideoView进行视频播放。 步骤：  在界面布局文件中定义VideoView组件，或在程序中创建VideoView组件。 调用VideoView的如下两个方法来加载指定的视频: setVidePath(String path)：加载path文件代表的视频">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/04/video_vieweffect.gif">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/video_vieweffect.gif">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -202,7 +202,7 @@
 <p>Activity：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">VideoPlayActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.activity_video_play);</span><br><span class="line"></span><br><span class="line">        <span class="type">VideoView</span> videoView = (<span class="type">VideoView</span>) <span class="keyword">this</span>.findViewById(<span class="type">R</span>.id.video_view);</span><br><span class="line">        videoView.setMediaController(<span class="keyword">new</span> <span class="type">MediaController</span>(<span class="keyword">this</span>)); <span class="comment">// 添加MediaController</span></span><br><span class="line">        videoView.setVideoPath(<span class="string">"你的视频路径"</span>); <span class="comment">// 设置路径</span></span><br><span class="line">        videoView.requestFocus(); <span class="comment">// 获取焦点</span></span><br><span class="line">        videoView.start(); <span class="comment">// 播放</span></span><br><span class="line">        videoView.setOnCompletionListener(<span class="keyword">new</span> <span class="type">MediaPlayer</span>.<span class="type">OnCompletionListener</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            public void onCompletion(<span class="type">MediaPlayer</span> mp) &#123;</span><br><span class="line">                finish(); <span class="comment">// 播放结束回调</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>因为视频播放一般是全屏，直接使用系统的FullScreen会提示需要使用AppCompat主题，所以我给Activity设置了一个style。<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style <span class="built_in">name</span>=<span class="string">"NoTitleFullscreen"</span> parent=<span class="string">"AppTheme"</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowNoTitle"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"windowActionBar"</span>&gt;<span class="literal">false</span>&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowFullscreen"</span>&gt;<span class="literal">true</span>&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">    &lt;<span class="built_in">item</span> <span class="built_in">name</span>=<span class="string">"android:windowContentOverlay"</span>&gt;@null&lt;/<span class="built_in">item</span>&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:name</span>=<span class="string">".ui.VideoPlayActivity"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:theme</span>=<span class="string">"@style/NoTitleFullscreen"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>实际效果：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/04/video_vieweffect.gif" alt=""></p>
+<p>实际效果：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/video_vieweffect.gif" alt=""></p>
 <p>因为是虚拟机，效果看起来可能不太满意，但是至少视频是能播放了。<br>后续可能还有屏幕视频适配的问题，现在就不多说了，后面解决了再来更新。</p>
 <p>问题：VideoView加载资源需要一定的耗时, 会造成短暂的黑屏现象。<br>如何避免播放前的黑屏现象呢？可以给videoview设置加载的监听，在加载前给一个遮罩，等资源加载完成后隐藏遮罩。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">FrameLayout</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">android:id</span>=<span class="string">"@+id/frameLayout1"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span>  </span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_marginTop</span>=<span class="string">"50dip"</span> &gt;</span>  </span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">VideoView</span>  </span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/geoloc_anim"</span>  </span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"172dip"</span> <span class="attr">android:layout_gravity</span>=<span class="string">"top|center"</span> <span class="attr">android:visibility</span>=<span class="string">"visible"</span>/&gt;</span>  </span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">FrameLayout</span>  </span></span><br><span class="line"><span class="tag">      <span class="attr">android:id</span>=<span class="string">"@+id/placeholder"</span>  </span></span><br><span class="line"><span class="tag">      <span class="attr">android:layout_width</span>=<span class="string">"fill_parent"</span>  </span></span><br><span class="line"><span class="tag">      <span class="attr">android:layout_height</span>=<span class="string">"fill_parent"</span> <span class="attr">android:background</span>=<span class="string">"@drawable/fondvert_anim"</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">FrameLayout</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <p>设置监听：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">videoView.setOnPreparedListener(<span class="keyword">new</span> MediaPlayer.OnPreparedListener() &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mediaPlayer)</span> </span>&#123;  </span><br><span class="line">        <span class="comment">//Called when the video is ready to play  </span></span><br><span class="line">        View placeholder = findViewById(R.id.placeholder);  </span><br><span class="line"></span><br><span class="line">        placeholder.setVisibility(View.GONE);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
@@ -344,7 +344,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -423,11 +423,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -440,6 +440,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -463,7 +467,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,11 +483,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -483,7 +495,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

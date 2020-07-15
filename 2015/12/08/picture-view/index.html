@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言最近的项目中需要用到类似QQ空间那样的图片浏览功能，于是Google了一波，发现使用ViewPager与PhotoView即可实现。有了思路便开撸了。 代码首先，我们定义一个用于展示原图的Activity。12345678910111213141516171819202122232425public class ImageBrowseActivity extends Activity &amp;#12">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2015/12/picture-view1.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.133Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/picture-view1.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.243Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android仿QQ空间浏览图片">
 <meta name="twitter:description" content="前言最近的项目中需要用到类似QQ空间那样的图片浏览功能，于是Google了一波，发现使用ViewPager与PhotoView即可实现。有了思路便开撸了。 代码首先，我们定义一个用于展示原图的Activity。12345678910111213141516171819202122232425public class ImageBrowseActivity extends Activity &amp;#12">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2015/12/picture-view1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/picture-view1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -190,7 +190,7 @@
 <p>Activity比较简单，不做过多赘述。下面看看ImageBrowseAdapter怎么实现的。<br>ImageBrowseAdapter代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageBrowseAdapter</span> <span class="keyword">extends</span> <span class="title">PagerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    PhotoViewAttacher mAttacher;</span><br><span class="line">    <span class="keyword">private</span> Context context;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; imagePath;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ImageBrowseAdapter</span><span class="params">(Context context, List&lt;String&gt; urls)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.context = context;</span><br><span class="line">        <span class="keyword">this</span>.imagePath = urls;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> imagePath.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isViewFromObject</span><span class="params">(View view, Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> view == o;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyItem</span><span class="params">(ViewGroup view, <span class="keyword">int</span> position, Object object)</span> </span>&#123;</span><br><span class="line">        view.removeView((View) object);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">instantiateItem</span><span class="params">(ViewGroup view, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        ImageView imageView = <span class="keyword">new</span> ImageView(context);</span><br><span class="line">        <span class="keyword">new</span> DownloadImageTask(context, imageView).execute(imagePath.get(position));</span><br><span class="line">        view.addView(imageView);</span><br><span class="line">        <span class="keyword">return</span> imageView;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">DownloadImageTask</span> <span class="keyword">extends</span> <span class="title">BaseAsyncTask</span>&lt;<span class="title">String</span>, <span class="title">Void</span>, <span class="title">Bitmap</span>&gt; </span>&#123;</span><br><span class="line">        ImageView bmImage;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DownloadImageTask</span><span class="params">(Context context, ImageView bmImage)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>(context);</span><br><span class="line">            <span class="keyword">this</span>.bmImage = bmImage;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPreExecute</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> Bitmap <span class="title">doInBackground</span><span class="params">(String... urls)</span> </span>&#123;</span><br><span class="line">            String path = urls[<span class="number">0</span>];</span><br><span class="line">            Bitmap result = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</span><br><span class="line">                <span class="comment">//先设置为true，获取bitmap宽度、高度</span></span><br><span class="line">                options.inJustDecodeBounds = <span class="keyword">true</span>;</span><br><span class="line">                InputStream in = <span class="keyword">new</span> java.net.URL(path).openStream();</span><br><span class="line">                result = BitmapFactory.decodeStream(in, <span class="keyword">null</span>, options);</span><br><span class="line">                in.close();</span><br><span class="line">                resetOptions(options);</span><br><span class="line">                <span class="comment">//后设置为false，加载进内存显示</span></span><br><span class="line">                options.inJustDecodeBounds = <span class="keyword">false</span>;</span><br><span class="line">                <span class="comment">// InputStream在读取完之后就到结尾了，需要再次打开才能重新读取，否则下面的result将返回null</span></span><br><span class="line">                in = <span class="keyword">new</span> java.net.URL(path).openStream();</span><br><span class="line">                result = BitmapFactory.decodeStream(in, <span class="keyword">null</span>, options);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onPostExecute</span><span class="params">(Bitmap result)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (result != <span class="keyword">null</span>) &#123;</span><br><span class="line">                bmImage.setImageBitmap(result);</span><br><span class="line">                <span class="comment">// PhotoViewAttacher绑定ImageView</span></span><br><span class="line">                mAttacher = <span class="keyword">new</span> PhotoViewAttacher(bmImage);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置inSampleSize参数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> options</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resetOptions</span><span class="params">(BitmapFactory.Options options)</span> </span>&#123;</span><br><span class="line">        DisplayMetrics dm = context.getResources().getDisplayMetrics();</span><br><span class="line">        <span class="keyword">int</span> width = dm.widthPixels / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> height = dm.heightPixels / <span class="number">2</span>;</span><br><span class="line">        options.inSampleSize = (options.outWidth / width &gt; options.outHeight / height) ?</span><br><span class="line">                options.outWidth / width : options.outHeight / height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>在Adapter中，我为了求简便，直接在instantiateItem()中新建ImageView实例，然后传入到DownloadImageTask异步任务中进行下载，下载完成后更新，然后将PhotoViewAttacher与ImageView实例绑定。示例中没有使用PhoteView这个类，主要是用到了PhotoViewAttacher这个类。</p>
 <p>我们会有一个显示缩略图的列表，给列表的Item设置如下点击事件：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> void ImageClicked(ArrayList&lt;String&gt; imagePath, <span class="built_in">int</span> <span class="keyword">position</span>) &#123;</span><br><span class="line">    <span class="keyword">Intent</span> <span class="keyword">intent</span> = new <span class="keyword">Intent</span>(getActivity(), ImageBrowseActivity.<span class="keyword">class</span>);</span><br><span class="line">    <span class="keyword">intent</span>.putExtra(<span class="string">"position"</span>, <span class="keyword">position</span>);</span><br><span class="line">    <span class="keyword">intent</span>.putStringArrayListExtra(<span class="string">"imagePath"</span>, imagePath);</span><br><span class="line">    startActivity(<span class="keyword">intent</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>imagePath是原图的路径数组，position代表当前显示第几张。<br>点击事件设置好之后，便能实现网络图片浏览功能了。下面上效果图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/12/picture-view1.png" alt="这里写图片描述"></p>
+<p>imagePath是原图的路径数组，position代表当前显示第几张。<br>点击事件设置好之后，便能实现网络图片浏览功能了。下面上效果图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/picture-view1.png" alt="这里写图片描述"></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
 <li>使用ViewPager来实现大图左右滑动。</li>
 <li>使用PhotoView开源库实现图片的缩放，移动等特性，<a href="https://github.com/chrisbanes/PhotoView" target="_blank" rel="noopener">点击传送PhotoView开源库</a>。</li>
@@ -339,7 +339,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -418,11 +418,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -435,6 +435,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,7 +462,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -466,11 +478,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,7 +490,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

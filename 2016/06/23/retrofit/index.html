@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言在这个技术日新月累的今天，各种新的轮子层出不穷。网络这块，从HttpClient到android-async-http，再到Volley。当下比较火的网络框架Retrofit也是受到了很多开发者的热爱。虽然项目中并没有使用到Retrofit，但抱着学习的态度，我还是打算接触一下，算是有个了解。说不定后面的开发中会用到呢？ Retrofit概述Retrofit是一个 RESTful 的 HTTP">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/06/retrofit1.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.144Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/retrofit1.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Retrofit初识">
 <meta name="twitter:description" content="前言在这个技术日新月累的今天，各种新的轮子层出不穷。网络这块，从HttpClient到android-async-http，再到Volley。当下比较火的网络框架Retrofit也是受到了很多开发者的热爱。虽然项目中并没有使用到Retrofit，但抱着学习的态度，我还是打算接触一下，算是有个了解。说不定后面的开发中会用到呢？ Retrofit概述Retrofit是一个 RESTful 的 HTTP">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/06/retrofit1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/retrofit1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -193,7 +193,7 @@
 <p>OK，下面开始写请求的API了。</p>
 <p>定义如下接口：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">RequestService</span> &#123;</span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"realtime"</span>)</span><br><span class="line">    Call&lt;String&gt; getString(<span class="variable">@Query</span>(<span class="string">"cityId"</span>) String cityId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>然后在Activity中添加代码：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> void onClick(View v) &#123;</span><br><span class="line">        Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">                .baseUrl(<span class="string">"http://weatherapi.market.xiaomi.com/wtr-v2/temp/"</span>)</span><br><span class="line">                .addConverterFactory(ScalarsConverterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        RequestService requestService = retrofit.create(RequestService.<span class="keyword">class</span>);</span><br><span class="line">        <span class="keyword">Call</span>&lt;<span class="built_in">String</span>&gt; <span class="keyword">call</span> = requestService.getString(<span class="string">"101010100"</span>);</span><br><span class="line">        <span class="keyword">call</span>.enqueue(<span class="keyword">new</span> Callback&lt;<span class="built_in">String</span>&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> void onResponse(<span class="keyword">Call</span>&lt;<span class="built_in">String</span>&gt; <span class="keyword">call</span>, <span class="built_in">Response</span>&lt;<span class="built_in">String</span>&gt; <span class="built_in">response</span>) &#123;</span><br><span class="line">                <span class="built_in">Log</span>.e(<span class="string">"TAG"</span>, <span class="string">"成功："</span> + <span class="built_in">response</span>.body().toString());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> void onFailure(<span class="keyword">Call</span>&lt;<span class="built_in">String</span>&gt; <span class="keyword">call</span>, Throwable t) &#123;</span><br><span class="line">                <span class="built_in">Log</span>.e(<span class="string">"TAG"</span>, <span class="string">"失败"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>运行代码，点击按钮。会发现Log中有如下的Log：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/06/retrofit1.png" alt=""></p>
+<p>运行代码，点击按钮。会发现Log中有如下的Log：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/retrofit1.png" alt=""></p>
 <p>可见，网络请求成功。</p>
 <h2 id="相关说明"><a href="#相关说明" class="headerlink" title="相关说明"></a>相关说明</h2><ol>
 <li><code>Retrofit</code>支持的协议包括<code>GET</code>/<code>POST</code>/<code>PUT</code>/<code>DELETE</code>/<code>HEAD</code>/<code>PATCH</code>，当然你也可以直接用HTTP来自定义请求,这些协议均以注解的形式进行配置。</li>
@@ -340,7 +340,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -419,11 +419,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -436,6 +436,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,7 +463,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,11 +479,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,7 +491,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

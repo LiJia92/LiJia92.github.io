@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。 原理先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.121Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc3.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo多台电脑同步博客">
 <meta name="twitter:description" content="前言iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。 原理先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -188,12 +188,12 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该如何做呢？我们知道，发不到Github pages上的东西是静态内容，这些是Hexo生成的，这些东西其实不需要我们管，我们只要在<code>hexo d</code>的时候就会帮我们生成然后上传到github。所以我们需要同步的只是<code>源文件</code>。这里的源文件指的就是<code>md文件、theme相关文件、以及博客配置文件</code>等<code>一切跟Hexo无关的文件</code>。</p>
 <a id="more"></a>
-<p>举个栗子，这里看看Hexo目录。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc1.png" alt=""><br>我们需要同步的就是<code>suorce、themes、以及_config.yml</code>了，其他都是Hexo生成的。<br>那么接下来便是同步这些文件了。同步的话我们可以在github.io的仓库下建个分支source（也可以建仓库，原理是一样的），然后将这些源文件同步到source分支，当另一台电脑要写博客时，先从该分支pull最新的数据，然后hexo new，当部署完之后将自己新建的源文件push到该分支。<br>而<code>hexo d</code>的时候，根据我们_config.yml中的配置，会推到master分支，2个分支是互不影响的。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repository</span>: <span class="attribute">https</span>:<span class="comment">//github.com/LiJia92/LiJia92.github.io.git</span></span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
+<p>举个栗子，这里看看Hexo目录。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc1.png" alt=""><br>我们需要同步的就是<code>suorce、themes、以及_config.yml</code>了，其他都是Hexo生成的。<br>那么接下来便是同步这些文件了。同步的话我们可以在github.io的仓库下建个分支source（也可以建仓库，原理是一样的），然后将这些源文件同步到source分支，当另一台电脑要写博客时，先从该分支pull最新的数据，然后hexo new，当部署完之后将自己新建的源文件push到该分支。<br>而<code>hexo d</code>的时候，根据我们_config.yml中的配置，会推到master分支，2个分支是互不影响的。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">  <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repository</span>: <span class="attribute">https</span>:<span class="comment">//github.com/LiJia92/LiJia92.github.io.git</span></span><br><span class="line">  <span class="attribute">branch</span>: master</span><br></pre></td></tr></table></figure></p>
 <p>记住一点，每次写博客的时候先pull，完毕的时候push。</p>
 <h2 id="A-电脑操作"><a href="#A-电脑操作" class="headerlink" title="A 电脑操作"></a>A 电脑操作</h2><p>首先，我们要同步themes，就把theme文件夹下面对应的<code>.git</code>删掉，删掉之后便是没有之前的版本控制了，意味着你不能再更新主题了-。-，但是其实一般主题我们再配置后就很少修改它了，所以为了<code>同步主题设置</code>姑且删掉吧。<br>然后在hexo目录下执行下面的命令初始化仓库：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git init</span></span><br></pre></td></tr></table></figure></p>
 <p>然后配置<code>.gitignore</code>：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/.deploy_git</span></span><br><span class="line"><span class="string">/node_modules</span></span><br><span class="line"><span class="string">/public</span></span><br><span class="line">db.json</span><br></pre></td></tr></table></figure></p>
 <p>db.json是每次部署的时候会自动生成，会经常变动，导致冲突，所以我们把它忽略。<br>然后添加远程分支，并push：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b source</span><br><span class="line">git <span class="keyword">add</span><span class="bash"> .</span></span><br><span class="line"><span class="bash">git commit -m <span class="string">"first commit"</span></span></span><br><span class="line"><span class="bash">git remote add origin https://github.com/LiJia92/LiJia92.github.io.git</span></span><br><span class="line"><span class="bash">git push origin <span class="built_in">source</span></span></span><br></pre></td></tr></table></figure></p>
-<p>执行完毕后再github.io上便能看到source分支了，这个分支里的内容便是源文件了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc2.png" alt=""></p>
+<p>执行完毕后再github.io上便能看到source分支了，这个分支里的内容便是源文件了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc2.png" alt=""></p>
 <h2 id="B-电脑操作"><a href="#B-电脑操作" class="headerlink" title="B 电脑操作"></a>B 电脑操作</h2><p>假设新电脑已经装好Git，Node，Hexo这些环境，那么只需要同步下来source分支的内容即可。<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git remote <span class="built_in">add</span> origin http<span class="variable">s:</span>//github.<span class="keyword">com</span>/LiJia92/LiJia92.github.io.git</span><br><span class="line">git pull origin <span class="keyword">source</span>    # 从<span class="keyword">source</span>分支拉取内容</span><br></pre></td></tr></table></figure></p>
 <p>建议先将hexo目录下的<code>source、themes等source分支上有的内容</code>删掉，避免冲突。<br>这样B电脑便具备了和A电脑一样的源文件环境了，接下来便可以进行写博客了。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>每次在写博客的时候，需要执行一次pull操作：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin <span class="built_in">source</span></span><br></pre></td></tr></table></figure></p>
@@ -206,7 +206,7 @@
 <p>查了一下，是因为我直接本地git init的分支名字叫master，然后要push的分支名为source，不一致导致的。通过下面的指令重命名分支：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -mv <span class="keyword">master</span> <span class="title">source</span></span><br></pre></td></tr></table></figure></p>
 <p>再push即可。也可以在init之后就直接checkout branch source。</p>
 <ol>
-<li><p>在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了<a href="mailto:``lijia@lijiadeiMac.local" target="_blank" rel="noopener">``lijia@lijiadeiMac.local</a><code>，利用</code>git log<code></code>可以看到相关的记录。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/11%EF%BC%8Fmulti-pc3.png" alt=""><br>这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。</p>
+<li><p>在我hexo d之后在github看不到我的contributions，Google之，是因为邮箱的问题，切换到iMac之后，邮箱变成了<a href="mailto:``lijia@lijiadeiMac.local" target="_blank" rel="noopener">``lijia@lijiadeiMac.local</a><code>，利用</code>git log<code></code>可以看到相关的记录。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/11%EF%BC%8Fmulti-pc3.png" alt=""><br>这个时候需要将邮箱改成之前绑定的邮箱，然后重新部署就能看到提交记录了。</p>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git<span class="built_in"> config </span>--global user.email 你的邮件地址</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>hexo d提示<code>Deployer not found:git</code>，执行：</p>
@@ -352,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -431,11 +431,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,6 +448,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,7 +475,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,11 +491,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,7 +503,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

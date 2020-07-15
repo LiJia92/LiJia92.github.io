@@ -158,92 +158,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-no-password" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-fragment" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/19/no-password/">博客免密提交、部署到Github</a>
+      <a class="article-title" href="/2019/01/10/fragment/">Fragment 问题小结</a>
     </h1>
   
 
         
-        <a href="/2017/04/19/no-password/" class="archive-article-date">
-  	<time datetime="2017-04-19T02:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-19</time>
+        <a href="/2019/01/10/fragment/" class="archive-article-date">
+  	<time datetime="2019-01-10T06:49:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>每次写完博客，<code>hexo d</code>的时候需要输入一次Github账号密码，<code>git push</code>的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。</p>
-<h2 id="hexo-d-免密输入"><a href="#hexo-d-免密输入" class="headerlink" title="hexo d 免密输入"></a>hexo d 免密输入</h2><p>在 user 根目录下新建<code>.netrc</code>文件，填写内容：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">machine github.com</span><br><span class="line">login username      <span class="comment">//username为github账户名 （不是用来登录的邮箱或手机号）</span></span><br><span class="line">password password   <span class="comment">//password为github账户的密码</span></span><br></pre></td></tr></table></figure></p>
-<p>保存之后，再执行 hexo d 时即可直接部署，不用输入账号密码了。</p>
+        <p>ViewPager 用来做多 Tab 处理已经是十分常见的了，ViewPager 需要一个 Fragment List 来生成 Adapter，这些 Fragment 有时是完全一样的，界面元素、展示风格都一致，只是数据源不一致。通过抽象的思想，很容易写出基类，类似这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseListFragment</span> : <span class="type">BaseFragment</span>&lt;<span class="type">MyData</span>&gt;</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">requestHttpData</span><span class="params">(pageModel: <span class="type">PageModel</span>?)</span></span>: MutableList&lt;MyData&gt; &#123;</span><br><span class="line">        <span class="keyword">return</span> getData()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">abstract</span> <span class="function"><span class="keyword">fun</span> <span class="title">getData</span><span class="params">()</span></span>: MutableList&lt;MyData&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2017/04/19/no-password/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-wrong" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/18/wrong/">使用ListView多Type的错误姿势</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/18/wrong/" class="archive-article-date">
-  	<time datetime="2017-04-18T11:33:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中，有这样的一个需求：</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/04/18/QQ%E5%9B%BE%E7%89%8720170412161938.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/04/18/wrong/#more">more >></a>
+          <a class="article-more-a" href="/2019/01/10/fragment/#more">more >></a>
         
       
 
@@ -281,34 +218,29 @@
 
 
   
-    <article id="post-coordinatorlayout" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-geek" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/31/coordinatorlayout/">CoordinatorLayout之Behavior认识</a>
+      <a class="article-title" href="/2018/12/25/geek/">极客时间推广课程</a>
     </h1>
   
 
         
-        <a href="/2017/03/31/coordinatorlayout/" class="archive-article-date">
-  	<time datetime="2017-03-31T11:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-31</time>
+        <a href="/2018/12/25/geek/" class="archive-article-date">
+  	<time datetime="2018-12-25T09:02:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/04/01/ListviewHack-listview-1.gif" alt=""></p>
-<p>在<code>Material Design</code>出来之前，我们可能会有方案一：</p>
-<blockquote>
-<p>给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。</p>
-</blockquote>
+        <p>前些日子购买了一波<a href="https://time.geekbang.org/" target="_blank" rel="noopener">极客时间</a>的几门课程，贴下二维码，扫码购买返现互惠~</p>
         
-          <a class="article-more-a" href="/2017/03/31/coordinatorlayout/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/25/geek/#more">more >></a>
         
       
 
@@ -322,7 +254,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Material Design</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">学习</a>
         		</li>
       		
 		</ul>
@@ -346,36 +278,32 @@
 
 
   
-    <article id="post-gradle-app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-amap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/03/16/gradle-app/">Gradle 多版本管理</a>
+      <a class="article-title" href="/2018/12/21/amap/">Android 高德地图 SDK 使用小记</a>
     </h1>
   
 
         
-        <a href="/2017/03/16/gradle-app/" class="archive-article-date">
-  	<time datetime="2017-03-16T08:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-16</time>
+        <a href="/2018/12/21/amap/" class="archive-article-date">
+  	<time datetime="2018-12-21T05:47:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前有写过一篇<a href="http://lastwarmth.win/2016/03/09/gradle-pack/" target="_blank" rel="noopener">Android Studio使用Gradle进行多渠道打包</a>，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言来声明项目设置，而不是传统的XML。<br>使用Gradle的优势:</p>
-<ol>
-<li>自动处理包相依关系 - 取自 Maven Repos 的概念</li>
-<li>自动处理布署问题 - 取自 Ant 的概念</li>
-<li>条件判断写法直觉 - 使用 Groovy 语言</li>
-</ol>
-<p>更多关于Gradle的学习可以阅读<a href="https://dongchuan.gitbooks.io/gradle-user-guide-/" target="_blank" rel="noopener">Gradle User Guide 中文版</a>。</p>
+        <p>最近的项目是基于高德地图 SDK 来实现的，使用中有一些值得记录的 Tip，便有了这篇博客。</p>
+<h2 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a>Logo</h2><p>使用高德地图 SDK，是不能去掉「高德地图」 Logo的，只能设置它显示的位置。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">mapView</span><span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoPosition</span>(<span class="selector-tag">position</span>);</span><br></pre></td></tr></table></figure></p>
+<p>position：位置参数。屏幕左下角：AMapOptions.LOGO_POSITION_BOTTOM_LEFT；底部居中：AMapOptions.LOGO_POSITION_BOTTOM_CENTER；右下：AMapOptions.LOGO_MARGIN_RIGHT。<br>如果想要隐藏 Logo，可以使用如下代码：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">mapView</span><span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoBottomMargin</span>(<span class="selector-tag">-50</span>);</span><br></pre></td></tr></table></figure></p>
+<p>设置负值可以让 Logo 显示在屏幕之外。</p>
         
-          <a class="article-more-a" href="/2017/03/16/gradle-app/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/21/amap/#more">more >></a>
         
       
 
@@ -389,7 +317,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
         		</li>
       		
 		</ul>
@@ -413,29 +341,78 @@
 
 
   
-    <article id="post-theme-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-recyclerview-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/16/theme-update/">博客主题更新</a>
+      <a class="article-title" href="/2018/12/12/recyclerview-scroll/">CoordinatorLayout + RecyclerView 处理滑动</a>
     </h1>
   
 
         
-        <a href="/2017/02/16/theme-update/" class="archive-article-date">
-  	<time datetime="2017-02-16T06:54:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-16</time>
+        <a href="/2018/12/12/recyclerview-scroll/" class="archive-article-date">
+  	<time datetime="2018-12-12T02:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前一直用的是<code>next</code>主题，后面看到过<code>yilia</code>主题，感觉也不错，便切换到了<code>yilia</code>主题。但是在用的时候有个问题一直让我很不爽：空行的处理让代码上下空出很多行。就像这样：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/02/984899F5-CB20-4A44-B7EF-5F311A4E2B48.png" alt=""></p>
+        <p>先看一下设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png" alt=""><br>最底层是个地图，再上面有一些按钮，最上层是路线信息 UI，页面可以滑动，滑动时地图和按钮不动，自然而然想到的 RecyclerView 来实现。<br>早些时候只有 2 个按钮，使用了一种很笨拙的方式，与之前写过的一篇文章类似：<a href="http://lastwarmth.win/2016/04/22/android-scroll/" target="_blank" rel="noopener">一个关于Android滑动“因缺斯厅”的想法</a>。<br>这种方式，相当于有四层：地图-&gt;按钮-&gt;RecyclerView-&gt;与按钮相同位置的View，但是是透明的。界面布局就像这样：</p>
         
-          <a class="article-more-a" href="/2017/02/16/theme-update/#more">more >></a>
+          <a class="article-more-a" href="/2018/12/12/recyclerview-scroll/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-media-mix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/23/media-mix/">无声视频合成音频</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/23/media-mix/" class="archive-article-date">
+  	<time datetime="2018-11-23T02:02:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇文章，通过 MediaProjectionManager 结合 MediaRecorder 进行录屏并生成视频文件。新版本需求产品提了个：视频增加背景音乐，音频文件内置在 Apk 中。那么，怎么生成带音频的视频呢？<br>通过调研发现，在用 MediaPlayer 进行录屏时，可以添加音频源，但是基本是使用麦克风录音，无法指定音频文件。代码如下：<br><figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化 MediaRecorder</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="type">RequiresApi</span>(<span class="type">Build</span>.<span class="type">VERSION_CODES</span>.<span class="type">LOLLIPOP</span>)</span><br><span class="line">private <span class="function"><span class="keyword">fun</span> <span class="title">initRecorder</span>() &#123;</span></span><br><span class="line"><span class="function">    <span class="title">mSaveFile</span> = <span class="title">File</span>(<span class="type">DirUtils</span>.getPublicMediaPath(), "$<span class="title">saveName</span>.<span class="title">tmp</span>")</span></span><br><span class="line"><span class="function">    <span class="title">if</span> (mSaveFile!!.exists()) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">mSaveFile</span>!!.<span class="title">delete</span>()</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span> = <span class="title">MediaRecorder</span>()</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoSource</span>(<span class="type">MediaRecorder</span>.<span class="type">VideoSource</span>.<span class="type">SURFACE</span>)</span></span><br><span class="line"><span class="function">    <span class="comment">// 使用麦克风录音</span></span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setAudioSource</span>(<span class="type">MediaRecorder</span>.<span class="type">AudioSource</span>.<span class="type">MIC</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setOutputFormat</span>(<span class="type">MediaRecorder</span>.<span class="type">OutputFormat</span>.<span class="type">MPEG_4</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setOutputFile</span>(mSaveFile!!.absolutePath)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoSize</span>(mVideoWidth, mVideoHeight)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoEncoder</span>(<span class="type">MediaRecorder</span>.<span class="type">VideoEncoder</span>.<span class="type">H264</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoEncodingBitRate</span>(<span class="type">VIDEO_BIT_RATE</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoFrameRate</span>(<span class="type">VIDEO_FRAME_RATE</span>)</span></span><br><span class="line"><span class="function">    <span class="title">try</span> &#123;</span></span><br><span class="line"><span class="function">        <span class="title">mMediaRecorder</span>?.<span class="title">prepare</span>()</span></span><br><span class="line"><span class="function">    &#125; <span class="title">catch</span> (e: <span class="type">IOException</span>) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">LogUtils</span>.<span class="title">e</span>(<span class="type">TAG</span>, e.toString())</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2018/11/23/media-mix/#more">more >></a>
         
       
 
@@ -449,7 +426,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -473,29 +450,29 @@
 
 
   
-    <article id="post-translucent-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-screen-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/16/translucent-view/">Android任意View边沿渐变透明</a>
+      <a class="article-title" href="/2018/10/18/screen-record/">录制仿 Keep 轨迹动画视频</a>
     </h1>
   
 
         
-        <a href="/2017/02/16/translucent-view/" class="archive-article-date">
-  	<time datetime="2017-02-16T02:04:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-16</time>
+        <a href="/2018/10/18/screen-record/" class="archive-article-date">
+  	<time datetime="2018-10-18T09:01:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前在做直播产品的时候，有个需求：弹幕列表在滑入滑出的时候要有渐变效果。当时想了几种方案但是都没有做到满意的效果，后面便搁置了。直到我看到了这个库：<a href="https://github.com/qinci/EdgeTranslucent" target="_blank" rel="noopener">Android任意View边沿渐变透明</a>，看了下效果，正是我当时需要的。虽然时过境迁，现在没有在意这个需求了，但是从心底里还是想知道它是如何实现的。<br><img src="https://raw.githubusercontent.com/qinci/EdgeTranslucent/master/image/image.gif" alt=""></p>
+        <p>最近 Keep 更新了一个轨迹动画的分享，可以生成一个看起来高大上的视频。项目产品也提出了一样的需求，便参照着实现了一波。效果如下（虚拟机跑动画就已经很卡了，然后还要录 gif 就更卡了，凑合看~）：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/trackAnimation.gif" alt=""></p>
         
-          <a class="article-more-a" href="/2017/02/16/translucent-view/#more">more >></a>
+          <a class="article-more-a" href="/2018/10/18/screen-record/#more">more >></a>
         
       
 
@@ -509,7 +486,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -533,32 +510,29 @@
 
 
   
-    <article id="post-summary" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-start-for-result" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/09/summary/">我的2016</a>
+      <a class="article-title" href="/2018/10/10/start-for-result/">startActivityForResult 的封装使用</a>
     </h1>
   
 
         
-        <a href="/2017/01/09/summary/" class="archive-article-date">
-  	<time datetime="2017-01-09T05:55:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-09</time>
+        <a href="/2018/10/10/start-for-result/" class="archive-article-date">
+  	<time datetime="2018-10-10T08:59:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>对，已经是1月9号了，早在8天前2016年便成为了过去，总觉得必须要写点什么。恰逢今天来了兴致，便随便叨叨几句。</p>
-<p>在新的一年里，我们总会兴冲冲的立下我们的小目标（先挣它一个亿~），但是一年里，有多少是你付出的呢？这个世界从来就不存在免费的午餐。</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/14A1F38B0-EBB5-4054-A254-4741691C74D1.png" alt=""></p>
-<p>注意看图中的时间。是的，2015年！2015年立下的几个小目标在2016年过完却是一个都没有实现，这可真是个悲伤的故事。但是我们仍然要相信，美好的事情总会发生。</p>
+        <p>startActivityForResult 相信大家都用过，调用和返回结果是分散开的，使用起来最好还是封装一下比较好。这里利用一个空的 Fragment 进行封装，代码比较简单。<br>封装的回调类 StartForResultListener：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">StartForResultListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * StartActivityForResult回调，同&#123;@link android.app.Activity#onActivityResult(int, int, Intent)&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onActivityResult</span>(<span class="params"><span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data</span>)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2017/01/09/summary/#more">more >></a>
+          <a class="article-more-a" href="/2018/10/10/start-for-result/#more">more >></a>
         
       
 
@@ -572,7 +546,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -596,31 +570,29 @@
 
 
   
-    <article id="post-ios-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-shape" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/16/ios-tips/">iOS 学习之旅</a>
+      <a class="article-title" href="/2018/09/27/shape/">Android 开发减少 shape 文件</a>
     </h1>
   
 
         
-        <a href="/2016/12/16/ios-tips/" class="archive-article-date">
-  	<time datetime="2016-12-16T02:23:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-16</time>
+        <a href="/2018/09/27/shape/" class="archive-article-date">
+  	<time datetime="2018-09-27T09:15:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>接触iOS也有一阵子了，也参与到项目做了有些事情，主要是从改bug入手，边学边做，下面记录一下自己在学习中遇到一些点。</p>
-<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Objective-C提供了一种与众不同的方式——Category，可以动态的为已经存在的类添加新的行为。这样可以保证类的原始设计规模较小，功能增加时再逐步扩展。使用Category对类进行扩展时，不需要访问其源代码，也不需要创建子类。Category使用简单的方式，实现了类的相关方法的模块化，把不同的类方法分配到不同的分类文件中。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SomeClass.h</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>) print;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> (<span class="title">Hello</span>)</span></span><br><span class="line">-(<span class="keyword">void</span>)hello;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(<span class="keyword">void</span>)hello&#123;</span><br><span class="line">    <span class="built_in">NSLog</span> (<span class="string">@"name：%@ "</span>, <span class="string">@"Jacky"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line"></span><br><span class="line">SomeClass * sc =[[SomeClass alloc] init];</span><br><span class="line">[sc hello]</span><br></pre></td></tr></table></figure></p>
-<p>这里还有一个约定成俗的习惯，将声明文件和实现文件名称统一采用“原类名+Category”的方式命名。</p>
+        <p>作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。<br>通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：<code>vyg__route_search_bg_selector.xml</code>，开发人员看到这个 shape 文件可以知道是在路线搜索页面用到的。可是这样命名，当开发人员各自独立开发时，可能会有一大堆业务相关的 shape 文件，可能会和其他开发人员相关业务重复了。所以后面我们干脆改成这样了：<code>vyg__shape_r2_f7f7f7.xml</code>，代表 2dp 的 radius，然后填充色是 #F7F7F7。如果项目设计师严格按照一套标准来设计所有的背景，这样命名一套 shape 文件可以做到复用了。可如果设计师经常换人，或者不够专业等等其他原因，这里一个颜色，那里又是另外一个颜色，或者把 2dp 的圆角变成 4dp，如此下来，shape 文件依然会很多。就像这样：</p>
         
-          <a class="article-more-a" href="/2016/12/16/ios-tips/#more">more >></a>
+          <a class="article-more-a" href="/2018/09/27/shape/#more">more >></a>
         
       
 
@@ -634,7 +606,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -658,30 +630,29 @@
 
 
   
-    <article id="post-xcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-phone-adapt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/07/xcode/">Xcode的基本使用</a>
+      <a class="article-title" href="/2018/09/13/phone-adapt/">「小米MIX2」全面屏适配</a>
     </h1>
   
 
         
-        <a href="/2016/12/07/xcode/" class="archive-article-date">
-  	<time datetime="2016-12-07T06:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
+        <a href="/2018/09/13/phone-adapt/" class="archive-article-date">
+  	<time datetime="2018-09-13T02:53:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>要开发iOS，Xcode是少不了的，这里摘录一下Xcode的基本使用。</p>
-<h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p><img src="http://img.blog.csdn.net/20141014195328609?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGh1bnht/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图片转自http://blog.csdn.net/phunxm/article/details/17044337"><br>导航区：导航作用，可以查看项目总体结构。<br>编辑区：用于编写代码的区域。<br>调试区：用于输出和显示调试信息的区域。<br>实用区：用于显示属性和提供xib类库的区域。<br>工具栏：可以选择运行的设备等。</p>
+        <p>有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113729.png" alt=""><br>作为一个 Android 开发者，首先想到的就是用 PopupWindow 来实现。底部阴影的高度固定，剩余的高度全部填充到 PopupWindow，然后调用 PopupWindow 的 showAsDropDown 让它在应用标题栏下面显示就行了。</p>
         
-          <a class="article-more-a" href="/2016/12/07/xcode/#more">more >></a>
+          <a class="article-more-a" href="/2018/09/13/phone-adapt/#more">more >></a>
         
       
 
@@ -695,7 +666,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -719,40 +690,29 @@
 
 
   
-    <article id="post-enter-oc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-kotlin-question3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/07/enter-oc/">Objective-C 基本语法</a>
+      <a class="article-title" href="/2018/08/22/kotlin-question3/">关于使用 kotlin 碰到的一个坑（三）</a>
     </h1>
   
 
         
-        <a href="/2016/12/07/enter-oc/" class="archive-article-date">
-  	<time datetime="2016-12-07T03:05:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
+        <a href="/2018/08/22/kotlin-question3/" class="archive-article-date">
+  	<time datetime="2018-08-22T03:30:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。</p>
-<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
-<ul>
-<li>任何C源程序，不经修改，即可通过Objective-C编译器成功编译。</li>
-<li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：<ol>
-<li>OC中头文件后缀为.h，实现文件为.m，类似于c++中的.h于.cpp。</li>
-<li>在OC语言中混合使用C或者C++代码，包含有C语言或者C++语言时，文件的后缀使用.mm。同时一般如果是纯粹的C++文件，源代码文件后缀为.cpp，头文件使用.hpp为后缀。</li>
-<li>import和include的功能是一样的，都是将引入的文件原封不动拷贝到当前位置。import的优点：会自动防止重复拷贝，同时兼容C语言的引入。</li>
-<li>“ ”优先在当前文件路径查找， &lt; &gt;优先在系统环境查找。</li>
-</ol>
-</li>
-</ul>
+        <p>近期整理代码，出现了一个空指针异常，其源头为 MapController 类的一个方法：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addOnMarkerClickListener</span>(<span class="params">AMap.OnMarkerClickListener onMarkerClickListener</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (onMarkerClickListener == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"onMarkerClickListener can not null"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (onMarkerClickListeners == <span class="literal">null</span>) &#123;</span><br><span class="line">        onMarkerClickListeners = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    onMarkerClickListeners.<span class="keyword">add</span>(onMarkerClickListener);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2016/12/07/enter-oc/#more">more >></a>
+          <a class="article-more-a" href="/2018/08/22/kotlin-question3/#more">more >></a>
         
       
 
@@ -766,7 +726,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
         		</li>
       		
 		</ul>
@@ -792,7 +752,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -804,7 +764,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -883,11 +843,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -900,6 +860,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -923,7 +887,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -931,11 +903,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -943,7 +915,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

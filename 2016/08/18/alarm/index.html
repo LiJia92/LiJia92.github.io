@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？ Android中提供了AlarmManager可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar3.jpg">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.058Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android AlarmManager使用小记">
 <meta name="twitter:description" content="现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？ Android中提供了AlarmManager可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar3.jpg">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -212,7 +212,7 @@
 <p>void cancel (PendingIntent operation)<br>Remove any alarms with a matching Intent. Any alarm, of any type, whose Intent matches this one (as defined by filterEquals(Intent)), will be canceled.</p>
 </blockquote>
 <p>只有符合filterEquals的intent才会被取消。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> boolean filterEquals(Intent other) &#123;</span><br><span class="line">    <span class="keyword">if</span> (other == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mAction, other.mAction)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mData, other.mData)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mType, other.mType)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mPackage, other.mPackage)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mComponent, other.mComponent)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mCategories, other.mCategories)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于即时性比较强的应用，比如直播类，闹钟定的时间要与正在直播的推送分开，不然用户就有可能收到2次通知了，所以闹钟就要定提前一点：XXX即将开始直播，类似这样。那么就会有一个问题：用户看到闹钟的这个通知后，进入应用，但是XXX是没有直播的（即将开始直播），所以对于用户当前是没有正确信息来显示的，这种体验可能不太好。如果将闹钟设置退后，XXX已经开始直播，又会显得非常怪异。<br>我的心情：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/04/seekbar3.jpg" alt=""><br>求同学们支招~</p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于即时性比较强的应用，比如直播类，闹钟定的时间要与正在直播的推送分开，不然用户就有可能收到2次通知了，所以闹钟就要定提前一点：XXX即将开始直播，类似这样。那么就会有一个问题：用户看到闹钟的这个通知后，进入应用，但是XXX是没有直播的（即将开始直播），所以对于用户当前是没有正确信息来显示的，这种体验可能不太好。如果将闹钟设置退后，XXX已经开始直播，又会显得非常怪异。<br>我的心情：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg" alt=""><br>求同学们支招~</p>
 
       
 
@@ -350,7 +350,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -429,11 +429,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -446,6 +446,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -469,7 +473,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,11 +489,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,7 +501,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

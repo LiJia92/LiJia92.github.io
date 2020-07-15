@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。 百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考百度开发指">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc2.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.065Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc2.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度定位SDK无法定位">
 <meta name="twitter:description" content="最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。 百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考百度开发指">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -185,7 +185,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。</p>
-<p>百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc1.png" alt="这里写图片描述"><br>若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考<a href="http://developer.baidu.com/map/index.php?title=androidsdk/guide/key" target="_blank" rel="noopener">百度开发指南</a>。</p>
+<p>百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png" alt="这里写图片描述"><br>若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考<a href="http://developer.baidu.com/map/index.php?title=androidsdk/guide/key" target="_blank" rel="noopener">百度开发指南</a>。</p>
 <a id="more"></a>
 <p>通过上述方式获取到的SHA1值为debug版本的，若是在Android Studio中，采用自己的keystore生成的apk对应的SHA1值会与debug版本的值不一致，这就导致了在百度开放平台上申请到的key值不对（key值需要SHA1值与app包名）。</p>
 <p>此时需要获得release版本对应的SHA1值。步骤如下：</p>
@@ -194,7 +194,7 @@
 <li>命令行进入到.android文件夹，执行命令：<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -<span class="built_in">list</span> -keystore keystorefile</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>keystorefile为刚刚拷贝的keystore文件。<br>会提示输入秘钥库口令，输入之后回车即可获取SHA1值。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc2.png" alt="这里写图片描述"><br>使用该SHA1值去开放平台申请秘钥，然后替换AndroidManifest.xml中的key值。之后采用自己那个keystore进行release打包出来的apk即可正常使用百度SDK了。</p>
+<p>keystorefile为刚刚拷贝的keystore文件。<br>会提示输入秘钥库口令，输入之后回车即可获取SHA1值。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc2.png" alt="这里写图片描述"><br>使用该SHA1值去开放平台申请秘钥，然后替换AndroidManifest.xml中的key值。之后采用自己那个keystore进行release打包出来的apk即可正常使用百度SDK了。</p>
 
       
 
@@ -332,7 +332,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -411,11 +411,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -428,6 +428,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -451,7 +455,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -459,11 +471,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,7 +483,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

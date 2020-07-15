@@ -16,19 +16,19 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。 前期准备接入微信支付SDK前期需要许多前期准备。 微信开放平台 注册微信开放平台账号。 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。 进入应用详情，获取AppID，以及申请开通微信支付能力。 等待审核通过。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk5.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk3.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk4.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk8.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk6.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk7.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.172Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk3.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk4.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.260Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android接入微信支付SDK">
 <meta name="twitter:description" content="本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。 前期准备接入微信支付SDK前期需要许多前期准备。 微信开放平台 注册微信开放平台账号。 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。 进入应用详情，获取AppID，以及申请开通微信支付能力。 等待审核通过。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -194,17 +194,17 @@
 <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>接入微信支付SDK前期需要许多前期准备。</p>
 <h3 id="微信开放平台"><a href="#微信开放平台" class="headerlink" title="微信开放平台"></a>微信开放平台</h3><ol>
 <li>注册<a href="https://open.weixin.qq.com/" target="_blank" rel="noopener">微信开放平台</a>账号。</li>
-<li>登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk1.png" alt=""><br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk5.png" alt=""></li>
-<li>进入应用详情，获取<code>AppID</code>，以及申请开通微信支付能力。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk2.png" alt=""></li>
+<li>登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png" alt=""></li>
+<li>进入应用详情，获取<code>AppID</code>，以及申请开通微信支付能力。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png" alt=""></li>
 <li>等待审核通过。</li>
 </ol>
 <a id="more"></a>
 <h3 id="微信商户平台"><a href="#微信商户平台" class="headerlink" title="微信商户平台"></a>微信商户平台</h3><ol>
 <li>注册<a href="https://pay.weixin.qq.com" target="_blank" rel="noopener">微信商户平台</a>账号。</li>
-<li>登录账号，在基本信息中获得<code>微信支付商户号</code>。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk3.png" alt=""></li>
-<li>安装操作证书，然后进入API安全设置<code>秘钥</code>，最好使用UUID自动生成的，记住这个<code>秘钥</code>。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk4.png" alt=""><br>OK，前期准备做完，下面进行代码接入。</li>
+<li>登录账号，在基本信息中获得<code>微信支付商户号</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk3.png" alt=""></li>
+<li>安装操作证书，然后进入API安全设置<code>秘钥</code>，最好使用UUID自动生成的，记住这个<code>秘钥</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk4.png" alt=""><br>OK，前期准备做完，下面进行代码接入。</li>
 </ol>
-<h2 id="工程接入SDK"><a href="#工程接入SDK" class="headerlink" title="工程接入SDK"></a>工程接入SDK</h2><h3 id="新建应用工程"><a href="#新建应用工程" class="headerlink" title="新建应用工程"></a>新建应用工程</h3><p>以AS为例，新建工程，注意包名与使用的签名要与微信开放平台申请应用时填写的一致。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk8.png" alt=""></p>
+<h2 id="工程接入SDK"><a href="#工程接入SDK" class="headerlink" title="工程接入SDK"></a>工程接入SDK</h2><h3 id="新建应用工程"><a href="#新建应用工程" class="headerlink" title="新建应用工程"></a>新建应用工程</h3><p>以AS为例，新建工程，注意包名与使用的签名要与微信开放平台申请应用时填写的一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png" alt=""></p>
 <h3 id="引入libs"><a href="#引入libs" class="headerlink" title="引入libs"></a>引入libs</h3><p>将<code>libammsdk.jar</code>放到libs文件夹下。</p>
 <h3 id="配置debug、release的签名文件"><a href="#配置debug、release的签名文件" class="headerlink" title="配置debug、release的签名文件"></a>配置debug、release的签名文件</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">signingConfigs</span> &#123;</span><br><span class="line">        <span class="section">debug</span> &#123;</span><br><span class="line">            <span class="attribute">storeFile</span> file(<span class="string">"你的keystore路径"</span>)</span><br><span class="line">            storePassword <span class="string">"xxx"</span></span><br><span class="line">            keyAlias <span class="string">"xxx"</span></span><br><span class="line">            keyPassword <span class="string">"xxx"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="attribute">storeFile</span> file(<span class="string">"你的keystore路径"</span>)</span><br><span class="line">            storePassword <span class="string">"xxx"</span></span><br><span class="line">            keyAlias <span class="string">"xxx"</span></span><br><span class="line">            keyPassword <span class="string">"xxx"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这里debug、realse我采用的是一样的签名。不论是debug，还是release都能对应上。</p>
@@ -212,7 +212,7 @@
 <p>也别忘记加入网络权限。</p>
 <h3 id="获取prepay-id"><a href="#获取prepay-id" class="headerlink" title="获取prepay_id"></a>获取prepay_id</h3><p>在支付之前，都需要调用微信的接口<code>https://api.mch.weixin.qq.com/pay/unifiedorder</code>来获得prepay_id。</p>
 <h3 id="支付"><a href="#支付" class="headerlink" title="支付"></a>支付</h3><p>获取到prepay_id之后，调用<code>IWXAPI</code>的<code>sendReq</code>方法即可完成支付。</p>
-<h3 id="添加支付成功回调Activity"><a href="#添加支付成功回调Activity" class="headerlink" title="添加支付成功回调Activity"></a>添加支付成功回调Activity</h3><p>添加<code>wxapi</code>的包名，在这个包名下必须要有<code>WXPayEntryActivity</code>这个Activity，支付成功后会显示此界面。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk6.png" alt=""></p>
+<h3 id="添加支付成功回调Activity"><a href="#添加支付成功回调Activity" class="headerlink" title="添加支付成功回调Activity"></a>添加支付成功回调Activity</h3><p>添加<code>wxapi</code>的包名，在这个包名下必须要有<code>WXPayEntryActivity</code>这个Activity，支付成功后会显示此界面。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png" alt=""></p>
 <p>另外，声明此 Activity 需要添加如下属性：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">".wxapi.WXPayEntryActivity"</span></span><br><span class="line">    android:<span class="attribute">exported</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">launchMode</span>=<span class="string">"singleTop"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>调用接口相关参数以及返回值参考<a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1" target="_blank" rel="noopener">开发者手册</a>。</p>
 <h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>下面说一下接入过程中需要注意的点。</p>
@@ -221,7 +221,7 @@
 <li>微信支付返回-1，一般是<code>签名</code>错误。这个签名有2种意思：1、Apk签名文件，debug与release最好使用同样的keystore；2、参数MD5签名生成的sign。要仔细检查是否正确。</li>
 <li>签名、包名必须跟微信开放平台申请的一致.</li>
 <li>获取prepay_id最好是在服务器完成，由服务器去跟微信服务器交互，客户端不需要参与，以免泄露重要信息。</li>
-<li>与微信接口交互时，参数都需要签名。签名方法如下图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk7.png" alt=""><br>这里重点说一下。<ul>
+<li>与微信接口交互时，参数都需要签名。签名方法如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png" alt=""><br>这里重点说一下。<ul>
 <li>参数名ASCII码从小到大排序（字典序）</li>
 <li>参数名区分大小写，包括sign。</li>
 <li>需要添加商户key值，这个key即是在前期准备中，我所说的微信商户的那个<code>秘钥</code>。</li>
@@ -366,7 +366,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -445,11 +445,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -462,6 +462,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,7 +489,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -493,11 +505,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,7 +517,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

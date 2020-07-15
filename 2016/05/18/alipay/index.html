@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="项目组支付宝商户审核通过，要准备接入支付宝移动支付的能力，本文主要讲述一下android接入支付宝移动支付SDK的步骤。 前期准备 支付宝商户网站注册支付宝商户账号。 签约移动支付产品，等到审核通过。 秘钥的生成与上传。注册和签约没什么好说的，由公司相关部门或人员进行操作就好了。这里重点讲一下密钥。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay3.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay4.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.060Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay3.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay4.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.207Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android接入支付宝移动支付">
 <meta name="twitter:description" content="项目组支付宝商户审核通过，要准备接入支付宝移动支付的能力，本文主要讲述一下android接入支付宝移动支付SDK的步骤。 前期准备 支付宝商户网站注册支付宝商户账号。 签约移动支付产品，等到审核通过。 秘钥的生成与上传。注册和签约没什么好说的，由公司相关部门或人员进行操作就好了。这里重点讲一下密钥。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -193,11 +193,11 @@
 <li>秘钥的生成与上传。<br>注册和签约没什么好说的，由公司相关部门或人员进行操作就好了。这里重点讲一下密钥。</li>
 </ol>
 <a id="more"></a>
-<p>秘钥的生成：<br>下载SDK资源压缩包，解压后，里面会有openssl的文件夹，里面有个<code>openssl.exe</code>，双击运行。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay1.png" alt=""><br>输入如下指令生成私钥:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genrsa -out rsa_private_key<span class="selector-class">.pem</span> <span class="number">1024</span></span><br></pre></td></tr></table></figure></p>
+<p>秘钥的生成：<br>下载SDK资源压缩包，解压后，里面会有openssl的文件夹，里面有个<code>openssl.exe</code>，双击运行。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay1.png" alt=""><br>输入如下指令生成私钥:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genrsa -out rsa_private_key<span class="selector-class">.pem</span> <span class="number">1024</span></span><br></pre></td></tr></table></figure></p>
 <p><code>java开发者</code>（否则跳过此步骤）需要转换成PKCS8格式，再输入如下指令进行转换：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkcs8 -topk8 -inform PEM -<span class="keyword">in</span> rsa_private_key<span class="selector-class">.pem</span> -outform PEM -nocrypt</span><br></pre></td></tr></table></figure></p>
-<p>可以看到下面的界面：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay2.png" alt=""><br><code>右键点击openssl窗口上边边缘，选择“编辑→标记”，选中要复制的文字</code>，将PKCS8格式私钥复制下来，保存到一个文本中，后面会用到。<br>继续执行指令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsa -<span class="keyword">in</span> rsa_private_key<span class="selector-class">.pem</span> -pubout -out rsa_public_key.pem</span><br></pre></td></tr></table></figure></p>
+<p>可以看到下面的界面：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay2.png" alt=""><br><code>右键点击openssl窗口上边边缘，选择“编辑→标记”，选中要复制的文字</code>，将PKCS8格式私钥复制下来，保存到一个文本中，后面会用到。<br>继续执行指令：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rsa -<span class="keyword">in</span> rsa_private_key<span class="selector-class">.pem</span> -pubout -out rsa_public_key.pem</span><br></pre></td></tr></table></figure></p>
 <p>会得到公钥文本。</p>
-<p>秘钥的上传：<br>登录支付宝商户账户，进入到<code>我的商家服务</code>。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay3.png" alt=""><br>点击<code>查询PID、KEY</code>，输入支付密码，进入到下面的页面：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/05/alipay4.png" alt=""><br>记录下<code>PID</code>。<br>点击RSA加密后面的<code>添加密码</code>，这里我已经添加过，所以显示的查看秘钥。将生成步骤中生成的公钥文本粘贴进编辑框，点击保存，若显示<code>上传成功</code>则代表成功。</p>
+<p>秘钥的上传：<br>登录支付宝商户账户，进入到<code>我的商家服务</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay3.png" alt=""><br>点击<code>查询PID、KEY</code>，输入支付密码，进入到下面的页面：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay4.png" alt=""><br>记录下<code>PID</code>。<br>点击RSA加密后面的<code>添加密码</code>，这里我已经添加过，所以显示的查看秘钥。将生成步骤中生成的公钥文本粘贴进编辑框，点击保存，若显示<code>上传成功</code>则代表成功。</p>
 <h2 id="接入SDK"><a href="#接入SDK" class="headerlink" title="接入SDK"></a>接入SDK</h2><ol>
 <li>将<code>alipaySDK-20160223.jar</code>jar包添加至项目中。</li>
 <li>修改AndroidManifest.xml：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 权限 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.ACCESS_WIFI_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.READ_PHONE_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 当用户手机没有安装支付宝App时，会调用H5的页面进行支付，若不进行声明，则直接返回支付失败 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">"com.alipay.sdk.app.H5PayActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:configChanges</span>=<span class="string">"orientation|keyboardHidden|navigation"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:screenOrientation</span>=<span class="string">"behind"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">"com.alipay.sdk.auth.AuthActivity"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:configChanges</span>=<span class="string">"orientation|keyboardHidden|navigation"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">"false"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:screenOrientation</span>=<span class="string">"behind"</span> &gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -349,7 +349,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -428,11 +428,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -445,6 +445,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -468,7 +472,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,11 +488,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -488,7 +500,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

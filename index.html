@@ -158,462 +158,37 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hashset" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-serial-port" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/hashset/">Java HashSet 的原理</a>
+      <a class="article-title" href="/2020/07/15/serial-port/">Android 串口通信小记</a>
     </h1>
   
 
         
-        <a href="/2018/04/12/hashset/" class="archive-article-date">
-  	<time datetime="2018-04-12T06:49:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
+        <a href="/2020/07/15/serial-port/" class="archive-article-date">
+  	<time datetime="2020-07-15T07:40:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>项目里有用到 HashSet 数据结构，之前几乎没怎么用过，只是了解一点，不能存放重复的元素。但是一直没有看过代码。今天基于这个契机，看了下代码研究了下内在原理。颇有感触，在此记录一下。</p>
+        <p>最近项目有需要用到串口通信，硬件同事通过串口给应用层发送数据，稍微记录一下。</p>
+<h2 id="串口"><a href="#串口" class="headerlink" title="串口"></a>串口</h2><p>串口通信（Serial Communications）是指外设和计算机间，通过数据信号线 、地线、控制线等，按位进行传输数据的一种通讯方式。串口通信是计算机中非常常见的通信方式，比如一些有线鼠标、键盘、打印机等都是通过串口进行通信的。串口的通信一般使用3根线完成，分别是地线、发送线（tx）、接收线（rx）。<br>串口中有五个重要的参数：串口设备名、波特率、奇偶校验位、数据位、停止位。</p>
+<ol>
+<li>设备名称：串口的名称。</li>
+<li>波特率：传输速率的参数，波特率和传输距离成反比。</li>
+<li>校验位：在串口通信中一种简单的检错方式，有四种检错方式：偶、奇、高和低，允许无校验位。</li>
+<li>数据位：通信中实际数据位的参数</li>
+<li>停止位：用于表示单个包的最后一位。</li>
+</ol>
         
-          <a class="article-more-a" href="/2018/04/12/hashset/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-async-task-model" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/async-task-model/">异步任务的原生实现</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/28/async-task-model/" class="archive-article-date">
-  	<time datetime="2018-03-28T09:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在谈到异步任务，相信大多数开发者都会直接选择 RxJava，但是仍然会有不用 RxJava 的项目。这种情况下如何来做异步任务呢？</p>
-<p>其实不论是 RxJava 抑或是 Android 自带的 AysncTask，内部实现原理都是 Thread + Handler。如果线程想要返回 Result，那么只能使用 Callable来实现子线程，AsyncTask 便是使用的 Callable。</p>
-<p>下面说下项目中的使用场景：<br>一个界面由一个列表构成，但列表的构成十分复杂，item type 很多，需要请求多个网络接口来返回所需要的数据。网络接口请求互相独立，没有依赖关系，可使用多线程进行请求。如果使用 Android 提供的 AsyncTask，则在 doInBackground 依次执行网络接口，就丧失了多线程的优势，当然你也可以在 doInBackground 再起子线程执行网络请求，然后在返回的时候使用阻塞，等到所有接口执行完毕才返回，原理其实是一样的。</p>
-        
-          <a class="article-more-a" href="/2018/03/28/async-task-model/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">code</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-interview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/interview/">面试资料整理</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/23/interview/" class="archive-article-date">
-  	<time datetime="2018-03-23T09:25:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>离职之后，从深圳回到武汉，当然还是得找工作的。这里就整理一下我看过的有帮助的的一些资料。面试的时候可能一些知识你都知道，但是不成章法，不能流利的说出来，这里就得多加练习了。自己对照着面试题目进行回答，练习口才。</p>
-<h3 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h3><p><a href="https://mp.weixin.qq.com/s/YVvV3-RUjbqYo-DYY3E6nA" target="_blank" rel="noopener">超详细Android面试的准备与经历分享 | 百度(offer)</a><br><a href="https://mp.weixin.qq.com/s/rSV2IFpIQxwDaTfhof-CNA" target="_blank" rel="noopener">阿里、腾讯、百度、华为、京东、搜狗和滴滴最新面试题汇集</a><br><a href="https://juejin.im/post/5ab7a9cd6fb9a028c812d24b" target="_blank" rel="noopener">我所经历的Android面试</a><br><a href="http://mp.weixin.qq.com/s/p3l9wr4DX976Lr62-dYe8w" target="_blank" rel="noopener">BAT大厂面试题整理</a></p>
-<h3 id="Hanlder"><a href="#Hanlder" class="headerlink" title="Hanlder"></a>Hanlder</h3><p><a href="https://www.jianshu.com/p/6cc4d4b4676b" target="_blank" rel="noopener">Android Handler消息机制实现原理</a><br><a href="https://www.zhihu.com/question/34652589" target="_blank" rel="noopener">Android中为什么主线程不会因为Looper.loop()里的死循环卡死？</a></p>
-        
-          <a class="article-more-a" href="/2018/03/23/interview/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-long-time-no-see" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/16/long-time-no-see/">好久不见</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/16/long-time-no-see/" class="archive-article-date">
-  	<time datetime="2018-03-16T08:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>好久没更新博客了，今天抽空写点东西。最近一篇博客，讲的是怎么拷贝代码，那为什么会有这样一篇文章呢？</p>
-<p>嘿嘿，2018 年 2 月 9 号，我离职了。<br>在公司呆了有段时间了，觉得公司技术其实是很不错的，可惜发展不太好。前期融资的钱烧得差不多了，却仍然没有创造合理的商业模式进行营利，导致公司很难运营下去，也很难继续拉到投资。公司开始拖欠工资，后面很多员工都陆续离职了。我呢，想着可能还有点机会，一直继续干。但是坚持到年底仍然没什么起色，心灰意冷，就只能离职了。</p>
-        
-          <a class="article-more-a" href="/2018/03/16/long-time-no-see/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-code-copy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/22/code-copy/">解锁拷贝代码的新姿势</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/22/code-copy/" class="archive-article-date">
-  	<time datetime="2018-01-22T07:13:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>作为程序员，我们总会有各种拷贝代码的需求，例如现场部署，基友探讨，亦或是 公司电脑 -&gt; 自家电脑 等等。最最无脑的就是直接硬盘拷贝了，复制代码文件夹或压缩文件，直接拷贝到自己的硬盘或 U 盘里。但是作为安卓开发，如果要拷贝安卓代码，那就很费劲了。因为 Android Studio 会生成各种与代码无关的文件，尤其是 build 文件夹，有些时候代码可能就一两百兆，但是 build 文件夹就能有大几百兆甚至上 G 了。当然我们可以先 clean，然后再拷贝，但是如果项目复杂，多个工程多个 Module 互相依赖的，那就得每个 Module 都执行一遍 clean 了，想想那有多繁杂。</p>
-<p>现在大多的代码版本控制都是采用的 Git，我们需要的其实就只是代码文件，其他的一概不需要，而 Git 内部的 .gitignore 不是正好对应我们的需求吗？所以，我们得从版本控制的角度来拷贝代码。相信大多数公司项目的代码都是私有仓库，只能在公司内网访问到。但我们可以给代码添加远程仓库 origin，这个 origin 可以指到 Github 或自己搭建的 Git 服务器，但是如果是公司代码是不建议这么做的，泄密了嘛～若是自己写的小工具，三方库倒是没什么影响，但这也不是本文要说的重点。</p>
-<p>今天就说一下利用 Git 拷贝代码的新姿势，SVN 或其他版本控制工具不在此文范围之内。<strong>其实就是一个 Git 命令：git bundle。</strong></p>
-        
-          <a class="article-more-a" href="/2018/01/22/code-copy/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">奇技淫巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-summary-2017" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/summary-2017/">2017</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/19/summary-2017/" class="archive-article-date">
-  	<time datetime="2018-01-19T15:14:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>已然 2018 年了，想想过去的一年里，竟然没有一丁点想要写下来的东西。曾经满腔热血，不甘平凡的我，竟也被岁月磨平了棱角变得平淡，无趣。<br>但理想总是该缅怀一下的，或许某一天你会有了力量，风雨兼程，勇往前行。</p>
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=29567189&auto=1&height=66"></iframe>
-        
-          <a class="article-more-a" href="/2018/01/19/summary-2017/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-talk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/11/talk/">Kotlin 结合 RxJava 使用杂谈</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/11/talk/" class="archive-article-date">
-  	<time datetime="2018-01-11T09:01:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信现在越来越多的开发者都在使用 RxJava 和 Kotlin，当二者相遇，写出来的代码堪称优雅！</p>
-<blockquote>
-<p>我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。</p>
-</blockquote>
-<p>我之前写过这样一段话，在使用 Kotlin 的这段时间里，我对它的看法慢慢改变了。尤其引入 RxJava 后，结合 Lambda 表达式，写起代码简直像要飞起来！</p>
-        
-          <a class="article-more-a" href="/2018/01/11/talk/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-build-config" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/build-config/">Android 获取 BuildConfig 信息</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/04/build-config/" class="archive-article-date">
-  	<time datetime="2018-01-04T01:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发中，我们的 App 这个 Module 定义了3个 buildType：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">buildTypes </span>&#123;</span><br><span class="line">    <span class="class">release </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class">debug </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'1'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class">beta </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'2'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。<br>项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png" alt=""><br>App 作为 Application，其他作为 Library。</p>
-        
-          <a class="article-more-a" href="/2018/01/04/build-config/#more">more >></a>
+          <a class="article-more-a" href="/2020/07/15/serial-port/#more">more >></a>
         
       
 
@@ -651,33 +226,36 @@
 
 
   
-    <article id="post-mvp-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-viewpager-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/22/mvp-2/">关于 MVP 模式的一点思考（续）</a>
+      <a class="article-title" href="/2020/05/09/viewpager-1/">ViewPager 左右突出</a>
     </h1>
   
 
         
-        <a href="/2017/12/22/mvp-2/" class="archive-article-date">
-  	<time datetime="2017-12-22T02:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
+        <a href="/2020/05/09/viewpager-1/" class="archive-article-date">
+  	<time datetime="2020-05-09T08:29:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前有一个关于 MVP 的疑惑：<strong>1个 Presenter 能否对应多个 View？</strong>，在我的<a href="http://lastwarmth.win/2017/04/25/mvp-1/" target="_blank" rel="noopener">这篇文章</a>中有写过。现在回过头来仔细想想，感觉有点不对劲：1个 Presenter 为什么会有对应多个 View 的需求呢？那篇文章中的使用场景是：</p>
-<blockquote>
-<p>我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。</p>
-</blockquote>
-<p>我们都知道，Presenter 是用来抽离 Activity 或 Fragment 中的业务代码的，何为业务代码？就是这个页面涉及到的业务逻辑。<strong>关于数据的增删改查，那是 M 应该做的事，而绝不是 Presenter 该去处理的。</strong> 所以，Presenter 应当只对应一个 View，如果有界面复用 Presenter 的情况，那我们得考虑为什么会有这种情况呢？复用 Presenter 代表着业务逻辑是一致的，不同的页面理当有着不同的业务逻辑。当然，这里说的业务是简单，最小颗粒化的业务，如果一个页面十分复杂，Presenter 中集合了大量业务代码，那么在某些小的页面是有可能复用 Presenter 中的部分业务代码的。所以这种情况下，Presenter 会对应多个 View，那么这个场景使用上篇文章中的做法是可以的：<strong>复用 Presenter，将 View 抽离，利用继承实现多个界面的定制需求</strong>，但不会是上篇文章中的那种使用场景。</p>
+        <p>日常开发中经常会有如下需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png" alt=""></p>
+<p>ViewPager 左右突出，实现起来非常简单：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v4.view.ViewPager</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">clipToPadding</span>=<span class="string">"false"</span></span><br><span class="line">    android:<span class="attribute">paddingLeft</span>=<span class="string">"48dp"</span></span><br><span class="line">    android:<span class="attribute">paddingRight</span>=<span class="string">"48dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>添加 padding、clipToPadding 即可。<br>现在还有几个需求：</p>
+<ol>
+<li>两边的 item 小一点，并且有透明度</li>
+<li>item 之间的间距固定</li>
+<li>滑动有动画效果</li>
+</ol>
         
-          <a class="article-more-a" href="/2017/12/22/mvp-2/#more">more >></a>
+          <a class="article-more-a" href="/2020/05/09/viewpager-1/#more">more >></a>
         
       
 
@@ -691,7 +269,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -715,35 +293,29 @@
 
 
   
-    <article id="post-kotlin-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-telecom" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/21/kotlin-code/">Kotlin - 代码篇</a>
+      <a class="article-title" href="/2020/01/22/telecom/">记一次电信一键登录的“BUG”</a>
     </h1>
   
 
         
-        <a href="/2017/12/21/kotlin-code/" class="archive-article-date">
-  	<time datetime="2017-12-21T03:15:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-21</time>
+        <a href="/2020/01/22/telecom/" class="archive-article-date">
+  	<time datetime="2020-01-22T08:34:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-22</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。</p>
-<h2 id="空安全"><a href="#空安全" class="headerlink" title="空安全"></a>空安全</h2><p>当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做 ? )来明确地指定一个对象是否能为空。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">这里不能通过编译.</span> <span class="string">Artist</span> <span class="string">不能是</span> <span class="literal">null</span></span><br><span class="line"><span class="string">var</span> <span class="attr">notNullArtist:</span> <span class="string">Artist</span> <span class="string">=</span> <span class="literal">null</span></span><br><span class="line"><span class="string">//</span> <span class="string">Artist</span> <span class="string">可以是</span> <span class="literal">null</span></span><br><span class="line"><span class="string">var</span> <span class="attr">artist:</span> <span class="string">Artist?</span> <span class="string">=</span> <span class="literal">null</span></span><br><span class="line"><span class="string">//</span> <span class="string">无法编译,</span> <span class="string">artist可能是</span> <span class="literal">null</span><span class="string">,我们需要进行处理</span></span><br><span class="line"><span class="string">artist.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">只要在artist</span> <span class="string">!=</span> <span class="literal">null</span><span class="string">时才会打印</span></span><br><span class="line"><span class="string">artist?.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">智能转换.</span> <span class="string">如果我们在之前进行了空检查,则不需要使用安全调用操作符调用</span></span><br><span class="line"><span class="string">if</span> <span class="string">(artist</span> <span class="string">!=</span> <span class="literal">null</span><span class="string">)</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">artist.print()</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">//</span> <span class="string">只有在确保</span> <span class="string">artist</span> <span class="string">不是</span> <span class="literal">null</span> <span class="string">的情况下才能这么调用，否则它会抛出异常</span></span><br><span class="line"><span class="string">artist!!.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">使用</span> <span class="string">Elvis操作符</span> <span class="string">来给定一个在是</span> <span class="literal">null</span> <span class="string">的情况下的替代值</span></span><br><span class="line"><span class="string">val</span> <span class="string">name</span> <span class="string">=</span> <span class="string">artist?.name</span> <span class="string">?:</span> <span class="string">"empty"</span></span><br></pre></td></tr></table></figure></p>
-<p>关于 Elvis操作符 其实是三目条件运算符的简略写法。可以这样理解：</p>
-<ol>
-<li>A ?: B 等价于 if(A == null) B</li>
-<li>A?.B ?: C 等价于 if(A != null) A.B else C</li>
-</ol>
+        <p>马上就要过年了，这几天公司的人越来越少，而我打算坚守到最后一天，虽然事情比较少，但也能稍微自己看点东西，充充电。然而，项目发布的 App 在华为渠道被拒了，原因是：<strong>在登录页的隐私协议，不能默认勾选上</strong>。然后我看到了这样的代码：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;CheckBox</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/check_box"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">button</span>=<span class="string">"@null"</span></span><br><span class="line">    android:<span class="attribute">checked</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">drawableLeft</span>=<span class="string">"@drawable/account__protocol_agree"</span></span><br><span class="line">    android:<span class="attribute">drawablePadding</span>=<span class="string">"7dp"</span></span><br><span class="line">    android:<span class="attribute">enabled</span>=<span class="string">"false"</span></span><br><span class="line">    android:<span class="attribute">text</span>=<span class="string">"同意"</span></span><br><span class="line">    android:<span class="attribute">textColor</span>=<span class="string">"#333333"</span></span><br><span class="line">    android:<span class="attribute">textSize</span>=<span class="string">"12dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
         
-          <a class="article-more-a" href="/2017/12/21/kotlin-code/#more">more >></a>
+          <a class="article-more-a" href="/2020/01/22/telecom/#more">more >></a>
         
       
 
@@ -757,7 +329,416 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-summary-2019" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/15/summary-2019/">2019 年终总结</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/15/summary-2019/" class="archive-article-date">
+  	<time datetime="2020-01-15T06:25:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>还有八天便是除夕了，又到了年终总结的时候了。2019 的总结，一个字：「难」。诉乐不诉苦，不管多难自己承受，「任何杀不死的，都会使我变得更为强大」。2019 还是有一些好事的。</p>
+        
+          <a class="article-more-a" href="/2020/01/15/summary-2019/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-textview-suffix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/24/textview-suffix/">TextView 自定义“ellipsize”</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/24/textview-suffix/" class="archive-article-date">
+  	<time datetime="2019-12-24T03:23:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>日常开发中，经常有 TextView 最多显示 3 行，超出了就显示“…查看更多”，在网上找到一个十分方便使用的类，原理也很简单，摘录一下，以后开发类似需求再也不愁了~</p>
+        
+          <a class="article-more-a" href="/2019/12/24/textview-suffix/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cat-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/18/cat-1/">土豆历险记</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/18/cat-1/" class="archive-article-date">
+  	<time datetime="2019-12-18T06:58:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上上周末，带土豆去洗了一次澡。从领回家到现在，就洗过一次澡…<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2019/1.jpg" alt=""><br>洗完澡之后，在烘干机里瑟瑟发抖。</p>
+        
+          <a class="article-more-a" href="/2019/12/18/cat-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">cat</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-anim-continue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/18/anim-continue/">记一次动画实践-续</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/18/anim-continue/" class="archive-article-date">
+  	<time datetime="2019-12-18T03:28:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>嗯，这篇文章是接着<a href="http://lastwarmth.win/2019/12/12/anim/" target="_blank" rel="noopener">上一篇</a>的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。<br>如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：</p>
+<ol>
+<li>scroll<blockquote>
+<p>The view will be scroll in direct relation to scroll events. This flag needs to be set for any of the other flags to take effect. If any sibling views before this one do not have this flag, then this value has no effect.</p>
+</blockquote>
+</li>
+</ol>
+<p>Child View 伴随着滚动事件而滚出或滚进屏幕。注意两点：第一点，如果使用了其他值，必定要使用这个值才能起作用；第二点：如果在这个 Child View 前面的任何其他 Child View 没有设置这个值，那么这个 Child View 的设置将失去作用。</p>
+        
+          <a class="article-more-a" href="/2019/12/18/anim-continue/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-anim" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/12/anim/">记一次动画实践</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/12/anim/" class="archive-article-date">
+  	<time datetime="2019-12-12T03:48:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>废话少说，先上效果图：</p>
+<p><video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E8%A7%86%E9%A2%91%E5%8A%A8%E7%94%BB%20.mp4" width="264" height="460" controls="controls"><br>Your browser does not support the video tag.<br></video><br>得如何实现这样的效果呢？</p>
+        
+          <a class="article-more-a" href="/2019/12/12/anim/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/29/tips/">问题集锦</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/29/tips/" class="archive-article-date">
+  	<time datetime="2019-11-29T10:18:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。</p>
+<h2 id="文件校验"><a href="#文件校验" class="headerlink" title="文件校验"></a>文件校验</h2><p>应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？<br>最后定位问题：<strong>同事拿到数据库文件，为了确定版本是对的，打开 db 文件看了一眼，然后 SQLite 就会自动写入一些东西，导致 md5 值改变。</strong> 涨点姿势，以后应当注意。</p>
+        
+          <a class="article-more-a" href="/2019/11/29/tips/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-october" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/31/october/">十月</a>
+    </h1>
+  
+
+        
+        <a href="/2019/10/31/october/" class="archive-article-date">
+  	<time datetime="2019-10-31T01:59:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>银烛秋光冷画屏，轻罗小扇扑流萤。<br>天阶夜色凉如水，坐看牵牛织女星。</p>
+<p>十月，秋高气爽，中秋国庆，适合出游。一直没空写点东西，在十月的尾巴，还是写点东西吧。</p>
+<p>早在 6、7 月份，便有了想去「西北大环线」的冲动。大学伊始到现在的几年里，去的地方也有一些了，山呀，水呀，都见过很多了，唯独大西北那种戈壁、荒漠的自然风光却只存在于想象里。在基友群里吹牛，说想去大西北，吹着吹着发现就这样组起队来了：去啊，去他妈的！老康、斌哥还是给力呀，行动力 Max。人员定了之后，初步聊了一下，后面就没怎么聊了，直到出发的前一天，感觉很梦幻：就这样出发了吗？总有种感觉会鸽掉。<br>所幸没有。</p>
+        
+          <a class="article-more-a" href="/2019/10/31/october/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
         		</li>
       		
 		</ul>
@@ -783,7 +764,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -795,7 +776,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -874,11 +855,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -891,6 +872,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -914,7 +899,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -922,11 +915,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -934,7 +927,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

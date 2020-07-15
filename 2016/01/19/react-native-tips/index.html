@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="在上一篇文章中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。 真机运行白屏在执行react-native run-android指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。白屏问题便能解决了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips3.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips4.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips5.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips6.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.137Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips3.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips4.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips5.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips6.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="React Native For Android初探-问题小结">
 <meta name="twitter:description" content="在上一篇文章中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。 真机运行白屏在执行react-native run-android指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。白屏问题便能解决了。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -189,15 +189,15 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在<a href="http://lijia92.github.io/2016/01/15/react-native/">上一篇文章</a>中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。</p>
-<h2 id="真机运行白屏"><a href="#真机运行白屏" class="headerlink" title="真机运行白屏"></a>真机运行白屏</h2><p>在执行<code>react-native run-android</code>指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips1.png" alt="这里写图片描述"><br>解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips2.png" alt="这里写图片描述"><br>白屏问题便能解决了。</p>
+<h2 id="真机运行白屏"><a href="#真机运行白屏" class="headerlink" title="真机运行白屏"></a>真机运行白屏</h2><p>在执行<code>react-native run-android</code>指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips1.png" alt="这里写图片描述"><br>解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips2.png" alt="这里写图片描述"><br>白屏问题便能解决了。</p>
 <a id="more"></a>
-<h2 id="真机运行提示Unable-to-download-JS-bundle"><a href="#真机运行提示Unable-to-download-JS-bundle" class="headerlink" title="真机运行提示Unable to download JS bundle"></a>真机运行提示Unable to download JS bundle</h2><p>在我们解决完白屏问题之后，重新运行程序，发现程序能运行了，但是报错了：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips3.png" alt="这里写图片描述"><br>点击Reload JS后，提示Unable to download JS bundle：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips4.png" alt="这里写图片描述"><br>解决方法：摇晃设备或按Menu键，可以打开调试菜单，点击DevSettings，选Debug server host for device，输入你的正在运行packager的那台电脑的<code>局域网IP加:8081</code>（同时要保证手机和电脑在同一网段，且没有防火墙阻拦），再按back键返回，再次打开Menu键，在调试菜单中选择Reload JS，就可以看到运行的结果了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips5.png" alt="这里写图片描述"></p>
+<h2 id="真机运行提示Unable-to-download-JS-bundle"><a href="#真机运行提示Unable-to-download-JS-bundle" class="headerlink" title="真机运行提示Unable to download JS bundle"></a>真机运行提示Unable to download JS bundle</h2><p>在我们解决完白屏问题之后，重新运行程序，发现程序能运行了，但是报错了：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips3.png" alt="这里写图片描述"><br>点击Reload JS后，提示Unable to download JS bundle：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips4.png" alt="这里写图片描述"><br>解决方法：摇晃设备或按Menu键，可以打开调试菜单，点击DevSettings，选Debug server host for device，输入你的正在运行packager的那台电脑的<code>局域网IP加:8081</code>（同时要保证手机和电脑在同一网段，且没有防火墙阻拦），再按back键返回，再次打开Menu键，在调试菜单中选择Reload JS，就可以看到运行的结果了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips5.png" alt="这里写图片描述"></p>
 <h2 id="Chrome调试JS"><a href="#Chrome调试JS" class="headerlink" title="Chrome调试JS"></a>Chrome调试JS</h2><ol>
 <li>安装拓展程序<code>React Developer Tools</code>。</li>
 <li>在模拟器或真机菜单中选择Debug JS，打开调试开关。</li>
 <li>Chrome打开：<code>http://localhost:8081/debugger-ui</code>，按F12打开开发者工具便能进行调试。</li>
 </ol>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips6.png" alt="这里写图片描述"></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips6.png" alt="这里写图片描述"></p>
 
       
 
@@ -335,7 +335,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -414,11 +414,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,6 +431,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -454,7 +458,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -462,11 +474,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -474,7 +486,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

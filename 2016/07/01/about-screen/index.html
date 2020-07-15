@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最后做的项目中，有用到横竖屏切换，碰到个小坑，在这里记录一下。 背景：用户在进入直播页面（姑且称之为RoomActivity），进入页面的时候会传入横竖屏的参数，在RoomActivity中拿到参数通过setRequestedOrientation来进行设置横竖屏。 众所周知，android在横竖屏切换的时候，会销毁当前的页面，然后重建，导致的便是activity的生命周期会执行2次，那么写在其中">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/06/screent1.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.057Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/screent1.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android屏幕横竖屏切换小记">
 <meta name="twitter:description" content="最后做的项目中，有用到横竖屏切换，碰到个小坑，在这里记录一下。 背景：用户在进入直播页面（姑且称之为RoomActivity），进入页面的时候会传入横竖屏的参数，在RoomActivity中拿到参数通过setRequestedOrientation来进行设置横竖屏。 众所周知，android在横竖屏切换的时候，会销毁当前的页面，然后重建，导致的便是activity的生命周期会执行2次，那么写在其中">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/06/screent1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/screent1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -192,7 +192,7 @@
 <p>方案二：<br>设置activty参数，避免销毁当前页面重建。在设置<code>configChanges</code>参数后，在切换横竖屏时候便不会重建页面了，那么当前页面或得到的业务数据也自然就还在，只是要强调一点：切换横竖屏后，<code>所有的View需要重新进行初始化</code>。<br>在<code>AndroidManifest.xml</code>中给activity设置如下<code>configChanges</code>参数：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">".RoomActivity"</span></span><br><span class="line">    android:<span class="attribute">screenOrientation</span>=<span class="string">"portrait"</span></span><br><span class="line">    android:<span class="attribute">keepScreenOn</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">configChanges</span>=<span class="string">"orientation|screenSize"</span></span><br><span class="line">    android:<span class="attribute">windowSoftInputMode</span>=<span class="string">"adjustNothing"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
 <p>然后在activity的<code>onConfigurationChanged</code>中进行view的初始化。<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> void onConfigurationChanged(Configuration <span class="keyword">new</span><span class="type">Config</span>) &#123;</span><br><span class="line">    setContentView(R.layout.activity_room);</span><br><span class="line">    initViewHolder();</span><br><span class="line">    initBarrageView();</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(<span class="keyword">new</span><span class="type">Config</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>之所以会重新调用<code>setContentView(R.layout.activity_room);</code>是因为我的RoomActivity有横、竖两套布局，需要重新设置一下（布局名称名字一样，横屏的布局文件写在land文件下即可）。</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/06/screent1.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/screent1.png" alt=""></p>
 <p>如此便解决了横竖屏切换导致的问题了，特此小记一下。</p>
 <p>补充：<br>Android横屏切换可能有2种：90度和270度。这两种都是横屏。现在做直播产品，需要设置摄像头的角度，所以不仅仅需要知道横竖屏，也需要知道横屏是90度的那种还是270度的那种。如果仅仅依靠重力感应，部分安卓手机会不支持180度转屏，以致于从90度转到270度或者从270度转到90度时，系统认为界面没有发生变化，所以没有合适的机会来设置摄像头的角度。采用DisplayManager.DisplayListener可以达到目的，但是必须是Android 17以上，这就需要依据项目情况来做些取舍了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initDisplayListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 部分安卓手机不支持180度转屏，以致于从90度转到270度或者从270度转到90度时，系统认为界面没有发生变化</span></span><br><span class="line"><span class="comment">	 * Android 17及以上可以通过DisplayManager.DisplayListener来监听手机旋转，以解决这个问题</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN_MR1) &#123;</span><br><span class="line">		mDisplayListener = <span class="keyword">new</span> DisplayManager.DisplayListener() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDisplayAdded</span><span class="params">(<span class="keyword">int</span> displayId)</span> </span>&#123;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDisplayChanged</span><span class="params">(<span class="keyword">int</span> displayId)</span> </span>&#123;</span><br><span class="line">				changeRotation();</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDisplayRemoved</span><span class="params">(<span class="keyword">int</span> displayId)</span> </span>&#123;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		DisplayManager displayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);</span><br><span class="line">		displayManager.registerDisplayListener(mDisplayListener, <span class="keyword">null</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">changeRotation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (getWindowManager().getDefaultDisplay().getRotation()) &#123;</span><br><span class="line">		<span class="keyword">case</span> Surface.ROTATION_0:</span><br><span class="line">			<span class="comment">// 0度</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> Surface.ROTATION_90:</span><br><span class="line">			<span class="comment">// 90度</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> Surface.ROTATION_180:</span><br><span class="line">			<span class="comment">// 180度</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> Surface.ROTATION_270:</span><br><span class="line">			<span class="comment">// 270度</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>参考：</p>
@@ -337,7 +337,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -416,11 +416,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -433,6 +433,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,7 +460,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -464,11 +476,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -476,7 +488,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

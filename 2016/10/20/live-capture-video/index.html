@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&amp;gt; 美颜/滤镜/特效处理 -&amp;gt; 编码 -&amp;gt; 封包 -&amp;gt; 推流 -&amp;gt; 分发 -&amp;gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。那么实时采集视频有哪些方案呢？ 调研通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：  通过Android Camera拍摄预览">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video1.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video2.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video3.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video4.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.114Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video1.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video2.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video3.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video4.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Android音视频开发】- 实时采集视频">
 <meta name="twitter:description" content="前言通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&amp;gt; 美颜/滤镜/特效处理 -&amp;gt; 编码 -&amp;gt; 封包 -&amp;gt; 推流 -&amp;gt; 分发 -&amp;gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。那么实时采集视频有哪些方案呢？ 调研通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：  通过Android Camera拍摄预览">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video1.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -196,12 +196,12 @@
 <p>通过学习，大致了解了1，2两种方式的实现方式，但是对于第3种方式，暂时没有研究。</p>
 <a id="more"></a>
 <h2 id="spydroid"><a href="#spydroid" class="headerlink" title="spydroid"></a>spydroid</h2><p>当我们在接触一个全新领域的时候，最希望的是能实实在在看到一个demo产品，通过demo产品我们更容易理解其内在的原理。在网上看到了许多的开源项目，最后选择了<a href="https://github.com/fyhertz/spydroid-ipcamera" target="_blank" rel="noopener">spydroid</a>，感觉它跟Android结合更紧密。更多的信息可以参考<a href="http://www.smarting.me/android-video-caputure.html" target="_blank" rel="noopener">Android视频采集方案总结</a>。</p>
-<h3 id="拷贝工程"><a href="#拷贝工程" class="headerlink" title="拷贝工程"></a>拷贝工程</h3><p>通过github看到的项目是Eclipse结构，这里我把代码拷贝下来后，通过AS打开，配置一些信息后项目结构如下：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video1.png" alt=""></p>
+<h3 id="拷贝工程"><a href="#拷贝工程" class="headerlink" title="拷贝工程"></a>拷贝工程</h3><p>通过github看到的项目是Eclipse结构，这里我把代码拷贝下来后，通过AS打开，配置一些信息后项目结构如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video1.png" alt=""></p>
 <p><a href="https://github.com/fyhertz/libstreaming" target="_blank" rel="noopener">streaming</a>是作者封装的一套库。</p>
 <blockquote>
 <p>A solution for streaming H.264, H.263, AMR, AAC using RTP on Android</p>
 </blockquote>
-<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>项目拷贝到AS后，有部分错误，修复后成功运行在MI 4LTE。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video2.png" alt=""><br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video3.png" alt=""><br>它可以通过http，也可以通过rtsp进行推流，打开rtsp推流的开关，首页会多了一个VLC的地址。<br>我在Win 10上使用Chrome接收失败，打开网站后Connect一直连不上。所以采取的VLC方式。<br>打开VLC输入首页提示的地址，即可看到推流成功了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video4.png" alt=""><br>demo跑通后，便有了一个直观的感受，接下来便是看代码了。</p>
+<h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><p>项目拷贝到AS后，有部分错误，修复后成功运行在MI 4LTE。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video2.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video3.png" alt=""><br>它可以通过http，也可以通过rtsp进行推流，打开rtsp推流的开关，首页会多了一个VLC的地址。<br>我在Win 10上使用Chrome接收失败，打开网站后Connect一直连不上。所以采取的VLC方式。<br>打开VLC输入首页提示的地址，即可看到推流成功了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video4.png" alt=""><br>demo跑通后，便有了一个直观的感受，接下来便是看代码了。</p>
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>从<code>SpydroidActivity</code>开始，会看到它连接了一个Service：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ServiceConnection mRtspServiceConnection = <span class="keyword">new</span> ServiceConnection() &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</span><br><span class="line">		mRtspServer = (CustomRtspServer) ((RtspServer.LocalBinder)service).getService();</span><br><span class="line">		mRtspServer.addCallbackListener(mRtspCallbackListener);</span><br><span class="line">		mRtspServer.start();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
 <p>看到<code>RtspServer</code>中的start方法：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (!mEnabled || mRestart) stop();</span><br><span class="line">	<span class="keyword">if</span> (mEnabled &amp;&amp; mListenerThread == <span class="keyword">null</span>) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			mListenerThread = <span class="keyword">new</span> RequestListener();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			mListenerThread = <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	mRestart = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>再看到<code>RequestListener</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestListener</span> <span class="keyword">extends</span> <span class="title">Thread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> ServerSocket mServer;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">RequestListener</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			mServer = <span class="keyword">new</span> ServerSocket(mPort);</span><br><span class="line">			start();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (BindException e) &#123;</span><br><span class="line">			Log.e(TAG,<span class="string">"Port already in use !"</span>);</span><br><span class="line">			postError(e, ERROR_BIND_FAILED);</span><br><span class="line">			<span class="keyword">throw</span> e;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Log.i(TAG,<span class="string">"RTSP server listening on port "</span>+mServer.getLocalPort());</span><br><span class="line">		<span class="keyword">while</span> (!Thread.interrupted()) &#123;</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				<span class="keyword">new</span> WorkerThread(mServer.accept()).start();</span><br><span class="line">			&#125; <span class="keyword">catch</span> (SocketException e) &#123;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">				Log.e(TAG,e.getMessage());</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		Log.i(TAG,<span class="string">"RTSP server stopped !"</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kill</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			mServer.close();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;&#125;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">this</span>.join();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException ignore) &#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -354,7 +354,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -433,11 +433,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,6 +450,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -473,7 +477,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,11 +493,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -493,7 +505,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

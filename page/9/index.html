@@ -158,32 +158,30 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-single-thread-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-wrong" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/23/single-thread-queue/">Android实现简易轻量下载器：单线程任务队列</a>
+      <a class="article-title" href="/2017/04/18/wrong/">使用ListView多Type的错误姿势</a>
     </h1>
   
 
         
-        <a href="/2016/02/23/single-thread-queue/" class="archive-article-date">
-  	<time datetime="2016-02-23T03:40:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-23</time>
+        <a href="/2017/04/18/wrong/" class="archive-article-date">
+  	<time datetime="2017-04-18T11:33:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近的项目是一个与音乐相关的App，其中有一个功能：收藏喜欢的歌曲，在wifi的环境下自动下载。</p>
-<p>考虑到音乐歌曲都是3、4Mb的小文件，断点下载的功能便不需要了。因此只需要实现一个特别轻量、简单的下载管理类，进行管理即可。</p>
-<p>最初的思路便是任务队列，单线程顺序执行，一个文件接着一个文件进行下载。</p>
-<p>之前看过AsyncTask的部分源码，其设计与我的想法类似，于是便借鉴着AsyncTask的源码，实现了一个特别简单、轻量的下载管理类。</p>
+        <p>项目中，有这样的一个需求：</p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/18/QQ%E5%9B%BE%E7%89%8720170412161938.png" alt=""></p>
         
-          <a class="article-more-a" href="/2016/02/23/single-thread-queue/#more">more >></a>
+          <a class="article-more-a" href="/2017/04/18/wrong/#more">more >></a>
         
       
 
@@ -199,10 +197,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -225,97 +219,34 @@
 
 
   
-    <article id="post-photo-wall" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-coordinatorlayout" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/17/photo-wall/">Android实现照片墙背景</a>
+      <a class="article-title" href="/2017/03/31/coordinatorlayout/">CoordinatorLayout之Behavior认识</a>
     </h1>
   
 
         
-        <a href="/2016/02/17/photo-wall/" class="archive-article-date">
-  	<time datetime="2016-02-17T09:34:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-17</time>
+        <a href="/2017/03/31/coordinatorlayout/" class="archive-article-date">
+  	<time datetime="2017-03-31T11:09:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>项目开发中，有一个这样的需求：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/02/photo-wall1.png" alt="这里写图片描述"><br>在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。</p>
-<hr>
-<h2 id="第一种方案"><a href="#第一种方案" class="headerlink" title="第一种方案"></a>第一种方案</h2><p>起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。</p>
-<p>显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。</p>
-<h2 id="第二种方案"><a href="#第二种方案" class="headerlink" title="第二种方案"></a>第二种方案</h2><p>之后，我想到了GridView，显然也是可以的，在得到图片路径后传入到Adapter中即可。比起方案一稍微“优雅”些，但是也是很难将这个背景墙当成一个整体，进行将来可能会添加的动画特效需求。</p>
-<h2 id="第三种方案"><a href="#第三种方案" class="headerlink" title="第三种方案"></a>第三种方案</h2><p>最后，我想到，既然要当成一整个整体，那么自定义View或许是个不错的办法。</p>
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：</p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif" alt=""></p>
+<p>在<code>Material Design</code>出来之前，我们可能会有方案一：</p>
+<blockquote>
+<p>给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。</p>
+</blockquote>
         
-          <a class="article-more-a" href="/2016/02/17/photo-wall/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-material-design" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/17/material-design/">使用Android新特性：Material Design</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/17/material-design/" class="archive-article-date">
-  	<time datetime="2016-02-17T08:34:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>大年初十，相信许多人都已经过完年，在上班的路上或者已经上班了。在这里跟大家说一声：新年好~</p>
-<p>新年新气象，今天打算写一篇关于Android新特性：<code>Material Design</code>的文章。Material Design作为android 5.0的重头戏，说是新特性，但是其实已经算不上“新”了，毕竟android 6.0都出来了呢。</p>
-<p>情人节刚过，我便以“秀恩爱”为主题，做一个新特性的使用例子。废话少说，下面开撸。</p>
-<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><p>使用新特性需要添加依赖：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:design:23.0.1'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:cardview-v7:23.1.0'</span></span><br><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:recyclerview-v7:23.1.0'</span></span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2016/02/17/material-design/#more">more >></a>
+          <a class="article-more-a" href="/2017/03/31/coordinatorlayout/#more">more >></a>
         
       
 
@@ -353,229 +284,36 @@
 
 
   
-    <article id="post-react-native-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-gradle-app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/19/react-native-tips/">React Native For Android初探-问题小结</a>
+      <a class="article-title" href="/2017/03/16/gradle-app/">Gradle 多版本管理</a>
     </h1>
   
 
         
-        <a href="/2016/01/19/react-native-tips/" class="archive-article-date">
-  	<time datetime="2016-01-19T03:38:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-19</time>
+        <a href="/2017/03/16/gradle-app/" class="archive-article-date">
+  	<time datetime="2017-03-16T08:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在<a href="http://lijia92.github.io/2016/01/15/react-native/">上一篇文章</a>中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。</p>
-<h2 id="真机运行白屏"><a href="#真机运行白屏" class="headerlink" title="真机运行白屏"></a>真机运行白屏</h2><p>在执行<code>react-native run-android</code>指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips1.png" alt="这里写图片描述"><br>解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/react-native-tips2.png" alt="这里写图片描述"><br>白屏问题便能解决了。</p>
-        
-          <a class="article-more-a" href="/2016/01/19/react-native-tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-react-native" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/15/react-native/">React Native For Android初探</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/15/react-native/" class="archive-article-date">
-  	<time datetime="2016-01-15T09:20:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Facebook 在 <a href="http://conf.reactjs.com/" target="_blank" rel="noopener">React.js Conf 2015</a> 大会上推出了基于 JavaScript 的开源框架 <a href="https://facebook.github.io/react-native/" target="_blank" rel="noopener">React Native</a>。React Native 结合了 Web 应用和 Native 应用的优势，可以使用 JavaScript 来开发 iOS 和 Android 原生应用。在 JavaScript 中用 React 抽象操作系统原生的 UI 组件，代替 DOM 元素来渲染等。</p>
-<blockquote>
-<p>React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. The focus of React Native is on developer efficiency across all the platforms you care about — learn once, write anywhere. Facebook uses React Native in multiple production apps and will continue investing in React Native.</p>
-</blockquote>
-<p>React Native 使你能够使用基于 JavaScript 和 React 一致的开发体验在本地平台上构建世界一流的应用程序体验。React Native 把重点放在所有开发人员关心的平台的开发效率上——开发者只需学习一种语言就能轻易为任何平台高效地编写代码。Facebook 在多个应用程序产品中使用了 React Native，并将继续为 React Native 投资。</p>
-<p>对于不太了解React Native是什么以及Facebook为什么要创建React Native，可以先看看<a href="https://code.facebook.com/posts/1014532261909640/react-native-bringing-modern-web-techniques-to-mobile/" target="_blank" rel="noopener">这篇博客</a>。</p>
-<p>Facebook 于 2015 年 9 月 15 日发布了 React Native for Android， 把 Web 和原生平台的 JavaScript 开发技术扩展到了 Google 的流行移动平台–Android。</p>
-<p>最近项目技术负责人说可能以后我们也会使用这套框架进行App开发，所以便预先学习一下，顺便做下笔记，分享给大家。</p>
-        
-          <a class="article-more-a" href="/2016/01/15/react-native/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hybrid-practice" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/14/hybrid-practice/">Android Hybrid开发实战之图片的交互</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/14/hybrid-practice/" class="archive-article-date">
-  	<time datetime="2016-01-14T06:32:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近一直在学习Hybrid开发，如何在H5页面调用Android原生接口，并返回值，以及回调。学习了一段时间，总算是有点收获，效果也做出来了。于是写下这篇博客，记录一下。</p>
-<p>本文中我以2个接口示例，来进行讲解。第1个示例很简单，就是调用接口，返回登录Token；第2个示例是H5调用接口，弹出Android原生界面进行图片选择，选择完之后返回选择图片的Base64格式的字符串。然后H5页面接收返回的字符串，回调进行图片显示。</p>
-<h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p>首先，讲解一下Base64。图片也是一个文件，可以通过Base64返回这个文件的Base64字符串，这个字符串可以直接放到H5的img标签进行显示。</p>
-        
-          <a class="article-more-a" href="/2016/01/14/hybrid-practice/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-notification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/11/notification/">Android Notification使用小记</a>
-    </h1>
-  
-
-        
-        <a href="/2016/01/11/notification/" class="archive-article-date">
-  	<time datetime="2016-01-11T12:46:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近的项目中，需要用到Notification。上一下效果图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/01/notification1.png" alt="这里写图片描述"></p>
-<p>首先，学习一下关于Notification的基本知识。</p>
-<p>状态通知栏主要涉及到2个类：  Notification 和 NotificationManager 。<br>Notification为通知信息类，它里面对应了通知栏的各个属性。<br>NotificationManager ：  是状态栏通知的管理类，负责发通知、清除通知等操作。<br>注意：NotificationManager 是一个系统Service，必须通过 getSystemService(NOTIFICATION_SERVICE)方法来获取：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mNotificationManager = (<span class="name">NotificationManager</span>) getSystemService(<span class="name">NOTIFICATION_SERVICE</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<p>自定义Notification大致分为以下几步：</p>
+        <p>之前有写过一篇<a href="http://lastwarmth.win/2016/03/09/gradle-pack/" target="_blank" rel="noopener">Android Studio使用Gradle进行多渠道打包</a>，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言来声明项目设置，而不是传统的XML。<br>使用Gradle的优势:</p>
 <ol>
-<li>自定义布局；</li>
-<li>使用NotificationCompat.Builder创建Notification。使用RemoteViews填充自定义布局，然后通过setContent()添加到Builder中；</li>
-<li>使用广播，添加按钮点击事件；</li>
-<li>NotificationManager.notify()将Notification显示到手机状态栏。</li>
+<li>自动处理包相依关系 - 取自 Maven Repos 的概念</li>
+<li>自动处理布署问题 - 取自 Ant 的概念</li>
+<li>条件判断写法直觉 - 使用 Groovy 语言</li>
 </ol>
-<p>下面结合代码进行说明。</p>
+<p>更多关于Gradle的学习可以阅读<a href="https://dongchuan.gitbooks.io/gradle-user-guide-/" target="_blank" rel="noopener">Gradle User Guide 中文版</a>。</p>
         
-          <a class="article-more-a" href="/2016/01/11/notification/#more">more >></a>
+          <a class="article-more-a" href="/2017/03/16/gradle-app/#more">more >></a>
         
       
 
@@ -589,7 +327,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
         		</li>
       		
 		</ul>
@@ -613,32 +351,29 @@
 
 
   
-    <article id="post-hybrid-introduction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-theme-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/25/hybrid-introduction/">Android Hybrid开发入门：原生Android与JS的交互</a>
+      <a class="article-title" href="/2017/02/16/theme-update/">博客主题更新</a>
     </h1>
   
 
         
-        <a href="/2015/12/25/hybrid-introduction/" class="archive-article-date">
-  	<time datetime="2015-12-25T07:03:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-25</time>
+        <a href="/2017/02/16/theme-update/" class="archive-article-date">
+  	<time datetime="2017-02-16T06:54:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们知道，现在App大致分为3类：<code>Hybrid App</code>、<code>Web App</code>、<code>Native App</code>。Hybrid App兼具“Native App良好用户交互体验的优势”和“Web App跨平台开发的优势”，市面上现在也有许多Hybrid App。</p>
-<p>最近做的项目，也会使用到Hybrid开发，之前没做过的。所以今天初步学习了一下，记录一下学习心得。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>首先，新建一个新的AS module，然后新建assets目录，至于src/main文件夹下。如下图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/12/hybrid-introduction1.png" alt="这里写图片描述"><br>我们再assets目录下，新建一个hello.html，编辑内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = <span class="string">"Hello Hybrid!"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">onclick</span>=<span class="string">"window.demo.clickOnAndroid()"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>一个很简单的html页面。</p>
+        <p>之前一直用的是<code>next</code>主题，后面看到过<code>yilia</code>主题，感觉也不错，便切换到了<code>yilia</code>主题。但是在用的时候有个问题一直让我很不爽：空行的处理让代码上下空出很多行。就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/02/984899F5-CB20-4A44-B7EF-5F311A4E2B48.png" alt=""></p>
         
-          <a class="article-more-a" href="/2015/12/25/hybrid-introduction/#more">more >></a>
+          <a class="article-more-a" href="/2017/02/16/theme-update/#more">more >></a>
         
       
 
@@ -652,7 +387,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
         		</li>
       		
 		</ul>
@@ -676,30 +411,29 @@
 
 
   
-    <article id="post-picture-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-translucent-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/08/picture-view/">Android仿QQ空间浏览图片</a>
+      <a class="article-title" href="/2017/02/16/translucent-view/">Android任意View边沿渐变透明</a>
     </h1>
   
 
         
-        <a href="/2015/12/08/picture-view/" class="archive-article-date">
-  	<time datetime="2015-12-08T09:09:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-08</time>
+        <a href="/2017/02/16/translucent-view/" class="archive-article-date">
+  	<time datetime="2017-02-16T02:04:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近的项目中需要用到类似QQ空间那样的图片浏览功能，于是Google了一波，发现使用ViewPager与PhotoView即可实现。有了思路便开撸了。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>首先，我们定义一个用于展示原图的Activity。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ImageBrowseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ViewPager对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">ViewPager</span> mViewPager;</span><br><span class="line">    <span class="comment">// 原图url路径List</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">List</span>&lt;<span class="type">String</span>&gt; imagePath;</span><br><span class="line">    <span class="comment">// 当前显示的位置</span></span><br><span class="line">    <span class="keyword">private</span> int position;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.activity_images_view);</span><br><span class="line">        <span class="comment">// 获取参数</span></span><br><span class="line">        <span class="keyword">this</span>.position = getIntent().getIntExtra(<span class="string">"position"</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">this</span>.imagePath = getIntent().getStringArrayListExtra(<span class="string">"imagePath"</span>);</span><br><span class="line">        mViewPager = (<span class="type">ViewPager</span>) findViewById(<span class="type">R</span>.id.images_view);</span><br><span class="line">        <span class="comment">// 设置左右两列缓存的数目</span></span><br><span class="line">        mViewPager.setOffscreenPageLimit(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 添加Adapter</span></span><br><span class="line">        <span class="type">PagerAdapter</span> adapter = <span class="keyword">new</span> <span class="type">ImageBrowseAdapter</span>(<span class="keyword">this</span>, imagePath);</span><br><span class="line">        mViewPager.setAdapter(adapter);</span><br><span class="line">        mViewPager.setCurrentItem(position);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>之前在做直播产品的时候，有个需求：弹幕列表在滑入滑出的时候要有渐变效果。当时想了几种方案但是都没有做到满意的效果，后面便搁置了。直到我看到了这个库：<a href="https://github.com/qinci/EdgeTranslucent" target="_blank" rel="noopener">Android任意View边沿渐变透明</a>，看了下效果，正是我当时需要的。虽然时过境迁，现在没有在意这个需求了，但是从心底里还是想知道它是如何实现的。<br><img src="https://raw.githubusercontent.com/qinci/EdgeTranslucent/master/image/image.gif" alt=""></p>
         
-          <a class="article-more-a" href="/2015/12/08/picture-view/#more">more >></a>
+          <a class="article-more-a" href="/2017/02/16/translucent-view/#more">more >></a>
         
       
 
@@ -713,7 +447,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
         		</li>
       		
 		</ul>
@@ -737,37 +471,226 @@
 
 
   
-    <article id="post-nine-patch" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-summary" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/23/nine-patch/">Android Studio中使用.9（Nine Patch）图</a>
+      <a class="article-title" href="/2017/01/09/summary/">我的2016</a>
     </h1>
   
 
         
-        <a href="/2015/11/23/nine-patch/" class="archive-article-date">
-  	<time datetime="2015-11-23T02:09:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-23</time>
+        <a href="/2017/01/09/summary/" class="archive-article-date">
+  	<time datetime="2017-01-09T05:55:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本文主要结合Android Studio讲述一下.9图片的原理与使用。</p>
-<hr>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>在Android的设计过程中，为了适配不同的手机分辨率，图片大多需要拉伸或者压缩，这样就出现了可以任意调整大小的一种图片格式“.9.png”。这种图片是用于Android开发的一种特殊的图片格式，它的好处在于可以用简单的方式把一张图片中哪些区域可以拉伸，哪些区域不可以拉伸设定好，同时可以把显示内容区域的位置标示清楚。</p>
-<p>.9图片相比普通图片，在四条边会多出1px的空隙，我们在这1px的空隙中画上黑线，即可控制图片怎么拉伸，内容区域的位置。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/11/nine-patch1.png" alt="这里写图片描述"><br>讲解一下四条边的作用：</p>
-<ol>
-<li>Top，图中1所示，是控制图片可横向拉伸的区域。</li>
-<li>Left，图中2所示，是控制图片可纵向拉伸的区域。</li>
-<li>Right&amp;Botton，图中的3与4，结合起来控制内容显示的区域。</li>
+        <p>对，已经是1月9号了，早在8天前2016年便成为了过去，总觉得必须要写点什么。恰逢今天来了兴致，便随便叨叨几句。</p>
+<p>在新的一年里，我们总会兴冲冲的立下我们的小目标（先挣它一个亿~），但是一年里，有多少是你付出的呢？这个世界从来就不存在免费的午餐。</p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/14A1F38B0-EBB5-4054-A254-4741691C74D1.png" alt=""></p>
+<p>注意看图中的时间。是的，2015年！2015年立下的几个小目标在2016年过完却是一个都没有实现，这可真是个悲伤的故事。但是我们仍然要相信，美好的事情总会发生。</p>
+        
+          <a class="article-more-a" href="/2017/01/09/summary/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-ios-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/16/ios-tips/">iOS 学习之旅</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/16/ios-tips/" class="archive-article-date">
+  	<time datetime="2016-12-16T02:23:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接触iOS也有一阵子了，也参与到项目做了有些事情，主要是从改bug入手，边学边做，下面记录一下自己在学习中遇到一些点。</p>
+<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Objective-C提供了一种与众不同的方式——Category，可以动态的为已经存在的类添加新的行为。这样可以保证类的原始设计规模较小，功能增加时再逐步扩展。使用Category对类进行扩展时，不需要访问其源代码，也不需要创建子类。Category使用简单的方式，实现了类的相关方法的模块化，把不同的类方法分配到不同的分类文件中。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SomeClass.h</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>) print;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> (<span class="title">Hello</span>)</span></span><br><span class="line">-(<span class="keyword">void</span>)hello;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(<span class="keyword">void</span>)hello&#123;</span><br><span class="line">    <span class="built_in">NSLog</span> (<span class="string">@"name：%@ "</span>, <span class="string">@"Jacky"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line"></span><br><span class="line">SomeClass * sc =[[SomeClass alloc] init];</span><br><span class="line">[sc hello]</span><br></pre></td></tr></table></figure></p>
+<p>这里还有一个约定成俗的习惯，将声明文件和实现文件名称统一采用“原类名+Category”的方式命名。</p>
+        
+          <a class="article-more-a" href="/2016/12/16/ios-tips/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-xcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/07/xcode/">Xcode的基本使用</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/07/xcode/" class="archive-article-date">
+  	<time datetime="2016-12-07T06:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>要开发iOS，Xcode是少不了的，这里摘录一下Xcode的基本使用。</p>
+<h2 id="基本"><a href="#基本" class="headerlink" title="基本"></a>基本</h2><p><img src="http://img.blog.csdn.net/20141014195328609?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcGh1bnht/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="图片转自http://blog.csdn.net/phunxm/article/details/17044337"><br>导航区：导航作用，可以查看项目总体结构。<br>编辑区：用于编写代码的区域。<br>调试区：用于输出和显示调试信息的区域。<br>实用区：用于显示属性和提供xib类库的区域。<br>工具栏：可以选择运行的设备等。</p>
+        
+          <a class="article-more-a" href="/2016/12/07/xcode/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-enter-oc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/07/enter-oc/">Objective-C 基本语法</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/07/enter-oc/" class="archive-article-date">
+  	<time datetime="2016-12-07T03:05:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
+<ul>
+<li>任何C源程序，不经修改，即可通过Objective-C编译器成功编译。</li>
+<li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：<ol>
+<li>OC中头文件后缀为.h，实现文件为.m，类似于c++中的.h于.cpp。</li>
+<li>在OC语言中混合使用C或者C++代码，包含有C语言或者C++语言时，文件的后缀使用.mm。同时一般如果是纯粹的C++文件，源代码文件后缀为.cpp，头文件使用.hpp为后缀。</li>
+<li>import和include的功能是一样的，都是将引入的文件原封不动拷贝到当前位置。import的优点：会自动防止重复拷贝，同时兼容C语言的引入。</li>
+<li>“ ”优先在当前文件路径查找， &lt; &gt;优先在系统环境查找。</li>
 </ol>
+</li>
+</ul>
         
-          <a class="article-more-a" href="/2015/11/23/nine-patch/#more">more >></a>
+          <a class="article-more-a" href="/2016/12/07/enter-oc/#more">more >></a>
         
       
 
@@ -781,11 +704,68 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
         		</li>
-      		 
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-multi-pc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/29/multi-pc/">Hexo多台电脑同步博客</a>
+    </h1>
+  
+
+        
+        <a href="/2016/11/29/multi-pc/" class="archive-article-date">
+  	<time datetime="2016-11-29T11:06:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该如何做呢？我们知道，发不到Github pages上的东西是静态内容，这些是Hexo生成的，这些东西其实不需要我们管，我们只要在<code>hexo d</code>的时候就会帮我们生成然后上传到github。所以我们需要同步的只是<code>源文件</code>。这里的源文件指的就是<code>md文件、theme相关文件、以及博客配置文件</code>等<code>一切跟Hexo无关的文件</code>。</p>
+        
+          <a class="article-more-a" href="/2016/11/29/multi-pc/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
         		</li>
       		
 		</ul>
@@ -811,7 +791,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 
@@ -823,7 +803,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -902,11 +882,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -919,6 +899,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -942,7 +926,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -950,11 +942,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -962,7 +954,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

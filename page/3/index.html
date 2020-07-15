@@ -158,31 +158,37 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-small-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-scroll-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/29/small-tips/">Android 日常开发的一些小知识</a>
+      <a class="article-title" href="/2019/05/17/scroll-1/">RecyclerView 滑动小记</a>
     </h1>
   
 
         
-        <a href="/2017/08/29/small-tips/" class="archive-article-date">
-  	<time datetime="2017-08-29T09:06:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-29</time>
+        <a href="/2019/05/17/scroll-1/" class="archive-article-date">
+  	<time datetime="2019-05-17T07:58:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： <a href="https://github.com/LiJia92/Gank" target="_blank" rel="noopener">Gank</a>。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。</p>
-<h2 id="SerializedName"><a href="#SerializedName" class="headerlink" title="@SerializedName"></a>@SerializedName</h2><p>现在与服务端通信通常都是Json，但是服务器返回的Json串的key是服务端自己的命名规则（可能是中文key，或者大写开头），我们直接通过Gson解析就必须一一对应，但是这样的命名在Java里很不友好。<br>那么就可以通过@SerializedName注解给Bean类进行“重命名”，这样在解析的时候便可以直接利用我们自己的命名规则命名变量了。<br>举个栗子：<a href="http://gank.io/api/day/2017/08/03" target="_blank" rel="noopener">http://gank.io/api/day/2017/08/03</a><br>返回的数据包含<code>Android</code>，<code>福利</code>等不符合Java规范的key，那么就可以这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataResults</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"Android"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; androidList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"iOS"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; iOSList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"休息视频"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; restList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"前端"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; jsList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"福利"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; welfareList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如此便可以直接通过Gson解析，并且变量名是以我们自己的命名规则进行命令的了。</p>
+        <p>关于 RecyclerView 的滑动方法有很多：</p>
+<ol>
+<li>scrollToPosition</li>
+<li>scrollTo</li>
+<li>scrollBy</li>
+<li>smoothScrollBy</li>
+<li>smoothScrollToPosition</li>
+</ol>
+<p>针对 LineaderLayoutManager 还有一个很重要的方法：scrollToPositionWithOffset，下面逐一进行说明。</p>
         
-          <a class="article-more-a" href="/2017/08/29/small-tips/#more">more >></a>
+          <a class="article-more-a" href="/2019/05/17/scroll-1/#more">more >></a>
         
       
 
@@ -220,29 +226,393 @@
 
 
   
-    <article id="post-github-star" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-h5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/04/github-star/">管理 Github 上的 star</a>
+      <a class="article-title" href="/2019/05/16/h5/">Android H5 与原生交互那点事</a>
     </h1>
   
 
         
-        <a href="/2017/08/04/github-star/" class="archive-article-date">
-  	<time datetime="2017-08-04T09:01:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
+        <a href="/2019/05/16/h5/" class="archive-article-date">
+  	<time datetime="2019-05-16T07:19:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Github 逛久了，相信大家都会有很多<code>star</code>，虽然很多<code>star</code>后面再也不会看的。但是只要有那么一丁点的可能回头看，我们还是需要将自己的<code>star</code>整理一下，不然感觉都是无从下手。那么问题便来了：如何管理 Github 上的 star ?<br>答案便是 <a href="https://app.astralapp.com" target="_blank" rel="noopener">Astral</a>。这是我偶然发现的一个网站，它可以用来给 Github 上的 star 分类。<br>具体界面是这样子的:<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/08/04/%E9%80%89%E5%8C%BA_075.png" alt=""></p>
-<p>界面很简单，打开就能直接上手用，整理了一个下午，终于将自己的 200 多个 star 全部清理个便，分了几个 TAG，后面再回顾的时候便会方便多了。</p>
+        <p>鉴于 H5 丰富的表现力，产品决定将项目中的某个详情页改为 H5 展示，评论、点赞仍由原生实现，于是便需要原生与 H5 交互。之前对于这块少有涉及，恰巧合作的前端同事对于这块也不太熟悉，所以耗时良久。现在功能做得差不多了，稍微记录一下。</p>
+        
+          <a class="article-more-a" href="/2019/05/16/h5/#more">more >></a>
+        
+      
 
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-media" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/media/">Android 获取手机媒体数据那些事</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/09/media/" class="archive-article-date">
+  	<time datetime="2019-05-09T11:06:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在上一篇文章 <a href="http://lastwarmth.win/2019/04/24/jetpack/" target="_blank" rel="noopener">ViewModel + LiveData 初探</a> 中的场景中，有获取手机媒体数据的操作，界面上也要展示横竖屏，展示规则很简单：宽度不小于高度则定义为横屏，否则未竖屏。在我的小米 MIX2 上，不论手机如何拍照，返回的分辨率都是 4000:3000（根据相机设置中的画幅比例），不论你是横着拍还是竖着拍。所以当拿到 4000:3000 后就全部定义成横屏了，与实际不符。所以着手解决了一下，顺便整理下获取手机媒体数据的相关代码，方便日后使用。整体代码如下：</p>
+        
+          <a class="article-more-a" href="/2019/05/09/media/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-jetpack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/24/jetpack/">ViewModel + LiveData 初探</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/24/jetpack/" class="archive-article-date">
+  	<time datetime="2019-04-24T09:29:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Google 已经推出 Lifecycle、ViewModel、LiveData 等一系列架构组件已经很久了，但是自己一直没尝试使用，仅仅就是了解一点点，没有紧跟技术潮流持续学习，说来十分羞愧了。最近接到一个需求，界面如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/video.png" alt=""></p>
+        
+          <a class="article-more-a" href="/2019/04/24/jetpack/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Jetpack</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-coordinator-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/16/coordinator-1/">CoordinatorLayout 滑动再探</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/16/coordinator-1/" class="archive-article-date">
+  	<time datetime="2019-04-16T06:11:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>嗯，还是之前的路线详情的页面，新增了需求，导致界面结构又发生变化了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/coordinator.png" alt=""><br>添加了一个途经点的列表，与打点列表并列，可以和横向滑动切换 Tab。<br>之前写过一篇文章<a href="http://lastwarmth.win/2018/12/12/recyclerview-scroll/" target="_blank" rel="noopener">CoordinatorLayout + RecyclerView 处理滑动</a>说的也是这个页面，这里再贴一下当前的 xml 布局：</p>
+        
+          <a class="article-more-a" href="/2019/04/16/coordinator-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/12/scroll/">Android 滑动吸顶效果</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/12/scroll/" class="archive-article-date">
+  	<time datetime="2019-03-12T06:06:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>啥也不说，先上个图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/scroll.gif" alt=""><br>往上滑动的时候，有两点：</p>
+<ol>
+<li>透明度渐变显示个人主页标题栏，这个是覆盖在最上层的标题栏</li>
+<li>当 Tab 栏滑动到主页下面时，固定不动了，下面的布局继续滑动</li>
+</ol>
+        
+          <a class="article-more-a" href="/2019/03/12/scroll/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-wechat-tip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/wechat-tip/">记录微信分享的一个坑</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/05/wechat-tip/" class="archive-article-date">
+  	<time datetime="2019-03-05T09:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天碰到一个问题，社区里帖子有的可以分享到微信，有的不行，单独调试获取分享的数据，发现并无不同。生成分享数据的代码如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WXMediaMessage mediaMessage = new WXMediaMessage(programObject);</span><br><span class="line">mediaMessage.title = shareData.getTitle();</span><br><span class="line">mediaMessage.description = shareData.getContent();</span><br><span class="line">mediaMessage.thumbData = Utils.readMiniProgramThumbImageFileData(shareData.getShareImagePath());</span><br><span class="line">//发送请求</span><br><span class="line">SendMessageToWX.Req req = new SendMessageToWX.Re<span class="string">q()</span>;</span><br><span class="line">req.transaction = String.valueOf(listenerId);</span><br><span class="line">req.message = mediaMessage;</span><br><span class="line">// 目前支持会话</span><br><span class="line">req.scene = SendMessageToWX.Req.WXSceneSession;</span><br><span class="line">doSendRe<span class="string">q(req)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>shareData 是客户端单独组织的一个 Model。起初怀疑是 thumbData 太大导致的，结果后面可以分享的帖子生成的 thumbData 所占的字节还要大一些。。。<br>然后试着分享到微博、QQ 等其他平台，发现也可以分享成功，唯独微信分享给朋友或朋友圈不行。偶然的发现一个帖子分享到微博也会失败，而微博客户端给出了“内容不符合规范”类似大意的提示，于是猜测可能是 description 导致。于是分别调试了不同帖子的数据，发现不能分享的帖子生成的 description length 都是 2000+，而可以分享的帖子生成的才 1000+，没有超过 2000，于是预测是 description 超长导致的。最后调试进行截取，超长的则取前 100 个字符，发现问题解决。<br>问题比较简单，但是调试的时候很坑，因为分享失败的帖子竟然连 WxEntryActivity 里的 onResp 都不回调，所以压根无法知道失败的原因，只能对比数据靠猜测，于是便记录一下，以后碰到这类问题便知道如何解决了。<br>总结一下：<strong>微信分享传的 description 参数不能过长（测试 1800 以下是可以分享的），否则会分享失败，而且回调里的 onResp 都不会调用。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-feeling" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/27/feeling/">最近的几点感悟</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/27/feeling/" class="archive-article-date">
+  	<time datetime="2019-02-27T02:14:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一直有读公众号的习惯，关注了 MacTalk、Fenng、王信文等一些大咖，也读过不少文章，有一些还是蛮有感慨的，希望自己能每天变得更好一点。</p>
+        
+          <a class="article-more-a" href="/2019/02/27/feeling/#more">more >></a>
+        
       
 
       
@@ -279,282 +649,36 @@
 
 
   
-    <article id="post-svg" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-animation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/26/svg/">尝试使用 Android SVG</a>
+      <a class="article-title" href="/2019/02/02/animation/">Android 动画序列的实现</a>
     </h1>
   
 
         
-        <a href="/2017/07/26/svg/" class="archive-article-date">
-  	<time datetime="2017-07-26T10:50:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
+        <a href="/2019/02/02/animation/" class="archive-article-date">
+  	<time datetime="2019-02-02T06:19:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。<br>项目开发中便遇到了这样一个设计稿：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png" alt=""></p>
-<p>这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中<code>关闭按钮</code>的实现。<br>这个<code>关闭按钮</code>算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺便也是减轻设计师的工作量，经常劳烦别人也不是什么好事。</p>
-        
-          <a class="article-more-a" href="/2017/07/26/svg/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-java-set" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/11/java-set/">关于 ConcurrentModificationException 异常</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/11/java-set/" class="archive-article-date">
-  	<time datetime="2017-07-11T08:24:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Integer</span>[] numbers = new <span class="keyword">Integer</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line">List&lt;<span class="keyword">Integer</span>&gt; list = new ArrayList&lt;&gt;(Arrays.asList(numbers));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">Integer</span> <span class="keyword">integer</span> : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">integer</span> % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="keyword">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码在执行的时候便会抛出异常：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.util</span><span class="selector-class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.checkForComodification(ArrayList<span class="selector-class">.java</span>:<span class="number">901</span>)</span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.next(ArrayList<span class="selector-class">.java</span>:<span class="number">851</span>)</span><br><span class="line">	at com<span class="selector-class">.example</span><span class="selector-class">.MyClass</span><span class="selector-class">.main</span>(MyClass<span class="selector-class">.java</span>:<span class="number">16</span>)</span><br></pre></td></tr></table></figure></p>
-<p>这个异常出现通常是遍历一个集合的同时，在修改这个集合。看到<code>next</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> E next() &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkForComodification();</span><br><span class="line">    int var1 = <span class="keyword">this</span>.cursor;</span><br><span class="line">    <span class="keyword">if</span>(var1 &gt;= ArrayList.<span class="keyword">this</span>.size) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new NoSuchElementException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Object[] var2 = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span>(var1 &gt;= var2.length) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.cursor = var1 + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> var2[<span class="keyword">this</span>.lastRet = var1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后看到<code>checkForComodification</code>：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="function"><span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>即当<code>modCount 与 expectedModCount 不相等时，会抛 ConcurrentModificationException 异常</code>。其实很早之前就会碰到这个问题，使用<code>Iterator</code>进行遍历和操作就不会出现这个问题了，但是一直没有深究其原因。</p>
-        
-          <a class="article-more-a" href="/2017/07/11/java-set/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-viewpager" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/viewpager/">关于 ViewPager 的2点特性</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/30/viewpager/" class="archive-article-date">
-  	<time datetime="2017-06-30T01:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>新手引导是每个 App 都具备的。如果新手引导直接用 Activity 来做，可能就会比较繁杂和冗余。所以一般都是 ViewPager 来实现。那么便会有 2 个问题：</p>
+        <p>老规矩，上需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/animation.gif" alt=""><br>这个 Gif 里有众多的动画效果，怎么实现呢？</p>
+<h3 id="拆分效果"><a href="#拆分效果" class="headerlink" title="拆分效果"></a>拆分效果</h3><p>整体的动画效果大致可以分为 3 个：</p>
 <ol>
-<li>不能手动滑动</li>
-<li>当前 item 跳转到下一个 item 要平滑滑动</li>
+<li>右上角小车移动的动画</li>
+<li>图片缩放动画及文字展示的动画</li>
+<li>左侧 Logo 及底部文字的动画</li>
 </ol>
+<p>拆分完之后，依次来实现。</p>
         
-          <a class="article-more-a" href="/2017/06/30/viewpager/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-zsh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/09/zsh/">初识 zsh</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/09/zsh/" class="archive-article-date">
-  	<time datetime="2017-06-09T02:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停<code>git branch</code>来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波<code>zsh</code>了。</p>
-<p>同事有用<code>zsh</code>的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现<code>bash</code>相比<code>zsh</code>确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很熟悉，虽然现在是在用，但是对于 Linux 的很多特性都不是很了解，命令行、Shell 脚本算是 Linux 一大特色。</p>
-<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
-<p>关于<code>oh-my-zsh</code>的安装直接照着 github 中的<code>README</code>一步一步来就好了。就提醒一点，安装完之后需要注销掉用户，重启也可以，然后再重新登录，才可以看到<code>zsh</code>。</p>
-        
-          <a class="article-more-a" href="/2017/06/09/zsh/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/git/">关于 Git 的使用小记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/07/git/" class="archive-article-date">
-  	<time datetime="2017-06-07T12:04:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。</p>
-<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
-        
-          <a class="article-more-a" href="/2017/06/07/git/#more">more >></a>
+          <a class="article-more-a" href="/2019/02/02/animation/#more">more >></a>
         
       
 
@@ -592,31 +716,36 @@
 
 
   
-    <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-china-map" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/09/confuse/">关于混淆的一个小纰漏</a>
+      <a class="article-title" href="/2019/01/25/china-map/">Android 绘制中国地图</a>
     </h1>
   
 
         
-        <a href="/2017/05/09/confuse/" class="archive-article-date">
-  	<time datetime="2017-05-09T05:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
+        <a href="/2019/01/25/china-map/" class="archive-article-date">
+  	<time datetime="2019-01-25T06:07:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
-<p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
-<p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
+        <p>最近的版本有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/TIM%E5%9B%BE%E7%89%8720190125141415.png" alt=""></p>
+<p>有 3 个要素：</p>
+<ol>
+<li>中国地图</li>
+<li>高亮省区</li>
+<li>中心显示数字</li>
+</ol>
+<p>面对这样一个需求，该如何实现呢？</p>
         
-          <a class="article-more-a" href="/2017/05/09/confuse/#more">more >></a>
+          <a class="article-more-a" href="/2019/01/25/china-map/#more">more >></a>
         
       
 
@@ -631,127 +760,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-multi-type" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/09/multi-type/">针对ListView多Type的优化</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/09/multi-type/" class="archive-article-date">
-  	<time datetime="2017-05-09T02:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在之前写过一篇多 Type 的错误使用<a href="http://lastwarmth.win/2017/04/18/wrong/" target="_blank" rel="noopener">使用ListView多Type的错误姿势</a>，下面写一下针对这种使用场景的优化。</p>
-        
-          <a class="article-more-a" href="/2017/05/09/multi-type/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-mvp-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/25/mvp-1/">关于 MVP 模式的一点思考</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/25/mvp-1/" class="archive-article-date">
-  	<time datetime="2017-04-25T07:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。</p>
-<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a href="https://github.com/android-cn/android-discuss/issues/468" target="_blank" rel="noopener">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
-        
-          <a class="article-more-a" href="/2017/04/25/mvp-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -777,7 +785,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 
@@ -789,7 +797,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -868,11 +876,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,6 +893,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,7 +920,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -916,11 +936,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -928,7 +948,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

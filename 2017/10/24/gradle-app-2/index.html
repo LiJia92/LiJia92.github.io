@@ -16,14 +16,14 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="之前写过一篇Gradle多版本管理，主要是通过productFlavors来控制产品版本。这篇文章将结合buildTypes来说一下多版本管理。在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.091Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle 多版本管理（续）">
 <meta name="twitter:description" content="之前写过一篇Gradle多版本管理，主要是通过productFlavors来控制产品版本。这篇文章将结合buildTypes来说一下多版本管理。在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -193,9 +193,9 @@
 <p>然后选择 release 版本运行会显示<code>Hello World From Release</code>，其他版本也会显示对应的字符串。那么我们在打包的时候直接打包 Release Build Variant 就行了。当 Debug 或 Beta 进行调试时，选择 Debug（Beta）Build Variant 即可，通过配置可以减少程序员可能造成的错误。当然，如果只是场景比较简单，你也可以直接代码里写<code>if (BuildConfig.DEBUG)</code>。另外如果 Release 版本出问题后面进行跟踪时， Release 的包默认是会混淆优化资源的，而且不可调试，只能改配置。但是如果是根据 Gradle 配置的，我可以直接在 debug 版本里设置 release 的值：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">release </span>&#123;</span><br><span class="line">    buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class">debug </span>&#123;</span><br><span class="line">    buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>) <span class="comment">// 设置和 release 一样的值，运行跟踪问题</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>另外一般接入三方 SDK 的时候都会有很多平台的 so，x86 平台一般只是虚拟机用到，在 release 版本中是不需要的，那么就可以配置，在 release 版本中去除 x86，这样也可以减小包的体积。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">buildTypes</span> &#123;</span><br><span class="line">    <span class="section">release</span> &#123;</span><br><span class="line">      <span class="section">ndk</span> &#123;</span><br><span class="line">          <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">debug</span> &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    beta &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>通过<code>buildTypes</code>与<code>productFlavors</code>二者结合可以构建出很多的版本，而且可以进行很灵活的配置。文中例子３个 buildTypes，３个 productFlavors，那么就会有<code>3 * 3 = 9</code>个Build Variant了。当然这只是一个Module的配置，当我们Module很多时，上层 App 定义产品 Build Variant，然后依赖 Module 的不同 Build Variant，这样下来我们可以构建各种各样的版本来适应各种需求定制了。<br>再说个项目中用到的场景。业务越做越广，涉及到商家之前的合作也越来越多。很多商家有自己的定制需求，比如换 Logo 啊，换启动图标啊，等等，总不能需求来一个我们就手动改下资源，然后打包吧。所以通过 Gradle 配置好了 Build Variant 了，然后不同的变种下面放置不同的资源，达到打包含不同资源（或其他定制需求）的包的目的。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">buildTypes</span> &#123;</span><br><span class="line">    <span class="section">retail</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">catering</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">takeout</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">publishNonDefault</span> <span class="literal">true</span></span><br><span class="line">productFlavors &#123;</span><br><span class="line">    <span class="section">mmr</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">xgt</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">efs</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这是我们项目中配置的，然后区分文件夹放置不同的资源：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata" alt=""></p>
-<p>注意这种配置并不是只有<code>3 * 3 = 9</code>个变种，而是有１５个。buildTypes 默认包含 debug，release，尽管我们没有显示的配置，所以应该是<code>5 * 3 = 15</code>个变种。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png" alt=""><br>当不需要某些变种时，可以直接忽略掉：<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def ignoreVariants = [</span><br><span class="line">            <span class="string">"xgtTakeout"</span>,</span><br><span class="line">            <span class="string">"efsTakeout"</span>,</span><br><span class="line">            <span class="string">"efsCatering"</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="comment">// To check for a certain build type, use variant.buildType.name == "&lt;buildType&gt;"</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">"debug"</span>) || buildType.<span class="built_in">contains</span>(<span class="string">"release"</span>)) &#123;</span><br><span class="line">        <span class="comment">// Gradle ignores any variants that satisfy the conditions above.</span></span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ignoreVariants.<span class="built_in">contains</span>(variant.<span class="keyword">name</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>重新编译，就可以看到变种只剩６个了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png" alt=""><br>Gradle 的功能真的是太强大了，需要持续学习。</p>
+<p>这是我们项目中配置的，然后区分文件夹放置不同的资源：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata" alt=""></p>
+<p>注意这种配置并不是只有<code>3 * 3 = 9</code>个变种，而是有１５个。buildTypes 默认包含 debug，release，尽管我们没有显示的配置，所以应该是<code>5 * 3 = 15</code>个变种。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png" alt=""><br>当不需要某些变种时，可以直接忽略掉：<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def ignoreVariants = [</span><br><span class="line">            <span class="string">"xgtTakeout"</span>,</span><br><span class="line">            <span class="string">"efsTakeout"</span>,</span><br><span class="line">            <span class="string">"efsCatering"</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="comment">// To check for a certain build type, use variant.buildType.name == "&lt;buildType&gt;"</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">"debug"</span>) || buildType.<span class="built_in">contains</span>(<span class="string">"release"</span>)) &#123;</span><br><span class="line">        <span class="comment">// Gradle ignores any variants that satisfy the conditions above.</span></span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ignoreVariants.<span class="built_in">contains</span>(variant.<span class="keyword">name</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>重新编译，就可以看到变种只剩６个了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png" alt=""><br>Gradle 的功能真的是太强大了，需要持续学习。</p>
 
       
 
@@ -333,7 +333,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -412,11 +412,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,6 +429,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -452,7 +456,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -460,11 +472,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -472,7 +484,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

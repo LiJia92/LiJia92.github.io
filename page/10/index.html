@@ -158,29 +158,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-swipe-listview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-OS-X" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/14/swipe-listview/">Android仿QQ实现ListView滑动删除</a>
+      <a class="article-title" href="/2016/11/28/OS-X/">熟悉OS X系统</a>
     </h1>
   
 
         
-        <a href="/2015/11/14/swipe-listview/" class="archive-article-date">
-  	<time datetime="2015-11-13T18:09:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-14</time>
+        <a href="/2016/11/28/OS-X/" class="archive-article-date">
+  	<time datetime="2016-11-28T08:01:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>手机QQ应该是很普及的App了，看到QQ消息栏对话框列表的每个子项左滑的时候会弹出删除、置顶图标。like this：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/11/swipe-listview1.png" alt="这里写图片描述"><br>于是突发奇想：想要自己实现一个这样的效果。<br>很显然的，这样的效果实现要依赖Android的事件分发机制，于是我先从Android事件分发入手。对于事件分发还不太熟悉的朋友可以参考<a href="http://lijia92.github.io/2015/11/14/touch-event/">Android事件分发机制学习</a>。<br>下面开工！</p>
+        <p>等了一个星期，公司配备的iMac总算是到了，今天装上后体验了一下，有很多地方还是很不习惯，后面需要慢慢适应，这里列几点感悟。</p>
         
-          <a class="article-more-a" href="/2015/11/14/swipe-listview/#more">more >></a>
+          <a class="article-more-a" href="/2016/11/28/OS-X/#more">more >></a>
         
       
 
@@ -194,7 +194,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
         		</li>
       		
 		</ul>
@@ -218,32 +218,30 @@
 
 
   
-    <article id="post-touch-event" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ios" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/14/touch-event/">Android事件分发机制学习小记</a>
+      <a class="article-title" href="/2016/11/21/ios/">Android 转 iOS</a>
     </h1>
   
 
         
-        <a href="/2015/11/14/touch-event/" class="archive-article-date">
-  	<time datetime="2015-11-13T17:15:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-14</time>
+        <a href="/2016/11/21/ios/" class="archive-article-date">
+  	<time datetime="2016-11-21T09:55:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Android事件分发机制有三类：Activity、View、ViewGroup，其调用顺序是Activity-&gt;ViewGroup-&gt;View，考虑到实际开发中Activity的事件分发很少用到，这里便不作赘述。想要了解的可自行百度、谷歌。<br>下面，我从View的事件分发开始。</p>
-<hr>
-<h2 id="View的事件分发"><a href="#View的事件分发" class="headerlink" title="View的事件分发"></a>View的事件分发</h2><p>我们知道，任何触摸事件都是从dispatchTouchEvent函数开始。在View的dispatchTouchEvent函数中，会看到这样的代码块：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="keyword">if</span> (onFilterTouchEventForSecurity(<span class="keyword">event</span>)) &#123;</span><br><span class="line">            <span class="comment">//noinspection SimplifiableIfStatement</span></span><br><span class="line">            ListenerInfo li = mListenerInfo;</span><br><span class="line">            <span class="keyword">if</span> (li != <span class="literal">null</span> &amp;&amp; li.mOnTouchListener != <span class="literal">null</span></span><br><span class="line">                    &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED</span><br><span class="line">                    &amp;&amp; li.mOnTouchListener.onTouch(<span class="keyword">this</span>, <span class="keyword">event</span>)) &#123;</span><br><span class="line">                result = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!result &amp;&amp; onTouchEvent(<span class="keyword">event</span>)) &#123;</span><br><span class="line">                result = <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>说明View若要进行事件分发，那么会优先分发给onTouch()，若onTouch()返回true，则直接返回true，不会进入到onTouchEvent()中。否则，进入到onTouchEvent()。</p>
+        <p>过完一个周末来上班，今天被技术负责人约着谈了一下，主题是：让我转iOS开发。</p>
+<p>其实在刚刚听到这个消息的时候，内心是窃喜的。因为自国庆以来，做的主要工作是预研性质的，诸如网络连接、音视频、图像处理这些非常专业的领域。也不是说自己不能够学习，主要是这些领域都是需要非常专业的人来做这些事情。通过我自学，预研，然后来做相关的开发，说实话，我自己都觉得不靠谱。所以一直以来，我对自己的工作都不是很不满意，虽然通过查资料，看文章，了解了相关东西的一点点皮毛，但是这些皮毛感觉没啥用，如果你不在这些专业的领域继续深挖进去，可以说我之前1、2月的工作都是做的无用功。当然，稍微拓宽了自己的知识层面这是不可否认的<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh121.gif" alt="">。</p>
         
-          <a class="article-more-a" href="/2015/11/14/touch-event/#more">more >></a>
+          <a class="article-more-a" href="/2016/11/21/ios/#more">more >></a>
         
       
 
@@ -257,7 +255,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">事件分发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
         		</li>
       		
 		</ul>
@@ -281,102 +279,30 @@
 
 
   
-    <article id="post-genymotion" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-socket" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/05/genymotion/">Android Studio使用Genymotion小记</a>
+      <a class="article-title" href="/2016/11/16/socket/">Android直播利用Socket传输实时数据</a>
     </h1>
   
 
         
-        <a href="/2015/11/05/genymotion/" class="archive-article-date">
-  	<time datetime="2015-11-05T02:46:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-05</time>
+        <a href="/2016/11/16/socket/" class="archive-article-date">
+  	<time datetime="2016-11-16T01:52:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在学习Android Studio的过程中，看到网上很多人都推荐使用Genymotion插件，在某些无法使用真机的情况下，这个模拟器插件能大大加快模拟器的运行速度。而且由于没有Android 5.0以上的真机，使用Genymotion可以运行Android 5.0以上的模拟器，看看Meterial Design的设计，所谓一举两得，于是便开始了一波Genymotion的学习。</p>
-<hr>
-<h3 id="安装Genymotion"><a href="#安装Genymotion" class="headerlink" title="安装Genymotion"></a>安装Genymotion</h3><p>安装Genymotion。进入到官网，下载Genymotion，没有安装Virtual Box的，选择带有Virtual Box的安装文件进行下载。下载成功后，安装，基本都是下一步，下一步。</p>
-<h3 id="Android-Studio使用Genymotion插件"><a href="#Android-Studio使用Genymotion插件" class="headerlink" title="Android Studio使用Genymotion插件"></a>Android Studio使用Genymotion插件</h3><ol>
-<li><p>Android Studio安装Genymotion插件。安装过程很简单，网上一搜一大把，就不赘述了。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/11/genymotion1.png" alt="这里写图片描述"></p>
-</li>
-<li><p>将Genymotion路径配置到Android Studio中。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/11/genymotion2.png" alt="这里写图片描述"></p>
-</li>
-<li><p>启动Genymotion插件，选择要配置的机型，系统，点击Next，等待下载，安装，部署结束之后，启动模拟器即可进行使用了。</p>
-</li>
-</ol>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过前面一段时间的摸索，iOS的Multipeer Connectivity与Android的Wifi-Direct并不兼容，一些三方可能都是需要连接热点才能实现跨平台传输。热点是需要连接到同一个网络环境下的，那么考虑下Socket是否可行呢？理论上，应该是没问题的。为了验证，我这边便开始Android端的测试，至于跨平台就得等到iOS那边一起合作来验证了。</p>
+<h2 id="Socket连接"><a href="#Socket连接" class="headerlink" title="Socket连接"></a>Socket连接</h2><p>这里分一个Client（采集实时数据），一个server（接收数据进行处理）这样的两个角色。在一个局域网下，他们要互相建立连接首先便是要能互相发现。我的方案是：Server监听一个端口，Client发送一个绑定端口的广播（UDP），广播信息包含Client的ip，Server再收到广播之后，利用收到的ip发送一个单播到Client，单播信息包含Server的ip，Client收到之后便知道Server的ip了，那么便可以建立连接了。</p>
         
-          <a class="article-more-a" href="/2015/11/05/genymotion/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-reflect-interface" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/28/reflect-interface/">Java反射实现接口</a>
-    </h1>
-  
-
-        
-        <a href="/2015/10/28/reflect-interface/" class="archive-article-date">
-  	<time datetime="2015-10-28T04:00:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前做过一个插件，综合了移动MM，移动和游戏，沃商店等一些计费SDK。将这些计费SDK提供的接口全部整合，最后由插件提供一套接口。通过后台配置，来让游戏使用某种计费SDK。游戏开发商接入计费的时候，只需要调用插件提供的一套接口即可。因为不可能保证游戏会包含所有的计费SDK的代码，所以插件内部只能利用反射来实现。通过反射来获取类，获取方法进行调用是比较简单的。</p>
-<p>但是有个问题困扰了我很久：计费SDK都有提供回调接口，使游戏开发商在计费成功或失败进行回调，那么如何通过反射来实现这些回调接口，进行调用呢？通过一段时间的摸索，知道了一种解决方法：使用<code>Proxy</code>类与<code>InvocationHandler</code>接口。</p>
-<hr>
-<p>下面通过一个例子进行讲解。</p>
-        
-          <a class="article-more-a" href="/2015/10/28/reflect-interface/#more">more >></a>
+          <a class="article-more-a" href="/2016/11/16/socket/#more">more >></a>
         
       
 
@@ -392,66 +318,9 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-baidu-loc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/24/baidu-loc/">百度定位SDK无法定位</a>
-    </h1>
-  
-
-        
-        <a href="/2015/10/24/baidu-loc/" class="archive-article-date">
-  	<time datetime="2015-10-24T09:14:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。</p>
-<p>百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2015/10/baidu-loc1.png" alt="这里写图片描述"><br>若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考<a href="http://developer.baidu.com/map/index.php?title=androidsdk/guide/key" target="_blank" rel="noopener">百度开发指南</a>。</p>
-        
-          <a class="article-more-a" href="/2015/10/24/baidu-loc/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
         		</li>
       		
 		</ul>
@@ -475,36 +344,364 @@
 
 
   
-    <article id="post-ddms-logcat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-cross-platform" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/24/ddms-logcat/">Android DDMS无法输出logcat</a>
+      <a class="article-title" href="/2016/10/28/cross-platform/">Android-iOS 跨平台传输方案调研</a>
     </h1>
   
 
         
-        <a href="/2015/10/24/ddms-logcat/" class="archive-article-date">
-  	<time datetime="2015-10-24T08:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-24</time>
+        <a href="/2016/10/28/cross-platform/" class="archive-article-date">
+  	<time datetime="2016-10-28T08:21:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable <span class="built_in">to</span> <span class="built_in">open</span> <span class="built_in">log</span> device‘/dev/<span class="built_in">log</span>/main’: No such <span class="built_in">file</span> <span class="keyword">or</span> <span class="built_in">directory</span></span><br></pre></td></tr></table></figure></p>
-<p>导致连上真机却看不到log。</p>
-<p>网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者<a href="http://stackoverflow.com/questions/4867971/dev-log-main-not-found" target="_blank" rel="noopener">stackoverflow</a>上说的与手机内核有关。但是对我的手机都不奏效，我的手机是华为3C，刷的MIUI的rom。</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>后面折腾了老半天，终于找到了原因：</p>
-<blockquote>
-<p>./system/etc/init.d目录下的脚本删掉了日志设备 </p>
-</blockquote>
-<p>知道问题出在哪了，那么解决起来就很方便了。</p>
+        <h2 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h2><ol>
+<li>iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac/iPad/iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。</li>
+<li>Android：Wi-Fi peer-to-peer（P2P，对等网络），它允许具备相应硬件的Android 4.0（API level 14）或者更高版本的设备可以直接通过wifi而不需要其它中间中转节点就能直接通信（Android的Wi-Fi P2P框架符合Wi-Fi联盟的Wi-Fi Direct™直连认证标志）。使用这些API，你可以搜索并连接其它同样支持Wi-Fi P2P的设备，然后再通过一个高速的连接进行互相通信，并且这个连接的有效距离要比蓝牙连接的有效距离要长的多。这对于需要在用户之间共享数据的应用程序非常有用，例如多玩家游戏或者照片分享之类应用。</li>
+</ol>
         
-          <a class="article-more-a" href="/2015/10/24/ddms-logcat/#more">more >></a>
+          <a class="article-more-a" href="/2016/10/28/cross-platform/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-live-audio" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/live-audio/">【Android音视频开发】- 实时采集音频并编码</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/22/live-audio/" class="archive-article-date">
+  	<time datetime="2016-10-22T01:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，利用Camera实时采集视频，并用MediaCodec编码，可以得到YUV、H264文件了。那么接下来便是采集音频并编码了。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>在音频开发中，有一些基础的概念是必须要知道的。</p>
+<h3 id="采样率（samplerate）"><a href="#采样率（samplerate）" class="headerlink" title="采样率（samplerate）"></a>采样率（samplerate）</h3><p>采样就是把模拟信号数字化的过程，不仅仅是音频需要采样，所有的模拟信号都需要通过采样转换为可以用0101来表示的数字信号，示意图如下所示：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video6.png" alt=""><br>蓝色代表模拟音频信号，红色的点代表采样得到的量化数值。采样频率越高，红色的间隔就越密集，记录这一段音频信号所用的数据量就越大，同时音频质量也就越高。根据奈奎斯特理论，采样频率只要不低于音频信号最高频率的两倍，就可以无损失地还原原始的声音。通常人耳能听到频率范围大约在20Hz～20kHz之间的声音，为了保证声音不失真，采样频率应在40kHz以上。常用的音频采样频率有：8kHz、11.025kHz、22.05kHz、16kHz、37.8kHz、44.1kHz、48kHz、96kHz、192kHz等。</p>
+<h3 id="量化精度（位宽）"><a href="#量化精度（位宽）" class="headerlink" title="量化精度（位宽）"></a>量化精度（位宽）</h3><p>上图中，每一个红色的采样点，都需要用一个数值来表示大小，这个数值的数据类型大小可以是：4bit、8bit、16bit、32bit等等，位数越多，表示得就越精细，声音质量自然就越好，当然，数据量也会成倍增大。常见的位宽是：8bit 或者 16bit。</p>
+<h3 id="声道数（channels）"><a href="#声道数（channels）" class="headerlink" title="声道数（channels）"></a>声道数（channels）</h3><p>由于音频的采集和播放是可以叠加的，因此，可以同时从多个音频源采集声音，并分别输出到不同的扬声器，故声道数一般表示声音录制时的音源数量或回放时相应的扬声器数量。单声道（Mono）和双声道（Stereo）比较常见，顾名思义，前者的声道数为1，后者为2。</p>
+<h3 id="音频帧（frame）"><a href="#音频帧（frame）" class="headerlink" title="音频帧（frame）"></a>音频帧（frame）</h3><p>音频数据是流式的，本身并没有明确的一帧帧的概念，在实际的应用中，为了音频算法处理/传输的方便，一般约定俗成取 2.5 ms ~ 60 ms为单位的数据量为一帧音频。 这个时间被称之为“采样时间”，其长度没有特别的标准。我们可以计算一下一帧音频帧的大小。假设某通道的音频信号是采样率为 8 kHz，位宽为16 bit，20 ms 一帧，双通道，则一帧音频数据的大小为：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int size = <span class="number">8000</span> x <span class="number">16</span>bit x <span class="number">0.02</span>s  x <span class="number">2</span> = <span class="number">5120</span> bit = <span class="number">640</span> byte</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2016/10/22/live-audio/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-live-code-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/20/live-code-video/">【Android音视频开发】- 实时采集视频并编码</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/20/live-code-video/" class="archive-article-date">
+  	<time datetime="2016-10-20T06:54:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，实时采集视频的LocalSocket方式在新的Android SDK上是跑不通的，那么便只剩下Camera了。本文将利用<code>Camera</code>来进行实时采集视频，<code>MediaCodec</code>进行硬编码来输出yuv、h264文件。</p>
+<h2 id="YUV"><a href="#YUV" class="headerlink" title="YUV"></a>YUV</h2><p>通过Camera采集到的原始数据是YUV（NV21）格式的，何为YUV？</p>
+<blockquote>
+<p>YUV，分为三个分量，“Y”表示明亮度（Luminance或Luma），也就是灰度值；而“U”和“V” 表示的则是色度（Chrominance或Chroma），作用是描述影像色彩及饱和度，用于指定像素的颜色。YUV是一种颜色编码方法，主要用于电视系统以及模拟视频领域，它将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的，这样的设计很好地解决了彩色电视机与黑白电视的兼容问题。并且，YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。</p>
+</blockquote>
+<p>YUV码流的存储格式其实与其采样的方式密切相关，主流的采样方式有三种，YUV4:4:4，YUV4:2:2，YUV4:2:0。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video5.jpg" alt=""></p>
+<ol>
+<li>YUV 4:4:4采样，每一个Y对应一组UV分量。</li>
+<li>YUV 4:2:2采样，每两个Y共用一组UV分量。</li>
+<li>YUV 4:2:0采样，每四个Y共用一组UV分量。</li>
+</ol>
+<p>这里只抛出这样一个概念，详情请参见文末的<code>参考</code>。</p>
+        
+          <a class="article-more-a" href="/2016/10/20/live-code-video/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-live-capture-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/20/live-capture-video/">【Android音视频开发】- 实时采集视频</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/20/live-capture-video/" class="archive-article-date">
+  	<time datetime="2016-10-20T02:24:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&gt; 美颜/滤镜/特效处理 -&gt; 编码 -&gt; 封包 -&gt; 推流 -&gt; 分发 -&gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。<br>那么实时采集视频有哪些方案呢？</p>
+<h2 id="调研"><a href="#调研" class="headerlink" title="调研"></a>调研</h2><p>通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：</p>
+<ol>
+<li>通过Android Camera拍摄预览中设置setPreviewCallback实现onPreviewFrame接口，实时截取每一帧视频流数据</li>
+<li>通过通过Android的MediaRecorder，在SetoutputFile函数中绑定LocalSocket实现</li>
+<li>流媒体服务器方式，利用ffmpeg或GetStreamer等获取Camera视频</li>
+</ol>
+<p>通过学习，大致了解了1，2两种方式的实现方式，但是对于第3种方式，暂时没有研究。</p>
+        
+          <a class="article-more-a" href="/2016/10/20/live-capture-video/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-live" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/19/live/">【Android音视频开发】- 直播</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/19/live/" class="archive-article-date">
+  	<time datetime="2016-10-19T10:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个<code>【Android音视频开发】</code>系列，此文便是开篇了！<br>PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可能根本就不适用，我通过实例验证，做下此总结。最近一直在看这一块的东西，今天抽空，趁着记忆的知识还比较新鲜记下来，好记性不如烂笔头，也希望能帮助到其他的人。</p>
+<h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><p>从技术层面上来，直播大致分为：音视频采集、美颜/滤镜/特效处理、编码、封包、推流、分发、解码/渲染/播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
+<ol>
+<li>视频实时采集：Camera预览/MediaRecorder绑定LocalSocket</li>
+<li>音频实时采集：MediaRecorder/AudioRecord/OpenSL ES</li>
+<li>特效处理：视频磨皮美颜，音频降噪去回声等算法</li>
+<li>编解码：H264&amp;AAC，MediaCodec(API &gt;= 16)硬解，ffmpeg等三方库软解</li>
+<li>流媒体传输：rtmp rtsp hls等</li>
+<li>渲染播放：MediaPlayer，ijkplayer等三方库</li>
+</ol>
+        
+          <a class="article-more-a" href="/2016/10/19/live/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-system-ui" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/20/system-ui/">Android状态栏、虚拟按键小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/20/system-ui/" class="archive-article-date">
+  	<time datetime="2016-09-20T08:05:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前写过一篇<a href="http://lastwarmth.win/2016/08/04/statusbar/" target="_blank" rel="noopener">状态栏小记</a>，这里加入虚拟按键重新做一下总结。</p>
+        
+          <a class="article-more-a" href="/2016/09/20/system-ui/#more">more >></a>
         
       
 
@@ -542,9 +739,69 @@
 
 
   
+    <article id="post-jcenter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/12/jcenter/">Android Studio发布项目到JCenter</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/12/jcenter/" class="archive-article-date">
+  	<time datetime="2016-09-12T08:40:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。</p>
+        
+          <a class="article-more-a" href="/2016/09/12/jcenter/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+      <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
     </nav>
   
 
@@ -556,7 +813,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -635,11 +892,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -652,6 +909,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -675,7 +936,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -683,11 +952,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -695,7 +964,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

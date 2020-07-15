@@ -158,31 +158,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-github-star" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/07/domain/">博客添加域名映射</a>
+      <a class="article-title" href="/2017/08/04/github-star/">管理 Github 上的 star</a>
     </h1>
   
 
         
-        <a href="/2016/04/07/domain/" class="archive-article-date">
-  	<time datetime="2016-04-07T06:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-07</time>
+        <a href="/2017/08/04/github-star/" class="archive-article-date">
+  	<time datetime="2017-08-04T09:01:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>利用Github搭建博客有一阵子了，每次访问都必须带上<code>github.io</code>，其实我的内心是拒绝的，于是今天打算买个自己的域名，然后映射到博客。</p>
-<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>首先第一步自然是买域名了。许多人都说是用<code>GoDaddy</code>，但是我去搜了一下，随便一个就是15刀，吓死宝宝了~<br>刚开始嘛，弄个便宜的尝尝鲜才是我的目的，于是我上<a href="https://wanwang.aliyun.com/" target="_blank" rel="noopener">阿里云</a>买了<code>lastwarmth.site</code>这个域名，首年才只收费4块钱哟~<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/04/domain9.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2016/04/07/domain/#more">more >></a>
-        
+        <p>Github 逛久了，相信大家都会有很多<code>star</code>，虽然很多<code>star</code>后面再也不会看的。但是只要有那么一丁点的可能回头看，我们还是需要将自己的<code>star</code>整理一下，不然感觉都是无从下手。那么问题便来了：如何管理 Github 上的 star ?<br>答案便是 <a href="https://app.astralapp.com" target="_blank" rel="noopener">Astral</a>。这是我偶然发现的一个网站，它可以用来给 Github 上的 star 分类。<br>具体界面是这样子的:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/08/04/%E9%80%89%E5%8C%BA_075.png" alt=""></p>
+<p>界面很简单，打开就能直接上手用，整理了一个下午，终于将自己的 200 多个 star 全部清理个便，分了几个 TAG，后面再回顾的时候便会方便多了。</p>
+
       
 
       
@@ -195,7 +193,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
         		</li>
       		
 		</ul>
@@ -219,104 +217,30 @@
 
 
   
-    <article id="post-jpush" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-svg" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/jpush/">Android接入JPush（极光推送）</a>
+      <a class="article-title" href="/2017/07/26/svg/">尝试使用 Android SVG</a>
     </h1>
   
 
         
-        <a href="/2016/04/05/jpush/" class="archive-article-date">
-  	<time datetime="2016-04-05T06:14:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-05</time>
+        <a href="/2017/07/26/svg/" class="archive-article-date">
+  	<time datetime="2017-07-26T10:50:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>项目中需要有推送功能，技术负责人最后决定使用<code>极光推送</code>，活被分配给我了，于是我便接了一波，在此小记一下~</p>
-<p>在极光推送的<a href="http://docs.jpush.io/guideline/android_guide/" target="_blank" rel="noopener">官方文档</a>中，已经有了较详细的说明了，这里只做一下简单的摘录。</p>
-<h2 id="三分钟快速Demo"><a href="#三分钟快速Demo" class="headerlink" title="三分钟快速Demo"></a>三分钟快速Demo</h2><p>在极光推送的官方文档中，有<code>三分钟快速Demo</code>，我也是从demo入手。</p>
-<h3 id="创建开发者账号"><a href="#创建开发者账号" class="headerlink" title="创建开发者账号"></a>创建开发者账号</h3><p>接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个<code>开发者账号</code>。<br>要创建极光推送开发者帐号，请访问<a href="http://jpush.cn" target="_blank" rel="noopener">极光推送官方网站</a>。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/04/jpush1.png" alt=""></p>
+        <p>普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。<br>项目开发中便遇到了这样一个设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png" alt=""></p>
+<p>这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中<code>关闭按钮</code>的实现。<br>这个<code>关闭按钮</code>算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺便也是减轻设计师的工作量，经常劳烦别人也不是什么好事。</p>
         
-          <a class="article-more-a" href="/2016/04/05/jpush/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-video-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/01/video-view/">Android使用VideoView进行视频播放</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/01/video-view/" class="archive-article-date">
-  	<time datetime="2016-04-01T07:07:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做一个主播类的App，里面涉及到视频播放，之前没有接触过，在探索一阵后能够播放基本视频了。特此写下小记，方便日后查看。</p>
-<p>首先，确定使用<code>VideoView</code>进行视频播放。</p>
-<p>步骤：</p>
-<ol>
-<li>在界面布局文件中定义VideoView组件，或在程序中创建VideoView组件。</li>
-<li>调用VideoView的如下两个方法来加载指定的视频:<ul>
-<li>setVidePath(String path)：加载path文件代表的视频</li>
-<li>setVideoURI(Uri uri)：加载uri所对应的视频</li>
-</ul>
-</li>
-<li>调用VideoView的start()、stop()、psuse()等方法来控制视频的播放。</li>
-</ol>
-<p>若要显示进度条，可结合<code>MediaController</code>一起使用。</p>
-        
-          <a class="article-more-a" href="/2016/04/01/video-view/#more">more >></a>
+          <a class="article-more-a" href="/2017/07/26/svg/#more">more >></a>
         
       
 
@@ -354,34 +278,33 @@
 
 
   
-    <article id="post-blog-move" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-java-set" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/25/blog-move/">博客搬家</a>
+      <a class="article-title" href="/2017/07/11/java-set/">关于 ConcurrentModificationException 异常</a>
     </h1>
   
 
         
-        <a href="/2016/03/25/blog-move/" class="archive-article-date">
-  	<time datetime="2016-03-25T01:39:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-25</time>
+        <a href="/2017/07/11/java-set/" class="archive-article-date">
+  	<time datetime="2017-07-11T08:24:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在2015年10月24日，正好是<code>程序猿节</code>，我开始写博客。</p>
-<p>在半年前找工作的时候，看到许多许多公司的招聘上，都会有个加分项：<code>拥有维护半年以上的个人博客</code>。</p>
-<p>其实也是一直想写博客来着，因为我学习安卓都是从许多大牛的博客中学习的，我也想朝着他们的方向努力。分享自己的知识，帮助他人。</p>
-<p>刚开始写博客的时候，还不太熟练，借用的<a href="http://blog.csdn.net/lastwarmth" target="_blank" rel="noopener">CSDN</a>平台，比较方便快捷的写起了博客。</p>
-<p>最近使用Hexo+Github搭建完自己的博客之后，便打算把所有的博客迁移过来，并做了些许调整。</p>
-<p>有几篇转载的，写得非常好的文章因为没有md格式的文件，暂时迁移不过来，后面再说了。</p>
+        <p>List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Integer</span>[] numbers = new <span class="keyword">Integer</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line">List&lt;<span class="keyword">Integer</span>&gt; list = new ArrayList&lt;&gt;(Arrays.asList(numbers));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">Integer</span> <span class="keyword">integer</span> : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">integer</span> % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="keyword">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码在执行的时候便会抛出异常：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.util</span><span class="selector-class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.checkForComodification(ArrayList<span class="selector-class">.java</span>:<span class="number">901</span>)</span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.next(ArrayList<span class="selector-class">.java</span>:<span class="number">851</span>)</span><br><span class="line">	at com<span class="selector-class">.example</span><span class="selector-class">.MyClass</span><span class="selector-class">.main</span>(MyClass<span class="selector-class">.java</span>:<span class="number">16</span>)</span><br></pre></td></tr></table></figure></p>
+<p>这个异常出现通常是遍历一个集合的同时，在修改这个集合。看到<code>next</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> E next() &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkForComodification();</span><br><span class="line">    int var1 = <span class="keyword">this</span>.cursor;</span><br><span class="line">    <span class="keyword">if</span>(var1 &gt;= ArrayList.<span class="keyword">this</span>.size) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new NoSuchElementException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Object[] var2 = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span>(var1 &gt;= var2.length) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.cursor = var1 + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> var2[<span class="keyword">this</span>.lastRet = var1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后看到<code>checkForComodification</code>：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="function"><span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>即当<code>modCount 与 expectedModCount 不相等时，会抛 ConcurrentModificationException 异常</code>。其实很早之前就会碰到这个问题，使用<code>Iterator</code>进行遍历和操作就不会出现这个问题了，但是一直没有深究其原因。</p>
         
-          <a class="article-more-a" href="/2016/03/25/blog-move/#more">more >></a>
+          <a class="article-more-a" href="/2017/07/11/java-set/#more">more >></a>
         
       
 
@@ -395,7 +318,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>
@@ -419,388 +342,33 @@
 
 
   
-    <article id="post-wechat-sdk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-viewpager" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/18/wechat-sdk/">android接入微信支付SDK</a>
+      <a class="article-title" href="/2017/06/30/viewpager/">关于 ViewPager 的2点特性</a>
     </h1>
   
 
         
-        <a href="/2016/03/18/wechat-sdk/" class="archive-article-date">
-  	<time datetime="2016-03-18T07:04:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-18</time>
+        <a href="/2017/06/30/viewpager/" class="archive-article-date">
+  	<time datetime="2017-06-30T01:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。</p>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>接入微信支付SDK前期需要许多前期准备。</p>
-<h3 id="微信开放平台"><a href="#微信开放平台" class="headerlink" title="微信开放平台"></a>微信开放平台</h3><ol>
-<li>注册<a href="https://open.weixin.qq.com/" target="_blank" rel="noopener">微信开放平台</a>账号。</li>
-<li>登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk1.png" alt=""><br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk5.png" alt=""></li>
-<li>进入应用详情，获取<code>AppID</code>，以及申请开通微信支付能力。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/wechat-sdk2.png" alt=""></li>
-<li>等待审核通过。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/03/18/wechat-sdk/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hexo-tools" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/hexo-tools/">Hexo-Tools</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/hexo-tools/" class="archive-article-date">
-  	<time datetime="2016-03-17T10:14:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要讲述一下使用Hexo搭建博客的过程中，使用的一些比较实用的工具。</p>
-<h2 id="七牛"><a href="#七牛" class="headerlink" title="七牛"></a>七牛</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>在博客中若要插入图片，我们可以直接将图片放在本地。但是这样的话，在deploy的时候，图片也会上传至Github。但是Github上的空间只有300Mb，很有可能导致以后不够用，所以最好找一个图床。<br>之前听说过七牛，便打算试一试。<br>它：</p>
+        <p>新手引导是每个 App 都具备的。如果新手引导直接用 Activity 来做，可能就会比较繁杂和冗余。所以一般都是 ViewPager 来实现。那么便会有 2 个问题：</p>
 <ol>
-<li>注册之后实名制便有10G的免费空间，一段时间内是肯定够用的；</li>
-<li>比较稳定；</li>
-<li>有很多实用的工具，你可以使用；</li>
-<li>更多的就待以后慢慢发现了~</li>
+<li>不能手动滑动</li>
+<li>当前 item 跳转到下一个 item 要平滑滑动</li>
 </ol>
         
-          <a class="article-more-a" href="/2016/03/17/hexo-tools/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hexo-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/hexo-tips/">Hexo-Tips</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/hexo-tips/" class="archive-article-date">
-  	<time datetime="2016-03-17T04:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要讲述一下使用Hexo搭建博客的一些Tips。</p>
-<h2 id="hexo基本指令"><a href="#hexo基本指令" class="headerlink" title="hexo基本指令"></a>hexo基本指令</h2><ol>
-<li>hexo clean 清除</li>
-<li>hexo new page “menu name” 新建菜单</li>
-<li>hexo g == hexo generate 生成</li>
-<li>hexo d == hexo deploy 部署</li>
-<li>hexo s == hexo server 启动本地</li>
-<li>hexo n == hexo new 新建</li>
-</ol>
-<h2 id="首页文章显示"><a href="#首页文章显示" class="headerlink" title="首页文章显示"></a>首页文章显示</h2><p>在md文件中添加<code>&lt;!--more--&gt;</code>，那么首页就只会显示这个标签之上的内容了，并显示一个<code>阅读全文</code>的按钮。</p>
-<h2 id="部署到Github保证README-md不被渲染"><a href="#部署到Github保证README-md不被渲染" class="headerlink" title="部署到Github保证README.md不被渲染"></a>部署到Github保证README.md不被渲染</h2><ol>
-<li>在Hexo目录下的source根目录下创建README.md文件,并编辑保存。</li>
-<li><p>编辑Hexo目录的_config.yml文件中的“skip_render”参数。</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">skip_render:</span> README.md</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署到Github，然后看仓库是否有README.md。</p>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/03/17/hexo-tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-hexo-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/hexo-blog/">Windows使用Hexo + Github Pages搭建自己的博客</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/hexo-blog/" class="archive-article-date">
-  	<time datetime="2016-03-17T03:30:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要讲述一下Windows环境使用Hexo + Github Pages搭建自己博客的一些主要步骤。</p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>hexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在Github上。</p>
-<blockquote>
-<p>A fast, simple &amp; powerful blog framework</p>
-</blockquote>
-<ol>
-<li>超快的速度：Node.js 所带来的超快生成速度，让上百个页面在几秒内瞬间完成渲染。</li>
-<li>支持 Markdown：Hexo 支持 GitHub Flavored Markdown 的所有功能，甚至可以整合 Octopress 的大多数插件。</li>
-<li>一键部署：只需一条指令即可部署到 GitHub Pages, Heroku 或其他网站。</li>
-<li>丰富的插件：Hexo 拥有强大的插件系统，安装插件可以让 Hexo 支持 Jade, CoffeeScript。</li>
-</ol>
-<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。</p>
-<blockquote>
-<p>Websites for you and your projects.</p>
-</blockquote>
-<ol>
-<li>Github Pages 有300M免费空间，资料自己管理，保存可靠；</li>
-<li>Github作为最大的同性交流社区，已经得到了人们的肯定；</li>
-<li>Github上有很多大牛，学着用 Github ，享受 GitHub 的便利，眼界会开阔很多。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/03/17/hexo-blog/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-gradle-pack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/09/gradle-pack/">Android Studio 使用 Gradle 进行多渠道打包</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/09/gradle-pack/" class="archive-article-date">
-  	<time datetime="2016-03-09T06:39:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>使用Android Studio也有一段时间了，最近项目开发完成，内部测试也已经通过。下一步就是渠道打包，然后上线了。</p>
-<p>在出渠道包的时候，若是出一个包，便手动修改一次渠道号，很显然是很费时费力的。庆幸的是，Android Studio采用的Gradle可以很方便的实现我们的多渠道出包。</p>
-<p>下面结合代码进行说明。</p>
-<p>项目中使用的是友盟，在AndroidManifest.xml中有这样的代码：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data android:<span class="attribute">name</span>=<span class="string">"UMENG_CHANNEL"</span> android:<span class="attribute">value</span>=<span class="string">"<span class="variable">$&#123;UMENG_CHANNEL_VALUE&#125;</span>"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>其中${UMENG_CHANNEL_VALUE}中的值就是在gradle中自定义配置的值。</p>
-        
-          <a class="article-more-a" href="/2016/03/09/gradle-pack/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-change-title" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/02/change-title/">Android实现渐变title栏</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/02/change-title/" class="archive-article-date">
-  	<time datetime="2016-03-02T02:03:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近用美团外卖点餐看到这样一个效果：</p>
-<p><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/03/change-title1.png" alt="这里写图片描述"></p>
-<p>顶部的title栏伴随着滑动有这样的一个效果，看起来很不错。</p>
-<p>正好项目中可能需要用到，于是打算自己实现一波。</p>
-<p>后面在百度、谷歌之后，发现ToolBar+CoordinatorLayout可以很轻易的实现这种效果。</p>
-<p>但是在项目中，并没有采用Android新特性的一些东西，所以就得基于目前状况想办法了。</p>
-        
-          <a class="article-more-a" href="/2016/03/02/change-title/#more">more >></a>
+          <a class="article-more-a" href="/2017/06/30/viewpager/#more">more >></a>
         
       
 
@@ -815,6 +383,375 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-zsh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/09/zsh/">初识 zsh</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/09/zsh/" class="archive-article-date">
+  	<time datetime="2017-06-09T02:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停<code>git branch</code>来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波<code>zsh</code>了。</p>
+<p>同事有用<code>zsh</code>的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现<code>bash</code>相比<code>zsh</code>确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很熟悉，虽然现在是在用，但是对于 Linux 的很多特性都不是很了解，命令行、Shell 脚本算是 Linux 一大特色。</p>
+<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
+<p>关于<code>oh-my-zsh</code>的安装直接照着 github 中的<code>README</code>一步一步来就好了。就提醒一点，安装完之后需要注销掉用户，重启也可以，然后再重新登录，才可以看到<code>zsh</code>。</p>
+        
+          <a class="article-more-a" href="/2017/06/09/zsh/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/07/git/">关于 Git 的使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/07/git/" class="archive-article-date">
+  	<time datetime="2017-06-07T12:04:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。</p>
+<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
+        
+          <a class="article-more-a" href="/2017/06/07/git/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/09/confuse/">关于混淆的一个小纰漏</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/09/confuse/" class="archive-article-date">
+  	<time datetime="2017-05-09T05:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
+<p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
+<p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
+        
+          <a class="article-more-a" href="/2017/05/09/confuse/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-multi-type" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/09/multi-type/">针对ListView多Type的优化</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/09/multi-type/" class="archive-article-date">
+  	<time datetime="2017-05-09T02:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前写过一篇多 Type 的错误使用<a href="http://lastwarmth.win/2017/04/18/wrong/" target="_blank" rel="noopener">使用ListView多Type的错误姿势</a>，下面写一下针对这种使用场景的优化。</p>
+        
+          <a class="article-more-a" href="/2017/05/09/multi-type/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-mvp-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/25/mvp-1/">关于 MVP 模式的一点思考</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/25/mvp-1/" class="archive-article-date">
+  	<time datetime="2017-04-25T07:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。</p>
+<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a href="https://github.com/android-cn/android-discuss/issues/468" target="_blank" rel="noopener">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
+        
+          <a class="article-more-a" href="/2017/04/25/mvp-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-no-password" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/19/no-password/">博客免密提交、部署到Github</a>
+    </h1>
+  
+
+        
+        <a href="/2017/04/19/no-password/" class="archive-article-date">
+  	<time datetime="2017-04-19T02:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>每次写完博客，<code>hexo d</code>的时候需要输入一次Github账号密码，<code>git push</code>的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。</p>
+<h2 id="hexo-d-免密输入"><a href="#hexo-d-免密输入" class="headerlink" title="hexo d 免密输入"></a>hexo d 免密输入</h2><p>在 user 根目录下新建<code>.netrc</code>文件，填写内容：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">machine github.com</span><br><span class="line">login username      <span class="comment">//username为github账户名 （不是用来登录的邮箱或手机号）</span></span><br><span class="line">password password   <span class="comment">//password为github账户的密码</span></span><br></pre></td></tr></table></figure></p>
+<p>保存之后，再执行 hexo d 时即可直接部署，不用输入账号密码了。</p>
+        
+          <a class="article-more-a" href="/2017/04/19/no-password/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
         		</li>
       		
 		</ul>
@@ -840,7 +777,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
     </nav>
   
 
@@ -852,7 +789,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -931,11 +868,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -948,6 +885,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -971,7 +912,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -979,11 +928,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -991,7 +940,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

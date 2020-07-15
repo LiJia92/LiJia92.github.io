@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="之前有写过一篇Android Studio使用Gradle进行多渠道打包，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。 简介Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言来声明项目设置，而不是传统的XML。使用Gradle的优势:  自动处理包相依关系 - 取自 Maven Repos 的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.092Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle 多版本管理">
 <meta name="twitter:description" content="之前有写过一篇Android Studio使用Gradle进行多渠道打包，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。 简介Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言来声明项目设置，而不是传统的XML。使用Gradle的优势:  自动处理包相依关系 - 取自 Maven Repos 的">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -195,9 +195,9 @@
 <a id="more"></a>
 <h2 id="多版本"><a href="#多版本" class="headerlink" title="多版本"></a>多版本</h2><p>其实很多东西在你没有接触的时候，它的一些概念你是很难理解的。我现在重新去理解它，因为我碰到了这样一个情形：由于业务的拓展导致项目越来越复杂，由最初的一个手机基本App版本衍生出很多其他版本，比如pos机，收银机，pad等等，又或者是针对某些具体用户定制的版本。而这些版本的业务是基本一致的，只是在界面或者交互上有一些不一样，这个时候要如何构建自己的项目呢？答案当然是Gradle。</p>
 <p>下面举个栗子。<br>创建一个AS项目，在app的build.radle中加入如下代码：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">productFlavors </span>&#123;</span><br><span class="line">    <span class="comment">// pad版</span></span><br><span class="line">    <span class="class">pad </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 手机版</span></span><br><span class="line">    <span class="class">phone </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 定制版</span></span><br><span class="line">    <span class="class">custom </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后我们看到<code>Build Variant</code>:<br>3个版本对应debug release，6个编译指令。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png" alt=""><br>在不同版本的编译指令中，我们可以做不同的事情。比如替换包名：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">productFlavors </span>&#123;</span><br><span class="line">    <span class="comment">// pad版</span></span><br><span class="line">    <span class="class">pad </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.pad"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 手机版</span></span><br><span class="line">    <span class="class">phone </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.phone"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 定制版</span></span><br><span class="line">    <span class="class">custom </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后我们看到<code>Build Variant</code>:<br>3个版本对应debug release，6个编译指令。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/%E9%80%89%E5%8C%BA_001.png" alt=""><br>在不同版本的编译指令中，我们可以做不同的事情。比如替换包名：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">productFlavors </span>&#123;</span><br><span class="line">    <span class="comment">// pad版</span></span><br><span class="line">    <span class="class">pad </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.pad"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 手机版</span></span><br><span class="line">    <span class="class">phone </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.phone"</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 定制版</span></span><br><span class="line">    <span class="class">custom </span>&#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样我们在手机上就可以安装三个不同的版本了。<br>再继续上面的情形，三个版本的绝大部分东西是一样的，只是有个别页面不一样。那么可以这样做：</p>
-<p>依然继续上面的栗子。<br>在app src目录下，新建目录，与main目录平行，目录名称与gradle中配置的一致。然后继续创建java、res文件夹，再就是写代码了。注意多个文件夹中的文件名以及路径要一样，代码必须添加java文件夹，资源必须添加res文件夹。<strong>公共模块中不能包含与其一样的类，否则当切到相应的版本会导致类重复。</strong><br><img src="http://7xryow.com1.z0.glb.clouddn.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt=""></p>
+<p>依然继续上面的栗子。<br>在app src目录下，新建目录，与main目录平行，目录名称与gradle中配置的一致。然后继续创建java、res文件夹，再就是写代码了。注意多个文件夹中的文件名以及路径要一样，代码必须添加java文件夹，资源必须添加res文件夹。<strong>公共模块中不能包含与其一样的类，否则当切到相应的版本会导致类重复。</strong><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/03/16/2017-03-17%2009:24:35%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt=""></p>
 <p>当我们选择一个版本时候，另外不可用的代码就会变成<code>红色J标志</code>。如上图中，我选的custom版本，那么pad与phone目录下的代码都变成<code>红色J</code>了，代表当前版本没有用到此代码。<br>改变Build Variant，然后运行，将3个版本都装到设备上，运行后可以看到每个版本的内容是不一样的。（ubuntu录制gif还没找到很好的方法，就不放图了，可以自己跑代码看。）运行都是各自的代码，main下面的代码则是公共模块。</p>
 <p>通过上面的栗子，我们知道可以通过<code>productFlavors</code>做各种版本配置。</p>
 <h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>当项目变得越来越复杂，就不仅仅是单个项目或者Module能解决的了的。我们通常会有很多个Module，继上面的栗子。</p>
@@ -350,7 +350,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -429,11 +429,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -446,6 +446,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -469,7 +473,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,11 +489,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -489,7 +501,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

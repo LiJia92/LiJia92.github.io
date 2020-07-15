@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言通过我的上一篇文章，实时采集视频的LocalSocket方式在新的Android SDK上是跑不通的，那么便只剩下Camera了。本文将利用Camera来进行实时采集视频，MediaCodec进行硬编码来输出yuv、h264文件。 YUV通过Camera采集到的原始数据是YUV（NV21）格式的，何为YUV？  YUV，分为三个分量，“Y”表示明亮度（Luminance或Luma），也就是灰度">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video5.jpg">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.115Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video5.jpg">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.235Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Android音视频开发】- 实时采集视频并编码">
 <meta name="twitter:description" content="前言通过我的上一篇文章，实时采集视频的LocalSocket方式在新的Android SDK上是跑不通的，那么便只剩下Camera了。本文将利用Camera来进行实时采集视频，MediaCodec进行硬编码来输出yuv、h264文件。 YUV通过Camera采集到的原始数据是YUV（NV21）格式的，何为YUV？  YUV，分为三个分量，“Y”表示明亮度（Luminance或Luma），也就是灰度">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video5.jpg">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video5.jpg">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -188,7 +188,7 @@
 <blockquote>
 <p>YUV，分为三个分量，“Y”表示明亮度（Luminance或Luma），也就是灰度值；而“U”和“V” 表示的则是色度（Chrominance或Chroma），作用是描述影像色彩及饱和度，用于指定像素的颜色。YUV是一种颜色编码方法，主要用于电视系统以及模拟视频领域，它将亮度信息（Y）与色彩信息（UV）分离，没有UV信息一样可以显示完整的图像，只不过是黑白的，这样的设计很好地解决了彩色电视机与黑白电视的兼容问题。并且，YUV不像RGB那样要求三个独立的视频信号同时传输，所以用YUV方式传送占用极少的频宽。</p>
 </blockquote>
-<p>YUV码流的存储格式其实与其采样的方式密切相关，主流的采样方式有三种，YUV4:4:4，YUV4:2:2，YUV4:2:0。<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/10/video5.jpg" alt=""></p>
+<p>YUV码流的存储格式其实与其采样的方式密切相关，主流的采样方式有三种，YUV4:4:4，YUV4:2:2，YUV4:2:0。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video5.jpg" alt=""></p>
 <ol>
 <li>YUV 4:4:4采样，每一个Y对应一组UV分量。</li>
 <li>YUV 4:2:2采样，每两个Y共用一组UV分量。</li>
@@ -352,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -431,11 +431,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,6 +448,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,7 +475,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -479,11 +491,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -491,7 +503,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

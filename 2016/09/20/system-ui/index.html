@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="之前写过一篇状态栏小记，这里加入虚拟按键重新做一下总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/09/system1.gif">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.158Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/system1.gif">
+<meta property="og:updated_time" content="2020-07-15T11:50:34.254Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android状态栏、虚拟按键小记">
 <meta name="twitter:description" content="之前写过一篇状态栏小记，这里加入虚拟按键重新做一下总结。">
-<meta name="twitter:image" content="http://7xryow.com1.z0.glb.clouddn.com/2016/09/system1.gif">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/system1.gif">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -251,7 +251,7 @@
 <p>关于隐藏状态栏以及虚拟按键的显示、隐藏，目前知道的只有通过<code>setSystemUiVisibility</code>方法结合flag来实现。<br>隐藏虚拟按键：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">getWindow</span>()<span class="selector-class">.getDecorView</span>()<span class="selector-class">.setSystemUiVisibility</span>(<span class="selector-tag">View</span><span class="selector-class">.SYSTEM_UI_FLAG_HIDE_NAVIGATION</span>);</span><br></pre></td></tr></table></figure></p>
 <p>下面来做一个示例。</p>
 <h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>前言中11种flag，真正用到的也就几种，下面结合示例来说。<br>新建一个应用，将Activity设置为全屏，并且横屏（模拟直播、播放视频类似的环境）。<br>先贴一下示例代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isShowing;</span><br><span class="line">    <span class="keyword">private</span> TextView hello;</span><br><span class="line">    <span class="keyword">private</span> Button dialog;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        dialog = (Button) findViewById(R.id.dialog_button);</span><br><span class="line">        hello = (TextView) findViewById(R.id.hello_world);</span><br><span class="line">        hello.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (isShowing) &#123;</span><br><span class="line">                    hideOperation();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    showOperation();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        dialog.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(MainActivity.<span class="keyword">this</span>);</span><br><span class="line">                builder.setMessage(<span class="string">"Hello World!"</span>);</span><br><span class="line">                builder.setTitle(<span class="string">"Title"</span>);</span><br><span class="line">                builder.create().show();</span><br><span class="line">                hideOperation();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isShowing = <span class="keyword">true</span>;</span><br><span class="line">        WindowManager.LayoutParams attr = getWindow().getAttributes();</span><br><span class="line">        attr.flags &amp;= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);</span><br><span class="line">        getWindow().setAttributes(attr);</span><br><span class="line">        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</span><br><span class="line"></span><br><span class="line">        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">                | View.SYSTEM_UI_LAYOUT_FLAGS</span><br><span class="line">                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        isShowing = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> options = View.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">                | View.SYSTEM_UI_LAYOUT_FLAGS</span><br><span class="line">                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span><br><span class="line">                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</span><br><span class="line">                | View.SYSTEM_UI_FLAG_FULLSCREEN;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) &#123;</span><br><span class="line">            options |= View.SYSTEM_UI_FLAG_IMMERSIVE;</span><br><span class="line">        &#125;</span><br><span class="line">        getWindow().getDecorView().setSystemUiVisibility(options);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onWindowFocusChanged</span><span class="params">(<span class="keyword">boolean</span> hasFocus)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onWindowFocusChanged(hasFocus);</span><br><span class="line"><span class="comment">//        int options = View.SYSTEM_UI_FLAG_LAYOUT_STABLE</span></span><br><span class="line"><span class="comment">//                | View.SYSTEM_UI_LAYOUT_FLAGS</span></span><br><span class="line"><span class="comment">//                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span></span><br><span class="line"><span class="comment">//                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span></span><br><span class="line"><span class="comment">//                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</span></span><br><span class="line"><span class="comment">//                | View.SYSTEM_UI_FLAG_FULLSCREEN;</span></span><br><span class="line"><span class="comment">//        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) &#123;</span></span><br><span class="line"><span class="comment">//            options |= View.SYSTEM_UI_FLAG_IMMERSIVE;</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line"><span class="comment">//        getWindow().getDecorView().setSystemUiVisibility(options);</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>运行效果如下图：<br><img src="http://7xryow.com1.z0.glb.clouddn.com/2016/09/system1.gif" alt=""></p>
+<p>运行效果如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/system1.gif" alt=""></p>
 <ol>
 <li>可以看到，在我点击依次”Hello World”之后，button往下移了一点点，同时状态栏也显示了。（初始的时候虚拟按键就已经显示）</li>
 <li>再点击一下，进行隐藏操作，状态栏、虚拟按键同时消失。当点击中间的button弹出dialog时，虚拟按键与状态栏会同时出来。然后关掉dialog后要连着点2次，状态栏、虚拟按键才会消失。</li>
@@ -406,7 +406,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018 最后的温存
+    		&copy; 2020 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -485,11 +485,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,6 +502,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -525,7 +529,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -533,11 +545,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -545,7 +557,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">
