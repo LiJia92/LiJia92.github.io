@@ -336,6 +336,60 @@ LiveBus.with(Float::class.java).observeForever {
 ### 小结
 使用上述 4 个类：BusLiveData、BusMediatorLiveData、LiveBus、SameActionMediator，便可实现消息总线的整体功能了，同时有所优化。嗯，JetPack 真香啊~
 
+## 更新
+在项目使用过程中，当用到 observeForever 时，即使 removeObserver 了还是会收到回调，导致内存泄露。查看代码，发现是 BusLiveData 代码有问题，更新一下：
+```
+open class BusLiveData<T> : MutableLiveData<T>() {
+
+    private val wrappers = mutableMapOf<Observer<in T>, BusWrapper>()
+
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+        val wrapper = DefaultWrapper(observer)
+        super.observe(owner, wrapper)
+    }
+
+    open fun observeSticky(owner: LifecycleOwner, observer: Observer<T>) {
+        super.observe(owner, observer)
+    }
+
+    override fun observeForever(observer: Observer<in T>) {
+        val wrapper = DefaultWrapper(observer)
+        wrappers[observer] = wrapper
+        super.observeForever(wrapper)
+    }
+
+    fun observeStickyForever(observer: Observer<T>) {
+        super.observeForever(observer)
+    }
+
+    override fun removeObserver(observer: Observer<in T>) {
+        val wrapper = wrappers[observer]
+        if (wrapper != null) {
+            super.removeObserver(wrapper)
+            wrappers.remove(observer)
+        } else {
+            super.removeObserver(observer)
+        }
+    }
+
+    inner class DefaultWrapper(observer: Observer<in T>) : BusWrapper(observer) {
+        override fun onChanged(t: T?) {
+            if (lastVersion >= version) {
+                return
+            }
+
+            lastVersion = version
+            observer.onChanged(t)
+        }
+    }
+
+    abstract inner class BusWrapper(val observer: Observer<in T>) : Observer<T> {
+        var lastVersion = version
+    }
+}
+```
+调用 observe 的绑定了生命周期的，会在 destroy 的时候自动移除掉，wrappers 不需要持有。调用 observeForever 的 wrappers 需要持有，以便在 remove 时，找到对应的 Observer 去 remove。
+
 ### 参考
 1. [Android消息总线的演进之路：用LiveDataBus替代RxBus、EventBus](https://tech.meituan.com/2018/07/26/android-livedatabus.html)
 2. [【译】LiveData 使用详解](https://www.jianshu.com/p/dab2ee97d680)
