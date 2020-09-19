@@ -158,6 +158,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-live-capture-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/20/live-capture-video/">【Android音视频开发】- 实时采集视频</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/20/live-capture-video/" class="archive-article-date">
+  	<time datetime="2016-10-20T02:24:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&gt; 美颜/滤镜/特效处理 -&gt; 编码 -&gt; 封包 -&gt; 推流 -&gt; 分发 -&gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。<br>那么实时采集视频有哪些方案呢？</p>
+<h2 id="调研"><a href="#调研" class="headerlink" title="调研"></a>调研</h2><p>通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：</p>
+<ol>
+<li>通过Android Camera拍摄预览中设置setPreviewCallback实现onPreviewFrame接口，实时截取每一帧视频流数据</li>
+<li>通过通过Android的MediaRecorder，在SetoutputFile函数中绑定LocalSocket实现</li>
+<li>流媒体服务器方式，利用ffmpeg或GetStreamer等获取Camera视频</li>
+</ol>
+<p>通过学习，大致了解了1，2两种方式的实现方式，但是对于第3种方式，暂时没有研究。</p>
+        
+          <a class="article-more-a" href="/2016/10/20/live-capture-video/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-live" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -720,66 +787,6 @@
 
 
   
-    <article id="post-android-adapter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/21/android-adapter/">Andoird开发中适配小记</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/21/android-adapter/" class="archive-article-date">
-  	<time datetime="2016-07-21T01:59:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。<br>主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。</p>
-        
-          <a class="article-more-a" href="/2016/07/21/android-adapter/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
@@ -905,11 +912,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -917,11 +924,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

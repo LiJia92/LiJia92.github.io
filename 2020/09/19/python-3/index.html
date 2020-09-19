@@ -6,23 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lijia92.github.io">
-  <title>百度定位SDK无法定位 | 听雪楼</title>
+  <title>一次 Python 工具编写的经历《三》 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。 百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考百度开发指">
-<meta name="keywords" content="sdk">
+  <meta name="description" content="todo">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="百度定位SDK无法定位">
-<meta property="og:url" content="http://lijia92.github.io/2015/10/24/baidu-loc/index.html">
+<meta property="og:title" content="一次 Python 工具编写的经历《三》">
+<meta property="og:url" content="http://lijia92.github.io/2020/09/19/python-3/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。 百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考百度开发指">
+<meta property="og:description" content="todo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png">
-<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc2.png">
-<meta property="og:updated_time" content="2020-07-16T12:08:14.529Z">
+<meta property="og:updated_time" content="2020-09-19T09:56:30.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="百度定位SDK无法定位">
-<meta name="twitter:description" content="最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。 百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考百度开发指">
-<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png">
+<meta name="twitter:title" content="一次 Python 工具编写的经历《三》">
+<meta name="twitter:description" content="todo">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -164,38 +161,27 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-baidu-loc" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-python-3" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      百度定位SDK无法定位
+      一次 Python 工具编写的经历《三》
     </h1>
   
 
         
-        <a href="/2015/10/24/baidu-loc/" class="archive-article-date">
-  	<time datetime="2015-10-24T09:14:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-24</time>
+        <a href="/2020/09/19/python-3/" class="archive-article-date">
+  	<time datetime="2020-09-19T09:55:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近的项目中，有使用到百度定位SDK，在自己的debug环境安装apk，手机可以进行定位。但是发布release版本后安装，手机却无法定位。后面找到问题是百度配置的秘钥不对。</p>
-<p>百度地图SDK在申请秘钥时，需要SHA1值。此值在Eclipse中在Eclipse中，可直接看到：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc1.png" alt="这里写图片描述"><br>若是使用Android Studio，直接在setting中好像看不到该值。此时需要通过命令行来获取，具体操作可参考<a href="http://developer.baidu.com/map/index.php?title=androidsdk/guide/key" target="_blank" rel="noopener">百度开发指南</a>。</p>
-<a id="more"></a>
-<p>通过上述方式获取到的SHA1值为debug版本的，若是在Android Studio中，采用自己的keystore生成的apk对应的SHA1值会与debug版本的值不一致，这就导致了在百度开放平台上申请到的key值不对（key值需要SHA1值与app包名）。</p>
-<p>此时需要获得release版本对应的SHA1值。步骤如下：</p>
-<ol>
-<li>将自己的keystore拷贝一份到C:\Users\Administrator.android目录下；</li>
-<li>命令行进入到.android文件夹，执行命令：<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keytool -<span class="built_in">list</span> -keystore keystorefile</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>keystorefile为刚刚拷贝的keystore文件。<br>会提示输入秘钥库口令，输入之后回车即可获取SHA1值。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/baidu-loc2.png" alt="这里写图片描述"><br>使用该SHA1值去开放平台申请秘钥，然后替换AndroidManifest.xml中的key值。之后采用自己那个keystore进行release打包出来的apk即可正常使用百度SDK了。</p>
-
+        <h2 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h2>
       
 
       
@@ -208,7 +194,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -264,7 +250,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2015/10/24/baidu-loc/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2020/09/19/python-3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -278,18 +264,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2015/10/28/reflect-interface/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Java反射实现接口
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/10/24/ddms-logcat/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android DDMS无法输出logcat</div>
+    <a href="/2020/09/19/python-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一次 Python 工具编写的经历《二》</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -303,7 +280,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="baidu-loc" data-title="百度定位SDK无法定位" data-url="http://lijia92.github.io/2015/10/24/baidu-loc/"></div>
+	<div class="ds-thread" data-thread-key="python-3" data-title="一次 Python 工具编写的经历《三》" data-url="http://lijia92.github.io/2020/09/19/python-3/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

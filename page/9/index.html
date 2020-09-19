@@ -158,6 +158,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/09/confuse/">关于混淆的一个小纰漏</a>
+    </h1>
+  
+
+        
+        <a href="/2017/05/09/confuse/" class="archive-article-date">
+  	<time datetime="2017-05-09T05:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
+<p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
+<p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
+        
+          <a class="article-more-a" href="/2017/05/09/confuse/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-multi-type" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -717,68 +779,6 @@
 
 
   
-    <article id="post-ios-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/12/16/ios-tips/">iOS 学习之旅</a>
-    </h1>
-  
-
-        
-        <a href="/2016/12/16/ios-tips/" class="archive-article-date">
-  	<time datetime="2016-12-16T02:23:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>接触iOS也有一阵子了，也参与到项目做了有些事情，主要是从改bug入手，边学边做，下面记录一下自己在学习中遇到一些点。</p>
-<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Objective-C提供了一种与众不同的方式——Category，可以动态的为已经存在的类添加新的行为。这样可以保证类的原始设计规模较小，功能增加时再逐步扩展。使用Category对类进行扩展时，不需要访问其源代码，也不需要创建子类。Category使用简单的方式，实现了类的相关方法的模块化，把不同的类方法分配到不同的分类文件中。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SomeClass.h</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>) print;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> (<span class="title">Hello</span>)</span></span><br><span class="line">-(<span class="keyword">void</span>)hello;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(<span class="keyword">void</span>)hello&#123;</span><br><span class="line">    <span class="built_in">NSLog</span> (<span class="string">@"name：%@ "</span>, <span class="string">@"Jacky"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line"></span><br><span class="line">SomeClass * sc =[[SomeClass alloc] init];</span><br><span class="line">[sc hello]</span><br></pre></td></tr></table></figure></p>
-<p>这里还有一个约定成俗的习惯，将声明文件和实现文件名称统一采用“原类名+Category”的方式命名。</p>
-        
-          <a class="article-more-a" href="/2016/12/16/ios-tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
@@ -904,11 +904,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -916,11 +916,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
