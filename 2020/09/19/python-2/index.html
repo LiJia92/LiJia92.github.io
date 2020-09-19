@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lijia92.github.io">
-  <title>ViewPager 左右突出 | 听雪楼</title>
+  <title>一次 Python 工具编写的经历《二》 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="继上篇文章，获取到序列号后，接下来就是得打印了。python 里使用打印，可以直接使用PyQt5.QtPrintSupport。 打印获取打印机列表：12345678def printerList():    printer = []    printerInfo = QPrinterInfo()    print(&apos;availablePrinterNames&apos;, printerInfo.avai">
+<meta name="keywords" content="python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ViewPager 左右突出">
-<meta property="og:url" content="http://lijia92.github.io/2020/05/09/viewpager-1/index.html">
+<meta property="og:title" content="一次 Python 工具编写的经历《二》">
+<meta property="og:url" content="http://lijia92.github.io/2020/09/19/python-2/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
+<meta property="og:description" content="继上篇文章，获取到序列号后，接下来就是得打印了。python 里使用打印，可以直接使用PyQt5.QtPrintSupport。 打印获取打印机列表：12345678def printerList():    printer = []    printerInfo = QPrinterInfo()    print(&apos;availablePrinterNames&apos;, printerInfo.avai">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png">
-<meta property="og:updated_time" content="2020-07-16T12:08:14.558Z">
+<meta property="og:updated_time" content="2020-09-19T09:47:26.270Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ViewPager 左右突出">
-<meta name="twitter:description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
-<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png">
+<meta name="twitter:title" content="一次 Python 工具编写的经历《二》">
+<meta name="twitter:description" content="继上篇文章，获取到序列号后，接下来就是得打印了。python 里使用打印，可以直接使用PyQt5.QtPrintSupport。 打印获取打印机列表：12345678def printerList():    printer = []    printerInfo = QPrinterInfo()    print(&apos;availablePrinterNames&apos;, printerInfo.avai">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -163,45 +161,47 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-viewpager-1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-python-2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      ViewPager 左右突出
+      一次 Python 工具编写的经历《二》
     </h1>
   
 
         
-        <a href="/2020/05/09/viewpager-1/" class="archive-article-date">
-  	<time datetime="2020-05-09T08:29:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
+        <a href="/2020/09/19/python-2/" class="archive-article-date">
+  	<time datetime="2020-09-19T08:40:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>日常开发中经常会有如下需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png" alt=""></p>
-<p>ViewPager 左右突出，实现起来非常简单：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v4.view.ViewPager</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">clipToPadding</span>=<span class="string">"false"</span></span><br><span class="line">    android:<span class="attribute">paddingLeft</span>=<span class="string">"48dp"</span></span><br><span class="line">    android:<span class="attribute">paddingRight</span>=<span class="string">"48dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>添加 padding、clipToPadding 即可。<br>现在还有几个需求：</p>
-<ol>
-<li>两边的 item 小一点，并且有透明度</li>
-<li>item 之间的间距固定</li>
-<li>滑动有动画效果</li>
-</ol>
+        <p>继<a href="http://lastwarmth.win/2020/09/15/python-1/" target="_blank" rel="noopener">上篇文章</a>，获取到序列号后，接下来就是得打印了。python 里使用打印，可以直接使用<strong>PyQt5.QtPrintSupport</strong>。</p>
+<h2 id="打印"><a href="#打印" class="headerlink" title="打印"></a>打印</h2><p>获取打印机列表：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printerList</span><span class="params">()</span>:</span></span><br><span class="line">    printer = []</span><br><span class="line">    printerInfo = QPrinterInfo()</span><br><span class="line">    print(<span class="string">'availablePrinterNames'</span>, printerInfo.availablePrinterNames())</span><br><span class="line">    print(<span class="string">'defaultPrinterName'</span>, printerInfo.defaultPrinterName())</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> printerInfo.availablePrinters():</span><br><span class="line">        printer.append(item.printerName())</span><br><span class="line">    <span class="keyword">return</span> printer</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<p>第 1点使用 scale 进行缩放即可，但是<strong>左边需要向右缩放，右边需要向左缩放</strong>，才能保证第 2 点。<br>第 2 点使用 setPageMargin。<br>第 3 点使用 setPageTransformer。</p>
-<p>transformPage 有 2 个参数：</p>
+<p>打印一个文档：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def printing(printer, content):</span><br><span class="line">    <span class="attr">printerInfo</span> = QPrinterInfo()</span><br><span class="line">    <span class="attr">p</span> = QPrinter()</span><br><span class="line">    for item <span class="keyword">in</span> printerInfo.availablePrinters():</span><br><span class="line">        <span class="keyword">if</span> <span class="attr">printer</span> == item.printerName():</span><br><span class="line">            <span class="attr">p</span> = QPrinter(item)</span><br><span class="line">    <span class="attr">doc</span> = QTextDocument()</span><br><span class="line">    doc.setHtml(content)</span><br><span class="line">    <span class="comment"># doc.setPageSize(QSizeF(p.logicalDpiX() * (80 / 25.4),p.logicalDpiY() * (297 / 25.4)))</span></span><br><span class="line">    p.setOutputFormat(QPrinter.NativeFormat)</span><br><span class="line">    doc.print_(p)</span><br></pre></td></tr></table></figure></p>
+<p>doc.setHtml 设置一个 Html 进行打印。使用此种方法，发现一个问题：<strong>html 左右布局，但是打出来的标签是上下布局的</strong>，找了多种方法没找到解决方案，寻到一个曲线救国的方案：<strong>先转成图片，然后再打印。</strong></p>
+<h2 id="Html-转图片"><a href="#Html-转图片" class="headerlink" title="Html 转图片"></a>Html 转图片</h2><p>在网上找到的是使用<a href="https://github.com/jarrekk/imgkit" target="_blank" rel="noopener">imgkit 库</a>。安装有两步：</p>
 <ol>
-<li>page，View: Apply the transformation to this page</li>
-<li>position，float: Position of page relative to the current front-and-center position of the pager. 0 is front and center. 1 is one full page position to the right, and -1 is one page position to the left.</li>
+<li>pip install imgkit</li>
+<li>brew install wkhtmltopdf(Mac OS)</li>
 </ol>
-<p>也就是左边的 View -1~0 变化，右边的 View 0~1 变化。<br>下面问题来了，显示的页面并非在中间的时候缩放到最大，而是要滑动到左边的边缘才是最大。通过断点调试，发现 postion 值就没有出现过0，也就是从来没有滑到“正中间”。看到代码调用 transformPage 的地方：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> offset, <span class="keyword">int</span> offsetPixels)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mPageTransformer != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> scrollX = getScrollX();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childCount = getChildCount();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> View child = getChildAt(i);</span><br><span class="line">            <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (lp.isDecor) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">float</span> transformPos = (<span class="keyword">float</span>) (child.getLeft() - scrollX) / getClientWidth();</span><br><span class="line">            mPageTransformer.transformPage(child, transformPos);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>传回来的 transformPos 在进行计算时，没有考虑 ViewPager 的 padding，</strong>一切似乎都对应上了。<br>自己计算位置，最终代码：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">viewPager.pageMargin = DimenUtils.dp2px(10f)</span><br><span class="line">viewPager.setPageTransformer(<span class="literal">false</span>) &#123; page: View, <span class="symbol">_</span>: Float -&gt;</span><br><span class="line">    <span class="built_in">var</span> <span class="built_in">position</span> = getPositionConsiderPadding(<span class="built_in">view</span>.itemView.schoolViewPager, page)</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> &lt; -<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">position</span> = -1f</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">position</span> = 1f</span><br><span class="line">    &#125;</span><br><span class="line">    val <span class="built_in">scale</span>: Float</span><br><span class="line">    val alpha: Float</span><br><span class="line">    val pivotX: Float</span><br><span class="line">    val pivotY: Float</span><br><span class="line">    when &#123;</span><br><span class="line">        <span class="built_in">position</span> &lt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f + <span class="built_in">position</span> * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.</span>5f + <span class="number">0.</span>5f * (<span class="number">1</span> + <span class="built_in">position</span>))</span><br><span class="line">            pivotX = <span class="built_in">width</span>.toFloat()</span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">position</span> &gt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f - <span class="built_in">position</span> * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.</span>5f + <span class="number">0.</span>5f * (<span class="number">1</span> - <span class="built_in">position</span>))</span><br><span class="line">            pivotX = <span class="number">0f</span></span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f</span><br><span class="line">            alpha = 1f</span><br><span class="line">            pivotX = <span class="built_in">width</span> / 2f</span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    page.alpha = alpha</span><br><span class="line">    page.pivotX = pivotX</span><br><span class="line">    page.pivotY = pivotY</span><br><span class="line">    page.scaleX = <span class="built_in">scale</span></span><br><span class="line">    page.scaleY = <span class="built_in">scale</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据 padding 计算真实的 position</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">private fun getPositionConsiderPadding(viewPager: ViewPager, page: View): Float &#123;</span><br><span class="line">    val clientWidth = (viewPager.measuredWidth - viewPager.paddingLeft - viewPager.paddingRight).toFloat()</span><br><span class="line">    <span class="built_in">return</span> ((page.left - viewPager.scrollX - viewPager.paddingLeft) / clientWidth)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>注：scale 动画可以设置 x、y 的参照点，<strong>代码设置为相对值，不是百分比，所以需要根据百分比映射到真实的位置</strong>。</p>
-<p>参考：<a href="https://www.itcodemonkey.com/article/9599.html" target="_blank" rel="noopener">解决几个ViewPager 异常问题 | 深入剖析</a></p>
+<p>若使用 Windows，前往<a href="https://wkhtmltopdf.org/" target="_blank" rel="noopener">wkhtmltopdf 官网</a>下载安装。<br>运行后依然报错：</p>
+<blockquote>
+<p>Can’t create pdf using python PDFKIT Error : “ No wkhtmltopdf executable found:”</p>
+</blockquote>
+<p>在 <a href="https://stackoverflow.com/questions/27673870/cant-create-pdf-using-python-pdfkit-error-no-wkhtmltopdf-executable-found" target="_blank" rel="noopener">stactoverflow</a> 上找到相应解决方案(Windows)：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pdfkit</span><br><span class="line">path_wkhtmltopdf = <span class="string">r'C:\Program Files (x86)\wkhtmltopdf\bin\wkhtmltopdf.exe'</span></span><br><span class="line">config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)</span><br><span class="line">pdfkit.from_url(<span class="string">"http://google.com"</span>, <span class="string">"out.pdf"</span>, configuration=config)</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以转成图片了。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def do_print(self, num, qrCode):</span><br><span class="line">    # 生成图片再打印</span><br><span class="line">    html = '<span class="meta">&lt;!DOCTYPE html&gt;</span><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale="</span>&gt;</span><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"> <span class="selector-tag">html</span>, <span class="selector-tag">body</span>, <span class="selector-tag">div</span> &#123; <span class="attribute">margin</span>: <span class="number">0</span>; <span class="attribute">padding</span>: <span class="number">0</span>; &#125; <span class="selector-tag">table</span> &#123; &#125; <span class="selector-tag">table</span> <span class="selector-tag">td</span> &#123; <span class="attribute">padding</span>: <span class="number">12px</span>; <span class="attribute">vertical-align</span>: middle; <span class="attribute">text-align</span>: center; &#125; <span class="selector-tag">p</span> &#123; <span class="attribute">margin</span>: <span class="number">8px</span> <span class="number">0</span>; <span class="attribute">font-size</span>: <span class="number">24px</span>; <span class="attribute">font-weight</span>: bold; &#125;</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span><span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;<span class="name">table</span> &gt;</span><span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"' + qrCode + '"</span> <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"100"</span>/&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>序列号<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>' + num + '<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span><span class="tag">&lt;/<span class="name">table</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span>'</span><br><span class="line">    path = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltoimage.exe'</span><br><span class="line">    config = Config(wkhtmltoimage=path)</span><br><span class="line">    options = &#123;</span><br><span class="line">        'width': 350,</span><br><span class="line">        'height': 140,</span><br><span class="line">        'encoding': 'UTF-8'</span><br><span class="line">    &#125;</span><br><span class="line">    imgkit.from_string(html, 'print.png', config=config, options=options)</span><br></pre></td></tr></table></figure></p>
+<p>options 是生成图片的宽高，看打印需求进行调整。代码成功执行后，本地就会生成一个 print.png 的图片了。</p>
+<h2 id="打印图片"><a href="#打印图片" class="headerlink" title="打印图片"></a>打印图片</h2><p>打印图片使用 QPainter：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">printer = <span class="string">"defaultPrinter"</span></span><br><span class="line">printerInfo = QPrinterInfo()</span><br><span class="line">p = QPrinter()</span><br><span class="line"><span class="comment"># p.setPaperSize(QSizeF(50,20),QPrinter.Millimeter)</span></span><br><span class="line"><span class="comment"># p.setPageSize(QPageSize.LetterExtra)</span></span><br><span class="line">for item in printerInfo.availablePrinters():</span><br><span class="line">    if printer == item.printerName():</span><br><span class="line">        p = QPrinter(item)</span><br><span class="line">img = QImage('print.png')</span><br><span class="line">painter = QPainter(p)</span><br><span class="line"><span class="comment"># rect = painter.viewport()</span></span><br><span class="line"><span class="comment"># size = img.size()</span></span><br><span class="line"><span class="comment"># size.scale(rect.size(), Qt.KeepAspectRatio)</span></span><br><span class="line"><span class="comment"># painter.setViewport(rect.x(), rect.y(), size.width(), size.height())</span></span><br><span class="line"><span class="comment"># painter.setWindow(img.rect())</span></span><br><span class="line">painter.drawImage(0, 0, img)</span><br><span class="line">painter.end()</span><br></pre></td></tr></table></figure></p>
+<p>图片打印成功，后续要需要根据纸张大小进行调整，以达到最佳的打印效果。<br>下一步便是生成 Windows 可运行工具了，欲知后事如何，且听下回分解。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://stackoverflow.com/questions/27673870/cant-create-pdf-using-python-pdfkit-error-no-wkhtmltopdf-executable-found" target="_blank" rel="noopener">Can’t create pdf using python PDFKIT Error : “ No wkhtmltopdf executable found:”</a><br><a href="https://blog.csdn.net/threegirl/article/details/81107939" target="_blank" rel="noopener">pythonhtml2image: imgkit 和 wkhtmltoimage的坑</a><br><a href="https://www.cnblogs.com/MakeView660/p/11225445.html" target="_blank" rel="noopener">QPainter绘制图片填充方式（正常大小、剪切大小、自适应大小、平铺）
+</a><br><a href="https://blog.csdn.net/amnes1a/article/details/70597506" target="_blank" rel="noopener">Qt中的打印操作</a><br><a href="https://blog.csdn.net/fanyun_01/article/details/53431786" target="_blank" rel="noopener">Qt打印详解</a><br><a href="https://www.geek-share.com/detail/2729251049.html" target="_blank" rel="noopener">Qt实现 二维码打印功能</a><br><a href="https://www.cnblogs.com/ribavnu/p/4790262.html" target="_blank" rel="noopener">Python调用打印机参考例子</a></p>
 
       
 
@@ -215,7 +215,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
@@ -271,7 +271,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2020/05/09/viewpager-1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2020/09/19/python-2/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -285,18 +285,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/07/15/serial-port/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Android 串口通信小记
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/22/telecom/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">记一次电信一键登录的“BUG”</div>
+    <a href="/2020/09/15/python-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一次 Python 工具编写的经历《一》</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -310,7 +301,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="viewpager-1" data-title="ViewPager 左右突出" data-url="http://lijia92.github.io/2020/05/09/viewpager-1/"></div>
+	<div class="ds-thread" data-thread-key="python-2" data-title="一次 Python 工具编写的经历《二》" data-url="http://lijia92.github.io/2020/09/19/python-2/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
