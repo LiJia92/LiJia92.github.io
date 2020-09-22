@@ -4,4 +4,4 @@ date: 2020-09-19 17:55:59
 tags:
  - python
 ---
-## todo
+将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了。

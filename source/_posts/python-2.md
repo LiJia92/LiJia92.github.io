@@ -91,6 +91,39 @@ painter.drawImage(0, 0, img)
 painter.end()
 ```
 图片打印成功，后续要需要根据纸张大小进行调整，以达到最佳的打印效果。
+
+## 打印多列
+项目中用到的打印机是标签打印机，一行有 2 个标签纸，所以需要做特殊适配：
+```
+painter.setRenderHint(QPainter.HighQualityAntialiasing, True)
+count = self.print_count.value()
+for i in range(0, count):
+    # 打第奇数张图片
+    painter.drawImage(10, 0, img)
+    if 1 == i % 2:
+        # 打第偶数张图片
+        painter.drawImage(440, 0, img)
+        if i != count - 1:
+            # 如果还有下一个，就新建下一页
+            p.newPage()
+painter.end()
+```
+print_count 为一个数量选择器，目前暂定只能打 2 张或者 4 张：
+```
+self.print_count = QSpinBox(Form)
+self.print_count.setRange(2, 4)
+self.print_count.setSingleStep(2)
+self.print_count.setValue(2)
+```
+
+## 图片模糊
+通过此种方法打印出来的标签，总感觉比较模糊。即使我把生成图片的宽高调成与打印机的一致，也还是会模糊。寻找了很多方法，无果。后面在[QT 官网](https://doc.qt.io/qt-5/qprinter.html#PrinterMode-enum)看到打印机的 **PrinterMode** 设置。默认是 ScreenResolution，改成 HighResolution 之后打印出来就很清晰了，然后打第二张图的间距也需要适当调整（painter.drawImage(440, 0, img)）。
+> This enum describes the mode the printer should work in. It basically presets a certain resolution and working mode.
+QPrinter::ScreenResolution：Sets the resolution of the print device to the screen resolution. This has the big advantage that the results obtained when painting on the printer will match more or less exactly the visible output on the screen. It is the easiest to use, as font metrics on the screen and on the printer are the same. This is the default value. ScreenResolution will produce a lower quality output than HighResolution and should only be used for drafts.
+QPrinter::PrinterResolution：This value is deprecated. It is equivalent to ScreenResolution on Unix and HighResolution on Windows and Mac. Due to the difference between ScreenResolution and HighResolution, use of this value may lead to non-portable printer code.
+QPrinter::HighResolution：On Windows, sets the printer resolution to that defined for the printer in use. For PDF printing, sets the resolution of the PDF driver to 1200 dpi.
+
+
 下一步便是生成 Windows 可运行工具了，欲知后事如何，且听下回分解。
 
 ## 参考
