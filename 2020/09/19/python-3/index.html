@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>一次 Python 工具编写的经历《三》 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了。">
+  <meta name="description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台。安装 PyInstaller，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一次 Python 工具编写的经历《三》">
 <meta property="og:url" content="http://lijia92.github.io/2020/09/19/python-3/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了。">
+<meta property="og:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台。安装 PyInstaller，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-22T11:35:10.725Z">
+<meta property="og:updated_time" content="2020-09-22T12:06:56.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次 Python 工具编写的经历《三》">
-<meta name="twitter:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了。">
+<meta name="twitter:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台。安装 PyInstaller，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -181,7 +181,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了。</p>
+        <p>将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：<strong>MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台</strong>。<br>安装 <a href="https://github.com/pyinstaller/pyinstaller/" target="_blank" rel="noopener">PyInstaller</a>，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w xx.py。<br>打包是很容易了，但是能正常运行则需要运气。使用 pyCharm 可以正常运行 py 文件，但是打成 exe 后运行直接崩溃。所以第一步：接入异常提示。</p>
+<h2 id="异常提示"><a href="#异常提示" class="headerlink" title="异常提示"></a>异常提示</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line">except <span class="keyword">Exception</span> <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">self</span>.box = QMessageBox(QMessageBox.Warning, <span class="string">'提示'</span>,</span><br><span class="line">                           <span class="string">"出错了!"</span> + traceback.format_exc())</span><br><span class="line">    <span class="keyword">self</span>.box.exec()</span><br></pre></td></tr></table></figure>
+<p>获取到提示后，下一个错误就来了。</p>
+<a id="more"></a>
+<h2 id="WindowsError-Error-6"><a href="#WindowsError-Error-6" class="headerlink" title="WindowsError:[Error 6]"></a>WindowsError:[Error 6]</h2><p>运行 exe 报错：WindowsError:[Error 6]，报错文件为 imgkit/config.py，里面用到了 subprocess。网上查阅相关文章，需要添加全量的参数设置。<br>修改前：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">subprocess</span><span class="selector-class">.Popen</span>([<span class="string">'where'</span>, <span class="string">'xvfb-run'</span>],stdout=subprocess.PIPE)<span class="selector-class">.communicate</span>()<span class="selector-attr">[0]</span><span class="selector-class">.strip</span>()</span><br></pre></td></tr></table></figure></p>
+<p>修改后：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.Popen<span class="params">(['where', 'xvfb-run'],<span class="attr">shell</span>=True, <span class="attr">stdin</span>=subprocess.PIPE, <span class="attr">stderr</span>=subprocess.PIPE,<span class="attr">stdout</span>=subprocess.PIPE)</span><span class="string">.communicate</span><span class="params">()</span>[0]<span class="string">.strip</span><span class="params">()</span></span><br></pre></td></tr></table></figure></p>
+<p>然后重新打包，运行成功。<br>PS：python 修改三方库文件，直接 pyCharm 修改保存即可，十分方便了~</p>
+<h2 id="打包指令"><a href="#打包指令" class="headerlink" title="打包指令"></a>打包指令</h2><p>-F, –onefile Py代码只有一个文件<br>-D, –onedir Py代码放在一个目录中（默认是这个）<br>-K, –tk 包含TCL/TK<br>-d, –debug 生成debug模式的exe文件<br>-w, –windowed, –noconsole 窗体exe文件(WindowsOnly)<br>-c, –nowindowed, –console 控制台exe文件(WindowsOnly)<br>-X, –upx 使用upx压缩exe文件<br>-o DIR, –out=DIR 设置spec文件输出的目录，默认在PyInstaller同目录<br>-v FILE, –version=FILE 加入版本信息文件</p>
+<p>python 工具之旅到此结束。</p>
 
       
 
@@ -421,7 +429,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,11 +437,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
