@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lijia92.github.io">
-  <title>Archives: 2018 | 听雪楼</title>
+  <title>混淆小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="听雪楼">
-<meta property="og:url" content="http://lijia92.github.io/archives/2018/page/3/index.html">
+  <meta name="description" content="最近做的项目是个新项目，早期为了快速迭代实现需求，在混淆这块没做过处理。最近打算上 release 包，混淆这块肯定还是需要的。 开启混淆在 App Module 的 build.gradle 文件中配置开启混淆：1234567release &amp;#123;    signingConfig signingConfigs.release    minifyEnabled true    multiD">
+<meta name="keywords" content="日常开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混淆小记">
+<meta property="og:url" content="http://lijia92.github.io/2020/09/24/proguard/index.html">
 <meta property="og:site_name" content="听雪楼">
+<meta property="og:description" content="最近做的项目是个新项目，早期为了快速迭代实现需求，在混淆这块没做过处理。最近打算上 release 包，混淆这块肯定还是需要的。 开启混淆在 App Module 的 build.gradle 文件中配置开启混淆：1234567release &amp;#123;    signingConfig signingConfigs.release    minifyEnabled true    multiD">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-24T12:13:20.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听雪楼">
+<meta name="twitter:title" content="混淆小记">
+<meta name="twitter:description" content="最近做的项目是个新项目，早期为了快速迭代实现需求，在混淆这块没做过处理。最近打算上 release 包，混淆这块肯定还是需要的。 开启混淆在 App Module 的 build.gradle 文件中配置开启混淆：1234567release &amp;#123;    signingConfig signingConfigs.release    minifyEnabled true    multiD">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -156,226 +161,57 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-proguard" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      混淆小记
+    </h1>
+  
+
+        
+        <a href="/2020/09/24/proguard/" class="archive-article-date">
+  	<time datetime="2020-09-24T11:17:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近做的项目是个新项目，早期为了快速迭代实现需求，在混淆这块没做过处理。最近打算上 release 包，混淆这块肯定还是需要的。</p>
+<h2 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h2><p>在 App Module 的 build.gradle 文件中配置开启混淆：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">release</span> &#123;</span><br><span class="line">    <span class="attribute">signingConfig</span> signingConfigs.release</span><br><span class="line">    minifyEnabled <span class="literal">true</span></span><br><span class="line">    multiDexEnabled = <span class="literal">true</span></span><br><span class="line">    proguardFiles getDefaultProguardFile(<span class="string">'proguard-android-optimize.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">    resValue(<span class="string">"string"</span>, <span class="string">"build_type"</span>, <span class="string">"debug"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>minifyEnabled 开启为 true 则开启混淆，混淆规则为 proguard-rules.pro 中配置。proguardFiles getDefaultProguardFile(‘proguard-android.txt’) 会包含一份 Android 默认的混淆规则，比如四大组件的混淆等等。proguard-android-optimize.txt 也是默认的混淆规则，但是相比于 proguard-android.txt，它包含更“严格”的优化项，可能会出现某些预料之外的表现，比如连包名都给混淆了，视情况是否需要采用 optimize 吧。</p>
+<h2 id="混淆继承"><a href="#混淆继承" class="headerlink" title="混淆继承"></a>混淆继承</h2><p>作为 lib 库，最好是能实现自身的混淆规则，通过 consumerProguardFiles 指定自身混淆规则，这样第三方在依赖 lib 时便可以不用手动配混淆规则了：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">release</span> &#123;</span><br><span class="line">    <span class="attribute">minifyEnabled</span> <span class="literal">false</span></span><br><span class="line">    consumerProguardFiles <span class="string">'proguard-rules.pro'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="混淆文件合并"><a href="#混淆文件合并" class="headerlink" title="混淆文件合并"></a>混淆文件合并</h2><p>有些时候可能需要获取全量的混淆规则，来排查一些问题，可以在 App 层的混淆文件中加入这句：<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-<span class="ruby">printconfiguration <span class="string">"build/outputs/mapping/configuration.txt"</span></span></span><br></pre></td></tr></table></figure></p>
+<p>这样再成功 build 完之后，就能在相应路径下面看到 configuration.txt，它包含了全部的混淆规则（Android 默认的也能看得到）。</p>
+<h2 id="常用混淆"><a href="#常用混淆" class="headerlink" title="常用混淆"></a>常用混淆</h2><ol>
+<li><p>开启 ViewBinding 使用反射调用 inflate 实现基类，需要 keep ViewBinging：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">initViewBinding</span><span class="params">(inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?)</span></span>: View &#123;</span><br><span class="line">    <span class="keyword">val</span> type = javaClass.genericSuperclass</span><br><span class="line">    <span class="keyword">val</span> clazz = (type <span class="keyword">as</span> ParameterizedType).actualTypeArguments[<span class="number">0</span>] <span class="keyword">as</span> Class&lt;VB&gt;</span><br><span class="line">    <span class="keyword">val</span> method = clazz.getMethod(</span><br><span class="line">        <span class="string">"inflate"</span>,</span><br><span class="line">        LayoutInflater::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>,<span class="type"></span></span></span><br><span class="line">        ViewGroup::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>,<span class="type"></span></span></span><br><span class="line">        <span class="built_in">Boolean</span>::<span class="class"><span class="keyword">class</span>.<span class="title">java</span></span></span><br><span class="line">    )</span><br><span class="line">    viewBinding = method.invoke(<span class="literal">null</span>, inflater, container, <span class="literal">false</span>) <span class="keyword">as</span> VB</span><br><span class="line">    <span class="keyword">return</span> viewBinding.root</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-keep <span class="class"><span class="keyword">class</span> * <span class="title">implements</span> <span class="title">androidx</span>.<span class="title">viewbinding</span>.<span class="title">ViewBinding</span> </span>&#123;</span><br><span class="line">    *;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义 ViewModelProvider.Factory，会反射调用构造方法，也需要 keep：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ViewModel&gt;</span> <span class="title">create</span><span class="params">(modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">val</span> examSite = intent.getSerializableExtra(KEY_EXAM_SITE) <span class="keyword">as</span> ExamSite</span><br><span class="line">    <span class="keyword">return</span> modelClass.getConstructor(ExamSite::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>).<span class="title">newInstance</span></span>(examSite)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-keepclassmembers <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> * <span class="title">extends</span> <span class="title">androidx</span>.<span class="title">lifecycle</span>.<span class="title">ViewModel</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;init&gt;(...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>kotlin 写的这个 ViewModelProvider.Factory 在添加混淆之后，依然报错：</p>
+<blockquote>
+<p>kotlin.jvm.KotlinReflectionNotSupportedError: Kotlin reflection implementation is not found at runtime. Make sure you have kotlin-reflect.jar in the classpath.</p>
+</blockquote>
+<p>所以解决方法便是添加 kotlin-reflect.jar：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">implementation</span> <span class="string">"org.jetbrains.kotlin:kotlin-reflect:<span class="variable">$project</span>.thirdparty.kotlinVersion"</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>其他用到反射的地方，以及各类 SDK 的混淆，需要注意。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/23/interview/" class="archive-article-date">
-  	<time datetime="2018-03-23T09:25:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-23</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/23/interview/">面试资料整理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/16/long-time-no-see/" class="archive-article-date">
-  	<time datetime="2018-03-16T08:07:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/16/long-time-no-see/">好久不见</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/22/code-copy/" class="archive-article-date">
-  	<time datetime="2018-01-22T07:13:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/22/code-copy/">解锁拷贝代码的新姿势</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">奇技淫巧</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/19/summary-2017/" class="archive-article-date">
-  	<time datetime="2018-01-19T15:14:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/19/summary-2017/">2017</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/11/talk/" class="archive-article-date">
-  	<time datetime="2018-01-11T09:01:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/11/talk/">Kotlin 结合 RxJava 使用杂谈</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/01/04/build-config/" class="archive-article-date">
-  	<time datetime="2018-01-04T01:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/01/04/build-config/">Android 获取 BuildConfig 信息</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -387,23 +223,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2020/09/24/proguard/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/09/19/python-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一次 Python 工具编写的经历《三》</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="proguard" data-title="混淆小记" data-url="http://lijia92.github.io/2020/09/24/proguard/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lastwarmth"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2018/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/2018/">1</a><a class="page-number" href="/archives/2018/page/2/">2</a><span class="page-number current">3</span>
-    </nav>
-  
+
 
 
           </div>
@@ -426,8 +345,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
