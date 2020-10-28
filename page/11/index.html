@@ -158,6 +158,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-live-audio" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/22/live-audio/">【Android音视频开发】- 实时采集音频并编码</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/22/live-audio/" class="archive-article-date">
+  	<time datetime="2016-10-22T01:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，利用Camera实时采集视频，并用MediaCodec编码，可以得到YUV、H264文件了。那么接下来便是采集音频并编码了。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>在音频开发中，有一些基础的概念是必须要知道的。</p>
+<h3 id="采样率（samplerate）"><a href="#采样率（samplerate）" class="headerlink" title="采样率（samplerate）"></a>采样率（samplerate）</h3><p>采样就是把模拟信号数字化的过程，不仅仅是音频需要采样，所有的模拟信号都需要通过采样转换为可以用0101来表示的数字信号，示意图如下所示：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video6.png" alt=""><br>蓝色代表模拟音频信号，红色的点代表采样得到的量化数值。采样频率越高，红色的间隔就越密集，记录这一段音频信号所用的数据量就越大，同时音频质量也就越高。根据奈奎斯特理论，采样频率只要不低于音频信号最高频率的两倍，就可以无损失地还原原始的声音。通常人耳能听到频率范围大约在20Hz～20kHz之间的声音，为了保证声音不失真，采样频率应在40kHz以上。常用的音频采样频率有：8kHz、11.025kHz、22.05kHz、16kHz、37.8kHz、44.1kHz、48kHz、96kHz、192kHz等。</p>
+<h3 id="量化精度（位宽）"><a href="#量化精度（位宽）" class="headerlink" title="量化精度（位宽）"></a>量化精度（位宽）</h3><p>上图中，每一个红色的采样点，都需要用一个数值来表示大小，这个数值的数据类型大小可以是：4bit、8bit、16bit、32bit等等，位数越多，表示得就越精细，声音质量自然就越好，当然，数据量也会成倍增大。常见的位宽是：8bit 或者 16bit。</p>
+<h3 id="声道数（channels）"><a href="#声道数（channels）" class="headerlink" title="声道数（channels）"></a>声道数（channels）</h3><p>由于音频的采集和播放是可以叠加的，因此，可以同时从多个音频源采集声音，并分别输出到不同的扬声器，故声道数一般表示声音录制时的音源数量或回放时相应的扬声器数量。单声道（Mono）和双声道（Stereo）比较常见，顾名思义，前者的声道数为1，后者为2。</p>
+<h3 id="音频帧（frame）"><a href="#音频帧（frame）" class="headerlink" title="音频帧（frame）"></a>音频帧（frame）</h3><p>音频数据是流式的，本身并没有明确的一帧帧的概念，在实际的应用中，为了音频算法处理/传输的方便，一般约定俗成取 2.5 ms ~ 60 ms为单位的数据量为一帧音频。 这个时间被称之为“采样时间”，其长度没有特别的标准。我们可以计算一下一帧音频帧的大小。假设某通道的音频信号是采样率为 8 kHz，位宽为16 bit，20 ms 一帧，双通道，则一帧音频数据的大小为：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int size = <span class="number">8000</span> x <span class="number">16</span>bit x <span class="number">0.02</span>s  x <span class="number">2</span> = <span class="number">5120</span> bit = <span class="number">640</span> byte</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2016/10/22/live-audio/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-live-code-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -728,79 +793,9 @@
 
 
   
-    <article id="post-textview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/26/textview/">TextView使用小记</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/26/textview/" class="archive-article-date">
-  	<time datetime="2016-07-26T02:46:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。</p>
-<h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><p>有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：</p>
-<ol>
-<li><p>使用SpannableString</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SpannableString spanString = <span class="keyword">new</span> <span class="type">SpannableString</span>(<span class="string">"Hello world!"</span>);</span><br><span class="line">ForegroundColorSpan span = <span class="keyword">new</span> <span class="type">ForegroundColorSpan</span>(getResources().getColor(R.color.black));</span><br><span class="line">spanString.setSpan(span, <span class="number">0</span>, <span class="number">5</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用Html format</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">text</span> = <span class="string">"&lt;font color='black'&gt;Hello:&lt;/font&gt;"</span> + <span class="string">"world!"</span>;</span><br><span class="line">content.setText(Html.fromHtml(<span class="built_in">text</span>), TextView.BufferType.SPANNABLE);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>两种方式都是可以的，但是第2种方式会导致TextView设置<code>maxLines=&quot;3&quot;、ellipsize=&quot;end&quot;</code>的情况下，文本超过3行的时候不显示<code>...</code>提示符了。所以在有<code>...</code>的需求的时候建议还是使用第一种。</p>
-        
-          <a class="article-more-a" href="/2016/07/26/textview/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
     </nav>
   
 
@@ -891,11 +886,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -935,11 +930,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

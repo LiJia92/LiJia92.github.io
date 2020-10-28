@@ -158,6 +158,76 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-textview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/26/textview/">TextView使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/07/26/textview/" class="archive-article-date">
+  	<time datetime="2016-07-26T02:46:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。</p>
+<h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><p>有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：</p>
+<ol>
+<li><p>使用SpannableString</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SpannableString spanString = <span class="keyword">new</span> <span class="type">SpannableString</span>(<span class="string">"Hello world!"</span>);</span><br><span class="line">ForegroundColorSpan span = <span class="keyword">new</span> <span class="type">ForegroundColorSpan</span>(getResources().getColor(R.color.black));</span><br><span class="line">spanString.setSpan(span, <span class="number">0</span>, <span class="number">5</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Html format</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">text</span> = <span class="string">"&lt;font color='black'&gt;Hello:&lt;/font&gt;"</span> + <span class="string">"world!"</span>;</span><br><span class="line">content.setText(Html.fromHtml(<span class="built_in">text</span>), TextView.BufferType.SPANNABLE);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>两种方式都是可以的，但是第2种方式会导致TextView设置<code>maxLines=&quot;3&quot;、ellipsize=&quot;end&quot;</code>的情况下，文本超过3行的时候不显示<code>...</code>提示符了。所以在有<code>...</code>的需求的时候建议还是使用第一种。</p>
+        
+          <a class="article-more-a" href="/2016/07/26/textview/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-blur" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -714,71 +784,9 @@
 
 
   
-    <article id="post-custom-attr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/10/custom-attr/">Android自定义属性</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/10/custom-attr/" class="archive-article-date">
-  	<time datetime="2016-05-10T07:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。</p>
-<p>起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例呢？我不是又得写啦~</p>
-<p>抱着偷懒的态度，我设想用自定义属性来解决这个问题，自己设置比例，这样只用自定义一个View，然后根据传入的比例再行计算即可。</p>
-        
-          <a class="article-more-a" href="/2016/05/10/custom-attr/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
     </nav>
   
 
@@ -869,11 +877,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -913,11 +921,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
