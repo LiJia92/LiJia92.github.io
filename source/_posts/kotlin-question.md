@@ -61,6 +61,23 @@ public fun <T> Collection<T>.toMutableList(): MutableList<T> {
 }
 ```
 
+## 序列化
+java 中一个 Model 有字段不需要序列化时，可以使用 transient 关键字：
+```
+public transient Rectangle rect;
+```
+然后 kotlin 中如此使用：
+```
+@Transient
+public boolean isPlaying = false;
+```
+如果我在 java 代码中使用 @Transient，fastjson 解析就会报错了，因为 Rectangle 没有默认构造函数：
+```
+@Transient
+public Rectangle rect;
+```
+所以 2 个关键字（注解）都要分开使用。
+
 ## 题外话
 关于 kotlin 的 var 变量，我们可能经常需要可以为 null 的类型。比如：
 ```
