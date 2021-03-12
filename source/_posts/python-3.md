@@ -35,6 +35,17 @@ subprocess.Popen(['where', 'xvfb-run'],shell=True, stdin=subprocess.PIPE, stderr
 然后重新打包，运行成功。
 PS：python 修改三方库文件，直接 pyCharm 修改保存即可，十分方便了~
 
+## Windows 兼容
+在 Windows 7 上运行 exe，报如下的错：
+```
+Python.exe cannot run for missing  api-ms-win-core-path-l1-1.0.dll
+```
+后面搜了一下：
+```
+Sorry, Windows 7 is no longer supported in Python 3.9. You'll need to update, ideally to Windows 10, but if you want to stay on Windows 8.1 then I believe that one's supported until Python 3.10.
+```
+意思是 Windows 7 只能使用 3.9 版本一下的 python，恰巧运行报错的电脑就是 Windows 7。所以需要兼容一下，使用 3.9 以下版本的 python。
+
 ## 打包指令
 -F, --onefile Py代码只有一个文件
 -D, --onedir Py代码放在一个目录中（默认是这个）
