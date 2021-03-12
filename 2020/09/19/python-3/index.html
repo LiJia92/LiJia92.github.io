@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台。安装 PyInstaller，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-09-22T12:06:56.419Z">
+<meta property="og:updated_time" content="2021-03-12T08:34:33.975Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次 Python 工具编写的经历《三》">
 <meta name="twitter:description" content="将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台。安装 PyInstaller，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w">
@@ -188,6 +188,9 @@
 <h2 id="WindowsError-Error-6"><a href="#WindowsError-Error-6" class="headerlink" title="WindowsError:[Error 6]"></a>WindowsError:[Error 6]</h2><p>运行 exe 报错：WindowsError:[Error 6]，报错文件为 imgkit/config.py，里面用到了 subprocess。网上查阅相关文章，需要添加全量的参数设置。<br>修改前：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">subprocess</span><span class="selector-class">.Popen</span>([<span class="string">'where'</span>, <span class="string">'xvfb-run'</span>],stdout=subprocess.PIPE)<span class="selector-class">.communicate</span>()<span class="selector-attr">[0]</span><span class="selector-class">.strip</span>()</span><br></pre></td></tr></table></figure></p>
 <p>修改后：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.Popen<span class="params">(['where', 'xvfb-run'],<span class="attr">shell</span>=True, <span class="attr">stdin</span>=subprocess.PIPE, <span class="attr">stderr</span>=subprocess.PIPE,<span class="attr">stdout</span>=subprocess.PIPE)</span><span class="string">.communicate</span><span class="params">()</span>[0]<span class="string">.strip</span><span class="params">()</span></span><br></pre></td></tr></table></figure></p>
 <p>然后重新打包，运行成功。<br>PS：python 修改三方库文件，直接 pyCharm 修改保存即可，十分方便了~</p>
+<h2 id="Windows-兼容"><a href="#Windows-兼容" class="headerlink" title="Windows 兼容"></a>Windows 兼容</h2><p>在 Windows 7 上运行 exe，报如下的错：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Python</span><span class="selector-class">.exe</span> <span class="selector-tag">cannot</span> <span class="selector-tag">run</span> <span class="selector-tag">for</span> <span class="selector-tag">missing</span>  <span class="selector-tag">api-ms-win-core-path-l1-1</span><span class="selector-class">.0</span><span class="selector-class">.dll</span></span><br></pre></td></tr></table></figure></p>
+<p>后面搜了一下：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sorry, Windows <span class="number">7</span> <span class="keyword">is</span> no longer supported <span class="keyword">in</span> Python <span class="number">3.9</span>. You'll need <span class="keyword">to</span> update, ideally <span class="keyword">to</span> Windows <span class="number">10</span>, <span class="keyword">but</span> <span class="keyword">if</span> you want <span class="keyword">to</span> stay <span class="keyword">on</span> Windows <span class="number">8.1</span> <span class="keyword">then</span> I believe <span class="keyword">that</span> one's supported <span class="keyword">until</span> Python <span class="number">3.10</span>.</span><br></pre></td></tr></table></figure></p>
+<p>意思是 Windows 7 只能使用 3.9 版本一下的 python，恰巧运行报错的电脑就是 Windows 7。所以需要兼容一下，使用 3.9 以下版本的 python。</p>
 <h2 id="打包指令"><a href="#打包指令" class="headerlink" title="打包指令"></a>打包指令</h2><p>-F, –onefile Py代码只有一个文件<br>-D, –onedir Py代码放在一个目录中（默认是这个）<br>-K, –tk 包含TCL/TK<br>-d, –debug 生成debug模式的exe文件<br>-w, –windowed, –noconsole 窗体exe文件(WindowsOnly)<br>-c, –nowindowed, –console 控制台exe文件(WindowsOnly)<br>-X, –upx 使用upx压缩exe文件<br>-o DIR, –out=DIR 设置spec文件输出的目录，默认在PyInstaller同目录<br>-v FILE, –version=FILE 加入版本信息文件</p>
 <p>python 工具之旅到此结束。</p>
 
@@ -406,11 +409,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,15 +445,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
