@@ -158,6 +158,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-single-thread-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/02/23/single-thread-queue/">Android实现简易轻量下载器：单线程任务队列</a>
+    </h1>
+  
+
+        
+        <a href="/2016/02/23/single-thread-queue/" class="archive-article-date">
+  	<time datetime="2016-02-23T03:40:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的项目是一个与音乐相关的App，其中有一个功能：收藏喜欢的歌曲，在wifi的环境下自动下载。</p>
+<p>考虑到音乐歌曲都是3、4Mb的小文件，断点下载的功能便不需要了。因此只需要实现一个特别轻量、简单的下载管理类，进行管理即可。</p>
+<p>最初的思路便是任务队列，单线程顺序执行，一个文件接着一个文件进行下载。</p>
+<p>之前看过AsyncTask的部分源码，其设计与我的想法类似，于是便借鉴着AsyncTask的源码，实现了一个特别简单、轻量的下载管理类。</p>
+        
+          <a class="article-more-a" href="/2016/02/23/single-thread-queue/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-photo-wall" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -742,66 +809,6 @@
 
 
   
-    <article id="post-swipe-listview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/14/swipe-listview/">Android仿QQ实现ListView滑动删除</a>
-    </h1>
-  
-
-        
-        <a href="/2015/11/14/swipe-listview/" class="archive-article-date">
-  	<time datetime="2015-11-13T18:09:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-11-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>手机QQ应该是很普及的App了，看到QQ消息栏对话框列表的每个子项左滑的时候会弹出删除、置顶图标。like this：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/swipe-listview1.png" alt="这里写图片描述"><br>于是突发奇想：想要自己实现一个这样的效果。<br>很显然的，这样的效果实现要依赖Android的事件分发机制，于是我先从Android事件分发入手。对于事件分发还不太熟悉的朋友可以参考<a href="http://lijia92.github.io/2015/11/14/touch-event/">Android事件分发机制学习</a>。<br>下面开工！</p>
-        
-          <a class="article-more-a" href="/2015/11/14/swipe-listview/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
@@ -895,6 +902,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
@@ -903,15 +914,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -980,6 +987,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">重构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tag 日常开发</a>
               </li>
              
               <li class="article-tag-list-item">

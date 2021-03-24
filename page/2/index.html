@@ -158,6 +158,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-viewbinding" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/21/viewbinding/">viewBinding 使用小结</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/21/viewbinding/" class="archive-article-date">
+  	<time datetime="2020-07-21T08:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>通过视图绑定功能，您可以更轻松地编写可与视图交互的代码。在模块中启用视图绑定之后，系统会为该模块中的每个 XML 布局文件生成一个绑定类。绑定类的实例包含对在相应布局中具有 ID 的所有视图的直接引用。<br>在大多数情况下，视图绑定会替代 findViewById。</p>
+</blockquote>
+<h2 id="启用"><a href="#启用" class="headerlink" title="启用"></a>启用</h2><p>只能在 Android Studio 3.6 Canary 11 及更高版本中使用。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">android</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    viewBinding &#123;</span><br><span class="line">        <span class="literal">enabled</span> = <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启用后，会根据 xml 名称生成一个驼峰命名，结尾带上 Binding 的绑定类。例如：result_profile.xml，会生成 ResultProfileBinding 的绑定类，这个绑定类 getRoot 方法返回根布局，xml 中所有有 id 的 View 也能通过此类直接获取。相比于 kotlin-android-extensions，它<strong>不会空指针，并且 id 唯一</strong>。kotlin-android-extensions 直接获取对应 id 的 view 有可能导致空指针。另一点，如果我们很多 xml 里的 id 有一样的命名，会很难区分。且如果一个页面引用了 2 个 xml，这 2 个 xml 里是不能使用同样的 id 的，编译器会不知道要去找哪个 id 从而报错，而使用 viewBinding 这些便都解决了。</p>
+        
+          <a class="article-more-a" href="/2020/07/21/viewbinding/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-serial-port" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -700,68 +764,6 @@
 
 
   
-    <article id="post-october" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/10/31/october/">十月</a>
-    </h1>
-  
-
-        
-        <a href="/2019/10/31/october/" class="archive-article-date">
-  	<time datetime="2019-10-31T01:59:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>银烛秋光冷画屏，轻罗小扇扑流萤。<br>天阶夜色凉如水，坐看牵牛织女星。</p>
-<p>十月，秋高气爽，中秋国庆，适合出游。一直没空写点东西，在十月的尾巴，还是写点东西吧。</p>
-<p>早在 6、7 月份，便有了想去「西北大环线」的冲动。大学伊始到现在的几年里，去的地方也有一些了，山呀，水呀，都见过很多了，唯独大西北那种戈壁、荒漠的自然风光却只存在于想象里。在基友群里吹牛，说想去大西北，吹着吹着发现就这样组起队来了：去啊，去他妈的！老康、斌哥还是给力呀，行动力 Max。人员定了之后，初步聊了一下，后面就没怎么聊了，直到出发的前一天，感觉很梦幻：就这样出发了吗？总有种感觉会鸽掉。<br>所幸没有。</p>
-        
-          <a class="article-more-a" href="/2019/10/31/october/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -855,6 +857,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
@@ -863,15 +869,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -940,6 +942,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">重构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">tag 日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
