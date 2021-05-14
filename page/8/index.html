@@ -158,6 +158,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mvp-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/22/mvp-2/">关于 MVP 模式的一点思考（续）</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/22/mvp-2/" class="archive-article-date">
+  	<time datetime="2017-12-22T02:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前有一个关于 MVP 的疑惑：<strong>1个 Presenter 能否对应多个 View？</strong>，在我的<a href="http://lastwarmth.win/2017/04/25/mvp-1/" target="_blank" rel="noopener">这篇文章</a>中有写过。现在回过头来仔细想想，感觉有点不对劲：1个 Presenter 为什么会有对应多个 View 的需求呢？那篇文章中的使用场景是：</p>
+<blockquote>
+<p>我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。</p>
+</blockquote>
+<p>我们都知道，Presenter 是用来抽离 Activity 或 Fragment 中的业务代码的，何为业务代码？就是这个页面涉及到的业务逻辑。<strong>关于数据的增删改查，那是 M 应该做的事，而绝不是 Presenter 该去处理的。</strong> 所以，Presenter 应当只对应一个 View，如果有界面复用 Presenter 的情况，那我们得考虑为什么会有这种情况呢？复用 Presenter 代表着业务逻辑是一致的，不同的页面理当有着不同的业务逻辑。当然，这里说的业务是简单，最小颗粒化的业务，如果一个页面十分复杂，Presenter 中集合了大量业务代码，那么在某些小的页面是有可能复用 Presenter 中的部分业务代码的。所以这种情况下，Presenter 会对应多个 View，那么这个场景使用上篇文章中的做法是可以的：<strong>复用 Presenter，将 View 抽离，利用继承实现多个界面的定制需求</strong>，但不会是上篇文章中的那种使用场景。</p>
+        
+          <a class="article-more-a" href="/2017/12/22/mvp-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-kotlin-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -723,67 +787,6 @@
 
 
   
-    <article id="post-xunfei" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/26/xunfei/">Android 集成讯飞语音SDK</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/26/xunfei/" class="archive-article-date">
-  	<time datetime="2017-09-26T08:42:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发需要用到<code>文字转语音</code>的功能，利用 Android 系统自带的<code>Text-to-Speech</code>可以实现<code>英文转语音</code>，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的<code>Pico TTS</code>是不支持的，我的小米手机是<code>度秘语音引擎</code>支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的<code>TTS</code>，考虑接入<code>讯飞语音SDK</code>。</p>
-<h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a href="http://passport.xfyun.cn/login" target="_blank" rel="noopener">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2017/09/26/xunfei/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -877,14 +880,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
@@ -893,7 +888,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -913,15 +916,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -958,10 +965,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">

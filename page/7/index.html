@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-refactor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/07/refactor/">关于重构的一些实践</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/07/refactor/" class="archive-article-date">
+  	<time datetime="2018-05-07T02:11:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png" alt=""><br>Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多<code>Deprecated</code>标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。</p>
+        
+          <a class="article-more-a" href="/2018/05/07/refactor/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-charles" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -712,70 +772,6 @@
 
 
   
-    <article id="post-mvp-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/22/mvp-2/">关于 MVP 模式的一点思考（续）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/22/mvp-2/" class="archive-article-date">
-  	<time datetime="2017-12-22T02:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前有一个关于 MVP 的疑惑：<strong>1个 Presenter 能否对应多个 View？</strong>，在我的<a href="http://lastwarmth.win/2017/04/25/mvp-1/" target="_blank" rel="noopener">这篇文章</a>中有写过。现在回过头来仔细想想，感觉有点不对劲：1个 Presenter 为什么会有对应多个 View 的需求呢？那篇文章中的使用场景是：</p>
-<blockquote>
-<p>我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。</p>
-</blockquote>
-<p>我们都知道，Presenter 是用来抽离 Activity 或 Fragment 中的业务代码的，何为业务代码？就是这个页面涉及到的业务逻辑。<strong>关于数据的增删改查，那是 M 应该做的事，而绝不是 Presenter 该去处理的。</strong> 所以，Presenter 应当只对应一个 View，如果有界面复用 Presenter 的情况，那我们得考虑为什么会有这种情况呢？复用 Presenter 代表着业务逻辑是一致的，不同的页面理当有着不同的业务逻辑。当然，这里说的业务是简单，最小颗粒化的业务，如果一个页面十分复杂，Presenter 中集合了大量业务代码，那么在某些小的页面是有可能复用 Presenter 中的部分业务代码的。所以这种情况下，Presenter 会对应多个 View，那么这个场景使用上篇文章中的做法是可以的：<strong>复用 Presenter，将 View 抽离，利用继承实现多个界面的定制需求</strong>，但不会是上篇文章中的那种使用场景。</p>
-        
-          <a class="article-more-a" href="/2017/12/22/mvp-2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -869,14 +865,6 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
@@ -885,7 +873,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -905,15 +901,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -950,10 +950,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
               </li>
              
               <li class="article-tag-list-item">
