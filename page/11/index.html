@@ -158,6 +158,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ios-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/16/ios-tips/">iOS 学习之旅</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/16/ios-tips/" class="archive-article-date">
+  	<time datetime="2016-12-16T02:23:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接触iOS也有一阵子了，也参与到项目做了有些事情，主要是从改bug入手，边学边做，下面记录一下自己在学习中遇到一些点。</p>
+<h2 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h2><p>Objective-C提供了一种与众不同的方式——Category，可以动态的为已经存在的类添加新的行为。这样可以保证类的原始设计规模较小，功能增加时再逐步扩展。使用Category对类进行扩展时，不需要访问其源代码，也不需要创建子类。Category使用简单的方式，实现了类的相关方法的模块化，把不同的类方法分配到不同的分类文件中。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SomeClass.h</span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> : <span class="title">NSObject</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>) print;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">SomeClass</span> (<span class="title">Hello</span>)</span></span><br><span class="line">-(<span class="keyword">void</span>)hello;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line">@implementationSomeClass (Hello)</span><br><span class="line">-(<span class="keyword">void</span>)hello&#123;</span><br><span class="line">    <span class="built_in">NSLog</span> (<span class="string">@"name：%@ "</span>, <span class="string">@"Jacky"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#import <span class="meta-string">"SomeClass+Hello.h"</span></span></span><br><span class="line"></span><br><span class="line">SomeClass * sc =[[SomeClass alloc] init];</span><br><span class="line">[sc hello]</span><br></pre></td></tr></table></figure></p>
+<p>这里还有一个约定成俗的习惯，将声明文件和实现文件名称统一采用“原类名+Category”的方式命名。</p>
+        
+          <a class="article-more-a" href="/2016/12/16/ios-tips/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-xcode" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -736,73 +798,6 @@
 
 
   
-    <article id="post-live-capture-video" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/20/live-capture-video/">【Android音视频开发】- 实时采集视频</a>
-    </h1>
-  
-
-        
-        <a href="/2016/10/20/live-capture-video/" class="archive-article-date">
-  	<time datetime="2016-10-20T02:24:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&gt; 美颜/滤镜/特效处理 -&gt; 编码 -&gt; 封包 -&gt; 推流 -&gt; 分发 -&gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。<br>那么实时采集视频有哪些方案呢？</p>
-<h2 id="调研"><a href="#调研" class="headerlink" title="调研"></a>调研</h2><p>通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：</p>
-<ol>
-<li>通过Android Camera拍摄预览中设置setPreviewCallback实现onPreviewFrame接口，实时截取每一帧视频流数据</li>
-<li>通过通过Android的MediaRecorder，在SetoutputFile函数中绑定LocalSocket实现</li>
-<li>流媒体服务器方式，利用ffmpeg或GetStreamer等获取Camera视频</li>
-</ol>
-<p>通过学习，大致了解了1，2两种方式的实现方式，但是对于第3种方式，暂时没有研究。</p>
-        
-          <a class="article-more-a" href="/2016/10/20/live-capture-video/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
@@ -900,11 +895,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -912,7 +907,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -932,11 +927,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
