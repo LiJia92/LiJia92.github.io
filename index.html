@@ -178,7 +178,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以还有另外一种方案，基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
+        <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
         
           <a class="article-more-a" href="/2021/07/08/gps/#more">more >></a>
         
@@ -859,7 +859,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -871,11 +871,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -895,7 +895,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -903,11 +903,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
