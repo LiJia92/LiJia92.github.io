@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gps-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/09/gps-2/">科二考试系统-续</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/09/gps-2/" class="archive-article-date">
+  	<time datetime="2021-07-09T01:46:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        Welcome to my blog, enter password to read.
+        
+          <a class="article-more-a" href="/2021/07/09/gps-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-gps" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -178,7 +238,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
+        <p>这是一个系列文章的开篇，尝试理解项目中用到的知识与结构，许多代码都是上级编写，我只能以我的能力尽量把东西说清楚，讲明白。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
         
           <a class="article-more-a" href="/2021/07/08/gps/#more">more >></a>
         
@@ -705,67 +766,6 @@
 
 
   
-    <article id="post-proguard" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/24/proguard/">混淆小记</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/24/proguard/" class="archive-article-date">
-  	<time datetime="2020-09-24T11:17:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近做的项目是个新项目，早期为了快速迭代实现需求，在混淆这块没做过处理。最近打算上 release 包，混淆这块肯定还是需要的。</p>
-<h2 id="开启混淆"><a href="#开启混淆" class="headerlink" title="开启混淆"></a>开启混淆</h2><p>在 App Module 的 build.gradle 文件中配置开启混淆：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">release</span> &#123;</span><br><span class="line">    <span class="attribute">signingConfig</span> signingConfigs.release</span><br><span class="line">    minifyEnabled <span class="literal">true</span></span><br><span class="line">    multiDexEnabled = <span class="literal">true</span></span><br><span class="line">    proguardFiles getDefaultProguardFile(<span class="string">'proguard-android-optimize.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">    resValue(<span class="string">"string"</span>, <span class="string">"build_type"</span>, <span class="string">"debug"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2020/09/24/proguard/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -859,11 +859,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -871,7 +871,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -895,15 +895,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -912,10 +916,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
