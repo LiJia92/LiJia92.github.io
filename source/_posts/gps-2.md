@@ -3,9 +3,9 @@ title: 科二考试系统-续
 date: 2021-07-09 09:46:31
 tags:
  - 技术思路
-password: 605520
+<!-- password: 605520
 abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
+message: Welcome to my blog, enter password to read. -->
 ---
 
 [上篇文章](http://lastwarmth.win/2021/07/08/gps/)已经基本把「科二考试系统」的核心思路描述清楚了，接下来记录一下稍微具体的知识点。
@@ -384,7 +384,7 @@ public class DefaultConverter implements Converter {
 ```
 
 ## 左右手坐标系
-这个概念我琢磨了好久，到现在也还没有彻底搞清楚。参考[左手坐标系 vs 右手坐标系](https://zhuanlan.zhihu.com/p/64707259)，假设 Z 轴是屏幕往内，X 轴方向保持一致时，可以看到 Y 轴是相反的。所以左右手坐标系，在相对 2D 的 场景里，会影响 Y 轴的值，右手坐标系需要取反。在科二里，某些评判是需要方向的，比如直角转弯分左直角和右直角，我们通过「世界坐标系」中直角项目的的 3 个点（3 个点，指定一个原点，剩下 2 个点分别代表 X、Y 轴的方向）建立「我的坐标系」，就有可能是左手，也有可能是右手。所以在整个场景中，尽量以左手坐标系为默认坐标系，某些特殊情况需要右手坐标系时，需要将 y 值取反。「我的坐标系」建立之后，需要将「世界坐标系」中其他的点也转换到这个坐标系内，需要做一个矩阵变换。
+这个概念我琢磨了好久，到现在也还没有彻底搞清楚。参考[左手坐标系 vs 右手坐标系](https://zhuanlan.zhihu.com/p/64707259)，假设 Z 轴是屏幕往内，X 轴方向保持一致时，可以看到 Y 轴是相反的。所以左右手坐标系，在相对 2D 的 场景里，会影响 Y 轴的值，右手坐标系需要取反。在科二里，某些评判是需要方向的，比如直角转弯分左直角和右直角，我们通过「世界坐标系」中直角项目的的 3 个点（3 个点，指定一个原点，剩下 2 个点分别代表 X、Y 轴的方向）建立「我的坐标系」，就有可能是左手，也有可能是右手。所以在整个场景中，尽量以左手坐标系为默认坐标系，某些特殊情况需要右手坐标系时，需要将 y 值取反。「我的坐标系」建立之后，需要将「世界坐标系」中其他的点通过矩阵变换，也转换到这个坐标系内。
 ```
 /**
  * 左手坐标系
@@ -463,7 +463,7 @@ public class Coordinate {
 ```
 
 ## 渲染
-「世界坐标系」的点需要渲染到界面上，也就是需要映射成屏幕坐标。以直角转弯为例：
+「世界坐标系」的点要渲染到界面上，需要映射成屏幕坐标。以直角转弯为例：
 ```
 public class ZhiJiaoSrcData implements Serializable {
     public Gps gps1;
@@ -576,21 +576,21 @@ public class ZhiJiaoRenderModel implements Serializable {
 /**
  * 根据两条直线，获取调整的点
  */
-public static Pos getTrimPos(Pos p1, Pos p2, Pos target, double distance) {
-    return getPosFromThreePos(getPointOnExtend(p1, target, distance), target, getPointOnExtend(p2, target, distance));
+public static Pos getTrimPos(Pos p1, Pos p2, Pos target, double dis) {
+    return getPosFromThreePos(getPointOnExtend(p1, target, dis), target, getPointOnExtend(p2, target, dis));
 }
 
 /**
  * 在线段的延长线上根据给定距离取一个点。这个距离可以是负值，这样就是在线段内部取一点了
  */
-public static Pos getPointOnExtend(Pos start, Pos end, double distance) {
+public static Pos getPointOnExtend(Pos start, Pos end, double dis) {
     double dx = end.x - start.x;
     double dy = end.y - start.y;
     double dz = end.z - start.z;
     double a = Math.sqrt(dx * dx + dy * dy + dz * dz + 1e-100);
-    double x = distance * dx / a + end.x;
-    double y = distance * dy / a + end.y;
-    double z = distance * dz / a + end.z;
+    double x = dis * dx / a + end.x;
+    double y = dis * dy / a + end.y;
+    double z = dis * dz / a + end.z;
     return new Pos(x, y, z);
 }
 
@@ -611,7 +611,10 @@ public static Pos getPosFromThreePos(Pos p1, Pos p2, Pos p3) {
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG109.jpeg)
 然后进行绘制：
 ```
-public List<MapBaseLayer> createMapLayers(MapView mapView, boolean isSelect, boolean isPreView) {
+/**
+ * 绘制直角项目，6条线
+ */
+public List<MapBaseLayer> createMapLayers(MapView mapView, boolean isSelect) {
     List<MapBaseLayer> layers = new ArrayList<>();
 
     addLine(line12, layers, mapView, Consts.Start_Color, null, true);
@@ -626,7 +629,7 @@ public List<MapBaseLayer> createMapLayers(MapView mapView, boolean isSelect, boo
     return layers;
 }
 
-public void addLine(Line line, List<MapBaseLayer> lines, MapView mapView, int lineColor, String desc, boolean isDot) {
+private void addLine(Line line, List<MapBaseLayer> lines, MapView mapView, int lineColor, String desc, boolean isDot) {
     Line l;
     if (turnLeft) {
         l = LineUtils.getLineAtLeft(line.start, line.end, Consts.Distance * 1.2f);
@@ -634,11 +637,17 @@ public void addLine(Line line, List<MapBaseLayer> lines, MapView mapView, int li
         l = LineUtils.getLineAtRight(line.start, line.end, Consts.Distance * 1.2f);
     }
     if (isDot) {
-        lines.add(new DotLineLayer(mapView, line.start, line.end, new DotLineLayer.Config((float) line.lineWidth, lineColor)
-                .desc(desc).dashGap(30).dashWidth(30).descPos(l.start.meanWith(l.end))));
+        lines.add(new DotLineLayer(mapView, line.start, line.end,
+                new DotLineLayer.Config((float) line.lineWidth, lineColor)
+                        .desc(desc)
+                        .dashGap(30)
+                        .dashWidth(30)
+                        .descPos(l.start.meanWith(l.end))));
     } else {
-        lines.add(new LineLayer(mapView, line.start, line.end, new BaseLineLayer.Config((float) line.lineWidth, lineColor).desc(desc)
-                .descPos(l.start.meanWith(l.end))));
+        lines.add(new LineLayer(mapView, line.start, line.end,
+                new BaseLineLayer.Config((float) line.lineWidth, lineColor)
+                        .desc(desc)
+                        .descPos(l.start.meanWith(l.end))));
     }
 }
 ```
@@ -663,9 +672,7 @@ public static Line getLineAtRight(Pos start, Pos end, double distance) {
 
     return new Line(new Pos(x2, y2), new Pos(x3, y3));
 }
-```
-HardCode 对应方法：
-```
+
 /**
  * 采用解方程的方式求平行线，时间比夹角的方式快一倍
  */
@@ -683,7 +690,7 @@ public static Line getLine(Pos start, Pos end, double distance, boolean atLeft) 
     double x4 = start.x + b * distanceAB;
 
     double x, y;
-    //根据向量叉乘检测哪一个在左边
+    // 根据向量叉乘检测哪一个在左边
     double cross = (end.x - start.x) * (y1 - start.y) - (end.y - start.y) * (x1 - start.x);
     if (atLeft) {
         if (cross < 0) {
@@ -759,5 +766,5 @@ public void draw(Canvas canvas, Matrix currentMatrix) {
     canvas.restore();
 }
 ```
-通过 canvase、paint 进行绘制，就是普通的安卓知识了。但是还剩下一个疑问：**这个时候的线，传入的坐标都是世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何映射的呢？**
+通过 canvas、paint 进行绘制，就是普通的安卓知识了。但是还剩下一个疑问：**这个时候的线，传入的坐标都是世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何映射的呢？**
 再听下回分解吧~
