@@ -63,7 +63,7 @@ Matrix{[1.0, 0.0, 0.0][0.0, 1.0, 0.0][0.0, 0.0, 1.0]}
 ```
 可以发现，安卓中的默认 Matrix 是一个 3 × 3 的单位矩阵。它各行各列的作用是这样的：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG113.png)
-第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做。
+第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做讲解。
 安卓矩阵提供四种基本的变换：
 1. Translate：平移变换
 2. Rotate：旋转变换
@@ -101,3 +101,4 @@ public boolean postScale(float sx, float sy, float px, float py) {
 4. [矩阵的运算及其运算规则](http://www2.edu-edu.com.cn/lesson_crs78/self/j_0022/soft/ch0605.html)
 5. [矩阵](https://www.shuxuele.com/algebra/matrix-introduction.html)
 6. [Android中图像变换Matrix的原理、代码验证和应用](https://www.iteye.com/blog/biandroid-1399462)
+7. [安卓自定义View进阶-Matrix原理](http://www.gcssloop.com/customview/Matrix_Basic.html)
