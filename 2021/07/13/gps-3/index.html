@@ -27,11 +27,11 @@
 <meta property="og:image" content="https://www.shuxuele.com/algebra/images/matrix-multiply-ex1a.svg">
 <meta property="og:image" content="https://www.shuxuele.com/algebra/images/matrix-multiply-ex1b.gif">
 <meta property="og:image" content="https://www.shuxuele.com/algebra/images/matrix-identity.gif">
-<meta property="og:image" content="http://gcsblog.oss-cn-shanghai.aliyuncs.com/blog/2019-04-29-071730.jpg?gcssloop">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG113.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/WechatIMG112.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/Screenshot_20210713-203231.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/Screenshot_20210713-203405.png">
-<meta property="og:updated_time" content="2021-07-14T01:18:24.182Z">
+<meta property="og:updated_time" content="2021-07-14T01:29:15.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="科二考试系统-矩阵">
 <meta name="twitter:description" content="在上篇文章中，遗留一个问题：世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何将这个点绘制在安卓屏幕上呢？其实很简单：直接画。假设屏幕像素为1920*1080，简单一点让地图 MapView 的宽高也是这个，那么这个点就会在屏幕 (1000,1000) 的位置被绘制出来。世界坐标系中的其他所有的点，也都可以这样">
@@ -221,13 +221,13 @@
 <li>单位矩阵是一个特殊的矩阵，对角线全是1，其他全是0。</li>
 </ol>
 <h2 id="安卓中的-Matrix"><a href="#安卓中的-Matrix" class="headerlink" title="安卓中的 Matrix"></a>安卓中的 Matrix</h2><p>简单在代码中创建一个矩阵，打印出来是这样的：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Matrix&#123;[<span class="string">1.0, 0.0, 0.0</span>][<span class="symbol">0.0, 1.0, 0.0</span>][<span class="string">0.0, 0.0, 1.0</span>]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以发现，安卓中的默认 Matrix 是一个 3 × 3 的单位矩阵。它各行各列的作用是这样的：<br><img src="http://gcsblog.oss-cn-shanghai.aliyuncs.com/blog/2019-04-29-071730.jpg?gcssloop" alt=""><br>第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做。<br>安卓矩阵提供四种基本的变换：</p>
+<p>可以发现，安卓中的默认 Matrix 是一个 3 × 3 的单位矩阵。它各行各列的作用是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG113.png" alt=""><br>第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做。<br>安卓矩阵提供四种基本的变换：</p>
 <ol>
 <li>Translate：平移变换</li>
 <li>Rotate：旋转变换</li>
 <li>Scale：缩放变换</li>
 <li>Skew：错切变换<br>关于这四类基本变换，可以参考<a href="https://www.iteye.com/blog/biandroid-1399462" target="_blank" rel="noopener">Android中图像变换Matrix的原理、代码验证和应用</a>。<blockquote>
-<p>你可能注意到了，我们坐标多了一个1，这是使用了齐次坐标系的缘故，在数学中我们的点和向量都是这样表示的(x, y)，两者看起来一样，计算机无法区分，为此让计算机也可以区分它们，增加了一个标志位，增加之后看起来是这样:<br>(x, y, 1) - 点<br>(x, y, 0) - 向量</p>
+<p>你可能注意到了，我们坐标多了一个 1，这是使用了齐次坐标系的缘故，在数学中我们的点和向量都是这样表示的(x, y)，两者看起来一样，计算机无法区分，为此让计算机也可以区分它们，增加了一个标志位，增加之后看起来是这样:<br>(x, y, 1) - 点<br>(x, y, 0) - 向量</p>
 </blockquote>
 </li>
 </ol>
@@ -449,11 +449,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -461,7 +457,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -485,6 +485,10 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
@@ -493,7 +497,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -502,10 +506,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
