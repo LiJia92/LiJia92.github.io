@@ -158,6 +158,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-cl-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/13/cl-2/">MotionLayout 使用介绍</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/13/cl-2/" class="archive-article-date">
+  	<time datetime="2019-08-13T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MotionLayout 是 ConstraintLayout 2.0 版本引入进来的，目前还在测试版本中，但感觉还挺有意思的，就写一篇记录一下。</p>
+<blockquote>
+<p>MotionLayout 类继承自 ConstraintLayout 类，允许你为各种状态之间的布局设置过渡动画。由于 MotionLayout 继承了 ConstraintLayout，因此可以直接在 XML 布局文件中使用 MotionLayout 替换 ConstraintLayout。MotionLayout 是完全声明式的，你可以完全在 XML 文件中描述一个复杂的过渡动画而无需任何代码。</p>
+</blockquote>
+<p>MotionLayout 与 ConstraintLayout 不同的是 MotionLayout 需要链接到一个 MotionScene 文件。使用 MotionLayout 的 app:layoutDescription 属性将 MotionLayout 链接到一个 MotionScene 文件。另外，<strong>MotionLayout 所有的直接子 View 需要指定 id</strong>，不然会报错：<br><figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">All</span> children <span class="keyword">of</span> ConstraintLayout must have ids <span class="keyword">to</span> <span class="keyword">use</span> ConstraintSet.</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2019/08/13/cl-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-handlerthread" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -719,69 +783,9 @@
 
 
   
-    <article id="post-coordinator-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/16/coordinator-1/">CoordinatorLayout 滑动再探</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/16/coordinator-1/" class="archive-article-date">
-  	<time datetime="2019-04-16T06:11:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>嗯，还是之前的路线详情的页面，新增了需求，导致界面结构又发生变化了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/coordinator.png" alt=""><br>添加了一个途经点的列表，与打点列表并列，可以和横向滑动切换 Tab。<br>之前写过一篇文章<a href="http://lastwarmth.win/2018/12/12/recyclerview-scroll/" target="_blank" rel="noopener">CoordinatorLayout + RecyclerView 处理滑动</a>说的也是这个页面，这里再贴一下当前的 xml 布局：</p>
-        
-          <a class="article-more-a" href="/2019/04/16/coordinator-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -872,19 +876,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,10 +912,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
@@ -920,7 +920,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -929,6 +929,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
