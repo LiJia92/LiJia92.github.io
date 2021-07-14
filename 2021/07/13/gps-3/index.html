@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/WechatIMG112.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/Screenshot_20210713-203231.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/Screenshot_20210713-203405.png">
-<meta property="og:updated_time" content="2021-07-14T01:29:15.766Z">
+<meta property="og:updated_time" content="2021-07-14T01:35:01.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="科二考试系统-矩阵">
 <meta name="twitter:description" content="在上篇文章中，遗留一个问题：世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何将这个点绘制在安卓屏幕上呢？其实很简单：直接画。假设屏幕像素为1920*1080，简单一点让地图 MapView 的宽高也是这个，那么这个点就会在屏幕 (1000,1000) 的位置被绘制出来。世界坐标系中的其他所有的点，也都可以这样">
@@ -221,7 +221,7 @@
 <li>单位矩阵是一个特殊的矩阵，对角线全是1，其他全是0。</li>
 </ol>
 <h2 id="安卓中的-Matrix"><a href="#安卓中的-Matrix" class="headerlink" title="安卓中的 Matrix"></a>安卓中的 Matrix</h2><p>简单在代码中创建一个矩阵，打印出来是这样的：<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Matrix&#123;[<span class="string">1.0, 0.0, 0.0</span>][<span class="symbol">0.0, 1.0, 0.0</span>][<span class="string">0.0, 0.0, 1.0</span>]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以发现，安卓中的默认 Matrix 是一个 3 × 3 的单位矩阵。它各行各列的作用是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG113.png" alt=""><br>第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做。<br>安卓矩阵提供四种基本的变换：</p>
+<p>可以发现，安卓中的默认 Matrix 是一个 3 × 3 的单位矩阵。它各行各列的作用是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG113.png" alt=""><br>第三行的 MPERSP 参数主要在 3D 效果中运用，通常为 [0.0, 0.0, 1.0]，本文不做讲解。<br>安卓矩阵提供四种基本的变换：</p>
 <ol>
 <li>Translate：平移变换</li>
 <li>Rotate：旋转变换</li>
@@ -241,6 +241,7 @@
 <li><a href="http://www2.edu-edu.com.cn/lesson_crs78/self/j_0022/soft/ch0605.html" target="_blank" rel="noopener">矩阵的运算及其运算规则</a></li>
 <li><a href="https://www.shuxuele.com/algebra/matrix-introduction.html" target="_blank" rel="noopener">矩阵</a></li>
 <li><a href="https://www.iteye.com/blog/biandroid-1399462" target="_blank" rel="noopener">Android中图像变换Matrix的原理、代码验证和应用</a></li>
+<li><a href="http://www.gcssloop.com/customview/Matrix_Basic.html" target="_blank" rel="noopener">安卓自定义View进阶-Matrix原理</a></li>
 </ol>
 
       
@@ -485,15 +486,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -510,6 +507,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gradle</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
