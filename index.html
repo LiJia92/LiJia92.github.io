@@ -158,6 +158,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-corutines" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/15/corutines/">Kotlin 协程小实践</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/15/corutines/" class="archive-article-date">
+  	<time datetime="2021-10-15T06:34:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~<br><a href="https://www.bilibili.com/video/BV164411C7FK" target="_blank" rel="noopener">Kotlin 的协程「用力瞥一眼」</a><br><a href="https://www.bilibili.com/video/BV1KJ41137E9" target="_blank" rel="noopener">Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了</a><br><a href="https://www.bilibili.com/video/BV1JE411R7hp" target="_blank" rel="noopener">到底什么是「非阻塞式」挂起？协程真的比线程更轻量级吗？</a></p>
+<p>站在凯哥的肩膀上，我大概建立了以下几个概念：</p>
+<ol>
+<li>协程就是一个线程框架，它可以很方便地进行线程切换；</li>
+<li>非阻塞式挂起，也就是协程内部切线程了，所以当前调用协程的线程不会被阻塞，它可以继续做其他的事情。假设协程内部不切线程，那么其实也是阻塞（同步）的；</li>
+<li>使用协程可以将异步代码平铺，看起来就像同步代码一样，避免线程切换的各种回调和缩进。</li>
+</ol>
+<p>所以当有切线程这样的场景时，就可以使用协程了。</p>
+        
+          <a class="article-more-a" href="/2021/10/15/corutines/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">协程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-gps-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -705,66 +772,6 @@
 
 
   
-    <article id="post-usb" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/27/usb/">Android 连接 USB 设备</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/27/usb/" class="archive-article-date">
-  	<time datetime="2020-11-27T06:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近项目中有需要连接 USB 设备，App 运行在平板之上，只有一个 type-c 接口，只能通过 type-c 转串口进行连接，所以 App 直接接触的是 USB 设备。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/WechatIMG60.png" alt=""><br>使用 USB 设备遵照<a href="https://developer.android.com/guide/topics/connectivity/usb/host?hl=zh-cn#java" target="_blank" rel="noopener">Google 官方文档</a>开发即可。</p>
-        
-          <a class="article-more-a" href="/2020/11/27/usb/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -858,19 +865,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -894,11 +901,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">协程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -915,10 +930,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
