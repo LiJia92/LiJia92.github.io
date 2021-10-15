@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~Kotlin 的协程「用力瞥一眼」Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了到底什么是「非阻塞式」挂起？协程真的比线程更轻量级吗？ 站在凯哥的肩膀上，我大概建立了以下几个概念：  协程就是一个线程框架，它可以很方便地进行线程切换； 非阻塞式挂起，也就是协程内部切线程了，所以当前调用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-10-15T09:24:50.500Z">
+<meta property="og:updated_time" content="2021-10-15T10:21:00.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kotlin 协程小实践">
 <meta name="twitter:description" content="太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~Kotlin 的协程「用力瞥一眼」Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了到底什么是「非阻塞式」挂起？协程真的比线程更轻量级吗？ 站在凯哥的肩膀上，我大概建立了以下几个概念：  协程就是一个线程框架，它可以很方便地进行线程切换； 非阻塞式挂起，也就是协程内部切线程了，所以当前调用">
@@ -205,7 +205,7 @@
 <ol>
 <li>suspend 方法只是一个标记，标记这个方法是协程方法，需要在协程里进行调用。假设 suspend 方法体内部没有用到任何协程的代码，那么这个标记是可以去掉的，不要把它想得太玄乎。</li>
 <li>挂起其实就是切线程切走了，所以当前线程不会被阻塞，可以继续做其他的事情。但是一个网络请求，总是会有一个线程去等待请求返回结果的，结果返回之前，这个线程就会一直等待，也就是阻塞了，没有任何方法或者途径，可以减去这个线程的开销。</li>
-<li>使用带生命周期感知功能的 scope，比如 lifecycleScope，可以当生命周期不可见的时候，自行取消线程回调。假设 enablePlan 接口执行 10 秒钟超时了，而 activity 在第 3 秒的时候就关闭了，那么当接口执行完之后就不切回到主线程了，也就是 return result（包括更后面的代码）压根就不执行了，这样 adapter.notifyDataSetChanged 也就不会调用了。如果调用了，因为这个 activity 已经关闭，就会导致崩溃了，这就和 Handler postDelay 一样的道理。</li>
+<li>使用带生命周期感知功能的 scope，比如 lifecycleScope，可以当生命周期不可见的时候，自行取消线程回调。假设 enablePlan 接口执行 10 秒钟超时了，而 activity 在第 3 秒的时候就关闭了，那么当接口执行完之后就不切回到主线程了，也就是 return result（包括更后面的代码）压根就不执行了，这样可以避免一些问题，就和 Handler postDelay 需要做保护一样的道理。</li>
 </ol>
 <p>总得来说，协程用起来相当的方便，后续我应该会持续学习并使用协程，最近出的 Flow 听说也很不错。<br>路漫漫其修远兮啊~~~</p>
 
@@ -415,11 +415,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,7 +423,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -455,11 +455,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">协程</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color3">协程</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -467,11 +467,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -487,11 +487,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
               </li>
              
               <li class="article-tag-list-item">
