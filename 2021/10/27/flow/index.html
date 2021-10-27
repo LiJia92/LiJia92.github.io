@@ -6,17 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lijia92.github.io">
-  <title>Flow 初始 | 听雪楼</title>
+  <title>Flow 初识 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="kotlin">
+  <meta name="description" content="继上一篇文章，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。">
+<meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Flow 初始">
+<meta property="og:title" content="Flow 初识">
 <meta property="og:url" content="http://lijia92.github.io/2021/10/27/flow/index.html">
 <meta property="og:site_name" content="听雪楼">
+<meta property="og:description" content="继上一篇文章，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-10-27T03:19:03.414Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG182.png">
+<meta property="og:updated_time" content="2021-10-27T06:55:56.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Flow 初始">
+<meta name="twitter:title" content="Flow 初识">
+<meta name="twitter:description" content="继上一篇文章，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG182.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -165,7 +170,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Flow 初始
+      Flow 初识
     </h1>
   
 
@@ -178,7 +183,38 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>继<a href="http://lastwarmth.win/2021/10/15/corutines/" target="_blank" rel="noopener">上一篇文章</a>，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。<br>「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。</p>
+<a id="more"></a>
+<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>使用 Flow，需要添加依赖：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">implementation</span> <span class="string">'org.jetbrains.kotlinx:kotlinx-coroutines-core:版本号'</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">'org.jetbrains.kotlinx:kotlinx-coroutines-android:版本号'</span></span><br></pre></td></tr></table></figure></p>
+<p>我们使用 lifecycle-runtime 或者 viewmodel 的 kotlin 扩展时，本身就会依赖此库。如果使用的 api 依赖，便可以直接使用 Flow。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG182.png" alt=""></p>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><p>创建数据流:<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">count</span><span class="params">()</span></span>: Flow&lt;<span class="built_in">Int</span>&gt; = flow &#123;</span><br><span class="line">    <span class="keyword">var</span> x = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x &gt; <span class="number">20</span>) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">        emit(x)</span><br><span class="line">        x = x.plus(<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>监听数据流：<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GlobalScope.launch &#123;</span><br><span class="line">    <span class="keyword">count</span>().map &#123;</span><br><span class="line">        <span class="string">"$&#123;it / 0&#125;"</span></span><br><span class="line">    &#125;.catch &#123; <span class="keyword">ex</span> -&gt;</span><br><span class="line">        <span class="keyword">ex</span>.printStackTrace()</span><br><span class="line">        <span class="keyword">Log</span>.<span class="built_in">d</span>(<span class="string">"Coroutine"</span>, <span class="keyword">ex</span>.<span class="keyword">toString</span>())</span><br><span class="line">        emit(<span class="string">"-1"</span>)</span><br><span class="line">    &#125;.collect &#123;</span><br><span class="line">        <span class="keyword">Log</span>.<span class="built_in">d</span>(<span class="string">"Coroutine"</span>, it)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<ol>
+<li>flow 构建器函数会创建数据流；emit 函数发送新值至数据流；map 函数修改数据流；collect 函数收集数据流；catch 函数捕获异常。</li>
+<li>map 等属于中间运算符，可在应用于数据流时，设置一系列暂不执行的链式运算，留待将来使用值时执行。仅将一个中间运算符应用于数据流不会启动数据流收集。</li>
+<li>collect 等终端运算符可触发数据流开始监听值。由于 collect 是挂起函数，因此需要在协程中执行。</li>
+<li>catch 函数只能捕获上游的异常，无法捕获下游的异常。</li>
+<li>catch 函数捕获到异常后，collect 函数无法执行。可以考虑通过 catch 函数执行 emit 操作处理后续逻辑。</li>
+</ol>
+</blockquote>
+<h2 id="callbackFlow"><a href="#callbackFlow" class="headerlink" title="callbackFlow"></a>callbackFlow</h2><p>callbackFlow 可以将基于回调的 API 转换为数据流。以文本框输入监听为例，结合上面的网络请求示例。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> TextView.<span class="title">textWatcherFlow</span><span class="params">()</span></span>: Flow&lt;String&gt; = callbackFlow&lt;String&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> textWatcher = <span class="keyword">object</span> : TextWatcher &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">beforeTextChanged</span><span class="params">(s: <span class="type">CharSequence</span>?, start: <span class="type">Int</span>, count: <span class="type">Int</span>, after: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onTextChanged</span><span class="params">(s: <span class="type">CharSequence</span>?, start: <span class="type">Int</span>, before: <span class="type">Int</span>, count: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">afterTextChanged</span><span class="params">(s: <span class="type">Editable</span>?)</span></span> &#123;</span><br><span class="line">            offer(s.toString())  <span class="comment">// 发送值</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    addTextChangedListener(textWatcher)</span><br><span class="line">    awaitClose &#123; removeTextChangedListener(textWatcher) &#125;</span><br><span class="line">&#125;.buffer(Channel.CONFLATED)</span><br><span class="line">    .debounce(<span class="number">300</span>L)</span><br></pre></td></tr></table></figure></p>
+<p>采集数据流：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lifecycleScope<span class="selector-class">.launchWhenStarted</span> &#123;</span><br><span class="line">    mBinding<span class="selector-class">.etSearch</span><span class="selector-class">.textWatcherFlow</span>()<span class="selector-class">.collect</span> &#123;</span><br><span class="line">        viewModel.getArticles(it)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个写法看起来就很舒服了，可以将 listener 的注册与注销，与生命周期进行绑定，写一个拓展方法即可。同时数据转成 Flow 发出来，可以做后续的各种处理，非常奈斯~</p>
+<h2 id="冷流、热流"><a href="#冷流、热流" class="headerlink" title="冷流、热流"></a>冷流、热流</h2><blockquote>
+<p>冷流是按需创建的，并且会在它们被观察时发送数据；热流则总是活跃，无论是否被观察，它们都能发送数据。</p>
+</blockquote>
+<p>直接通过 flow{} 构造出来的流，是冷流。StateFlow、SharedFlow 则是热流（1.4.0 版本才引入）。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LatestNewsViewModel</span></span>(</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> newsRepository: NewsRepository</span><br><span class="line">) : ViewModel() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Backing property to avoid state updates from other classes</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> _uiState = MutableStateFlow(LatestNewsUiState.Success(emptyList()))</span><br><span class="line">    <span class="comment">// The UI collects from this StateFlow to get its state updates</span></span><br><span class="line">    <span class="keyword">val</span> uiState: StateFlow&lt;LatestNewsUiState&gt; = _uiState</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        viewModelScope.launch &#123;</span><br><span class="line">            newsRepository.favoriteLatestNews</span><br><span class="line">                <span class="comment">// Update View with the latest favorite news</span></span><br><span class="line">                <span class="comment">// Writes to the value property of MutableStateFlow,</span></span><br><span class="line">                <span class="comment">// adding a new element to the flow and updating all</span></span><br><span class="line">                <span class="comment">// of its collectors</span></span><br><span class="line">                .collect &#123; favoriteNews -&gt;</span><br><span class="line">                    _uiState.value = LatestNewsUiState.Success(favoriteNews)</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Represents different states for the LatestNews screen</span></span><br><span class="line"><span class="keyword">sealed</span> <span class="class"><span class="keyword">class</span> <span class="title">LatestNewsUiState</span> </span>&#123;</span><br><span class="line">    <span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Success</span></span>(news: List&lt;ArticleHeadline&gt;): LatestNewsUiState()</span><br><span class="line">    <span class="keyword">data</span> <span class="class"><span class="keyword">class</span> <span class="title">Error</span></span>(exception: Throwable): LatestNewsUiState()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>采集数据流：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LatestNewsActivity</span> : <span class="type">AppCompatActivity</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> latestNewsViewModel = <span class="comment">// getViewModel()</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// Start a coroutine in the lifecycle scope</span></span><br><span class="line">        lifecycleScope.launch &#123;</span><br><span class="line">            <span class="comment">// repeatOnLifecycle launches the block in a new coroutine every time the</span></span><br><span class="line">            <span class="comment">// lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.</span></span><br><span class="line">            repeatOnLifecycle(Lifecycle.State.STARTED) &#123;</span><br><span class="line">                <span class="comment">// Trigger the flow and start listening for values.</span></span><br><span class="line">                <span class="comment">// Note that this happens when lifecycle is STARTED and stops</span></span><br><span class="line">                <span class="comment">// collecting when the lifecycle is STOPPED</span></span><br><span class="line">                latestNewsViewModel.uiState.collect &#123; uiState -&gt;</span><br><span class="line">                    <span class="comment">// New value received</span></span><br><span class="line">                    <span class="keyword">when</span> (uiState) &#123;</span><br><span class="line">                        <span class="keyword">is</span> LatestNewsUiState.Success -&gt; showFavoriteNews(uiState.news)</span><br><span class="line">                        <span class="keyword">is</span> LatestNewsUiState.Error -&gt; showError(uiState.exception)</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这些看起来和 LiveData 类似：</p>
+<ol>
+<li>StateFlow 需要将初始状态传递给构造函数，而 LiveData 不需要。</li>
+<li>当 View 进入 STOPPED 状态时，LiveData.observe() 会自动取消注册使用方，而从 StateFlow 或任何其他数据流收集数据的操作并不会自动停止。如需实现相同的行为，您需要从 Lifecycle.repeatOnLifecycle 块收集数据流。</li>
+</ol>
+<p>说白了就是数据一直在产生，LiveData observe 的时候本身就是在可见时，才进行回调。而 collect 会一直回调，需要结合 repeatOnLifecycle 一块使用。<br>关于冷流、热流的概念，现在还很模糊，只能后面边用边摸索了~</p>
+<p>总的来说，Flow 非常强大，能做的事情也很多。所以网上也有说法：出了 Flow 就可以废弃 LiveData 了。这个可以看一下凯哥的视频<a href="https://www.bilibili.com/video/BV1WL411E7ry?zw" target="_blank" rel="noopener">LiveData：还没普及就让我去世？我去你的 Kotlin 协程</a>。简而言之，我们可以有很多种技术来实现某一些特定的场景，并不一定就得是 A 技术替换 B 技术。萝卜白菜，各有所爱。当然我们还是得依据自身场景，尽量使用主流的技术。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/347785851" target="_blank" rel="noopener">Kotlin Flow场景化学习</a><br><a href="https://juejin.cn/post/6925304772383735822" target="_blank" rel="noopener">[正确]的使用Kotlin Flow进行搜索优化</a><br><a href="https://developer.android.com/kotlin/flow" target="_blank" rel="noopener">Android 上的 Kotlin 数据流</a></p>
+
       
 
       
@@ -191,7 +227,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
         		</li>
       		
 		</ul>
@@ -277,7 +313,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="flow" data-title="Flow 初始" data-url="http://lijia92.github.io/2021/10/27/flow/"></div>
+	<div class="ds-thread" data-thread-key="flow" data-title="Flow 初识" data-url="http://lijia92.github.io/2021/10/27/flow/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
@@ -397,11 +433,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -425,10 +461,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
@@ -437,11 +469,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -450,6 +478,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
