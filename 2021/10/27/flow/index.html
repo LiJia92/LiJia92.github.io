@@ -17,7 +17,7 @@
 <meta property="og:description" content="继上一篇文章，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG182.png">
-<meta property="og:updated_time" content="2021-10-27T06:55:56.323Z">
+<meta property="og:updated_time" content="2021-11-02T09:41:16.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flow 初识">
 <meta name="twitter:description" content="继上一篇文章，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。">
@@ -213,7 +213,11 @@
 </ol>
 <p>说白了就是数据一直在产生，LiveData observe 的时候本身就是在可见时，才进行回调。而 collect 会一直回调，需要结合 repeatOnLifecycle 一块使用。<br>关于冷流、热流的概念，现在还很模糊，只能后面边用边摸索了~</p>
 <p>总的来说，Flow 非常强大，能做的事情也很多。所以网上也有说法：出了 Flow 就可以废弃 LiveData 了。这个可以看一下凯哥的视频<a href="https://www.bilibili.com/video/BV1WL411E7ry?zw" target="_blank" rel="noopener">LiveData：还没普及就让我去世？我去你的 Kotlin 协程</a>。简而言之，我们可以有很多种技术来实现某一些特定的场景，并不一定就得是 A 技术替换 B 技术。萝卜白菜，各有所爱。当然我们还是得依据自身场景，尽量使用主流的技术。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/347785851" target="_blank" rel="noopener">Kotlin Flow场景化学习</a><br><a href="https://juejin.cn/post/6925304772383735822" target="_blank" rel="noopener">[正确]的使用Kotlin Flow进行搜索优化</a><br><a href="https://developer.android.com/kotlin/flow" target="_blank" rel="noopener">Android 上的 Kotlin 数据流</a></p>
+<h2 id="续一把"><a href="#续一把" class="headerlink" title="续一把"></a>续一把</h2><p>正好就用到 Flow 来做了一把倒计时的需求：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">private fun exitCountDown() &#123;</span><br><span class="line">    lifecycleScope<span class="selector-class">.launch</span> &#123;</span><br><span class="line">        flow &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="selector-tag">i</span> <span class="keyword">in</span> <span class="number">5</span> downTo <span class="number">1</span>) &#123;</span><br><span class="line">                emit(i)</span><br><span class="line">                delay(<span class="number">1000</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="selector-class">.onStart</span> &#123;</span><br><span class="line">            viewBinding<span class="selector-class">.countDownCl</span><span class="selector-class">.visibility</span> = View.VISIBLE</span><br><span class="line">            viewBinding<span class="selector-class">.appVersionTv</span><span class="selector-class">.text</span> = <span class="string">"Version$&#123;SystemUtils.getVersionName()&#125;"</span></span><br><span class="line">        &#125;<span class="selector-class">.onCompletion</span> &#123;</span><br><span class="line">            exit()</span><br><span class="line">        &#125;<span class="selector-class">.collect</span> &#123;</span><br><span class="line">            viewBinding<span class="selector-class">.countDownTv</span><span class="selector-class">.text</span> = it.toString()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>看起来可太简单了，整个流程就在这一个方法里。如果不用 Flow，大概率就是 handler.postDelay，或者 Timer 了，逻辑就会分散在各处，不方便查看。香，真香！<br>嗯，然后又做了一个网络监听的需求，封装了一个类：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">object</span> GlobalNetWorkMonitor &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> context = MucangConfig.getContext()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> listeners = mutableListOf&lt;WeakReference&lt;NetWorkChangeListener?&gt;&gt;()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> connect = callbackFlow &#123;</span><br><span class="line">        <span class="keyword">val</span> receiver = <span class="keyword">object</span> : BroadcastReceiver() &#123;</span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onReceive</span><span class="params">(context: <span class="type">Context</span>?, intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">                offer(NetworkUtils.isNetworkConnected())</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">val</span> filter = IntentFilter()</span><br><span class="line">        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)</span><br><span class="line">        context.registerReceiver(receiver, filter)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        MainScope().launch &#123;</span><br><span class="line">            connect.collect &#123;</span><br><span class="line">                <span class="keyword">if</span> (it) &#123;</span><br><span class="line">                    listeners.forEach &#123; item -&gt;</span><br><span class="line">                        item.<span class="keyword">get</span>()?.onNetworkConnected()</span><br><span class="line">                        item.clear()</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JvmStatic</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">addListener</span><span class="params">(listener: <span class="type">NetWorkChangeListener</span>?)</span></span> &#123;</span><br><span class="line">        listeners.forEach &#123;</span><br><span class="line">            <span class="keyword">if</span> (it.<span class="keyword">get</span>() == listener) &#123;</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        listeners.add(WeakReference(listener))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@JvmStatic</span></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">removeListener</span><span class="params">(listener: <span class="type">NetWorkChangeListener</span>?)</span></span> &#123;</span><br><span class="line">        listeners.forEach &#123;</span><br><span class="line">            <span class="keyword">if</span> (it.<span class="keyword">get</span>() == listener) &#123;</span><br><span class="line">                it.clear()</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">NetWorkChangeListener</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">onNetworkConnected</span><span class="params">()</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>信心满满的跑了一把，结果网络一发生变化就崩溃了：ClosedSendChannelException: Channel was closed。<br>后面找到原因：Reason is that callbackFlow block closes the (hidden under the hood) channel, as soon, as everything within<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">callbackFlow &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也就是当括号里的代码执行完了之后， callbackFlow 自动就 close 了，这个时候还去 offer 就会报错，需要添加 awaitClose。于是改成：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> connect = callbackFlow &#123;</span><br><span class="line">    <span class="keyword">val</span> receiver = <span class="keyword">object</span> : BroadcastReceiver() &#123;</span><br><span class="line">        <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onReceive</span><span class="params">(context: <span class="type">Context</span>?, intent: <span class="type">Intent</span>?)</span></span> &#123;</span><br><span class="line">            offer(NetworkUtils.isNetworkConnected())</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> filter = IntentFilter()</span><br><span class="line">    filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)</span><br><span class="line">    context.registerReceiver(receiver, filter)</span><br><span class="line">    <span class="comment">// 这句是重点，使 flow 一直 active</span></span><br><span class="line">    awaitClose &#123; context.unregisterReceiver(receiver) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://zhuanlan.zhihu.com/p/347785851" target="_blank" rel="noopener">Kotlin Flow场景化学习</a><br><a href="https://juejin.cn/post/6925304772383735822" target="_blank" rel="noopener">[正确]的使用Kotlin Flow进行搜索优化</a><br><a href="https://developer.android.com/kotlin/flow" target="_blank" rel="noopener">Android 上的 Kotlin 数据流</a><br><a href="https://github.com/Kotlin/kotlinx.coroutines/issues/1770" target="_blank" rel="noopener">ClosedSendChannelException for callbackFlow</a></p>
 
       
 
@@ -421,6 +425,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
@@ -434,10 +442,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -457,11 +461,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -469,7 +477,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -478,10 +486,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
