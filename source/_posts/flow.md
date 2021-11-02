@@ -152,8 +152,110 @@ class LatestNewsActivity : AppCompatActivity() {
 
 总的来说，Flow 非常强大，能做的事情也很多。所以网上也有说法：出了 Flow 就可以废弃 LiveData 了。这个可以看一下凯哥的视频[LiveData：还没普及就让我去世？我去你的 Kotlin 协程](https://www.bilibili.com/video/BV1WL411E7ry?zw)。简而言之，我们可以有很多种技术来实现某一些特定的场景，并不一定就得是 A 技术替换 B 技术。萝卜白菜，各有所爱。当然我们还是得依据自身场景，尽量使用主流的技术。
 
+## 续一把
+正好就用到 Flow 来做了一把倒计时的需求：
+```
+private fun exitCountDown() {
+    lifecycleScope.launch {
+        flow {
+            for (i in 5 downTo 1) {
+                emit(i)
+                delay(1000)
+            }
+        }.onStart {
+            viewBinding.countDownCl.visibility = View.VISIBLE
+            viewBinding.appVersionTv.text = "Version${SystemUtils.getVersionName()}"
+        }.onCompletion {
+            exit()
+        }.collect {
+            viewBinding.countDownTv.text = it.toString()
+        }
+    }
+}
+```
+看起来可太简单了，整个流程就在这一个方法里。如果不用 Flow，大概率就是 handler.postDelay，或者 Timer 了，逻辑就会分散在各处，不方便查看。香，真香！
+嗯，然后又做了一个网络监听的需求，封装了一个类：
+```
+object GlobalNetWorkMonitor {
+
+    private val context = MucangConfig.getContext()
+    private var listeners = mutableListOf<WeakReference<NetWorkChangeListener?>>()
+
+    private val connect = callbackFlow {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                offer(NetworkUtils.isNetworkConnected())
+            }
+        }
+        val filter = IntentFilter()
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        context.registerReceiver(receiver, filter)
+    }
+
+    init {
+        MainScope().launch {
+            connect.collect {
+                if (it) {
+                    listeners.forEach { item ->
+                        item.get()?.onNetworkConnected()
+                        item.clear()
+                    }
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    fun addListener(listener: NetWorkChangeListener?) {
+        listeners.forEach {
+            if (it.get() == listener) {
+                return
+            }
+        }
+        listeners.add(WeakReference(listener))
+    }
+
+    @JvmStatic
+    fun removeListener(listener: NetWorkChangeListener?) {
+        listeners.forEach {
+            if (it.get() == listener) {
+                it.clear()
+                return
+            }
+        }
+    }
+
+    interface NetWorkChangeListener {
+        fun onNetworkConnected()
+    }
+}
+```
+信心满满的跑了一把，结果网络一发生变化就崩溃了：ClosedSendChannelException: Channel was closed。
+后面找到原因：Reason is that callbackFlow block closes the (hidden under the hood) channel, as soon, as everything within
+```
+callbackFlow {
+...
+}
+```
+也就是当括号里的代码执行完了之后， callbackFlow 自动就 close 了，这个时候还去 offer 就会报错，需要添加 awaitClose。于是改成：
+```
+private val connect = callbackFlow {
+    val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            offer(NetworkUtils.isNetworkConnected())
+        }
+    }
+    val filter = IntentFilter()
+    filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+    context.registerReceiver(receiver, filter)
+    // 这句是重点，使 flow 一直 active
+    awaitClose { context.unregisterReceiver(receiver) }
+}
+```
+
 ## 参考
 [Kotlin Flow场景化学习](https://zhuanlan.zhihu.com/p/347785851)
 [[正确]的使用Kotlin Flow进行搜索优化](https://juejin.cn/post/6925304772383735822)
 [Android 上的 Kotlin 数据流](https://developer.android.com/kotlin/flow)
+[ClosedSendChannelException for callbackFlow](https://github.com/Kotlin/kotlinx.coroutines/issues/1770)
 
