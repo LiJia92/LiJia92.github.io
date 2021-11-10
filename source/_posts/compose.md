@@ -47,7 +47,6 @@ Column {
 2. 声明式 UI，动态更新只需要更新的 View，其他 View 不会改变。代码更少，更直观，更快，更强！
 
 ## 参考
-[使用 Jetpack Compose 更快地打造
-更出色的应用](https://developer.android.google.cn/jetpack/compose)
+[使用 Jetpack Compose 更快地打造更出色的应用](https://developer.android.google.cn/jetpack/compose)
 [谷歌开发者大会扔物线演讲原稿整理：Jetpack Compose](https://rengwuxian.com/jetpack-compose-1/)
 [声明式 UI？Android 官方怒推的 Jetpack Compose 到底是什么](https://rengwuxian.com/jetpack-compose-3/)
