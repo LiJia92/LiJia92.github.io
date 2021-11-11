@@ -35,6 +35,7 @@ Column {
 > 注意，当 show 先是 true 然后又变成 false 的时候，**不是设置了一个 setVisibility(GONE) 这样的做法，而是直接上面的 Text() 在界面中消失了**。每次数据改变所导致的界面更新，看起来就跟**界面关闭又重启、并用新的数据重新初始化了一遍一样**。这，才叫声明式 UI，这是数据绑定做不到的。而且 **Compose 并不是真的把界面重启了，它只会刷新那些需要刷新的部分**，这样的话就能保证，它自动的更新界面跟我们手动更新一样高效。比如上面这里 show 的值从 true 变成 false 了，if 里面的 Text() 会被重新调用一次，但是外面的 Column() 和里面的 Text() 却不会被重新调用。很神奇吧？怎么做到的？靠的 code>@Composable 关键字，或者说靠的 Compose 的编译器插件，这个插件通过对编译过程的干预，把代码的逻辑拆到了我们看不到的细粒度，让这种看起来是连续的代码可以做到互相独立地执行。
 
 结合收费课程自我理解一下：Compose 是一套独立的 View 系统，区别于我们熟悉的 View、ViewGroup 那一套。之前的父 View、子 View 的改变会互相影响，而 Compose 会将所有 View 独立，这样在数据改变时只需要改变对应的 View 即可，而其他的 View 纹丝不动。可以想象一下：这样的话，View 层级对渲染性能的影响将消失，界面刷新的效率也会更高，我们开发者能做的事情也是可以无限想象了，但我们可能得重新学习 Compose 中 View、ViewGroup 的相关知识（触摸事件传递等）了(ಥ_ಥ)。
+View 嵌套不影响性能，主要依赖于 Compose 的「intrinsic measurement」。传统的 View 是因为会二次测量，甚至多次测量，层级越深，测量的次数就会是指数级增长，从而影响性能。而 Compose 就直接不允许二次测量了，引入「intrinsic measurement」来帮助测量，从根本上解决问题。
 
 ## 简单使用
 通过 AndoirdStudio 建立一个 Compose 工程，编译通过可以看到是这样的：
@@ -48,5 +49,6 @@ Column {
 
 ## 参考
 [使用 Jetpack Compose 更快地打造更出色的应用](https://developer.android.google.cn/jetpack/compose)
+[Compose 布局中的固有特性测量](https://developer.android.com/jetpack/compose/layouts/intrinsic-measurements?hl=zh-cn)
 [谷歌开发者大会扔物线演讲原稿整理：Jetpack Compose](https://rengwuxian.com/jetpack-compose-1/)
 [声明式 UI？Android 官方怒推的 Jetpack Compose 到底是什么](https://rengwuxian.com/jetpack-compose-3/)
