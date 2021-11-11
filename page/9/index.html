@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-support-version" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/support-version/">Support 库，注意你的版本号</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/15/support-version/" class="archive-article-date">
+  	<time datetime="2017-12-15T09:18:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目开发，引进了一个新的三方库，导致之前能运行的代码出现问题，错误堆栈：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FATAL EXCEPTION: main</span><br><span class="line">Process: com<span class="selector-class">.lijia</span><span class="selector-class">.app</span><span class="selector-class">.catering</span><span class="selector-class">.dev</span>, PID: <span class="number">29387</span></span><br><span class="line">java<span class="selector-class">.lang</span><span class="selector-class">.NoClassDefFoundError</span>: android<span class="selector-class">.support</span><span class="selector-class">.v4</span><span class="selector-class">.animation</span><span class="selector-class">.AnimatorCompatHelper</span></span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.DefaultItemAnimator</span><span class="selector-class">.resetAnimation</span>(DefaultItemAnimator<span class="selector-class">.java</span>:<span class="number">514</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.DefaultItemAnimator</span><span class="selector-class">.animateAdd</span>(DefaultItemAnimator<span class="selector-class">.java</span>:<span class="number">217</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.SimpleItemAnimator</span><span class="selector-class">.animateAppearance</span>(SimpleItemAnimator<span class="selector-class">.java</span>:<span class="number">114</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.animateAppearance</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3243</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.access</span>$<span class="number">800</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">147</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span>$<span class="number">4</span>.processAppeared(RecyclerView<span class="selector-class">.java</span>:<span class="number">436</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.ViewInfoStore</span><span class="selector-class">.process</span>(ViewInfoStore<span class="selector-class">.java</span>:<span class="number">249</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.dispatchLayoutStep3</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3098</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.dispatchLayout</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">2917</span>)</span><br><span class="line">    at android<span class="selector-class">.support</span><span class="selector-class">.v7</span><span class="selector-class">.widget</span><span class="selector-class">.RecyclerView</span><span class="selector-class">.onLayout</span>(RecyclerView<span class="selector-class">.java</span>:<span class="number">3283</span>)</span><br><span class="line">    at android<span class="selector-class">.view</span><span class="selector-class">.View</span><span class="selector-class">.layout</span>(View.java)</span><br><span class="line">    at android<span class="selector-class">.view</span><span class="selector-class">.ViewGroup</span><span class="selector-class">.layout</span>(ViewGroup.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.setChildFrame</span>(LinearLayout.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.layoutVertical</span>(LinearLayout.java)</span><br><span class="line">    at android<span class="selector-class">.widget</span><span class="selector-class">.LinearLayout</span><span class="selector-class">.onLayout</span>(LinearLayout.java)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2017/12/15/support-version/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-kotlin-config" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -720,65 +780,6 @@
 
 
   
-    <article id="post-github-star" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/04/github-star/">管理 Github 上的 star</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/04/github-star/" class="archive-article-date">
-  	<time datetime="2017-08-04T09:01:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Github 逛久了，相信大家都会有很多<code>star</code>，虽然很多<code>star</code>后面再也不会看的。但是只要有那么一丁点的可能回头看，我们还是需要将自己的<code>star</code>整理一下，不然感觉都是无从下手。那么问题便来了：如何管理 Github 上的 star ?<br>答案便是 <a href="https://app.astralapp.com" target="_blank" rel="noopener">Astral</a>。这是我偶然发现的一个网站，它可以用来给 Github 上的 star 分类。<br>具体界面是这样子的:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/08/04/%E9%80%89%E5%8C%BA_075.png" alt=""></p>
-<p>界面很简单，打开就能直接上手用，整理了一个下午，终于将自己的 200 多个 star 全部清理个便，分了几个 TAG，后面再回顾的时候便会方便多了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
@@ -872,15 +873,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -889,6 +886,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -904,11 +905,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -928,11 +929,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

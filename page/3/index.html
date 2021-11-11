@@ -158,6 +158,74 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-serial-port" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/15/serial-port/">Android 串口通信小记</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/15/serial-port/" class="archive-article-date">
+  	<time datetime="2020-07-15T07:40:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目有需要用到串口通信，硬件同事通过串口给应用层发送数据，稍微记录一下。</p>
+<h2 id="串口"><a href="#串口" class="headerlink" title="串口"></a>串口</h2><p>串口通信（Serial Communications）是指外设和计算机间，通过数据信号线 、地线、控制线等，按位进行传输数据的一种通讯方式。串口通信是计算机中非常常见的通信方式，比如一些有线鼠标、键盘、打印机等都是通过串口进行通信的。串口的通信一般使用3根线完成，分别是地线、发送线（tx）、接收线（rx）。<br>串口中有五个重要的参数：串口设备名、波特率、奇偶校验位、数据位、停止位。</p>
+<ol>
+<li>设备名称：串口的名称。</li>
+<li>波特率：传输速率的参数，波特率和传输距离成反比。</li>
+<li>校验位：在串口通信中一种简单的检错方式，有四种检错方式：偶、奇、高和低，允许无校验位。</li>
+<li>数据位：通信中实际数据位的参数</li>
+<li>停止位：用于表示单个包的最后一位。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2020/07/15/serial-port/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-viewpager-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -694,67 +762,6 @@
 
 
   
-    <article id="post-media-mix2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/19/media-mix2/">无声视频合成音频（续）</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/19/media-mix2/" class="archive-article-date">
-  	<time datetime="2019-09-19T08:30:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前有一个音视频合成的需求，还写了一篇文章<a href="http://lastwarmth.win/2018/11/23/media-mix/" target="_blank" rel="noopener">无声视频合成音频</a>。之前的需求是，视频整体时间控制在 10s（便于发布到朋友圈），现在朋友圈的限制改为 15s 了，所以产品决定不再限制视频的时长为 10s 了，改为最长 40s，若有发布到朋友圈的需求，则自己裁剪。大部分情况下，生成的视频长度会小于 15s，也不需要裁剪。需求调整后，之前文章里的音视频合成的方案就需要略作修改了。</p>
-<p>说下之前的方案：利用录屏生成 10s 的无声视频，与正好 10s 的音频 aac 文件进行合成。之前的代码最终生成的文件长度为音视频文件的最大值（若视频为 10s，音频为 15s，则会生成 15s 的视频，视频最后 5s 一直展示视频的最后一帧，同时播放音乐）。现在调整视频时长后，产品定的需求是视频时长增加，然后音频循环播放。所以可能就是 24s 的无声视频合成 10s 的音频。所以之前的代码就得调整了：</p>
-        
-          <a class="article-more-a" href="/2019/09/19/media-mix2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -848,15 +855,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -865,6 +868,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -880,11 +887,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -904,11 +911,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

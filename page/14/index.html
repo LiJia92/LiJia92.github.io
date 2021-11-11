@@ -158,6 +158,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-popupwindow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/02/popupwindow/">android PopupWindow在控件上方显示</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/02/popupwindow/" class="archive-article-date">
+  	<time datetime="2016-06-02T08:26:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow1.png" alt=""></p>
+<p>用户点击送礼物，会弹出一个礼物选择对话框，然后在选择一个礼物之后，可以选择礼物数量，按照图中的意思，选择数量很自然的想到了用<code>PopupWindow</code>来做了。但是这里有一个问题就是：弹出来的数量选择框是需要在数量显示栏的上方的。</p>
+<p>如果是在下方，那很简单，直接<code>popupWindow.showAsDropDown(v);</code>即可。但若是在上方，则需要自己计算坐标了，然后通过<code>showAtLocation()</code>方法来显示。</p>
+        
+          <a class="article-more-a" href="/2016/06/02/popupwindow/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-task-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -721,69 +783,6 @@
 
 
   
-    <article id="post-jpush" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/jpush/">Android接入JPush（极光推送）</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/05/jpush/" class="archive-article-date">
-  	<time datetime="2016-04-05T06:14:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中需要有推送功能，技术负责人最后决定使用<code>极光推送</code>，活被分配给我了，于是我便接了一波，在此小记一下~</p>
-<p>在极光推送的<a href="http://docs.jpush.io/guideline/android_guide/" target="_blank" rel="noopener">官方文档</a>中，已经有了较详细的说明了，这里只做一下简单的摘录。</p>
-<h2 id="三分钟快速Demo"><a href="#三分钟快速Demo" class="headerlink" title="三分钟快速Demo"></a>三分钟快速Demo</h2><p>在极光推送的官方文档中，有<code>三分钟快速Demo</code>，我也是从demo入手。</p>
-<h3 id="创建开发者账号"><a href="#创建开发者账号" class="headerlink" title="创建开发者账号"></a>创建开发者账号</h3><p>接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个<code>开发者账号</code>。<br>要创建极光推送开发者帐号，请访问<a href="http://jpush.cn" target="_blank" rel="noopener">极光推送官方网站</a>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush1.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2016/04/05/jpush/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
@@ -877,15 +876,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -894,6 +889,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -909,11 +908,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -933,11 +932,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

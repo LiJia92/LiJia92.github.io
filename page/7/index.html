@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-keep-alive" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/16/keep-alive/">Android 保活实践</a>
+    </h1>
+  
+
+        
+        <a href="/2018/08/16/keep-alive/" class="archive-article-date">
+  	<time datetime="2018-08-16T05:55:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为 Android 开发者，当提到“保活”时，心中的滋味可谓是五味杂陈。互联网上也有各种“黑科技”来达到相应的目的。若是普通的应用，我是十分拒绝进行保活的，当用户不需要你了，还要偷偷地活着，做一些事情。最近参与开发的一款 App 是跟地图相关的，有着「录轨迹」的功能，当用户开启录制功能后，即使退出应用到后台，也是期望能够继续录制的，所以便研究了一番保活，并实践了一下，最后效果也还不错。<br>说下总体方案：<strong>1 像素 Activity 、音频播放、前台服务</strong>。</p>
+        
+          <a class="article-more-a" href="/2018/08/16/keep-alive/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-sticky-header" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -706,68 +766,6 @@
 
 
   
-    <article id="post-async-task-model" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/async-task-model/">异步任务的原生实现</a>
-    </h1>
-  
-
-        
-        <a href="/2018/03/28/async-task-model/" class="archive-article-date">
-  	<time datetime="2018-03-28T09:14:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在谈到异步任务，相信大多数开发者都会直接选择 RxJava，但是仍然会有不用 RxJava 的项目。这种情况下如何来做异步任务呢？</p>
-<p>其实不论是 RxJava 抑或是 Android 自带的 AysncTask，内部实现原理都是 Thread + Handler。如果线程想要返回 Result，那么只能使用 Callable来实现子线程，AsyncTask 便是使用的 Callable。</p>
-<p>下面说下项目中的使用场景：<br>一个界面由一个列表构成，但列表的构成十分复杂，item type 很多，需要请求多个网络接口来返回所需要的数据。网络接口请求互相独立，没有依赖关系，可使用多线程进行请求。如果使用 Android 提供的 AsyncTask，则在 doInBackground 依次执行网络接口，就丧失了多线程的优势，当然你也可以在 doInBackground 再起子线程执行网络请求，然后在返回的时候使用阻塞，等到所有接口执行完毕才返回，原理其实是一样的。</p>
-        
-          <a class="article-more-a" href="/2018/03/28/async-task-model/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">code</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/6/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/">Next &raquo;</a>
@@ -861,15 +859,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -878,6 +872,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -893,11 +891,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -917,11 +915,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
