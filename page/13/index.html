@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jcenter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/12/jcenter/">Android Studio发布项目到JCenter</a>
+    </h1>
+  
+
+        
+        <a href="/2016/09/12/jcenter/" class="archive-article-date">
+  	<time datetime="2016-09-12T08:40:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。</p>
+        
+          <a class="article-more-a" href="/2016/09/12/jcenter/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-make-wheel" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -715,67 +775,6 @@
 
 
   
-    <article id="post-retrofit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/23/retrofit/">Retrofit初识</a>
-    </h1>
-  
-
-        
-        <a href="/2016/06/23/retrofit/" class="archive-article-date">
-  	<time datetime="2016-06-23T07:33:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在这个技术日新月累的今天，各种新的轮子层出不穷。网络这块，从<code>HttpClient</code>到<code>android-async-http</code>，再到<code>Volley</code>。当下比较火的网络框架<code>Retrofit</code>也是受到了很多开发者的热爱。虽然项目中并没有使用到<code>Retrofit</code>，但抱着学习的态度，我还是打算接触一下，算是有个了解。说不定后面的开发中会用到呢？</p>
-<h2 id="Retrofit概述"><a href="#Retrofit概述" class="headerlink" title="Retrofit概述"></a>Retrofit概述</h2><p><code>Retrofit</code>是一个 RESTful 的 HTTP 网络请求框架的封装。注意这里并没有说它是网络请求框架，主要原因在于网络请求的工作并不是<code>Retrofit</code>来完成的。<code>Retrofit 2.0</code>开始内置<code>OkHttp</code>，前者专注于接口的封装，后者专注于网络请求的高效，二者分工协作。<br>我们的应用程序通过<code>Retrofit</code>请求网络，实际上是使用<code>Retrofit</code>接口层封装请求参数、Header、Url等信息，之后由<code>OkHttp</code>完成后续的请求操作，在服务端返回数据之后，<code>OkHttp</code>将原始的结果交给<code>Retrofit</code>，后者根据用户的需求对结果进行解析的过程。所谓<code>Retrofit</code>，其实就是<code>Retrofitting OkHttp</code>了。</p>
-        
-          <a class="article-more-a" href="/2016/06/23/retrofit/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
@@ -869,7 +868,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,10 +884,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">code</a>
               </li>
              
@@ -901,15 +896,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -917,7 +908,19 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -926,10 +929,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
