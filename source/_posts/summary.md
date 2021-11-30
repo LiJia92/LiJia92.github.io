@@ -53,7 +53,7 @@ tags:
 
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/1IMG_20160924_192411_HDR.jpg)
 
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="http://music.163.com/outchain/player?type=2&id=28181131&auto=0&height=32"></iframe>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=386001&auto=1&height=66"></iframe>
 
 希望你也喜欢这首歌。
 
