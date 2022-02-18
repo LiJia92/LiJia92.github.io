@@ -158,6 +158,62 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-anim-continue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/18/anim-continue/">记一次动画实践-续</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/18/anim-continue/" class="archive-article-date">
+  	<time datetime="2019-12-18T03:28:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>嗯，这篇文章是接着<a href="http://lastwarmth.win/2019/12/12/anim/" target="_blank" rel="noopener">上一篇</a>的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。<br>如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：</p>
+<ol>
+<li>scroll<blockquote>
+<p>The view will be scroll in direct relation to scroll events. This flag needs to be set for any of the other flags to take effect. If any sibling views before this one do not have this flag, then this value has no effect.</p>
+</blockquote>
+</li>
+</ol>
+<p>Child View 伴随着滚动事件而滚出或滚进屏幕。注意两点：第一点，如果使用了其他值，必定要使用这个值才能起作用；第二点：如果在这个 Child View 前面的任何其他 Child View 没有设置这个值，那么这个 Child View 的设置将失去作用。</p>
+        
+          <a class="article-more-a" href="/2019/12/18/anim-continue/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-anim" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -704,68 +760,6 @@
 
 
   
-    <article id="post-multi-form" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/12/multi-form/">Android 实现大文件分片上传</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/12/multi-form/" class="archive-article-date">
-  	<time datetime="2019-07-12T07:57:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中有视频上传的功能，但一直没做断点续传，针对大视频上传不友好，最近的版本需求将断点续传加上了，服务端采用的是 multipart/form-data 编码方式来实现，那么客户端也依照这个方式来做就好了。</p>
-<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h2><p>multipart/form-data 方式用于大数据 Post 请求，用做分片正好合适。它对数据有一定的格式，参照示例：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">POST</span> http://www.example.com <span class="type">HTTP</span>/<span class="number">1.1</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Type</span>:multipart/form-<span class="class"><span class="keyword">data</span>; boundary=<span class="comment">----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Disposition</span>: form-<span class="class"><span class="keyword">data</span>; name="text"</span></span><br><span class="line"></span><br><span class="line"><span class="title">title</span></span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Disposition</span>: form-<span class="class"><span class="keyword">data</span>; name="file"; filename="chrome.png"</span></span><br><span class="line"><span class="type">Content</span>-<span class="type">Type</span>: image/png</span><br><span class="line"></span><br><span class="line"><span class="type">PNG</span> ... content <span class="keyword">of</span> chrome.png ...</span><br><span class="line"><span class="comment">------WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span></span><br></pre></td></tr></table></figure></p>
-<p>每部分都是以<code>--boundary</code>开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（文本或二进制）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以<code>--boundary--</code>标示结束。</p>
-        
-          <a class="article-more-a" href="/2019/07/12/multi-form/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -859,15 +853,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -879,11 +873,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color4">cat</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -891,11 +885,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -907,11 +901,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
