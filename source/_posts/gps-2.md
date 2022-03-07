@@ -3,9 +3,6 @@ title: 科二考试系统-续
 date: 2021-07-09 09:46:31
 tags:
  - 技术思路
-password: 605520
-abstract: Welcome to my blog, enter password to read.
-message: Welcome to my blog, enter password to read.
 ---
 
 [上篇文章](http://lastwarmth.win/2021/07/08/gps/)已经基本把「科二考试系统」的核心思路描述清楚了，接下来记录一下稍微具体的知识点。
