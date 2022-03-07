@@ -158,6 +158,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-new-seekbar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/28/new-seekbar/">Android自定义View实现弧形SeekBar（续）</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/28/new-seekbar/" class="archive-article-date">
+  	<time datetime="2016-04-28T08:13:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>在我的<a href="http://lastwarmth.win/2016/04/27/seekbar/" target="_blank" rel="noopener">上一篇文章</a>中，写了自定义弧形SeekBar，效果达到了自己的预期，于是高高兴兴回家了。但是后面手贱，在家里自己随意玩了玩，发现SeekBar滑动几下之后再滑动就会变得特别卡。然后查看代码，短时间内没什么头绪。</p>
+<p>没错，这个时候又要祭出我的室友了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/new-seekbar1.jpg" alt=""><br>室友之前是做rom相关的，对于android系统工具用得很熟。然后他拿着我的手机打开开发者选项中的<code>GPU呈现模式分析</code>，运行了一下程序，滑了一会之后就这样了：</p>
+        
+          <a class="article-more-a" href="/2016/04/28/new-seekbar/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-seekbar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -743,83 +804,6 @@
 
 
   
-    <article id="post-hexo-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/hexo-tips/">Hexo-Tips</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/hexo-tips/" class="archive-article-date">
-  	<time datetime="2016-03-17T04:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要讲述一下使用Hexo搭建博客的一些Tips。</p>
-<h2 id="hexo基本指令"><a href="#hexo基本指令" class="headerlink" title="hexo基本指令"></a>hexo基本指令</h2><ol>
-<li>hexo clean 清除</li>
-<li>hexo new page “menu name” 新建菜单</li>
-<li>hexo g == hexo generate 生成</li>
-<li>hexo d == hexo deploy 部署</li>
-<li>hexo s == hexo server 启动本地</li>
-<li>hexo n == hexo new 新建</li>
-</ol>
-<h2 id="首页文章显示"><a href="#首页文章显示" class="headerlink" title="首页文章显示"></a>首页文章显示</h2><p>在md文件中添加<code>&lt;!--more--&gt;</code>，那么首页就只会显示这个标签之上的内容了，并显示一个<code>阅读全文</code>的按钮。</p>
-<h2 id="部署到Github保证README-md不被渲染"><a href="#部署到Github保证README-md不被渲染" class="headerlink" title="部署到Github保证README.md不被渲染"></a>部署到Github保证README.md不被渲染</h2><ol>
-<li>在Hexo目录下的source根目录下创建README.md文件,并编辑保存。</li>
-<li><p>编辑Hexo目录的_config.yml文件中的“skip_render”参数。</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">skip_render:</span> README.md</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署到Github，然后看仓库是否有README.md。</p>
-</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/03/17/hexo-tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
@@ -913,15 +897,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -945,11 +929,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -965,11 +949,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
