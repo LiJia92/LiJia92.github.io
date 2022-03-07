@@ -158,6 +158,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-hybrid-practice" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/14/hybrid-practice/">Android Hybrid开发实战之图片的交互</a>
+    </h1>
+  
+
+        
+        <a href="/2016/01/14/hybrid-practice/" class="archive-article-date">
+  	<time datetime="2016-01-14T06:32:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近一直在学习Hybrid开发，如何在H5页面调用Android原生接口，并返回值，以及回调。学习了一段时间，总算是有点收获，效果也做出来了。于是写下这篇博客，记录一下。</p>
+<p>本文中我以2个接口示例，来进行讲解。第1个示例很简单，就是调用接口，返回登录Token；第2个示例是H5调用接口，弹出Android原生界面进行图片选择，选择完之后返回选择图片的Base64格式的字符串。然后H5页面接收返回的字符串，回调进行图片显示。</p>
+<h2 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h2><p>首先，讲解一下Base64。图片也是一个文件，可以通过Base64返回这个文件的Base64字符串，这个字符串可以直接放到H5的img标签进行显示。</p>
+        
+          <a class="article-more-a" href="/2016/01/14/hybrid-practice/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-notification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -741,76 +803,9 @@
 
 
   
-    <article id="post-ddms-logcat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/24/ddms-logcat/">Android DDMS无法输出logcat</a>
-    </h1>
-  
-
-        
-        <a href="/2015/10/24/ddms-logcat/" class="archive-article-date">
-  	<time datetime="2015-10-24T08:00:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable <span class="built_in">to</span> <span class="built_in">open</span> <span class="built_in">log</span> device‘/dev/<span class="built_in">log</span>/main’: No such <span class="built_in">file</span> <span class="keyword">or</span> <span class="built_in">directory</span></span><br></pre></td></tr></table></figure></p>
-<p>导致连上真机却看不到log。</p>
-<p>网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者<a href="http://stackoverflow.com/questions/4867971/dev-log-main-not-found" target="_blank" rel="noopener">stackoverflow</a>上说的与手机内核有关。但是对我的手机都不奏效，我的手机是华为3C，刷的MIUI的rom。</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>后面折腾了老半天，终于找到了原因：</p>
-<blockquote>
-<p>./system/etc/init.d目录下的脚本删掉了日志设备 </p>
-</blockquote>
-<p>知道问题出在哪了，那么解决起来就很方便了。</p>
-        
-          <a class="article-more-a" href="/2015/10/24/ddms-logcat/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span>
+      <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
     </nav>
   
 
@@ -901,11 +896,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -933,11 +928,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -949,7 +944,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -957,7 +952,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
