@@ -158,6 +158,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gradle-app" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/16/gradle-app/">Gradle 多版本管理</a>
+    </h1>
+  
+
+        
+        <a href="/2017/03/16/gradle-app/" class="archive-article-date">
+  	<time datetime="2017-03-16T08:54:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前有写过一篇<a href="http://lastwarmth.win/2016/03/09/gradle-pack/" target="_blank" rel="noopener">Android Studio使用Gradle进行多渠道打包</a>，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Gradle是一个基于Apache Ant和Apache Maven概念的项目自动化建构工具。它使用一种基于Groovy的特定领域语言来声明项目设置，而不是传统的XML。<br>使用Gradle的优势:</p>
+<ol>
+<li>自动处理包相依关系 - 取自 Maven Repos 的概念</li>
+<li>自动处理布署问题 - 取自 Ant 的概念</li>
+<li>条件判断写法直觉 - 使用 Groovy 语言</li>
+</ol>
+<p>更多关于Gradle的学习可以阅读<a href="https://dongchuan.gitbooks.io/gradle-user-guide-/" target="_blank" rel="noopener">Gradle User Guide 中文版</a>。</p>
+        
+          <a class="article-more-a" href="/2017/03/16/gradle-app/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-theme-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -717,71 +784,6 @@
 
 
   
-    <article id="post-socket" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/16/socket/">Android直播利用Socket传输实时数据</a>
-    </h1>
-  
-
-        
-        <a href="/2016/11/16/socket/" class="archive-article-date">
-  	<time datetime="2016-11-16T01:52:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>通过前面一段时间的摸索，iOS的Multipeer Connectivity与Android的Wifi-Direct并不兼容，一些三方可能都是需要连接热点才能实现跨平台传输。热点是需要连接到同一个网络环境下的，那么考虑下Socket是否可行呢？理论上，应该是没问题的。为了验证，我这边便开始Android端的测试，至于跨平台就得等到iOS那边一起合作来验证了。</p>
-<h2 id="Socket连接"><a href="#Socket连接" class="headerlink" title="Socket连接"></a>Socket连接</h2><p>这里分一个Client（采集实时数据），一个server（接收数据进行处理）这样的两个角色。在一个局域网下，他们要互相建立连接首先便是要能互相发现。我的方案是：Server监听一个端口，Client发送一个绑定端口的广播（UDP），广播信息包含Client的ip，Server再收到广播之后，利用收到的ip发送一个单播到Client，单播信息包含Server的ip，Client收到之后便知道Server的ip了，那么便可以建立连接了。</p>
-        
-          <a class="article-more-a" href="/2016/11/16/socket/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
@@ -907,7 +909,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -915,7 +917,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -923,11 +925,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
