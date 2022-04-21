@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://lijia92.github.io">
-  <title>关于 MVP 模式的一点思考 | 听雪楼</title>
+  <title>云基站概述 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
-<meta name="keywords" content="设计模式">
+  <meta name="description" content="在科二考试系统一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。 定位要实现高精度定位，需要两个定位设备。设备支持设置 流动站 或者 基站 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。">
+<meta name="keywords" content="技术思路">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于 MVP 模式的一点思考">
-<meta property="og:url" content="http://lijia92.github.io/2017/04/25/mvp-1/index.html">
+<meta property="og:title" content="云基站概述">
+<meta property="og:url" content="http://lijia92.github.io/2022/04/21/station/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
+<meta property="og:description" content="在科二考试系统一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。 定位要实现高精度定位，需要两个定位设备。设备支持设置 流动站 或者 基站 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-16T12:08:14.545Z">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG285.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG287.png">
+<meta property="og:updated_time" content="2022-04-21T06:32:30.212Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 MVP 模式的一点思考">
-<meta name="twitter:description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
+<meta name="twitter:title" content="云基站概述">
+<meta name="twitter:description" content="在科二考试系统一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。 定位要实现高精度定位，需要两个定位设备。设备支持设置 流动站 或者 基站 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG285.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -161,36 +164,45 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-mvp-1" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-station" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      关于 MVP 模式的一点思考
+      云基站概述
     </h1>
   
 
         
-        <a href="/2017/04/25/mvp-1/" class="archive-article-date">
-  	<time datetime="2017-04-25T07:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
+        <a href="/2022/04/21/station/" class="archive-article-date">
+  	<time datetime="2022-04-21T02:39:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。</p>
-<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a href="https://github.com/android-cn/android-discuss/issues/468" target="_blank" rel="noopener">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
+        <p>在<a href="http://lastwarmth.win/2021/07/08/gps/" target="_blank" rel="noopener">科二考试系统</a>一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>要实现高精度定位，需要两个定位设备。设备支持设置 <strong>流动站</strong> 或者 <strong>基站</strong> 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。</p>
 <a id="more"></a>
-<p>这个issue跟我的情况很类似。我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。基于 Presenter与View 一一对应的情况下，很容易就写出如下的代码：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyPresenter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">query</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyView</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showList</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showInsertResult</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showUpdateResult</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showDeleteResult</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在 IMyPresenter 的具体实现中回调 IMyView 的方法，通知界面进行展示。A B C 三个界面都实现 IMyView，然后就会有一个蛋疼的现象：<strong>很多do nothing的方法</strong>。比如 A 界面会这样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showList</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// show something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInsertResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showUpdateResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showDeleteResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>因为 A 界面就没用到增删改的接口，所以自然不用实现相应的 View 接口，这看起来就很蛋疼了。</p>
-<p>现在假设我们使用多个 Presenter,使一个 Presenter 对应一个 View，也就是写3个 Presenter,一个负责查询对应界面 A，一个负责删除对应界面 B，一个负责增和改对应界面 C。显然是没什么毛病的，但是会多许多的 Presenter，除了写起来很费事繁杂，还有一个缺点：若界面有业务交集（比如 A 界面不仅有查询，还有个删除，那么就会和 B 界面重复），就会导致 Presenter 严重冗余，几个 Presenter 里面的代码大块大块的相似。另外这个 Presenter 本是增删改查一套业务，结果硬生生拆成多个 Presenter，总感觉不合适。</p>
-<p>所以在我的实际情况中，上述两种方案我都没有采用。这里便说下我的一些想法：<br><strong>Presenter 仍然独立处理业务，将 View 进行抽离解耦，提供一个顶层的 View 给 Presenter 使用，当要调到具体的 View 方法时，使用 instance of 判断，然后强转进行调用。</strong><br>修改后的代码大致如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public<span class="built_in"> interface </span>IMyView &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IAView extends IMyView &#123;</span><br><span class="line">    void showList();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IBView extends IMyView &#123;</span><br><span class="line">    void showDeleteResult();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IAView extends IMyView &#123;</span><br><span class="line">  void showUpdateResult();</span><br><span class="line"></span><br><span class="line">  void showInsertResult();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后 IMyPresenter 的实现持有 IMyView 的实例，在调用的地方进行强转。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">delete</span>()&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">  <span class="keyword">if</span> (mView != <span class="literal">null</span> &amp;&amp; mView <span class="keyword">instanceof</span> IBView) &#123;</span><br><span class="line">    ((IBView) mView).showDeleteResult();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>用这种方法，可以一定程度上解决一个 Presenter 对应多个 View 的问题。只能是一定程度上，是因为若 View 对应的业务场景有很复杂的交叉，那么就需要定义非常多的 View 与之对应，并且有很深的继承关系，也是不太合适。若真是碰到这种场景，我可能就会考虑 Google 所说的 MVP Clean 模式了。</p>
+<p>在设置基站模式时，需要同时给基站设置一个坐标，这个坐标可以是低精度的，也可以是高精度的。项目中有 3d 场景，利用流动站连接基站采集的高精度坐标数据，是 2d 的。为了让 3d 与 2d 对齐，取用这个基站设置的坐标当做 <strong>原点</strong>。这样 3d 建模的场景根据原点进行偏移，便可以与 2d 对应了。即车子开到这个侧方停车区域，3d 显示的便也是这个侧方停车区域。就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG285.png" alt=""><br>多个流动站可以连接到一个基站，进行高精度定位。</p>
+<h2 id="地图偏移"><a href="#地图偏移" class="headerlink" title="地图偏移"></a>地图偏移</h2><p>基于上述技术实现的产品需求，会伴随着一个问题：<strong>当基站架设的实际物理位置变动了，或者原点变化了，都会导致地图发生偏移，即车子在 3D 模型中的位置与实际位置不一致</strong>。</p>
+<p>而这在实际场景中是十分有可能发生的：</p>
+<ol>
+<li>实际位置变动可能是因为驾校改装，或者基站周围环境发生变化，必须迁移位置。</li>
+<li>基站配置设置的坐标变化是因为设备断电重启会自己设置一次原点（项目中采用设备硬件厂商的问题）。</li>
+</ol>
+<p>当地图发生偏移了，<strong>需要将与该基站关联的所有地图数据进行偏移操作</strong>。偏移操作的理论很简单：<strong>将同一个实际的物理位置，连接新基站采点，计算差量，做数据偏移</strong>。<br>举个例子：选定一个实际的物理位置（一般选倒库的点，好找一点），在地图中的坐标假设是 (100,100)。再连接新基站（基站移动或者坐标变化，需要重新设置，便不再是之前的那个基站了）之后在这个位置上采集到一个坐标假设是 (99,101)，根据这两个坐标计算的差量是 (-1,1)，然后将所有地图坐标根据这个差量运算一次，保存新的坐标即可。<br>理论虽然简单，但实际操作会有一定风险：</p>
+<ol>
+<li>需要人为定位实际的物理位置，多多少少会有偏差。</li>
+<li>有地域局限性。比如广西的基站发生偏移了，那么一定得去广西连接这个基站的某个驾校进行定位，重新采集新的坐标。</li>
+<li>迁移操作不可逆，如果发现没迁移对，得重新迁移，就会导致坐标不停的变化，可能带来一些其他的问题。</li>
+<li>如果这个基站关联的地图很多，那么就需要操作更多的数据，工作量更大且不可控。</li>
+</ol>
+<p>也是因为这些原因，项目中已经废弃这个方案了。</p>
+<h2 id="云基站"><a href="#云基站" class="headerlink" title="云基站"></a>云基站</h2><p>既然基站移动会到导致上述问题，那是不是可以 <strong>选取一个基站，这个基站永远不会变更位置，且不会因为断电重启的原因导致设置坐标变化</strong> 呢？应该是可以的，比如在某个大楼的楼顶，只要楼不塌，位置肯定不会变，正常情况下也能保证不会断电重启。<br>好，现在将这个基站架设好了，代号为 A。<br>现在来了一个实施需求，需要在某某驾校架设基站 B。组建云基站的操作也很简单：<strong>先将 B 基站架设好，同时将 B 设置为流动站，连接上 A 基站。B 根据 A 下发的 rtcm 数据解析出一个高精度坐标 X。再将 B 设置成基站模式，同时将这个高精度坐标 X 设置进去，这样 B 基站便云化了</strong>。<br>假设后面 B 需要移动位置重新架设，那么就只需要把这个操作重新执行一遍就可以了，不需要偏移已经采集好的地图数据。<br>因为基站本身就只能辐射几十公里的范围，云基站也是一样的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG287.png" alt=""><br>处于云基站系统 A 区域内，就使用云基站系统 A 里的基站，A1、A2、A3 等等，离哪个基站近就连哪个。如果处于云基站系统 B 的区域，就使用云基站系统 B。<br>假设在系统 A 下面采集了，结果又要在系统 B 去使用，就会导致偏移问题。但考虑到实际场景，是地域性特别强的科二考试，不存在这样交叉使用的情况。<br>再经过了许许多多的问题与躺坑后，才有了现在相对“完美”的方案。<strong>技术也是需要持续优化、进步的呀！</strong></p>
 
       
 
@@ -204,7 +216,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>
@@ -260,7 +272,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2017/04/25/mvp-1/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2022/04/21/station/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -274,18 +286,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/05/09/multi-type/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          针对ListView多Type的优化
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/04/19/no-password/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">博客免密提交、部署到Github</div>
+    <a href="/2022/04/12/camera/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Usb 摄像头绑定</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -299,7 +302,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="mvp-1" data-title="关于 MVP 模式的一点思考" data-url="http://lijia92.github.io/2017/04/25/mvp-1/"></div>
+	<div class="ds-thread" data-thread-key="station" data-title="云基站概述" data-url="http://lijia92.github.io/2022/04/21/station/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
