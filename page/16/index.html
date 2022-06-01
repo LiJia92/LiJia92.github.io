@@ -158,6 +158,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jpush" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/05/jpush/">Android接入JPush（极光推送）</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/05/jpush/" class="archive-article-date">
+  	<time datetime="2016-04-05T06:14:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中需要有推送功能，技术负责人最后决定使用<code>极光推送</code>，活被分配给我了，于是我便接了一波，在此小记一下~</p>
+<p>在极光推送的<a href="http://docs.jpush.io/guideline/android_guide/" target="_blank" rel="noopener">官方文档</a>中，已经有了较详细的说明了，这里只做一下简单的摘录。</p>
+<h2 id="三分钟快速Demo"><a href="#三分钟快速Demo" class="headerlink" title="三分钟快速Demo"></a>三分钟快速Demo</h2><p>在极光推送的官方文档中，有<code>三分钟快速Demo</code>，我也是从demo入手。</p>
+<h3 id="创建开发者账号"><a href="#创建开发者账号" class="headerlink" title="创建开发者账号"></a>创建开发者账号</h3><p>接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个<code>开发者账号</code>。<br>要创建极光推送开发者帐号，请访问<a href="http://jpush.cn" target="_blank" rel="noopener">极光推送官方网站</a>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush1.png" alt=""></p>
+        
+          <a class="article-more-a" href="/2016/04/05/jpush/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-video-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -781,71 +844,6 @@
 
 
   
-    <article id="post-photo-wall" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/17/photo-wall/">Android实现照片墙背景</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/17/photo-wall/" class="archive-article-date">
-  	<time datetime="2016-02-17T09:34:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发中，有一个这样的需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/photo-wall1.png" alt="这里写图片描述"><br>在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。</p>
-<hr>
-<h2 id="第一种方案"><a href="#第一种方案" class="headerlink" title="第一种方案"></a>第一种方案</h2><p>起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。</p>
-<p>显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。</p>
-<h2 id="第二种方案"><a href="#第二种方案" class="headerlink" title="第二种方案"></a>第二种方案</h2><p>之后，我想到了GridView，显然也是可以的，在得到图片路径后传入到Adapter中即可。比起方案一稍微“优雅”些，但是也是很难将这个背景墙当成一个整体，进行将来可能会添加的动画特效需求。</p>
-<h2 id="第三种方案"><a href="#第三种方案" class="headerlink" title="第三种方案"></a>第三种方案</h2><p>最后，我想到，既然要当成一整个整体，那么自定义View或许是个不错的办法。</p>
-        
-          <a class="article-more-a" href="/2016/02/17/photo-wall/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/15/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/17/">Next &raquo;</a>
@@ -939,19 +937,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -971,7 +969,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -979,7 +977,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -987,11 +985,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
