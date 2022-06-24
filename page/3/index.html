@@ -158,6 +158,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-robot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/03/24/robot/">语音机器人交互实现</a>
+    </h1>
+  
+
+        
+        <a href="/2021/03/24/robot/" class="archive-article-date">
+  	<time datetime="2021-03-24T07:18:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>嗯，先看需求：</p>
+<video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%8A%A8%E7%94%BB_aDTaP8af6m.mp4" width="460" height="260" controls="controls"><br>Your browser does not support the video tag.<br></video>
+
+<p>整体需求是：监听麦克风，等待语音唤醒。唤醒成功后，展示弹窗，然后变成“我在听”的状态。当识别到用户说出的内容时，从服务器获取结果，并展示。整体包含了很多的动画效果，实现与之前写的 <a href="http://lastwarmth.win/2019/02/02/animation/" target="_blank" rel="noopener">Android 动画序列的实现</a> 类似，但还是写篇博客记录一下吧。</p>
+        
+          <a class="article-more-a" href="/2021/03/24/robot/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-outing" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -710,70 +773,6 @@
 
 
   
-    <article id="post-viewbinding" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/21/viewbinding/">viewBinding 使用小结</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/21/viewbinding/" class="archive-article-date">
-  	<time datetime="2020-07-21T08:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>通过视图绑定功能，您可以更轻松地编写可与视图交互的代码。在模块中启用视图绑定之后，系统会为该模块中的每个 XML 布局文件生成一个绑定类。绑定类的实例包含对在相应布局中具有 ID 的所有视图的直接引用。<br>在大多数情况下，视图绑定会替代 findViewById。</p>
-</blockquote>
-<h2 id="启用"><a href="#启用" class="headerlink" title="启用"></a>启用</h2><p>只能在 Android Studio 3.6 Canary 11 及更高版本中使用。<br><figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">android</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    viewBinding &#123;</span><br><span class="line">        <span class="literal">enabled</span> = <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>启用后，会根据 xml 名称生成一个驼峰命名，结尾带上 Binding 的绑定类。例如：result_profile.xml，会生成 ResultProfileBinding 的绑定类，这个绑定类 getRoot 方法返回根布局，xml 中所有有 id 的 View 也能通过此类直接获取。相比于 kotlin-android-extensions，它<strong>不会空指针，并且 id 唯一</strong>。kotlin-android-extensions 直接获取对应 id 的 view 有可能导致空指针。另一点，如果我们很多 xml 里的 id 有一样的命名，会很难区分。且如果一个页面引用了 2 个 xml，这 2 个 xml 里是不能使用同样的 id 的，编译器会不知道要去找哪个 id 从而报错，而使用 viewBinding 这些便都解决了。</p>
-        
-          <a class="article-more-a" href="/2020/07/21/viewbinding/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -899,7 +898,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -907,7 +906,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -915,11 +914,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
