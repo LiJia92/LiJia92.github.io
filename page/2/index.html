@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-30" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/30/30/">写在 30 岁的第一天</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/30/30/" class="archive-article-date">
+  	<time datetime="2021-11-30T07:39:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>按照阳历日子，今天是我踏入「30 岁」的第一天，以后对外介绍自己的年龄时，得是“三十多岁”了。感谢老妈、老婆昨天给我过的生日。<br>时间怎么就过得这么快呢。想起当时大学时期，20 出头的年纪，天天和室友调侃着“奔三”了。读书，工作，结婚，一路走过来，感觉也就一瞬间的事儿。很多事情，也在这一瞬间就变了。<br>
+        
+          <a class="article-more-a" href="/2021/11/30/30/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-people" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -715,66 +775,6 @@
 
 
   
-    <article id="post-unique-id" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/09/unique-id/">一个关于“唯一 ID”的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/09/unique-id/" class="archive-article-date">
-  	<time datetime="2021-04-09T08:03:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一般涉及到硬件出厂的，都会有一个唯一 ID 来标记这个硬件，最近项目也涉及到了这块。硬件的同事会通过串口，给我们一串字节（12 个 byte），他们可以保证这 12 个 byte 的序列是唯一的，所以在 App 层面，我们使用这串字节，转成相应的十六进制的字符串，作为业务层的唯一 ID。转换代码如下：<br><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder builder = new StringBuilder()<span class="comment">;</span></span><br><span class="line">for (<span class="name">int</span> i = <span class="number">0</span><span class="comment">; i &lt; 12; i++) &#123;</span></span><br><span class="line">    int a = data.readUnsignedByte()<span class="comment">;</span></span><br><span class="line">    builder.append(<span class="name">Integer</span>.toHexString(<span class="name">a</span>))<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">sn = builder.toString()<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2021/04/09/unique-id/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -900,7 +900,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,7 +908,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -916,11 +916,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
