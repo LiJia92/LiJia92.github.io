@@ -174,6 +174,32 @@ private fun exitCountDown() {
 }
 ```
 看起来可太简单了，整个流程就在这一个方法里。如果不用 Flow，大概率就是 handler.postDelay，或者 Timer 了，逻辑就会分散在各处，不方便查看。香，真香！
+另外这里需要注意一下，假设可以中断这个倒计时，那么就会将这个 launch 返回的 job 保存起来，然后调用 job.cancel()，这个时候也会执行 onCompletion 方法。即调用了 job.cancel()，却仍然执行了 exit() 方法，这是不符合预期的。所以需要修改一下代码，就像这样：
+```
+private fun exitCountDown() {
+    lifecycleScope.launch {
+        flow {
+            for (i in 5 downTo 1) {
+                emit(i)
+                delay(1000)
+            }
+        }.onStart {
+            viewBinding.countDownCl.visibility = View.VISIBLE
+            viewBinding.appVersionTv.text = "Version${SystemUtils.getVersionName()}"
+        }.onCompletion { cause ->
+            if (cause == null) {
+                exit()
+            }
+        }.collect {
+            viewBinding.countDownTv.text = it.toString()
+        }
+    }
+}
+```
+当没有调用 cancel 时，cause 会是 null，代表正常结束。如果调用了 cancel，cause 则会是个 JobCancellationException。
+```
+onCompletion:kotlinx.coroutines.JobCancellationException: StandaloneCoroutine was cancelled; job=StandaloneCoroutine{Cancelling}@db2855a
+```
 嗯，然后又做了一个网络监听的需求，封装了一个类：
 ```
 object GlobalNetWorkMonitor {
@@ -258,4 +284,3 @@ private val connect = callbackFlow {
 [[正确]的使用Kotlin Flow进行搜索优化](https://juejin.cn/post/6925304772383735822)
 [Android 上的 Kotlin 数据流](https://developer.android.com/kotlin/flow)
 [ClosedSendChannelException for callbackFlow](https://github.com/Kotlin/kotlinx.coroutines/issues/1770)
-
