@@ -158,6 +158,75 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-live" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/19/live/">【Android音视频开发】- 直播</a>
+    </h1>
+  
+
+        
+        <a href="/2016/10/19/live/" class="archive-article-date">
+  	<time datetime="2016-10-19T10:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个<code>【Android音视频开发】</code>系列，此文便是开篇了！<br>PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可能根本就不适用，我通过实例验证，做下此总结。最近一直在看这一块的东西，今天抽空，趁着记忆的知识还比较新鲜记下来，好记性不如烂笔头，也希望能帮助到其他的人。</p>
+<h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><p>从技术层面上来，直播大致分为：音视频采集、美颜/滤镜/特效处理、编码、封包、推流、分发、解码/渲染/播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
+<ol>
+<li>视频实时采集：Camera预览/MediaRecorder绑定LocalSocket</li>
+<li>音频实时采集：MediaRecorder/AudioRecord/OpenSL ES</li>
+<li>特效处理：视频磨皮美颜，音频降噪去回声等算法</li>
+<li>编解码：H264&amp;AAC，MediaCodec(API &gt;= 16)硬解，ffmpeg等三方库软解</li>
+<li>流媒体传输：rtmp rtsp hls等</li>
+<li>渲染播放：MediaPlayer，ijkplayer等三方库</li>
+</ol>
+        
+          <a class="article-more-a" href="/2016/10/19/live/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-system-ui" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -711,69 +780,6 @@
 
 
   
-    <article id="post-about-screen" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/01/about-screen/">Android屏幕横竖屏切换小记</a>
-    </h1>
-  
-
-        
-        <a href="/2016/07/01/about-screen/" class="archive-article-date">
-  	<time datetime="2016-07-01T09:22:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最后做的项目中，有用到横竖屏切换，碰到个小坑，在这里记录一下。</p>
-<p>背景：用户在进入直播页面（姑且称之为RoomActivity），进入页面的时候会传入横竖屏的参数，在RoomActivity中拿到参数通过<code>setRequestedOrientation</code>来进行设置横竖屏。</p>
-<p>众所周知，android在横竖屏切换的时候，会销毁当前的页面，然后重建，导致的便是activity的生命周期会执行2次，那么写在其中的方法也会执行2次。在onStart()中我写了进入直播间的方法(enterRoom())，在onStop()中写了离开直播间的方法(exitRoom())，那么在切换屏幕的时候，会调用2次enterRoom，1次exitRoom，因为都是网络请求，不能保证后请求的一定后完成，那么就有可能导致2次enterRoom执行完成之后，exitRoom才执行完成，即用户发了2次进入直播间的请求，1次离开直播间的请求，离开的请求是最后完成，导致的最终结果便是用户不在直播间了，但他依然能看到画面，只不过看不到弹幕相关的一些东西了。</p>
-<p>这显然是个问题，需要解决。</p>
-        
-          <a class="article-more-a" href="/2016/07/01/about-screen/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
@@ -867,19 +873,19 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -903,11 +909,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
