@@ -158,6 +158,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-practical-cmd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/28/practical-cmd/">常用代码和指令小结</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/28/practical-cmd/" class="archive-article-date">
+  	<time datetime="2018-05-28T09:23:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这篇文章主要总结一下日常开发中常用的一些代码和指令。</p>
+<h2 id="ADB-指令"><a href="#ADB-指令" class="headerlink" title="ADB 指令"></a>ADB 指令</h2><h3 id="设置调试-App"><a href="#设置调试-App" class="headerlink" title="设置调试 App"></a>设置调试 App</h3><p>有些时候需要在应用启动的时候直接调试，如果设好断点然后<code>Debug App</code>重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。<br><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">adb </span><span class="string">shell </span><span class="string">am </span><span class="built_in">set-debug-app</span> -w <span class="string">com.</span><span class="string">example.</span><span class="string">appdebugsample</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="开启-GPU-过度绘制"><a href="#开启-GPU-过度绘制" class="headerlink" title="开启 GPU 过度绘制"></a>开启 GPU 过度绘制</h3><p>GPU 过度绘制的作用就不用多说了，直接指令开启，方便快捷。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span><span class="bash"> setprop debug.hwui.overdraw show</span></span><br><span class="line"><span class="bash">adb shell setprop debug.hwui.overdraw <span class="literal">false</span></span></span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2018/05/28/practical-cmd/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-uml" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -707,70 +769,6 @@
 
 
   
-    <article id="post-talk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/11/talk/">Kotlin 结合 RxJava 使用杂谈</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/11/talk/" class="archive-article-date">
-  	<time datetime="2018-01-11T09:01:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信现在越来越多的开发者都在使用 RxJava 和 Kotlin，当二者相遇，写出来的代码堪称优雅！</p>
-<blockquote>
-<p>我对 Kotlin 的并没有很特别的感觉，它就类似于 Swift 相比于 OC，大量的语法糖着实能使写代码的效率变高，但是是否能左右 Android 开发的现状还未可知。</p>
-</blockquote>
-<p>我之前写过这样一段话，在使用 Kotlin 的这段时间里，我对它的看法慢慢改变了。尤其引入 RxJava 后，结合 Lambda 表达式，写起代码简直像要飞起来！</p>
-        
-          <a class="article-more-a" href="/2018/01/11/talk/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
@@ -868,15 +866,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -896,7 +894,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,11 +906,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -921,6 +915,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

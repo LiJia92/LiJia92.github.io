@@ -158,6 +158,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/07/git/">关于 Git 的使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/07/git/" class="archive-article-date">
+  	<time datetime="2017-06-07T12:04:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。</p>
+<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
+        
+          <a class="article-more-a" href="/2017/06/07/git/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -716,69 +777,6 @@
 
 
   
-    <article id="post-summary" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/09/summary/">我的2016</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/09/summary/" class="archive-article-date">
-  	<time datetime="2017-01-09T05:55:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>对，已经是1月9号了，早在8天前2016年便成为了过去，总觉得必须要写点什么。恰逢今天来了兴致，便随便叨叨几句。</p>
-<p>在新的一年里，我们总会兴冲冲的立下我们的小目标（先挣它一个亿~），但是一年里，有多少是你付出的呢？这个世界从来就不存在免费的午餐。</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/14A1F38B0-EBB5-4054-A254-4741691C74D1.png" alt=""></p>
-<p>注意看图中的时间。是的，2015年！2015年立下的几个小目标在2016年过完却是一个都没有实现，这可真是个悲伤的故事。但是我们仍然要相信，美好的事情总会发生。</p>
-        
-          <a class="article-more-a" href="/2017/01/09/summary/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
@@ -876,15 +874,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -904,7 +902,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -916,11 +914,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -929,6 +923,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

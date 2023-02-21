@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-screen-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/18/screen-record/">录制仿 Keep 轨迹动画视频</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/18/screen-record/" class="archive-article-date">
+  	<time datetime="2018-10-18T09:01:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近 Keep 更新了一个轨迹动画的分享，可以生成一个看起来高大上的视频。项目产品也提出了一样的需求，便参照着实现了一波。效果如下（虚拟机跑动画就已经很卡了，然后还要录 gif 就更卡了，凑合看~）：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/trackAnimation.gif" alt=""></p>
+        
+          <a class="article-more-a" href="/2018/10/18/screen-record/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-start-for-result" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -703,68 +763,6 @@
 
 
   
-    <article id="post-practical-cmd" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/28/practical-cmd/">常用代码和指令小结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/28/practical-cmd/" class="archive-article-date">
-  	<time datetime="2018-05-28T09:23:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这篇文章主要总结一下日常开发中常用的一些代码和指令。</p>
-<h2 id="ADB-指令"><a href="#ADB-指令" class="headerlink" title="ADB 指令"></a>ADB 指令</h2><h3 id="设置调试-App"><a href="#设置调试-App" class="headerlink" title="设置调试 App"></a>设置调试 App</h3><p>有些时候需要在应用启动的时候直接调试，如果设好断点然后<code>Debug App</code>重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。<br><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">adb </span><span class="string">shell </span><span class="string">am </span><span class="built_in">set-debug-app</span> -w <span class="string">com.</span><span class="string">example.</span><span class="string">appdebugsample</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="开启-GPU-过度绘制"><a href="#开启-GPU-过度绘制" class="headerlink" title="开启 GPU 过度绘制"></a>开启 GPU 过度绘制</h3><p>GPU 过度绘制的作用就不用多说了，直接指令开启，方便快捷。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span><span class="bash"> setprop debug.hwui.overdraw show</span></span><br><span class="line"><span class="bash">adb shell setprop debug.hwui.overdraw <span class="literal">false</span></span></span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2018/05/28/practical-cmd/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -862,15 +860,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -890,7 +888,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -902,11 +900,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -915,6 +909,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
