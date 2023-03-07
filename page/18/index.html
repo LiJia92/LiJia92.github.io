@@ -158,6 +158,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-react-native-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/19/react-native-tips/">React Native For Android初探-问题小结</a>
+    </h1>
+  
+
+        
+        <a href="/2016/01/19/react-native-tips/" class="archive-article-date">
+  	<time datetime="2016-01-19T03:38:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="http://lijia92.github.io/2016/01/15/react-native/">上一篇文章</a>中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。</p>
+<h2 id="真机运行白屏"><a href="#真机运行白屏" class="headerlink" title="真机运行白屏"></a>真机运行白屏</h2><p>在执行<code>react-native run-android</code>指令编译安装apk到真机之后，运行程序，发现程序白屏，感觉像ANR一样。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips1.png" alt="这里写图片描述"><br>解决方法：手机设置中打开应用管理，选择我们安装的应用。然后点击权限管理，将显示悬浮框设置为允许。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/react-native-tips2.png" alt="这里写图片描述"><br>白屏问题便能解决了。</p>
+        
+          <a class="article-more-a" href="/2016/01/19/react-native-tips/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-react-native" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -746,69 +807,6 @@
 
 
   
-    <article id="post-reflect-interface" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/28/reflect-interface/">Java反射实现接口</a>
-    </h1>
-  
-
-        
-        <a href="/2015/10/28/reflect-interface/" class="archive-article-date">
-  	<time datetime="2015-10-28T04:00:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-10-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前做过一个插件，综合了移动MM，移动和游戏，沃商店等一些计费SDK。将这些计费SDK提供的接口全部整合，最后由插件提供一套接口。通过后台配置，来让游戏使用某种计费SDK。游戏开发商接入计费的时候，只需要调用插件提供的一套接口即可。因为不可能保证游戏会包含所有的计费SDK的代码，所以插件内部只能利用反射来实现。通过反射来获取类，获取方法进行调用是比较简单的。</p>
-<p>但是有个问题困扰了我很久：计费SDK都有提供回调接口，使游戏开发商在计费成功或失败进行回调，那么如何通过反射来实现这些回调接口，进行调用呢？通过一段时间的摸索，知道了一种解决方法：使用<code>Proxy</code>类与<code>InvocationHandler</code>接口。</p>
-<hr>
-<p>下面通过一个例子进行讲解。</p>
-        
-          <a class="article-more-a" href="/2015/10/28/reflect-interface/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/17/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/19/">Next &raquo;</a>
@@ -902,11 +900,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -934,10 +932,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
@@ -946,7 +940,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -955,10 +957,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">

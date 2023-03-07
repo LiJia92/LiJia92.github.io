@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-screen-record-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/03/07/screen-record-2/">录屏权限 clone 使用</a>
+    </h1>
+  
+
+        
+        <a href="/2023/03/07/screen-record-2/" class="archive-article-date">
+  	<time datetime="2023-03-07T07:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="http://lastwarmth.win/2023/02/28/screen-record-1/" target="_blank" rel="noopener">关于录屏权限的问题</a>一文中，通过与 Launcher 的结合，实现了权限无感自动申请的功能。这没过几天，就有反馈说有问题：<strong>开始录屏的时候会有权限申请弹窗一闪而过</strong>。<br>最初怀疑是平板性能差，会打开一个 activity，然后马上消失，由于性能问题导致这样的“一闪而过”。但研究下来发现这个怀疑不成立。通过调试知道了<code>MediaProjectionManager.createScreenCaptureIntent()</code>返回的 intent 对应的 activity 是 MediaProjectionPermissionActivity。于是查看其代码，在 onCreate 方法中有这样的片段：</p>
+        
+          <a class="article-more-a" href="/2023/03/07/screen-record-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-screen-record-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -700,66 +760,6 @@
 
 
   
-    <article id="post-camera" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/12/camera/">Usb 摄像头绑定</a>
-    </h1>
-  
-
-        
-        <a href="/2022/04/12/camera/" class="archive-article-date">
-  	<time datetime="2022-04-12T08:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在之前的文章中，写了一个 CameraIntent 的类，代表用到摄像头的业务。App 允许连接多个 Usb 摄像头，然后将业务绑定到一个确定的 Usb 端口。如果这个端口插入了摄像头，则可以直接使用摄像头产生的数据进行业务处理，如果没插入摄像头，则相应的业务不做处理或中断。<br>通过 UsbManager.ACTION_USB_DEVICE_ATTACHED、UsbManager.ACTION_USB_DEVICE_DETACHED 广播可以知道 Usb 设备插入、拔出的时机。通过 intent 获取到的是一个 UsbDevice 对象。如何通过这样的一个 UsbDevice 确定物理实际的 Usb 端口呢？</p>
-        
-          <a class="article-more-a" href="/2022/04/12/camera/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -853,11 +853,11 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,10 +885,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
@@ -897,7 +893,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -906,10 +910,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
              
               <li class="article-tag-list-item">
