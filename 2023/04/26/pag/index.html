@@ -17,7 +17,7 @@
 <meta property="og:description" content="基于公司发展，App 需要配合不定期的进行一次大版本更新。改动主要是启屏页的产品宣传，以及应用主页的 UI 效果。说白了，动画越来越花哨，让人感觉起来更加“高大上”。已经经历过启屏的好几个版本更新了，每次更新都需要配合实现一大堆的动画效果，以及与设计师沟通切图细节等等，十分花费精力。这不，近期又来了一个启屏升级的需求，设计效果感觉都快和游戏差不多了，纯安卓也能做，但是很多光效、粒子等效果，最快的实">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG564.jpeg">
-<meta property="og:updated_time" content="2023-04-26T08:39:51.399Z">
+<meta property="og:updated_time" content="2023-04-26T08:52:45.452Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PAG 之初体验">
 <meta name="twitter:description" content="基于公司发展，App 需要配合不定期的进行一次大版本更新。改动主要是启屏页的产品宣传，以及应用主页的 UI 效果。说白了，动画越来越花哨，让人感觉起来更加“高大上”。已经经历过启屏的好几个版本更新了，每次更新都需要配合实现一大堆的动画效果，以及与设计师沟通切图细节等等，十分花费精力。这不，近期又来了一个启屏升级的需求，设计效果感觉都快和游戏差不多了，纯安卓也能做，但是很多光效、粒子等效果，最快的实">
@@ -199,7 +199,8 @@
 <p>测试下来，感受不到“卡顿”了。虽然动画从最后一帧，一下子切到一半进度的那一帧，有些许不连贯，但是已经达到期望效果了。</p>
 <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>不论使用一个 PAG 还是两个 PAG 方案时，都发现一个问题：前八秒的动画执行到某一刻，总会很明显的卡一下。前面八秒的动画设计到品牌宣传，必须得优化好。通过 addPAGFlushListener，发现有时候刷新间隔竟然超过了 200ms。于是将当前进度也打出来，发现总是固定的 0.21 左右的进度时，flush 间隔会比较久，导致感受到卡顿。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">binding.pagView.addPAGFlushListener(<span class="keyword">object</span> : PAGView.PAGFlushListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFlush</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (flushTime == <span class="number">0</span>L) &#123;</span><br><span class="line">            flushTime = System.currentTimeMillis()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">val</span> current = System.currentTimeMillis()</span><br><span class="line">            <span class="keyword">val</span> tmp = current - flushTime</span><br><span class="line">            <span class="keyword">if</span> (tmp &gt; <span class="number">100</span>) &#123;</span><br><span class="line">                Log.e(<span class="string">"PAG"</span>, <span class="string">"progress:"</span> + binding.pagView.progress + <span class="string">"，duration:"</span> + tmp)</span><br><span class="line">            &#125;</span><br><span class="line">            flushTime = current</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>观察 PAG 动画，大概就是 0.2 进度时，会展示全屏的背景动画。怀疑是全屏尺寸(1920*1080)太大，导致内存一下子上涨，从而引起卡顿。那能不能提前将这一帧缓冲好，等缓冲好了再从头开始播放动画呢？当然是可以的。只是设置缓冲进度时，View 必须可见，那么就必须搞个黑色背景盖在上面了。当缓冲完事开始播放动画时，再将这个黑色背景移除掉。最终代码如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> pagFile = PAGFile.Load(activity.assets, <span class="string">"splash.pag"</span>)</span><br><span class="line">binding.pagView.composition = pagFile</span><br><span class="line">binding.pagView.progress = <span class="number">0.21</span></span><br><span class="line">binding.pagView.addPAGFlushListener(<span class="keyword">object</span> : PAGView.PAGFlushListener &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFlush</span><span class="params">()</span></span> &#123;</span><br><span class="line">        binding.pagView.removePAGFlushListener(<span class="keyword">this</span>)</span><br><span class="line">        binding.pagView.addPAGFlushListener(<span class="keyword">object</span> : PAGView.PAGFlushListener &#123;</span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onFlush</span><span class="params">()</span></span> &#123;</span><br><span class="line">                binding.maskView.visibility = View.GONE</span><br><span class="line">                binding.pagView.removePAGFlushListener(<span class="keyword">this</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        binding.pagView.progress = <span class="number">0.0</span></span><br><span class="line">        binding.pagView.addListener(<span class="keyword">object</span> : SimplePAGViewListener() &#123;</span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onAnimationRepeat</span><span class="params">(p0: <span class="type">PAGView</span>?)</span></span> &#123;</span><br><span class="line">                binding.pagView.progress = <span class="number">0.5</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        binding.pagView.setRepeatCount(<span class="number">0</span>)</span><br><span class="line">        binding.pagView.play()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>测试下来效果还不错，产品、设计、研发都比较满意，几天的辛苦没有白费~<br>另外有个点需要注意下，PAG 文件是有分辨率的，当 View 宽高和这个分辨率不一致时，可能会有黑边。项目设备分辨率是固定的 1920*1080，但是当导航栏出现时，会占用一定的高度，导致左右有黑边。于是给启屏页设置了这样的 flag：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window<span class="selector-class">.decorView</span><span class="selector-class">.apply</span> &#123;</span><br><span class="line">    systemUiVisibility = View<span class="selector-class">.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span> or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试下来效果还不错，产品、设计、研发都比较满意，几天的辛苦没有白费。附上一个测试视频：</p>
+<p><video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/demo.mp4" width="640" height="400" controls="controls"><br>Your browser does not support the video tag.<br></video><br>另外有个点需要注意下，PAG 文件是有分辨率的，当 View 宽高和这个分辨率不一致时，可能会有黑边。项目设备分辨率是固定的 1920*1080，但是当导航栏出现时，会占用一定的高度，导致左右有黑边。于是给启屏页设置了这样的 flag：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window<span class="selector-class">.decorView</span><span class="selector-class">.apply</span> &#123;</span><br><span class="line">    systemUiVisibility = View<span class="selector-class">.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span> or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样的话导航栏将盖在 activity 之上，不会影响 activity 的宽高了。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过 PAG 方案实现了新的启屏效果，后续若有类似的版本升级，只需要设计师设计新的 PAG 文件即可，达到了一劳永逸的效果。当然也可以直接使用视频实现，但是视频占用空间会更大，也没有 PAG 这样代码控制灵活。这是第一次使用 PAG，在研究的过程中，越来越佩服这样的技术了，极大的改善了动画交付效果。<br>保持 open，虚心学习吧！</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
@@ -416,15 +417,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,7 +449,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -456,7 +457,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
