@@ -133,7 +133,10 @@ binding.pagView.addPAGFlushListener(object : PAGView.PAGFlushListener {
     }
 })
 ```
-测试下来效果还不错，产品、设计、研发都比较满意，几天的辛苦没有白费~
+测试下来效果还不错，产品、设计、研发都比较满意，几天的辛苦没有白费。附上一个测试视频：
+<video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/demo.mp4" width="640" height="400" controls="controls">
+Your browser does not support the video tag.
+</video>
 另外有个点需要注意下，PAG 文件是有分辨率的，当 View 宽高和这个分辨率不一致时，可能会有黑边。项目设备分辨率是固定的 1920*1080，但是当导航栏出现时，会占用一定的高度，导致左右有黑边。于是给启屏页设置了这样的 flag：
 ```
 window.decorView.apply {
