@@ -158,6 +158,56 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/29/tips/">问题集锦</a>
+    </h1>
+  
+
+        
+        <a href="/2019/11/29/tips/" class="archive-article-date">
+  	<time datetime="2019-11-29T10:18:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。</p>
+<h2 id="文件校验"><a href="#文件校验" class="headerlink" title="文件校验"></a>文件校验</h2><p>应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？<br>最后定位问题：<strong>同事拿到数据库文件，为了确定版本是对的，打开 db 文件看了一眼，然后 SQLite 就会自动写入一些东西，导致 md5 值改变。</strong> 涨点姿势，以后应当注意。</p>
+        
+          <a class="article-more-a" href="/2019/11/29/tips/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-october" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -715,66 +765,6 @@
 
 
   
-    <article id="post-cat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/cat/">养猫一个星期后</a>
-    </h1>
-  
-
-        
-        <a href="/2019/06/28/cat/" class="archive-article-date">
-  	<time datetime="2019-06-28T08:40:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>我有一个梦想：养一只二哈，或者柴犬、金毛也可以，哈哈。<br>但是狗的话，天性好动，需要每天带出去溜溜（或许是狗溜我）。我现在一个人住，普遍情况下家里是没人的，养一只狗确实没太多的时间和精力。退而求其次，养只猫或许可行？猫的话，比较爱干净，也能一整天待在家里不需要你带出去溜，只要我在家的时间能陪陪他便好了。也做了很久的思想斗争，养不好怎么办，这不是耽误猫生吗？最后还是开悟了，人生不就是这样吗？要多多体验没经历过的事情，之前没养过猫，现在养一只，也是一种经历，会养慢慢学习总能变好的。<br>早些日子就找过一家猫舍看过猫，也加了微信，总能在朋友圈看到各种各样的小猫咪，内心总是蠢蠢欲动。心动不如行动，就在上周日，我去猫舍买了一只美短虎斑，很调皮的一个小家伙，我给他取名「土豆」。</p>
-        
-          <a class="article-more-a" href="/2019/06/28/cat/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">cat</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -880,11 +870,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -900,19 +890,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color3">直播</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
