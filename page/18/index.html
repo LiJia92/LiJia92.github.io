@@ -158,6 +158,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gradle-pack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/09/gradle-pack/">Android Studio 使用 Gradle 进行多渠道打包</a>
+    </h1>
+  
+
+        
+        <a href="/2016/03/09/gradle-pack/" class="archive-article-date">
+  	<time datetime="2016-03-09T06:39:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用Android Studio也有一段时间了，最近项目开发完成，内部测试也已经通过。下一步就是渠道打包，然后上线了。</p>
+<p>在出渠道包的时候，若是出一个包，便手动修改一次渠道号，很显然是很费时费力的。庆幸的是，Android Studio采用的Gradle可以很方便的实现我们的多渠道出包。</p>
+<p>下面结合代码进行说明。</p>
+<p>项目中使用的是友盟，在AndroidManifest.xml中有这样的代码：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data android:<span class="attribute">name</span>=<span class="string">"UMENG_CHANNEL"</span> android:<span class="attribute">value</span>=<span class="string">"<span class="variable">$&#123;UMENG_CHANNEL_VALUE&#125;</span>"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>其中${UMENG_CHANNEL_VALUE}中的值就是在gradle中自定义配置的值。</p>
+        
+          <a class="article-more-a" href="/2016/03/09/gradle-pack/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-change-title" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -741,67 +805,6 @@
 
 
   
-    <article id="post-picture-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/08/picture-view/">Android仿QQ空间浏览图片</a>
-    </h1>
-  
-
-        
-        <a href="/2015/12/08/picture-view/" class="archive-article-date">
-  	<time datetime="2015-12-08T09:09:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2015-12-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近的项目中需要用到类似QQ空间那样的图片浏览功能，于是Google了一波，发现使用ViewPager与PhotoView即可实现。有了思路便开撸了。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>首先，我们定义一个用于展示原图的Activity。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ImageBrowseActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ViewPager对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">ViewPager</span> mViewPager;</span><br><span class="line">    <span class="comment">// 原图url路径List</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">List</span>&lt;<span class="type">String</span>&gt; imagePath;</span><br><span class="line">    <span class="comment">// 当前显示的位置</span></span><br><span class="line">    <span class="keyword">private</span> int position;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.activity_images_view);</span><br><span class="line">        <span class="comment">// 获取参数</span></span><br><span class="line">        <span class="keyword">this</span>.position = getIntent().getIntExtra(<span class="string">"position"</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">this</span>.imagePath = getIntent().getStringArrayListExtra(<span class="string">"imagePath"</span>);</span><br><span class="line">        mViewPager = (<span class="type">ViewPager</span>) findViewById(<span class="type">R</span>.id.images_view);</span><br><span class="line">        <span class="comment">// 设置左右两列缓存的数目</span></span><br><span class="line">        mViewPager.setOffscreenPageLimit(<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 添加Adapter</span></span><br><span class="line">        <span class="type">PagerAdapter</span> adapter = <span class="keyword">new</span> <span class="type">ImageBrowseAdapter</span>(<span class="keyword">this</span>, imagePath);</span><br><span class="line">        mViewPager.setAdapter(adapter);</span><br><span class="line">        mViewPager.setCurrentItem(position);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2015/12/08/picture-view/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/17/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/19/">Next &raquo;</a>
@@ -899,15 +902,15 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">blog</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -927,11 +930,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -947,11 +950,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
               </li>
              
               <li class="article-tag-list-item">
