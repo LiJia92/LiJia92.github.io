@@ -158,6 +158,65 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-wechat-tip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/05/wechat-tip/">记录微信分享的一个坑</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/05/wechat-tip/" class="archive-article-date">
+  	<time datetime="2019-03-05T09:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天碰到一个问题，社区里帖子有的可以分享到微信，有的不行，单独调试获取分享的数据，发现并无不同。生成分享数据的代码如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WXMediaMessage mediaMessage = new WXMediaMessage(programObject);</span><br><span class="line">mediaMessage.title = shareData.getTitle();</span><br><span class="line">mediaMessage.description = shareData.getContent();</span><br><span class="line">mediaMessage.thumbData = Utils.readMiniProgramThumbImageFileData(shareData.getShareImagePath());</span><br><span class="line">//发送请求</span><br><span class="line">SendMessageToWX.Req req = new SendMessageToWX.Re<span class="string">q()</span>;</span><br><span class="line">req.transaction = String.valueOf(listenerId);</span><br><span class="line">req.message = mediaMessage;</span><br><span class="line">// 目前支持会话</span><br><span class="line">req.scene = SendMessageToWX.Req.WXSceneSession;</span><br><span class="line">doSendRe<span class="string">q(req)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>shareData 是客户端单独组织的一个 Model。起初怀疑是 thumbData 太大导致的，结果后面可以分享的帖子生成的 thumbData 所占的字节还要大一些。。。<br>然后试着分享到微博、QQ 等其他平台，发现也可以分享成功，唯独微信分享给朋友或朋友圈不行。偶然的发现一个帖子分享到微博也会失败，而微博客户端给出了“内容不符合规范”类似大意的提示，于是猜测可能是 description 导致。于是分别调试了不同帖子的数据，发现不能分享的帖子生成的 description length 都是 2000+，而可以分享的帖子生成的才 1000+，没有超过 2000，于是预测是 description 超长导致的。最后调试进行截取，超长的则取前 100 个字符，发现问题解决。<br>问题比较简单，但是调试的时候很坑，因为分享失败的帖子竟然连 WxEntryActivity 里的 onResp 都不回调，所以压根无法知道失败的原因，只能对比数据靠猜测，于是便记录一下，以后碰到这类问题便知道如何解决了。<br>总结一下：<strong>微信分享传的 description 参数不能过长（测试 1800 以下是可以分享的），否则会分享失败，而且回调里的 onResp 都不会调用。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-feeling" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -704,66 +763,6 @@
 
 
   
-    <article id="post-start-for-result" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/10/10/start-for-result/">startActivityForResult 的封装使用</a>
-    </h1>
-  
-
-        
-        <a href="/2018/10/10/start-for-result/" class="archive-article-date">
-  	<time datetime="2018-10-10T08:59:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>startActivityForResult 相信大家都用过，调用和返回结果是分散开的，使用起来最好还是封装一下比较好。这里利用一个空的 Fragment 进行封装，代码比较简单。<br>封装的回调类 StartForResultListener：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">StartForResultListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * StartActivityForResult回调，同&#123;@link android.app.Activity#onActivityResult(int, int, Intent)&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onActivityResult</span>(<span class="params"><span class="keyword">int</span> requestCode, <span class="keyword">int</span> resultCode, Intent data</span>)</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2018/10/10/start-for-result/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
@@ -865,11 +864,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -889,15 +888,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">

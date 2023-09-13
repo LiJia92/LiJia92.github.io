@@ -158,6 +158,73 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-seekbar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/27/seekbar/">Android自定义View实现弧形SeekBar</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/27/seekbar/" class="archive-article-date">
+  	<time datetime="2016-04-27T05:53:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目开发中有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar4.png" alt=""><br>通过滑动SeekBar来控制打赏金额，金额设置5个档次。</p>
+<p>看到设计稿的时候，除了自定义View想不到什么更好的方法了。自定义View一直是我的短板，内心总会有点抗拒，总感觉自己做不出来。最近一段时间，也是有意无意的练习自定义View。最后决定还是用自定义View来实现这次的需求。</p>
+<p>根据设计图，我分为3个步骤：</p>
+<ol>
+<li>画弧线。</li>
+<li>画圆球。</li>
+<li>触摸事件的处理，并提供对外接口。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2016/04/27/seekbar/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-android-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -753,85 +820,6 @@
 
 
   
-    <article id="post-hexo-blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/17/hexo-blog/">Windows使用Hexo + Github Pages搭建自己的博客</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/17/hexo-blog/" class="archive-article-date">
-  	<time datetime="2016-03-17T03:30:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本文主要讲述一下Windows环境使用Hexo + Github Pages搭建自己博客的一些主要步骤。</p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>hexo是一个基于Node.js的静态博客程序，可以方便的生成静态网页托管在Github上。</p>
-<blockquote>
-<p>A fast, simple &amp; powerful blog framework</p>
-</blockquote>
-<ol>
-<li>超快的速度：Node.js 所带来的超快生成速度，让上百个页面在几秒内瞬间完成渲染。</li>
-<li>支持 Markdown：Hexo 支持 GitHub Flavored Markdown 的所有功能，甚至可以整合 Octopress 的大多数插件。</li>
-<li>一键部署：只需一条指令即可部署到 GitHub Pages, Heroku 或其他网站。</li>
-<li>丰富的插件：Hexo 拥有强大的插件系统，安装插件可以让 Hexo 支持 Jade, CoffeeScript。</li>
-</ol>
-<h3 id="Github-Pages"><a href="#Github-Pages" class="headerlink" title="Github Pages"></a>Github Pages</h3><p>GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。</p>
-<blockquote>
-<p>Websites for you and your projects.</p>
-</blockquote>
-<ol>
-<li>Github Pages 有300M免费空间，资料自己管理，保存可靠；</li>
-<li>Github作为最大的同性交流社区，已经得到了人们的肯定；</li>
-<li>Github上有很多大牛，学着用 Github ，享受 GitHub 的便利，眼界会开阔很多。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/03/17/hexo-blog/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
@@ -933,11 +921,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -957,15 +945,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
