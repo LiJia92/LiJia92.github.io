@@ -158,6 +158,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/11/08/python/">使用 Python 分析坐标</a>
+    </h1>
+  
+
+        
+        <a href="/2023/11/08/python/" class="archive-article-date">
+  	<time datetime="2023-11-08T06:20:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中会用到坐标系，会有一系列的坐标点，通过这些坐标点的运算才判断某些业务。因为车子位置是移动的，所以这些坐标会不停的变化，通过日志记录下一串坐标如下：</p>
+<blockquote>
+<p>1=Pos{x=-11, y=-1, z=2771}，2=Pos{x=0, y=0, z=2771}，3=Pos{x=84, y=-5, z=54}，4=Pos{x=703, y=-823, z=51}，5=Pos{x=862, y=-801, z=51}，6=Pos{x=72, y=74, z=51}，7=Pos{x=83, y=-84, z=51}，8=Pos{x=-75, y=1063, z=12}，9=Pos{x=70, y=-1084, z=11}，10=Pos{x=-59, y=392, z=51}，11=Pos{x=-122, y=442, z=51}，12=Pos{x=3, y=343, z=51}</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2023/11/08/python/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-daughter-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -706,70 +769,9 @@
 
 
   
-    <article id="post-dialog-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/02/21/dialog-1/">使用 Dialog 的两个问题</a>
-    </h1>
-  
-
-        
-        <a href="/2023/02/21/dialog-1/" class="archive-article-date">
-  	<time datetime="2023-02-21T08:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>近期在使用 Dialog 的过程中，出现过两个问题，也记录一下。</p>
-<h2 id="TextureView"><a href="#TextureView" class="headerlink" title="TextureView"></a>TextureView</h2><p>当 Dialog 布局有 TextureView 时，运行报错：<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java.lang.UnsupportedOperationException: TextureView doesn't support displaying a background drawable</span><br><span class="line">  at android.<span class="keyword">view</span>.TextureView.setBackgroundDrawable(TextureView.java:<span class="number">315</span>)</span><br><span class="line">  at android.<span class="keyword">view</span>.<span class="keyword">View</span>.setBackground(<span class="keyword">View</span>.java:<span class="number">18124</span>)</span><br><span class="line">  at android.<span class="keyword">view</span>.<span class="keyword">View</span>.&lt;init&gt;(<span class="keyword">View</span>.java:<span class="number">4573</span>)</span><br><span class="line">  at android.<span class="keyword">view</span>.<span class="keyword">View</span>.&lt;init&gt;(<span class="keyword">View</span>.java:<span class="number">4082</span>)</span><br><span class="line">  at android.<span class="keyword">view</span>.TextureView.&lt;init&gt;(TextureView.java:<span class="number">159</span>)</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2023/02/21/dialog-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -892,11 +894,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -904,15 +906,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

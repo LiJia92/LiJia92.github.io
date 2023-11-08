@@ -158,6 +158,71 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-device" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/01/device/">在硬件设备上运行应用</a>
+    </h1>
+  
+
+        
+        <a href="/2017/11/01/device/" class="archive-article-date">
+  	<time datetime="2017-11-01T06:39:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png" alt=""></p>
+<p>然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到<a href="https://developer.android.com/studio/run/device.html#setting-up" target="_blank" rel="noopener">官网</a>来解决。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png" alt=""><br>跟到网站中可以看到</p>
+<blockquote>
+<p>如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配置的 udev 规则文件。</p>
+</blockquote>
+<p>这个便是问题所在了，跟着描述进行操作后面便可以使用 USB 调试了。</p>
+        
+          <a class="article-more-a" href="/2017/11/01/device/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-gradle-app-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -710,72 +775,9 @@
 
 
   
-    <article id="post-zsh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/09/zsh/">初识 zsh</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/09/zsh/" class="archive-article-date">
-  	<time datetime="2017-06-09T02:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停<code>git branch</code>来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波<code>zsh</code>了。</p>
-<p>同事有用<code>zsh</code>的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现<code>bash</code>相比<code>zsh</code>确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很熟悉，虽然现在是在用，但是对于 Linux 的很多特性都不是很了解，命令行、Shell 脚本算是 Linux 一大特色。</p>
-<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
-<p>关于<code>oh-my-zsh</code>的安装直接照着 github 中的<code>README</code>一步一步来就好了。就提醒一点，安装完之后需要注销掉用户，重启也可以，然后再重新登录，才可以看到<code>zsh</code>。</p>
-        
-          <a class="article-more-a" href="/2017/06/09/zsh/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/11/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/13/">Next &raquo;</a>
     </nav>
   
 
@@ -898,11 +900,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -910,15 +912,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-media-mix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/23/media-mix/">无声视频合成音频</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/23/media-mix/" class="archive-article-date">
+  	<time datetime="2018-11-23T02:02:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇文章，通过 MediaProjectionManager 结合 MediaRecorder 进行录屏并生成视频文件。新版本需求产品提了个：视频增加背景音乐，音频文件内置在 Apk 中。那么，怎么生成带音频的视频呢？<br>通过调研发现，在用 MediaPlayer 进行录屏时，可以添加音频源，但是基本是使用麦克风录音，无法指定音频文件。代码如下：<br><figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化 MediaRecorder</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="type">RequiresApi</span>(<span class="type">Build</span>.<span class="type">VERSION_CODES</span>.<span class="type">LOLLIPOP</span>)</span><br><span class="line">private <span class="function"><span class="keyword">fun</span> <span class="title">initRecorder</span>() &#123;</span></span><br><span class="line"><span class="function">    <span class="title">mSaveFile</span> = <span class="title">File</span>(<span class="type">DirUtils</span>.getPublicMediaPath(), "$<span class="title">saveName</span>.<span class="title">tmp</span>")</span></span><br><span class="line"><span class="function">    <span class="title">if</span> (mSaveFile!!.exists()) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">mSaveFile</span>!!.<span class="title">delete</span>()</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span> = <span class="title">MediaRecorder</span>()</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoSource</span>(<span class="type">MediaRecorder</span>.<span class="type">VideoSource</span>.<span class="type">SURFACE</span>)</span></span><br><span class="line"><span class="function">    <span class="comment">// 使用麦克风录音</span></span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setAudioSource</span>(<span class="type">MediaRecorder</span>.<span class="type">AudioSource</span>.<span class="type">MIC</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setOutputFormat</span>(<span class="type">MediaRecorder</span>.<span class="type">OutputFormat</span>.<span class="type">MPEG_4</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setOutputFile</span>(mSaveFile!!.absolutePath)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoSize</span>(mVideoWidth, mVideoHeight)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoEncoder</span>(<span class="type">MediaRecorder</span>.<span class="type">VideoEncoder</span>.<span class="type">H264</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoEncodingBitRate</span>(<span class="type">VIDEO_BIT_RATE</span>)</span></span><br><span class="line"><span class="function">    <span class="title">mMediaRecorder</span>?.<span class="title">setVideoFrameRate</span>(<span class="type">VIDEO_FRAME_RATE</span>)</span></span><br><span class="line"><span class="function">    <span class="title">try</span> &#123;</span></span><br><span class="line"><span class="function">        <span class="title">mMediaRecorder</span>?.<span class="title">prepare</span>()</span></span><br><span class="line"><span class="function">    &#125; <span class="title">catch</span> (e: <span class="type">IOException</span>) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">LogUtils</span>.<span class="title">e</span>(<span class="type">TAG</span>, e.toString())</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure></p>
+        
+          <a class="article-more-a" href="/2018/11/23/media-mix/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-screen-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -701,71 +761,9 @@
 
 
   
-    <article id="post-git-quesition" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/22/git-quesition/">Git data stream error</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/22/git-quesition/" class="archive-article-date">
-  	<time datetime="2018-06-22T04:38:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天使用 Git 碰到个问题，在此小记一下。<br>场景：<code>git stash</code>当前工作区，然后<code>git pull --rebase</code>:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png" alt=""></p>
-<p>然后执行<code>git stash pop</code>时报错。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/2.png" alt=""></p>
-<p>执行<code>git status</code>也报错：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/3.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2018/06/22/git-quesition/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
     </nav>
   
 
@@ -888,11 +886,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -900,15 +898,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">

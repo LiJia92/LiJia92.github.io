@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gps-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/13/gps-3/">科二考试系统-矩阵</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/13/gps-3/" class="archive-article-date">
+  	<time datetime="2021-07-13T06:15:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="http://lastwarmth.win/2021/07/09/gps-2/#more" target="_blank" rel="noopener">上篇文章</a>中，遗留一个问题：世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何将这个点绘制在安卓屏幕上呢？<br>其实很简单：<strong>直接画</strong>。<br>假设屏幕像素为1920*1080，简单一点让地图 MapView 的宽高也是这个，那么这个点就会在屏幕 (1000,1000) 的位置被绘制出来。世界坐标系中的其他所有的点，也都可以这样直接绘制。只是这样绘制之后，某些点可能在 MapView 上看不到而已，但是所有点的相对位置都是对的。接下来就要祭出大杀器「Matrix」了。</p>
+        
+          <a class="article-more-a" href="/2021/07/13/gps-3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-gps-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -708,70 +768,9 @@
 
 
   
-    <article id="post-gradle-variable" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/28/gradle-variable/">Android 打包动态修改变量</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/28/gradle-variable/" class="archive-article-date">
-  	<time datetime="2020-10-28T08:47:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在项目中经常有这种需求：在打包时指定某些变量的值，比如渠道号、应用名称等。我们采用 Jenkins 进行打包构建，可以添加相应的参数，参数可以直接在打包脚本中使用，也可以在项目的 gradle 文件中使用。下面以动态改变端口号，举例进行说明。</p>
-<h2 id="Jenkins-添加变量"><a href="#Jenkins-添加变量" class="headerlink" title="Jenkins 添加变量"></a>Jenkins 添加变量</h2><p>在 Jenkins 构建的设置中，添加变量<code>PORT_NAME</code>，做成选择项（固定的变量尽量避免人为错误），然后添加一下说明。这个变量可以在 Build 配置中的 Execute shell 中使用，当前场景不需要，只需要配置即可。</p>
-        
-          <a class="article-more-a" href="/2020/10/28/gradle-variable/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
   
 
@@ -894,11 +893,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -906,15 +905,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">学习</a>
               </li>
              
               <li class="article-tag-list-item">
