@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android-upgrade" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/11/09/android-upgrade/">Android 版本升级</a>
+    </h1>
+  
+
+        
+        <a href="/2023/11/09/android-upgrade/" class="archive-article-date">
+  	<time datetime="2023-11-09T09:14:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>公司内部有一套自己的基础库，各 App 或者模块都使用这个基础库进行开发。基础库有自己的迭代版本，可能是需求开发，也可能是 bugfix。项目初期，基于 16 版本的基础库进行开发，后续有若干个性化需求或者 bug 需要调整，便基于 16 的版本创建了 16-jky 的个性版本，用于自己这个项目。后面便独立出来了，不再跟进基础库的版本升级了，自己有 bug 或者需求自己改，自己升版本，自己用。<br>项目后期有一个 SDK 的需求，抽出项目中的一些功能，给出一个 SDK 由公司另一个 App 集成。这个 SDK 是基于 16-jky 版本进行开发。近期公司基础库做了很大的升级，升到了 18，适配到了 Android 14。集成的 App 也需要升级，便要求我们出一个基于最新版本基础库的 SDK。于是便开始了一次 Android 版本升级之旅，小小记录一下，万一后面项目也需要升级呢。</p>
+        
+          <a class="article-more-a" href="/2023/11/09/android-upgrade/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-python" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -709,66 +769,6 @@
 
 
   
-    <article id="post-screen-record-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/02/28/screen-record-1/">关于录屏权限的问题</a>
-    </h1>
-  
-
-        
-        <a href="/2023/02/28/screen-record-1/" class="archive-article-date">
-  	<time datetime="2023-02-28T07:17:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<a href="http://lastwarmth.win/2023/02/21/video-record/" target="_blank" rel="noopener">Android 倍速压缩视频时长</a>中，会先录屏然后对视频进行处理，录屏需要通过调用<code>MediaProjectionManager.createScreenCaptureIntent()</code>申请权限，这时会弹出系统的权限申请弹窗，用户可以选择同意或者拒绝，同时有不再询问的选项，就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG519.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2023/02/28/screen-record-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -866,11 +866,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -894,11 +894,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">

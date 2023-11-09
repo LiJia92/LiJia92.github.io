@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-enum" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/07/enum/">关于枚举类初始化的一个“耳光”</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/07/enum/" class="archive-article-date">
+  	<time datetime="2022-03-07T06:00:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中需要使用 Usb 摄像头，摄像头产生数据，然后业务方拿到数据后做自己的事情：推流、人脸登录、AI 检测等等。于是写了一个枚举类 CameraIntent 用来标识摄像头的意图。在 CameraIntent 每个枚举项初始化的时候，设置一个 key，然后根据这个 key 拿到 SharedPreferences 中绑定 UsbDevice 的名称，以此找到对应 UsbDevice 的摄像头，从而获取数据。</p>
+        
+          <a class="article-more-a" href="/2022/03/07/enum/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-ali" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -711,66 +771,6 @@
 
 
   
-    <article id="post-gps-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/14/gps-4/">科二考试系统-评判</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/14/gps-4/" class="archive-article-date">
-  	<time datetime="2021-07-14T08:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继<a href="http://lastwarmth.win/2021/07/09/gps-3/#more" target="_blank" rel="noopener">上篇文章</a>，通过高精度数据可以知道当前车辆的位置，结合考试地图建立好坐标系。那么车辆在这个地图中的一切行为轨迹都将是可以计算的，可以想象成一张蜘蛛网中蜘蛛的移动。那么接下来就是要利用这些数据来做评判了：判断当前车辆是否压线，以及打灯的时长是否足够等等。</p>
-        
-          <a class="article-more-a" href="/2021/07/14/gps-4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
@@ -868,11 +868,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -896,11 +896,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">

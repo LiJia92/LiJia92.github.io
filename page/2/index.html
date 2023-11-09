@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-screen-record-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/02/28/screen-record-1/">关于录屏权限的问题</a>
+    </h1>
+  
+
+        
+        <a href="/2023/02/28/screen-record-1/" class="archive-article-date">
+  	<time datetime="2023-02-28T07:17:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="http://lastwarmth.win/2023/02/21/video-record/" target="_blank" rel="noopener">Android 倍速压缩视频时长</a>中，会先录屏然后对视频进行处理，录屏需要通过调用<code>MediaProjectionManager.createScreenCaptureIntent()</code>申请权限，这时会弹出系统的权限申请弹窗，用户可以选择同意或者拒绝，同时有不再询问的选项，就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG519.png" alt=""></p>
+        
+          <a class="article-more-a" href="/2023/02/28/screen-record-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-dialog-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -700,66 +760,6 @@
 
 
   
-    <article id="post-enum" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/07/enum/">关于枚举类初始化的一个“耳光”</a>
-    </h1>
-  
-
-        
-        <a href="/2022/03/07/enum/" class="archive-article-date">
-  	<time datetime="2022-03-07T06:00:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中需要使用 Usb 摄像头，摄像头产生数据，然后业务方拿到数据后做自己的事情：推流、人脸登录、AI 检测等等。于是写了一个枚举类 CameraIntent 用来标识摄像头的意图。在 CameraIntent 每个枚举项初始化的时候，设置一个 key，然后根据这个 key 拿到 SharedPreferences 中绑定 UsbDevice 的名称，以此找到对应 UsbDevice 的摄像头，从而获取数据。</p>
-        
-          <a class="article-more-a" href="/2022/03/07/enum/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
@@ -857,11 +857,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -885,11 +885,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
