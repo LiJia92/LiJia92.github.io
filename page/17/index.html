@@ -158,6 +158,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-retrofit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/23/retrofit/">Retrofit初识</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/23/retrofit/" class="archive-article-date">
+  	<time datetime="2016-06-23T07:33:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在这个技术日新月累的今天，各种新的轮子层出不穷。网络这块，从<code>HttpClient</code>到<code>android-async-http</code>，再到<code>Volley</code>。当下比较火的网络框架<code>Retrofit</code>也是受到了很多开发者的热爱。虽然项目中并没有使用到<code>Retrofit</code>，但抱着学习的态度，我还是打算接触一下，算是有个了解。说不定后面的开发中会用到呢？</p>
+<h2 id="Retrofit概述"><a href="#Retrofit概述" class="headerlink" title="Retrofit概述"></a>Retrofit概述</h2><p><code>Retrofit</code>是一个 RESTful 的 HTTP 网络请求框架的封装。注意这里并没有说它是网络请求框架，主要原因在于网络请求的工作并不是<code>Retrofit</code>来完成的。<code>Retrofit 2.0</code>开始内置<code>OkHttp</code>，前者专注于接口的封装，后者专注于网络请求的高效，二者分工协作。<br>我们的应用程序通过<code>Retrofit</code>请求网络，实际上是使用<code>Retrofit</code>接口层封装请求参数、Header、Url等信息，之后由<code>OkHttp</code>完成后续的请求操作，在服务端返回数据之后，<code>OkHttp</code>将原始的结果交给<code>Retrofit</code>，后者根据用户的需求对结果进行解析的过程。所谓<code>Retrofit</code>，其实就是<code>Retrofitting OkHttp</code>了。</p>
+        
+          <a class="article-more-a" href="/2016/06/23/retrofit/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-popupwindow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/02/popupwindow/">android PopupWindow在控件上方显示</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/02/popupwindow/" class="archive-article-date">
+  	<time datetime="2016-06-02T08:26:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/popupwindow1.png" alt=""></p>
+<p>用户点击送礼物，会弹出一个礼物选择对话框，然后在选择一个礼物之后，可以选择礼物数量，按照图中的意思，选择数量很自然的想到了用<code>PopupWindow</code>来做了。但是这里有一个问题就是：弹出来的数量选择框是需要在数量显示栏的上方的。</p>
+<p>如果是在下方，那很简单，直接<code>popupWindow.showAsDropDown(v);</code>即可。但若是在上方，则需要自己计算坐标了，然后通过<code>showAtLocation()</code>方法来显示。</p>
+        
+          <a class="article-more-a" href="/2016/06/02/popupwindow/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-task-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -660,130 +783,6 @@
 
 
   
-    <article id="post-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/07/domain/">博客添加域名映射</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/07/domain/" class="archive-article-date">
-  	<time datetime="2016-04-07T06:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>利用Github搭建博客有一阵子了，每次访问都必须带上<code>github.io</code>，其实我的内心是拒绝的，于是今天打算买个自己的域名，然后映射到博客。</p>
-<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>首先第一步自然是买域名了。许多人都说是用<code>GoDaddy</code>，但是我去搜了一下，随便一个就是15刀，吓死宝宝了~<br>刚开始嘛，弄个便宜的尝尝鲜才是我的目的，于是我上<a href="https://wanwang.aliyun.com/" target="_blank" rel="noopener">阿里云</a>买了<code>lastwarmth.site</code>这个域名，首年才只收费4块钱哟~<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/domain9.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2016/04/07/domain/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-jpush" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/05/jpush/">Android接入JPush（极光推送）</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/05/jpush/" class="archive-article-date">
-  	<time datetime="2016-04-05T06:14:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目中需要有推送功能，技术负责人最后决定使用<code>极光推送</code>，活被分配给我了，于是我便接了一波，在此小记一下~</p>
-<p>在极光推送的<a href="http://docs.jpush.io/guideline/android_guide/" target="_blank" rel="noopener">官方文档</a>中，已经有了较详细的说明了，这里只做一下简单的摘录。</p>
-<h2 id="三分钟快速Demo"><a href="#三分钟快速Demo" class="headerlink" title="三分钟快速Demo"></a>三分钟快速Demo</h2><p>在极光推送的官方文档中，有<code>三分钟快速Demo</code>，我也是从demo入手。</p>
-<h3 id="创建开发者账号"><a href="#创建开发者账号" class="headerlink" title="创建开发者账号"></a>创建开发者账号</h3><p>接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个<code>开发者账号</code>。<br>要创建极光推送开发者帐号，请访问<a href="http://jpush.cn" target="_blank" rel="noopener">极光推送官方网站</a>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush1.png" alt=""></p>
-        
-          <a class="article-more-a" href="/2016/04/05/jpush/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/16/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/18/">Next &raquo;</a>
@@ -885,11 +884,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">

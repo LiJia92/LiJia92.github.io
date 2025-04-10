@@ -218,6 +218,128 @@
 
 
   
+    <article id="post-phone" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/04/05/phone/">记一次离奇的手机号被封的经历</a>
+    </h1>
+  
+
+        
+        <a href="/2025/04/05/phone/" class="archive-article-date">
+  	<time datetime="2025-04-05T06:26:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>3月29日12点34分，吃完午饭躺在床上玩手机的我收到了一条短信：</p>
+<blockquote>
+<p>尊敬的用户，此号码是我公司接国家执法部门要求进行关停的，您可以持本人身份证件、涉案号卡前往附近的自办营业厅进行身份核验，是否可以开机最终以国家执法部门核实后的结果为准。如有异议请详询10086。感谢您的理解与支持！</p>
+</blockquote>
+<p>起初以为是一条诈骗信息，然后定睛细看发件人，赫然发现是<code>中国移动10086</code>，内心突然就觉得不太妙。赶紧让老婆打我电话，打了两次，第一次打通了，第二次就提示手机已停机，同时家里的 WiFi 也无法上网了（与手机号绑定移动宽带）。<br>至此，我的噩梦正式开始。</p>
+        
+          <a class="article-more-a" href="/2025/04/05/phone/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-summary-2024" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/02/05/summary-2024/">2024 年终总结</a>
+    </h1>
+  
+
+        
+        <a href="/2025/02/05/summary-2024/" class="archive-article-date">
+  	<time datetime="2025-02-05T09:29:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>占位1.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-2023" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -642,130 +764,6 @@
 
 
   
-    <article id="post-opengl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/06/19/opengl/">Android 对视频进行切割、添加转场效果</a>
-    </h1>
-  
-
-        
-        <a href="/2023/06/19/opengl/" class="archive-article-date">
-  	<time datetime="2023-06-19T09:52:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<a href="http://lastwarmth.win/2023/02/21/video-record/" target="_blank" rel="noopener">Android 倍速压缩视频时长</a>中，实现了针对完整视频进行倍速压缩的功能。用户反馈说，这样的一个倍速视频就和看轨迹回放一样的效果，从头到尾完整播放一遍，体现不出“牛逼”的地方。于是想着针对学员“操作”的地方进行切片，比如打方向盘、挂挡等。当出现这些操作时，对整个视频进行切割，生成若干个片段，然后再拼接到一起。片段衔接处添加转场效果，让切换看起来更丝滑。这样处理后的视频，可能就是一个富含学员“精彩操作”的视频，学员查看和分享的欲望可能就更强烈了。基于这样的一个需求场景，需要做的事情就确定了：</p>
-<ol>
-<li>对完整视频进行切片，分割成若干个片段；</li>
-<li>将片段结合转场效果合并到一起，生成最终视频。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2023/06/19/opengl/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-dialog-fragment" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/05/22/dialog-fragment/">记一次 DialogFragment 的错误使用</a>
-    </h1>
-  
-
-        
-        <a href="/2023/05/22/dialog-fragment/" class="archive-article-date">
-  	<time datetime="2023-05-22T05:55:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-05-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近测试同学反馈一个问题：一个弹窗展示出来之后，点击按钮消失了。然后回到登录页再切回来时，这个弹窗又展示出来了。看到具体的代码：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">HintDialog</span> <span class="keyword">extends</span> <span class="title">DialogFragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> content;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">View</span>.<span class="type">OnClickListener</span> positiveClickListener;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> positive;</span><br><span class="line"></span><br><span class="line">    public static <span class="type">HintDialog</span> show(<span class="type">FragmentManager</span> fm, <span class="type">String</span> content, <span class="type">String</span> positive,</span><br><span class="line">                                  <span class="type">View</span>.<span class="type">OnClickListener</span> positiveClickListener) &#123;</span><br><span class="line">        <span class="type">HintDialog</span> hintDialog = <span class="keyword">new</span> <span class="type">HintDialog</span>();</span><br><span class="line">        hintDialog.content = content;</span><br><span class="line">        hintDialog.positive = positive;</span><br><span class="line">        hintDialog.positiveClickListener = positiveClickListener;</span><br><span class="line">        hintDialog.show(fm, <span class="string">"HintDialog"</span>);</span><br><span class="line">        <span class="keyword">return</span> hintDialog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public <span class="type">Dialog</span> onCreateDialog(<span class="meta">@Nullable</span> <span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">JCommonDialog</span>.createDialog(getActivity(), content, positive, positiveClickListener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2023/05/22/dialog-fragment/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
@@ -867,11 +865,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
