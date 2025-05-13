@@ -158,6 +158,72 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-python-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/15/python-1/">一次 Python 工具编写的经历《一》</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/15/python-1/" class="archive-article-date">
+  	<time datetime="2020-09-15T11:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>最近的项目涉及到硬件，硬件由工厂生产，生产之后需要连接到电脑，然后执行检测程序。检测程序需要做两件事：</p>
+<ol>
+<li>检测硬件的可用性；</li>
+<li>从硬件获取到硬件编号，拿到编号后去服务器请求一个序列号；</li>
+<li>拿到序列号后告知标签打印机进行打印。</li>
+</ol>
+<p>后面硬件装箱时，贴上此标签，通过服务器就可以知道一个序列号对应的具体硬件是哪一个了（排除人为标签贴错的情况）。那么，现在就是需要做这样的一个检测工具，运行在 windows 平台。</p>
+        
+          <a class="article-more-a" href="/2020/09/15/python-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-viewbinding" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -714,56 +780,6 @@
 
 
   
-    <article id="post-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/29/tips/">问题集锦</a>
-    </h1>
-  
-
-        
-        <a href="/2019/11/29/tips/" class="archive-article-date">
-  	<time datetime="2019-11-29T10:18:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。</p>
-<h2 id="文件校验"><a href="#文件校验" class="headerlink" title="文件校验"></a>文件校验</h2><p>应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？<br>最后定位问题：<strong>同事拿到数据库文件，为了确定版本是对的，打开 db 文件看了一眼，然后 SQLite 就会自动写入一些东西，导致 md5 值改变。</strong> 涨点姿势，以后应当注意。</p>
-        
-          <a class="article-more-a" href="/2019/11/29/tips/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
@@ -861,11 +877,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -893,11 +909,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
+                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
+                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -942,6 +958,10 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">游记</a>
               </li>
              
               <li class="article-tag-list-item">
