@@ -158,6 +158,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-android-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/22/android-scroll/">一个关于Android滑动“因缺斯厅”的想法</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/22/android-scroll/" class="archive-article-date">
+  	<time datetime="2016-04-22T06:07:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在项目实际开发过程中，需要实现一个这样的需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/android-srcoll1.png" alt=""><br>在屏幕上进行上滑时，顶端<code>大图背景</code>不动，下面的<code>正在直播</code>、<code>数字专辑</code>等模块进行滑动，并且<code>大图背景</code>慢慢模糊。</p>
+<p>起初想着是自定义View，重写onTouchEvent来进行滑动事件的处理，如果是手指滑一点，界面跟着滑一点还好。如果还要计算加速度、阻尼效果等这些因素，就会显得非常复杂了。于是跟基友讨论了一下，有个因缺斯厅的idea，先上一下最后实现的一个效果图。</p>
+        
+          <a class="article-more-a" href="/2016/04/22/android-scroll/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-refresh-listview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -771,70 +832,6 @@
 
 
   
-    <article id="post-gradle-pack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/09/gradle-pack/">Android Studio 使用 Gradle 进行多渠道打包</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/09/gradle-pack/" class="archive-article-date">
-  	<time datetime="2016-03-09T06:39:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>使用Android Studio也有一段时间了，最近项目开发完成，内部测试也已经通过。下一步就是渠道打包，然后上线了。</p>
-<p>在出渠道包的时候，若是出一个包，便手动修改一次渠道号，很显然是很费时费力的。庆幸的是，Android Studio采用的Gradle可以很方便的实现我们的多渠道出包。</p>
-<p>下面结合代码进行说明。</p>
-<p>项目中使用的是友盟，在AndroidManifest.xml中有这样的代码：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data android:<span class="attribute">name</span>=<span class="string">"UMENG_CHANNEL"</span> android:<span class="attribute">value</span>=<span class="string">"<span class="variable">$&#123;UMENG_CHANNEL_VALUE&#125;</span>"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>其中${UMENG_CHANNEL_VALUE}中的值就是在gradle中自定义配置的值。</p>
-        
-          <a class="article-more-a" href="/2016/03/09/gradle-pack/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/17/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/19/">Next &raquo;</a>
@@ -932,19 +929,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -968,15 +965,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">

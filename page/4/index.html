@@ -158,6 +158,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-ping" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/31/ping/">使用 Ping 指令判断网络</a>
+    </h1>
+  
+
+        
+        <a href="/2021/12/31/ping/" class="archive-article-date">
+  	<time datetime="2021-12-31T06:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有个需求，需要判断网络是否连接，如果是正常的移动网络或者 WiFi，是可以判断出来的，但是目标设备使用的是以太网，就像台式机插入的网线一样。假设拔掉机器这边的网线，很显然就是没有网络的，通过 Android 的 ConnectivityManager 的 getActiveNetworkInfo 也可以判断出来。但如果拔掉的是网线的另一端，通过 Android SDK 获取的网络会仍然是 CONNECTED。这显然是有问题的，因为此时此刻设备连访问百度的能力都没有了。所以打算使用 ping 指令，不断的去 ping 一个 host，如果能正常返回，则说明网络是没问题的。</p>
+        
+          <a class="article-more-a" href="/2021/12/31/ping/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-30" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -710,71 +770,6 @@
 
 
   
-    <article id="post-engine" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/14/engine/">关于「引擎」设计的小结</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/14/engine/" class="archive-article-date">
-  	<time datetime="2021-05-14T09:05:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个业务场景：科二学员考试系统，当学员做了错误的操作之后，会扣分。那么如何实现这样的一个扣分引擎呢？</p>
-<ol>
-<li>检测时机：很显然的我们需要一个定时检测的时机，比如每隔 100 毫秒，或者 1 秒，执行一次检测。这样的话，可以理解为，有一个死循环，持续进行检测。</li>
-<li>检测事项：每一次检测需要检测哪些数据，当数据不符合条件，就扣这个分。</li>
-<li>引擎状态：当开始考试时，需要启动引擎，进行检测。结束考试时，就停止检测。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2021/05/14/engine/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
@@ -872,19 +867,19 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">blog</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -908,15 +903,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">直播</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
               </li>
              
               <li class="article-tag-list-item">
