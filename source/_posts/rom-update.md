@@ -1,8 +1,8 @@
 ---
-title: Anroid Launcher 升级 Rom
+title: Android Launcher 升级 Rom
 date: 2025-06-27 17:21:47
 tags:
- -
+ - 日常开发
 ---
 近期接到一个需求：利用 Launcher 对系统 Rom 进行升级。OTA 包由其他同事提供，Launcher 与服务器通信判断是否有新的升级包，若有升级包则下载到本地，由 Launcher 进行 Rom 升级。过程不算顺利，写下此文记录一下。
 
@@ -197,8 +197,19 @@ public UpdateEngine() {
 ## 系统原生升级
 通过 AI 获取的 RecoverySystem、UpdateEngine 方式全部失败后，我对 AI 丧失了一些信心。在验证 update.zip 是否能正常对系统更新时，发现了一个当前系统原生升级的逻辑：**当把 update.zip 放到 /sdcard 根目录时，设备重启后，会自动弹窗发现一个升级文件，询问是否需要进行升级。** 点击安装按钮后，系统会进入更新，且能更新成功。
 就像这样：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/1.png)
+
 于是有了一个新思路：**将 OTA 包下载后放到 /sdcard 根目录，然后重启设备，这个时候系统会弹窗是否进行升级，然后结合 Launcher 的系统能力，做自动点击，就可以走系统原生的升级了。**
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/2.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/3.png)
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/4.png)
+
 系统升级成功后，会有一个弹窗提醒删掉 OTA 文件，这个时候自动点击确认删除，即可完成系统升级。
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/5.png)
+
+若此 OTA 文件不删除，设备重启时会继续提示升级，但是点击按钮会报错，影响体验，所以还是需要删掉。
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/6.png)
+
 通过这个方案，就只剩下**自动点击**需要额外代码实现了，结合 AI 加不断的调试，最终得到如下代码：
 ```
 class SystemUpdateService : AccessibilityService() {
@@ -394,3 +405,115 @@ Settings.Secure.putInt(
 **这个代码需要系统级 App 才行，不然得到设置页专门打开无障碍服务。**
 至此，基本代码全部完成，运行后也符合预期，系统能升级成功。升级成功后，也能自动点击，删掉 OTA 文件。只是设备会多重启一次，体验略差，后续为了优化体验，准备研究刷机 Rom 的源码了。
 在调试最终方案的过程中，也有一些小插曲。
+### 升级弹窗
+在系统升级弹窗出现时，准备通过关键词研究一下相关代码，看能否直接将刷机的 Rom 的 Api 拿过来直接使用，当时使用如下指令，拿到了弹窗的层级信息：
+```
+adb shell uiautomator dump /sdcard/window_dump.xml
+adb pull /sdcard/window_dump.xml
+```
+得到的文件如下：
+```
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<hierarchy rotation="0">
+    <node index="0" text="" resource-id="" class="android.widget.FrameLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[525,357][1395,669]">
+        <node index="0" text="" resource-id="" class="android.widget.LinearLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,369][1383,657]">
+            <node index="0" text="" resource-id="android:id/title_container" class="android.widget.LinearLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,369][1383,465]">
+                <node index="0" text="" resource-id="android:id/left_icon" class="android.widget.ImageView" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[561,393][609,441]" />
+                <node index="1" text="固件升级" resource-id="android:id/title" class="android.widget.TextView" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[621,395][753,439]" />
+                <node index="2" text="" resource-id="android:id/right_icon" class="android.widget.ImageView" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[765,393][813,441]" /></node>
+            <node index="1" text="" resource-id="android:id/titleDivider" class="android.view.View" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,465][1383,467]" />
+            <node index="2" text="" resource-id="" class="android.widget.FrameLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,467][1383,657]">
+                <node index="0" text="" resource-id="android:id/content" class="android.widget.FrameLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,467][1383,657]">
+                    <node index="0" text="" resource-id="" class="android.widget.LinearLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[537,467][1383,657]">
+                        <node index="0" text="" resource-id="" class="android.widget.ScrollView" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[543,473][1377,579]">
+                            <node index="0" text="" resource-id="" class="android.widget.LinearLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[543,473][1377,579]">
+                                <node index="0" text="发现一个升级包 : '/storage/emulated/0/update.zip'. 是否要安装升级包?" resource-id="android.rockchip.update.service:id/notify" class="android.widget.TextView" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="true" scrollable="false" long-clickable="true" password="false" selected="false" bounds="[543,473][1377,542]" /></node>
+                        </node>
+                        <node index="1" text="" resource-id="" class="android.widget.LinearLayout" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[543,579][1377,651]">
+                            <node index="0" text="放弃" resource-id="android.rockchip.update.service:id/button_cancel" class="android.widget.Button" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[543,579][959,651]" />
+                            <node index="1" text="安装" resource-id="android.rockchip.update.service:id/button_ok" class="android.widget.Button" package="android.rockchip.update.service" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[961,579][1377,651]" /></node>
+                    </node>
+                </node>
+            </node>
+        </node>
+    </node>
+</hierarchy>
+```
+可以看到包名是``android.rockchip.update.service``，后续就可以往这个方向研究源码了。这也是代码里会加上包名过滤的原因，避免影响其他的弹窗。
+
+### getRootInActiveWindow
+之前是使用 getRootInActiveWindow 方法来获取想要的 AccessibilityNodeInfo。结果发现有时候能拿到当前弹窗的 Node，通过 findAccessibilityNodeInfosByText 可以找到想要的按钮，可是有时候又找不到。后面还发现升级成功后的删除弹窗， 竟然不是一个 Dialog，而是一个 Activity。
+```
+adb shell dumpsys window | grep -A 5 "Window #"
+```
+得到的结果如下：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/7.jpg)
+
+当前的弹窗它竟然是一个 Activity ！！！
+> android.rockchip.update.service/android.rockchip.update.service.NotifyDeleteActivity
+
+可能是因为 Activity，getRootInActiveWindow 就无法获取到弹窗的 Node 了。实在搞不懂为什么 Rom 会这样区分对待。
+getRootInActiveWindow 不好使，最后发现 onAccessibilityEvent 回调方法里的参数 **event: AccessibilityEvent**，它有个 source 属性，直接就可以返回 AccessibilityNodeInfo，那这个 Node 能不能找到对应的按钮呢？
+试了一下，果然可以。所以直接用回调里的 event 即可了。
+
+### Service 无响应
+在调试过程中，Service 一启动就会无响应，因为也是通过 AI 拿到的代码，不是所有代码都清楚作用，于是一行一行代码注释，终于找到罪魁祸首：
+```
+override fun onServiceConnected() {
+    LogUtils.e(TAG, "onServiceConnected")
+    val info = AccessibilityServiceInfo().apply {
+        eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED or
+                AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
+        feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+        notificationTimeout = 100
+        flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
+                AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            flags = flags or AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE
+        }
+    }
+    serviceInfo = info
+}
+```
+在 onServiceConnected 方法里，给 info 设置的 flags 会导致 Service 无响应。当把 flags 设置代码去掉之后，Service 就恢复正常了。这几个 flag 简单了解了一下，去掉也不影响当前业务。
+
+### Service 崩溃
+为了测试自动点击，我写了个测试代码，
+```
+debug.setOnClickListener {
+    try {
+        // 1. 构造Intent并设置ComponentName
+        val intent = Intent()
+        val component = ComponentName(
+            "android.rockchip.update.service",  // 包名
+            "android.rockchip.update.service.NotifyDeleteActivity" // 完整类名
+        )
+        intent.setComponent(component)
+
+        // 2. 添加系统级Flags（可选）
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        // 3. 验证并启动Activity
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Log.e("Launch", "Activity不存在或无权访问")
+        }
+    } catch (e: SecurityException) {
+        Log.e("Launch", "权限不足: " + e.message)
+        // 尝试通过系统签名或Root权限提升
+    }
+}
+```
+代码会打开一个升级后删除 OTA 的弹窗，我进行模拟点击。测试时，发现只要进行第二次模拟点击时，Service 就会崩溃。最终找到原因，是 Node 执行完必须进行 recycle，不然就会崩溃。这通过 AI 写代码，我也挺崩溃的- -。
+最后加上 finally 块：
+```
+finally {
+    rootNode.recycle()
+}
+```
+至此所有流程全部结束，等待后续源码阅读，看是否可以优化。
+
+## 总结
+因为有 Launcher，具备一定的系统权限，我们能做的事情就比较多，这次升级 Rom 也算是顺利完成。
+本文通过 AI 给出了很多代码，但是能用的非常少，而且它不会告诉你它做不到，这也是我之前就说过的 AI 的缺点，它一定会给你一个答案，然后你尝试之后发现根本不能用，浪费很多时间，所以针对 AI 的学习还是要辩证着看，取其精华，去其糟粕。
