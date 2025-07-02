@@ -43,3 +43,5 @@ https://LiJia92:5201314lijia@github.com/LiJia92/LiJia92.github.io.git
 ## 参考
 [github https方式免密码提交代码 在git config 中添加用户名密码](http://www.akmumu.com/2015/06/02/360.html)
 [Hexo免输入密码部署到Github](http://jianwl.com/2016/04/14/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0Github/)
+
+## 2025/07/02更新
