@@ -392,17 +392,36 @@ fun parseOtaPackage(otaPath: String): Int? {
 ```
 在 Application 启动时，默认启动无障碍服务：
 ```
+// 获取当前已启用的服务列表
+val originalServices = Settings.Secure.getString(
+    contentResolver,
+    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+) ?: ""
+
+// 构造新的服务列表（避免重复添加）
+val newService = "cn.mucang.android.launcher/cn.mucang.android.launcher.ui.SystemUpdateService"
+val updatedServices = if (originalServices.isEmpty()) {
+    newService
+} else {
+    if (!originalServices.contains(newService)) {
+        "$originalServices:$newService"  // 使用冒号分隔（Android标准格式）
+    } else {
+        originalServices
+    }
+}
+// 更新设置
 Settings.Secure.putString(
     contentResolver,
     Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
-    "cn.packageName.launcher/cn.packageName.launcher.ui.SystemUpdateService"
+    updatedServices
 )
 Settings.Secure.putInt(
     contentResolver,
-    Settings.Secure.ACCESSIBILITY_ENABLED, 1
+    Settings.Secure.ACCESSIBILITY_ENABLED,
+    1
 )
 ```
-**这个代码需要系统级 App 才行，不然得到设置页专门打开无障碍服务。**
+**这个代码需要系统级 App 才行，不然得到设置页专门打开无障碍服务。**这里会先获取系统的无障碍服务，然后将当前的添加进去，然后启动，不然的话可能会将其他应用的无障碍服务设置成关闭了。
 至此，基本代码全部完成，运行后也符合预期，系统能升级成功。升级成功后，也能自动点击，删掉 OTA 文件。只是设备会多重启一次，体验略差，后续为了优化体验，准备研究刷机 Rom 的源码了。
 在调试最终方案的过程中，也有一些小插曲。
 ### 升级弹窗
