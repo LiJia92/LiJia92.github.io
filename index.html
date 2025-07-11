@@ -154,6 +154,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-rom-update1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/07/11/rom-update1/">Android Launcher 升级 Rom - 续</a>
+    </h1>
+  
+
+        
+        <a href="/2025/07/11/rom-update1/" class="archive-article-date">
+  	<time datetime="2025-07-11T08:07:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://lastwarmth.win/2025/06/27/rom-update/">上篇文章</a>记录了通过 Rom 自带的固件升级功能，结合无障碍服务进行自动点击，来实现了 Rom 的自动升级。OTA 包下载完成后，若要更新，需要重启一次设备。无障碍自动点击，也会出现弹窗一闪而过的异象。另外放置在存储卡根目录的 update.zip 不太好管理，比如有多个版本的 Rom 升级等等。于是研究了 Rom 的相关源码，终于有所收获，记录一下优化方案。</p>
+        
+          <a class="article-more-a" href="/2025/07/11/rom-update1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-rom-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -690,66 +750,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-serial" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/09/13/serial/">HashMap 序列化小结</a>
-    </h1>
-  
-
-        
-        <a href="/2023/09/13/serial/" class="archive-article-date">
-  	<time datetime="2023-09-13T08:45:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本地有一个 HashMap 的对象，有序列化的需求，直接使用 SharedPreferences 进行存储：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> val <span class="built_in">map</span> = <span class="built_in">HashMap</span>&lt;Byte, MutableList&lt;BrakeModel&gt;&gt;()</span><br><span class="line"></span><br><span class="line">PreUtils.<span class="property">setString</span>(KEY, JSON.<span class="property">toJSONString</span>(<span class="built_in">map</span>))</span><br></pre></td></tr></table></figure><br>然后将 String 反序列化时，报错了：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java<span class="selector-class">.lang</span><span class="selector-class">.ClassCastException</span>: com<span class="selector-class">.alibaba</span><span class="selector-class">.fastjson</span><span class="selector-class">.JSONObject</span> cannot be cast to BrakeModel</span><br></pre></td></tr></table></figure></p>
-        
-          <a class="article-more-a" href="/2023/09/13/serial/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>

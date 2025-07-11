@@ -154,6 +154,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-build-config" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/04/build-config/">Android 获取 BuildConfig 信息</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/04/build-config/" class="archive-article-date">
+  	<time datetime="2018-01-04T01:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目开发中，我们的 App 这个 Module 定义了3个 buildType：<br><figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildTypes</span> &#123;</span><br><span class="line">    <span class="keyword">release</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">debug</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">beta</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。<br>项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png" alt=""><br>App 作为 Application，其他作为 Library。</p>
+        
+          <a class="article-more-a" href="/2018/01/04/build-config/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-mvp-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -693,66 +753,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-classloader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/19/classloader/">Android 中的 ClassLoader</a>
-    </h1>
-  
-
-        
-        <a href="/2017/10/19/classloader/" class="archive-article-date">
-  	<time datetime="2017-10-19T11:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天发现了一个在对象序列化时的错误。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">E</span>/<span class="selector-tag">Parcel</span>: <span class="selector-tag">Class</span> <span class="selector-tag">not</span> <span class="selector-tag">found</span> <span class="keyword">when</span> <span class="attribute">unmarshalling</span>: com.lijia.study.InventoryDetail</span><br><span class="line">java.lang.<span class="attribute">ClassNotFoundException</span>: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method)</span><br><span class="line">    at java.lang.Class.<span class="built_in">forName</span>(Class.<span class="attribute">java</span>:<span class="number">309</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelableCreator</span>(Parcel.<span class="attribute">java</span>:<span class="number">2281</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2245</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2468</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readHashMap</span>(Parcel.<span class="attribute">java</span>:<span class="number">1678</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2252</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readArrayMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2485</span>)</span><br><span class="line">    at android.os.BaseBundle.<span class="built_in">unparcel</span>(BaseBundle.<span class="attribute">java</span>:<span class="number">221</span>)</span><br><span class="line">    at android.os.Bundle.<span class="built_in">getParcelable</span>(Bundle.<span class="attribute">java</span>:<span class="number">755</span>)</span><br><span class="line">    at android.content.Intent.<span class="built_in">getParcelableExtra</span>(Intent.<span class="attribute">java</span>:<span class="number">5088</span>)</span><br><span class="line">    ...</span><br><span class="line"> Caused <span class="attribute">by</span>: java.lang.<span class="attribute">ClassNotFoundException</span>: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method)</span><br><span class="line">    at java.lang.BootClassLoader.<span class="built_in">findClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">781</span>)</span><br><span class="line">    at java.lang.BootClassLoader.<span class="built_in">loadClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">841</span>)</span><br><span class="line">    at java.lang.ClassLoader.<span class="built_in">loadClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">469</span>)</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method) </span><br><span class="line">    at java.lang.Class.<span class="built_in">forName</span>(Class.<span class="attribute">java</span>:<span class="number">309</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelableCreator</span>(Parcel.<span class="attribute">java</span>:<span class="number">2281</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2245</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2468</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readHashMap</span>(Parcel.<span class="attribute">java</span>:<span class="number">1678</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2252</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readArrayMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2485</span>) </span><br><span class="line">    at android.os.BaseBundle.<span class="built_in">unparcel</span>(BaseBundle.<span class="attribute">java</span>:<span class="number">221</span>) </span><br><span class="line">    at android.os.Bundle.<span class="built_in">getParcelable</span>(Bundle.<span class="attribute">java</span>:<span class="number">755</span>) </span><br><span class="line">    at android.content.Intent.<span class="built_in">getParcelableExtra</span>(Intent.<span class="attribute">java</span>:<span class="number">5088</span>) </span><br><span class="line">    ...</span><br><span class="line"> Caused <span class="attribute">by</span>: java.lang.<span class="attribute">NoClassDefFoundError</span>: Class <span class="keyword">not</span> found using the boot class loader; no stack available</span><br></pre></td></tr></table></figure><br>
-        
-          <a class="article-more-a" href="/2017/10/19/classloader/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
         		</li>
       		
 		</ul>

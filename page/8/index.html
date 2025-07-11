@@ -154,6 +154,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-multi-form" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/12/multi-form/">Android 实现大文件分片上传</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/12/multi-form/" class="archive-article-date">
+  	<time datetime="2019-07-12T07:57:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中有视频上传的功能，但一直没做断点续传，针对大视频上传不友好，最近的版本需求将断点续传加上了，服务端采用的是 multipart/form-data 编码方式来实现，那么客户端也依照这个方式来做就好了。</p>
+<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h2><p>multipart/form-data 方式用于大数据 Post 请求，用做分片正好合适。它对数据有一定的格式，参照示例：<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST http:<span class="symbol">//www.example.com</span> HTTP<span class="symbol">/1.1</span></span><br><span class="line">Content-Type:multipart<span class="symbol">/form-data</span>; <span class="attr">boundary</span><span class="operator">=</span><span class="operator">-</span>---WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"><span class="params">Content-Disposition:</span> form-data; <span class="attr">name</span><span class="operator">=</span><span class="string">&quot;text&quot;</span></span><br><span class="line"></span><br><span class="line">title</span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"><span class="params">Content-Disposition:</span> form-data; <span class="attr">name</span><span class="operator">=</span><span class="string">&quot;file&quot;</span>; <span class="attr">filename</span><span class="operator">=</span><span class="string">&quot;chrome.png&quot;</span></span><br><span class="line"><span class="params">Content-Type:</span> image<span class="symbol">/png</span></span><br><span class="line"></span><br><span class="line">PNG ... content of chrome.png ...</span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span><br></pre></td></tr></table></figure><br>每部分都是以<code>--boundary</code>开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（文本或二进制）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以<code>--boundary--</code>标示结束。</p>
+        
+          <a class="article-more-a" href="/2019/07/12/multi-form/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-anr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -694,64 +755,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-wechat-tip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/05/wechat-tip/">记录微信分享的一个坑</a>
-    </h1>
-  
-
-        
-        <a href="/2019/03/05/wechat-tip/" class="archive-article-date">
-  	<time datetime="2019-03-05T09:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天碰到一个问题，社区里帖子有的可以分享到微信，有的不行，单独调试获取分享的数据，发现并无不同。生成分享数据的代码如下：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WXMediaMessage mediaMessage <span class="operator">=</span> new WXMediaMessage(programObject)<span class="comment">;</span></span><br><span class="line">mediaMessage.title <span class="operator">=</span> shareData.getTitle()<span class="comment">;</span></span><br><span class="line">mediaMessage.description <span class="operator">=</span> shareData.getContent()<span class="comment">;</span></span><br><span class="line">mediaMessage.thumbData <span class="operator">=</span> Utils.readMiniProgramThumbImageFileData(shareData.getShareImagePath())<span class="comment">;</span></span><br><span class="line">//发送请求</span><br><span class="line">SendMessageToWX.Req req <span class="operator">=</span> new SendMessageToWX.Req()<span class="comment">;</span></span><br><span class="line">req.transaction <span class="operator">=</span> String.valueOf(listenerId)<span class="comment">;</span></span><br><span class="line">req.message <span class="operator">=</span> mediaMessage<span class="comment">;</span></span><br><span class="line">// 目前支持会话</span><br><span class="line">req.scene <span class="operator">=</span> SendMessageToWX.Req.WXSceneSession<span class="comment">;</span></span><br><span class="line">doSendReq(req)<span class="comment">;</span></span><br></pre></td></tr></table></figure><br>shareData 是客户端单独组织的一个 Model。起初怀疑是 thumbData 太大导致的，结果后面可以分享的帖子生成的 thumbData 所占的字节还要大一些。。。<br>然后试着分享到微博、QQ 等其他平台，发现也可以分享成功，唯独微信分享给朋友或朋友圈不行。偶然的发现一个帖子分享到微博也会失败，而微博客户端给出了“内容不符合规范”类似大意的提示，于是猜测可能是 description 导致。于是分别调试了不同帖子的数据，发现不能分享的帖子生成的 description length 都是 2000+，而可以分享的帖子生成的才 1000+，没有超过 2000，于是预测是 description 超长导致的。最后调试进行截取，超长的则取前 100 个字符，发现问题解决。<br>问题比较简单，但是调试的时候很坑，因为分享失败的帖子竟然连 WxEntryActivity 里的 onResp 都不回调，所以压根无法知道失败的原因，只能对比数据靠猜测，于是便记录一下，以后碰到这类问题便知道如何解决了。<br>总结一下：<strong>微信分享传的 description 参数不能过长（测试 1800 以下是可以分享的），否则会分享失败，而且回调里的 onResp 都不会调用。</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
         		</li>
       		
 		</ul>

@@ -154,6 +154,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-classloader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/19/classloader/">Android 中的 ClassLoader</a>
+    </h1>
+  
+
+        
+        <a href="/2017/10/19/classloader/" class="archive-article-date">
+  	<time datetime="2017-10-19T11:26:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-10-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天发现了一个在对象序列化时的错误。<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">E</span>/<span class="selector-tag">Parcel</span>: <span class="selector-tag">Class</span> <span class="selector-tag">not</span> <span class="selector-tag">found</span> <span class="keyword">when</span> <span class="attribute">unmarshalling</span>: com.lijia.study.InventoryDetail</span><br><span class="line">java.lang.<span class="attribute">ClassNotFoundException</span>: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method)</span><br><span class="line">    at java.lang.Class.<span class="built_in">forName</span>(Class.<span class="attribute">java</span>:<span class="number">309</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelableCreator</span>(Parcel.<span class="attribute">java</span>:<span class="number">2281</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2245</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2468</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readHashMap</span>(Parcel.<span class="attribute">java</span>:<span class="number">1678</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2252</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readArrayMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2485</span>)</span><br><span class="line">    at android.os.BaseBundle.<span class="built_in">unparcel</span>(BaseBundle.<span class="attribute">java</span>:<span class="number">221</span>)</span><br><span class="line">    at android.os.Bundle.<span class="built_in">getParcelable</span>(Bundle.<span class="attribute">java</span>:<span class="number">755</span>)</span><br><span class="line">    at android.content.Intent.<span class="built_in">getParcelableExtra</span>(Intent.<span class="attribute">java</span>:<span class="number">5088</span>)</span><br><span class="line">    ...</span><br><span class="line"> Caused <span class="attribute">by</span>: java.lang.<span class="attribute">ClassNotFoundException</span>: com.lijia.study.InventoryDetail</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method)</span><br><span class="line">    at java.lang.BootClassLoader.<span class="built_in">findClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">781</span>)</span><br><span class="line">    at java.lang.BootClassLoader.<span class="built_in">loadClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">841</span>)</span><br><span class="line">    at java.lang.ClassLoader.<span class="built_in">loadClass</span>(ClassLoader.<span class="attribute">java</span>:<span class="number">469</span>)</span><br><span class="line">    at java.lang.Class.<span class="built_in">classForName</span>(Native Method) </span><br><span class="line">    at java.lang.Class.<span class="built_in">forName</span>(Class.<span class="attribute">java</span>:<span class="number">309</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelableCreator</span>(Parcel.<span class="attribute">java</span>:<span class="number">2281</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2245</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2468</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readHashMap</span>(Parcel.<span class="attribute">java</span>:<span class="number">1678</span>)</span><br><span class="line">    at android.os.Parcel.<span class="built_in">readParcelable</span>(Parcel.<span class="attribute">java</span>:<span class="number">2252</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readValue</span>(Parcel.<span class="attribute">java</span>:<span class="number">2152</span>) </span><br><span class="line">    at android.os.Parcel.<span class="built_in">readArrayMapInternal</span>(Parcel.<span class="attribute">java</span>:<span class="number">2485</span>) </span><br><span class="line">    at android.os.BaseBundle.<span class="built_in">unparcel</span>(BaseBundle.<span class="attribute">java</span>:<span class="number">221</span>) </span><br><span class="line">    at android.os.Bundle.<span class="built_in">getParcelable</span>(Bundle.<span class="attribute">java</span>:<span class="number">755</span>) </span><br><span class="line">    at android.content.Intent.<span class="built_in">getParcelableExtra</span>(Intent.<span class="attribute">java</span>:<span class="number">5088</span>) </span><br><span class="line">    ...</span><br><span class="line"> Caused <span class="attribute">by</span>: java.lang.<span class="attribute">NoClassDefFoundError</span>: Class <span class="keyword">not</span> found using the boot class loader; no stack available</span><br></pre></td></tr></table></figure><br>
+        
+          <a class="article-more-a" href="/2017/10/19/classloader/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-xunfei" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -668,68 +728,6 @@
 <h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
         
           <a class="article-more-a" href="/2017/06/07/git/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/09/confuse/">关于混淆的一个小纰漏</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/09/confuse/" class="archive-article-date">
-  	<time datetime="2017-05-09T05:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
-<p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
-<p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
-        
-          <a class="article-more-a" href="/2017/05/09/confuse/#more">more >></a>
         
       
 

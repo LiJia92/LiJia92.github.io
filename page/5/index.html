@@ -154,6 +154,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-gps" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/08/gps/">科二考试系统</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/08/gps/" class="archive-article-date">
+  	<time datetime="2021-07-08T06:04:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一个系列文章的开篇，尝试理解项目中用到的知识与结构，许多代码都是上级编写，我只能以我的能力尽量把东西说清楚，讲明白。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
+        
+          <a class="article-more-a" href="/2021/07/08/gps/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-engine" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -682,68 +743,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-python-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/19/python-3/">一次 Python 工具编写的经历《三》</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/19/python-3/" class="archive-article-date">
-  	<time datetime="2020-09-19T09:55:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：<strong>MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台</strong>。<br>安装 <a href="https://github.com/pyinstaller/pyinstaller/">PyInstaller</a>，然后进入到需要打包的 .py 文件所在文件夹，执行 cmd 指令：pyinstaller -F -w xx.py。<br>打包是很容易了，但是能正常运行则需要运气。使用 pyCharm 可以正常运行 py 文件，但是打成 exe 后运行直接崩溃。所以第一步：接入异常提示。</p>
-<h2 id="异常提示"><a href="#异常提示" class="headerlink" title="异常提示"></a>异常提示</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    <span class="comment"># do something</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="variable language_">self</span>.box = QMessageBox(QMessageBox.Warning, <span class="string">&#x27;提示&#x27;</span>,</span><br><span class="line">                           <span class="string">&quot;出错了!&quot;</span> + traceback.format_exc())</span><br><span class="line">    <span class="variable language_">self</span>.box.<span class="built_in">exec</span>()</span><br></pre></td></tr></table></figure>
-<p>获取到提示后，下一个错误就来了。</p>
-        
-          <a class="article-more-a" href="/2020/09/19/python-3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">python</a>
         		</li>
       		
 		</ul>
