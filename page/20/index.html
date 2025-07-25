@@ -154,6 +154,75 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-notification" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/11/notification/">Android Notification使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/01/11/notification/" class="archive-article-date">
+  	<time datetime="2016-01-11T12:46:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-01-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>最近的项目中，需要用到Notification。上一下效果图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/notification1.png" alt="这里写图片描述"></p>
+<p>首先，学习一下关于Notification的基本知识。</p>
+<p>状态通知栏主要涉及到2个类：  Notification 和 NotificationManager 。<br>Notification为通知信息类，它里面对应了通知栏的各个属性。<br>NotificationManager ：  是状态栏通知的管理类，负责发通知、清除通知等操作。<br>注意：NotificationManager 是一个系统Service，必须通过 getSystemService(NOTIFICATION_SERVICE)方法来获取：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">mNotificationManager</span> <span class="operator">=</span> (NotificationManager) getSystemService(NOTIFICATION_SERVICE)<span class="comment">;</span></span><br></pre></td></tr></table></figure><br>自定义Notification大致分为以下几步：</p>
+<ol>
+<li>自定义布局；</li>
+<li>使用NotificationCompat.Builder创建Notification。使用RemoteViews填充自定义布局，然后通过setContent()添加到Builder中；</li>
+<li>使用广播，添加按钮点击事件；</li>
+<li>NotificationManager.notify()将Notification显示到手机状态栏。</li>
+</ol>
+<p>下面结合代码进行说明。</p>
+        
+          <a class="article-more-a" href="/2016/01/11/notification/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-hybrid-introduction" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -828,11 +897,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
               </li>
              
               <li class="article-tag-list-item">
