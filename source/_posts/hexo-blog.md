@@ -2,7 +2,7 @@
 title: Windows使用Hexo + Github Pages搭建自己的博客
 date: 2016-03-17 11:30:45
 tags:
- - blog
+ - 博客
 ---
 
 本文主要讲述一下Windows环境使用Hexo + Github Pages搭建自己博客的一些主要步骤。

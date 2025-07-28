@@ -2,7 +2,7 @@
 title: Kotlin 协程小实践
 date: 2021-10-15 14:34:25
 tags:
- - Kotlin
+ - Android 进阶
 ---
 太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~
 [Kotlin 的协程「用力瞥一眼」](https://www.bilibili.com/video/BV164411C7FK)

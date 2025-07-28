@@ -2,7 +2,7 @@
 title: Android Studio发布项目到JCenter
 date: 2016-09-12 16:40:48
 tags:
- - android studio
+ - 开发工具
 ---
 
 在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。

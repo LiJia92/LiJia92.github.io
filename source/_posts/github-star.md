@@ -2,7 +2,7 @@
 title: 管理 Github 上的 star
 date: 2017-08-04 17:01:29
 tags:
- - 杂谈
+ - 开发工具
 ---
 Github 逛久了，相信大家都会有很多``star``，虽然很多``star``后面再也不会看的。但是只要有那么一丁点的可能回头看，我们还是需要将自己的``star``整理一下，不然感觉都是无从下手。那么问题便来了：如何管理 Github 上的 star ?
 答案便是 [Astral](https://app.astralapp.com)。这是我偶然发现的一个网站，它可以用来给 Github 上的 star 分类。

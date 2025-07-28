@@ -2,7 +2,7 @@
 title: 记一次动画实践
 date: 2019-12-12 11:48:19
 tags:
- - 日常开发
+ - Android 进阶
 ---
 废话少说，先上效果图：
 <video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E8%A7%86%E9%A2%91%E5%8A%A8%E7%94%BB%20.mp4" width="264" height="460" controls="controls">

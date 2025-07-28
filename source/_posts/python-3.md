@@ -2,7 +2,7 @@
 title: 一次 Python 工具编写的经历《三》
 date: 2020-09-19 17:55:59
 tags:
- - python
+ - 开发工具
 ---
 
 将整个 python 工具写好之后，最后一步便是生成 exe 文件提供给 Windows 电脑使用了，可以使用 pyinstaller 生成。这里需要注意个坑：**MacOS 只能生成 MacOS 对应的可执行文件，所以若要生成 exe，需要切换到 Windows 平台**。

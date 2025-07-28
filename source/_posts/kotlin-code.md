@@ -2,7 +2,7 @@
 title: Kotlin - 代码篇
 date: 2017-12-21 11:15:32
 tags:
- - Kotlin
+ - Android 进阶
 ---
 写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。
 

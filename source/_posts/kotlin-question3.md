@@ -2,7 +2,7 @@
 title: 关于使用 kotlin 碰到的一个坑（三）
 date: 2018-08-22 11:30:31
 tags:
- - Kotlin
+ - Android 进阶
 ---
 近期整理代码，出现了一个空指针异常，其源头为 MapController 类的一个方法：
 ```

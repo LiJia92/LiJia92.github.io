@@ -2,7 +2,7 @@
 title: ViewModel + LiveData 初探
 date: 2019-04-24 17:29:38
 tags:
- - JetPack
+ - Android 进阶
 ---
 Google 已经推出 Lifecycle、ViewModel、LiveData 等一系列架构组件已经很久了，但是自己一直没尝试使用，仅仅就是了解一点点，没有紧跟技术潮流持续学习，说来十分羞愧了。最近接到一个需求，界面如下：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/video.png)

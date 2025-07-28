@@ -2,7 +2,7 @@
 title: 记一次 ANR 寻根之旅
 date: 2019-07-04 15:12:38
 tags:
- - 日常开发
+ - Android 进阶
 ---
 最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。
 在 SplashActivity onCreate 的方法里打断点进都进不去，有点懵，所以将目标定位到 Application 初始化了。看着 Application 相关初始化的代码，没发现什么大问题。打断点逐步调试，运行到某一行时直接就无响应了，后面的代码也不执行了，logcat 也看不到有用的信息，有点摸不着头脑。后面 Google 发现可以直接看到手机 ANR 的日志，路径为：/data/anr/traces.txt，于是很欢快的将日志导出到电脑：

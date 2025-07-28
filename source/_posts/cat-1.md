@@ -2,7 +2,7 @@
 title: 土豆历险记
 date: 2019-12-18 14:58:46
 tags:
- - cat
+ - 生活杂谈
 ---
 上上周末，带土豆去洗了一次澡。从领回家到现在，就洗过一次澡...
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2019/1.jpg)

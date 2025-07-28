@@ -2,7 +2,7 @@
 title: MotionLayout 使用介绍
 date: 2019-08-13 16:18:16
 tags:
- - 日常开发
+ - Android 基础
 ---
 MotionLayout 是 ConstraintLayout 2.0 版本引入进来的，目前还在测试版本中，但感觉还挺有意思的，就写一篇记录一下。
 

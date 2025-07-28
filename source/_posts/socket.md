@@ -2,8 +2,7 @@
 title: Android直播利用Socket传输实时数据
 date: 2016-11-16 09:52:34
 tags:
- - 直播
- - java
+ - Android 进阶
 ---
 
 ## 前言

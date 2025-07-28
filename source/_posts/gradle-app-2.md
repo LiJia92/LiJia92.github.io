@@ -2,7 +2,7 @@
 title: Gradle 多版本管理（续）
 date: 2017-10-24 10:20:01
 tags:
- - gradle
+ - Android 进阶
 ---
 之前写过一篇[Gradle多版本管理](http://lastwarmth.win/2017/03/16/gradle-app/)，主要是通过``productFlavors``来控制产品版本。这篇文章将结合``buildTypes``来说一下多版本管理。
 在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：**利用 buildTypes 来控制编译类型。**

@@ -2,7 +2,7 @@
 title: Android实现照片墙背景
 date: 2016-02-17 17:34:49
 tags:
- - 自定义View
+ - Android 基础
 ---
 
 项目开发中，有一个这样的需求：

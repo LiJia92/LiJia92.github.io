@@ -2,7 +2,7 @@
 title: Fragment 问题小结
 date: 2019-01-10 14:49:12
 tags:
- - 日常开发
+ - Android 进阶
 ---
 ViewPager 用来做多 Tab 处理已经是十分常见的了，ViewPager 需要一个 Fragment List 来生成 Adapter，这些 Fragment 有时是完全一样的，界面元素、展示风格都一致，只是数据源不一致。通过抽象的思想，很容易写出基类，类似这样：
 ```

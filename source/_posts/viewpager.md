@@ -2,7 +2,7 @@
 title: 关于 ViewPager 的2点特性
 date: 2017-06-30 09:54:26
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 新手引导是每个 App 都具备的。如果新手引导直接用 Activity 来做，可能就会比较繁杂和冗余。所以一般都是 ViewPager 来实现。那么便会有 2 个问题：

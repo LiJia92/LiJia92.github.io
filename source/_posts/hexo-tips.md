@@ -2,7 +2,7 @@
 title: Hexo-Tips
 date: 2016-03-17 12:23:14
 tags:
- - blog
+ - 博客
 ---
 
 本文主要讲述一下使用Hexo搭建博客的一些Tips。

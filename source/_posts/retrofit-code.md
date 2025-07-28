@@ -2,7 +2,7 @@
 title: Retrofit 学习小结
 date: 2017-11-15 18:40:56
 tags:
- - sdk
+ - Android 进阶
 ---
 之前的一篇文章[Retrofit初识](http://lastwarmth.win/2016/06/23/retrofit/)尝试用了下 Retrofit。说来惭愧，到现在才写这篇文章。由于项目中没有使用的缘故，一直停留在了解的程度。最近自己学习做了个[Gank](https://github.com/LiJia92/Gank)客户端，一点点学习当前主流的技术，今天研究了下 Retrofit 的源码，颇有感触，便记录下来。
 

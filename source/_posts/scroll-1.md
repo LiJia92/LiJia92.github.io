@@ -2,7 +2,7 @@
 title: RecyclerView 滑动小记
 date: 2019-05-17 15:58:19
 tags:
- - 日常开发
+ - Android 进阶
 ---
 关于 RecyclerView 的滑动方法有很多：
 1. scrollToPosition

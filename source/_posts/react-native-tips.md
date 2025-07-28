@@ -2,7 +2,7 @@
 title: React Native For Android初探-问题小结
 date: 2016-01-19 11:38:48
 tags:
- - hybrid开发
+ - Android 进阶
 ---
 
 在[上一篇文章](http://lijia92.github.io/2016/01/15/react-native/)中，我介绍了React Native For Android的基本使用。这篇文章重点介绍一下使用过程中碰到的问题以及解决办法。

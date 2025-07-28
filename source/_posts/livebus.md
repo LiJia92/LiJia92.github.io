@@ -2,7 +2,7 @@
 title: LiveBus 之思考
 date: 2021-01-28 17:15:41
 tags:
- - JetPack
+ - Android 进阶
 ---
 在项目中使用到 [LiveBus](http://lastwarmth.win/2019/09/02/livedata/) 时，还是挺好用的，各方面的需求也都能满足。碰到的问题也能一一解决，这篇文章就稍微总结一下：
 

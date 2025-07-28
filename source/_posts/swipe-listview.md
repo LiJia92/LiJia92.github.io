@@ -2,7 +2,7 @@
 title: Android仿QQ实现ListView滑动删除
 date: 2015-11-14 02:09:38
 tags:
- - 自定义View
+ - Android 基础
 ---
 
 ## 前言

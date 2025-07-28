@@ -2,7 +2,7 @@
 title: Android感悟之造轮子
 date: 2016-09-12 11:17:11
 tags:
- - 自定义View
+ - Android 进阶
 ---
 
 最近项目要添加一个点赞的效果，类似[这篇文章所说](http://www.jianshu.com/p/03fdcfd3ae9c)，其实效果是差不多的，便打算直接拿来用了，感谢这位大大制作的轮子~

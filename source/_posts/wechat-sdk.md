@@ -2,7 +2,7 @@
 title: android接入微信支付SDK
 date: 2016-03-18 15:04:30
 tags:
- - sdk
+ - 日常开发
 ---
 
 本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。

@@ -2,7 +2,7 @@
 title: Xcode的基本使用
 date: 2016-12-07 14:36:05
 tags:
- - iOS
+ - 日常开发
 ---
 要开发iOS，Xcode是少不了的，这里摘录一下Xcode的基本使用。
 

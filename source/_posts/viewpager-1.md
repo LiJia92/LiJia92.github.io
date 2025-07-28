@@ -2,7 +2,7 @@
 title: ViewPager 左右突出
 date: 2020-05-09 16:29:19
 tags:
- - 日常开发
+ - Android 基础
 ---
 日常开发中经常会有如下需求：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png)

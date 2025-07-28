@@ -2,7 +2,7 @@
 title: CoordinatorLayout 滑动再探
 date: 2019-04-16 14:11:55
 tags:
- - 日常开发
+ - Android 进阶
 ---
 嗯，还是之前的路线详情的页面，新增了需求，导致界面结构又发生变化了。
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/coordinator.png)

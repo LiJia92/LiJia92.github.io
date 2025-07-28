@@ -2,7 +2,7 @@
 title: Android仿QQ空间浏览图片
 date: 2015-12-08 17:09:39
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 ## 前言

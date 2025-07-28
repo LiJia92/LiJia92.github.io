@@ -2,7 +2,7 @@
 title: 不平凡的 2022
 date: 2023-01-19 14:35:29
 tags:
- - 杂谈
+ - 生活杂谈
 ---
 今天是今年最后一天上班了，坐在工位上早已无心上班，有什么事情年后再说吧。
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG65124.jpeg)

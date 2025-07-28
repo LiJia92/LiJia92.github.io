@@ -2,7 +2,7 @@
 title: Android 约束布局的使用
 date: 2017-11-20 10:00:12
 tags:
- - 日常开发
+ - Android 基础
 ---
 习惯了用 LinearLayout、RelativeLayout 等布局，但是在某些界面的优化上这些布局很难做到。说下我项目中的实际例子：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/20/%E9%80%89%E5%8C%BA_254.png)

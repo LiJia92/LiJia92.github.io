@@ -2,7 +2,7 @@
 title: Android自定义属性
 date: 2016-05-10 15:42:43
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 ## 前言

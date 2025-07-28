@@ -2,7 +2,7 @@
 title: Android事件分发机制学习小记
 date: 2015-11-14 01:15:22
 tags:
- - 事件分发
+ - Android 基础
 ---
 
 Android事件分发机制有三类：Activity、View、ViewGroup，其调用顺序是Activity->ViewGroup->View，考虑到实际开发中Activity的事件分发很少用到，这里便不作赘述。想要了解的可自行百度、谷歌。

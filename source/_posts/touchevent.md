@@ -2,7 +2,7 @@
 title: Android开发事件分发小记
 date: 2016-08-05 15:39:32
 tags:
- - 事件分发
+ - Android 基础
 ---
 
 项目开发中，碰到这样一个情形：在点击页面空白处时会弹出状态栏，效果就如我[上一篇博客](http://lastwarmth.win/2016/08/04/statusbar/)一样。

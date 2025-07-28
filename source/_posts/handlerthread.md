@@ -2,7 +2,7 @@
 title: 高德地图 Marker 聚合
 date: 2019-08-05 14:36:57
 tags:
- - sdk
+ - Android 进阶
 ---
 高德地图有个[官方 Demo](https://github.com/amap-demo/android-cluster-marker)用来实现 Marker 聚合，但不是在 SDK 里。项目里也有这个需求，但是比较简单，不用做到数量计算，只需要当 Marker 数量很多的的时候，只展示部分 Marker，显示了会覆盖的 Marker 则直接不显示。每次移动地图都会请求新的数据，然后来进行展示，为了避免移动地图导致频繁请求数据，可以做个简单的优化：移动后延迟一定时间再去请求数据，在延迟时间内再次移动地图，则取消上次请求的动作，重新请求。综合考虑，使用 HandlerThread 便是不二之选了，在这里记录一下，以后或许用得到。
 

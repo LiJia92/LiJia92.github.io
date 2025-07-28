@@ -2,7 +2,7 @@
 title: Android 滑动吸顶效果
 date: 2019-03-12 14:06:58
 tags:
- - 日常开发
+ - Android 进阶
 ---
 啥也不说，先上个图：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/scroll.gif)

@@ -2,7 +2,7 @@
 title: Android 获取 BuildConfig 信息
 date: 2018-01-04 09:36:15
 tags:
- - 日常开发
+ - Android 基础
 ---
 项目开发中，我们的 App 这个 Module 定义了3个 buildType：
 ```

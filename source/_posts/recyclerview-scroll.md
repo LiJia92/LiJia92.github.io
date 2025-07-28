@@ -2,6 +2,7 @@
 title: CoordinatorLayout + RecyclerView 处理滑动
 date: 2018-12-12 10:25:19
 tags:
+ - Android 进阶
 ---
 先看一下设计稿：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png)

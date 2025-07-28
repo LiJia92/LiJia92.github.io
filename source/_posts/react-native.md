@@ -2,7 +2,7 @@
 title: React Native For Android初探
 date: 2016-01-15 17:20:02
 tags:
- - hybrid开发
+ - Android 进阶
 ---
 
 ## 介绍

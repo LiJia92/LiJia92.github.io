@@ -2,7 +2,7 @@
 title: Usb 摄像头绑定
 date: 2022-04-12 16:44:45
 tags:
- - 日常开发
+ - Android 进阶
 ---
 在之前的文章中，写了一个 CameraIntent 的类，代表用到摄像头的业务。App 允许连接多个 Usb 摄像头，然后将业务绑定到一个确定的 Usb 端口。如果这个端口插入了摄像头，则可以直接使用摄像头产生的数据进行业务处理，如果没插入摄像头，则相应的业务不做处理或中断。
 通过 UsbManager.ACTION_USB_DEVICE_ATTACHED、UsbManager.ACTION_USB_DEVICE_DETACHED 广播可以知道 Usb 设备插入、拔出的时机。通过 intent 获取到的是一个 UsbDevice 对象。如何通过这样的一个 UsbDevice 确定物理实际的 Usb 端口呢？

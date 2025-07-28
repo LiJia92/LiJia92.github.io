@@ -2,7 +2,7 @@
 title: Gradle 多版本管理
 date: 2017-03-16 16:54:10
 tags:
- - gradle
+ - Android 进阶
 ---
 之前有写过一篇[Android Studio使用Gradle进行多渠道打包](http://lastwarmth.win/2016/03/09/gradle-pack/)，多渠道打包算是Gradle最常用的功能了，但是它的强大可不止于此。
 

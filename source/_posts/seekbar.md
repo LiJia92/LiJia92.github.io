@@ -2,7 +2,7 @@
 title: Android自定义View实现弧形SeekBar
 date: 2016-04-27 13:53:19
 tags:
- - 自定义View
+ - Android 进阶
 ---
 
 ## 前言

@@ -2,7 +2,7 @@
 title: Android仿美团下拉刷新
 date: 2016-04-18 16:07:15
 tags:
- - 自定义View
+ - Android 进阶
 ---
 
 在之前看过一篇文章[Android自定义控件之仿美团下拉刷新](http://blog.csdn.net/nugongahou110/article/details/49557875)，就是实现仿美团下拉刷新。一直对ListView等控件的下拉刷新的了解程度，可能也就停留在``用HeaderView来实现，然后重写onTouchEvent``，但是具体应该是怎样的呢？一直没有实际动手自己写过，于是抽空自己照着这篇博客自己写了一遍，以加深自己的理解。我对原博客进行摘录，重点写出一些对自己帮助大的内容。

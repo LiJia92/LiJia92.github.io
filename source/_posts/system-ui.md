@@ -2,7 +2,7 @@
 title: Android状态栏、虚拟按键小记
 date: 2016-09-20 16:05:23
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 之前写过一篇[状态栏小记](http://lastwarmth.win/2016/08/04/statusbar/)，这里加入虚拟按键重新做一下总结。

@@ -2,7 +2,7 @@
 title: Android DDMS无法输出logcat
 date: 2015-10-24 16:00:11
 tags:
- - 日常开发
+ - 开发工具
 ---
 
 ### 问题

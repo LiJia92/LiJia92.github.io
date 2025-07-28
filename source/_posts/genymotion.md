@@ -2,7 +2,7 @@
 title: Android Studio使用Genymotion小记
 date: 2015-11-05 10:46:29
 tags:
- - android studio
+ - 开发工具
 ---
 
 在学习Android Studio的过程中，看到网上很多人都推荐使用Genymotion插件，在某些无法使用真机的情况下，这个模拟器插件能大大加快模拟器的运行速度。而且由于没有Android 5.0以上的真机，使用Genymotion可以运行Android 5.0以上的模拟器，看看Meterial Design的设计，所谓一举两得，于是便开始了一波Genymotion的学习。

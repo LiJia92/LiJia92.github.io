@@ -2,7 +2,7 @@
 title: 一次 Python 工具编写的经历《二》
 date: 2020-09-19 16:40:33
 tags:
- - python
+ - 开发工具
 ---
 继[上篇文章](http://lastwarmth.win/2020/09/15/python-1/)，获取到序列号后，接下来就是得打印了。python 里使用打印，可以直接使用**PyQt5.QtPrintSupport**。
 

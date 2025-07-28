@@ -2,7 +2,7 @@
 title: Android实现渐变title栏
 date: 2016-03-02 10:03:48
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 最近用美团外卖点餐看到这样一个效果：

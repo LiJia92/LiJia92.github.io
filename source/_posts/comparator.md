@@ -2,7 +2,7 @@
 title: Java 中的 Comparator
 date: 2017-12-20 16:04:13
 tags:
- - java
+ - Java
 ---
 最近写过一个界面，涉及到排序。
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png)

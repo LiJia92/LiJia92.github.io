@@ -2,8 +2,7 @@
 title: Android Studio中使用.9（Nine Patch）图
 date: 2015-11-23 10:09:38
 tags:
- - android studio
- - 日常开发
+ - Android 基础
 ---
 
 本文主要结合Android Studio讲述一下.9图片的原理与使用。

@@ -2,7 +2,7 @@
 title: Dialog 新姿势
 date: 2022-05-31 16:16:34
 tags:
- - 日常开发
+ - Android 基础
 ---
 近日测试同学报了一个 bug，当界面展示了雷达距离弹窗时，登录页面的按钮竟然还可以点击，点击 EditText 可以唤醒系统键盘，但是点击系统键盘后无法输出到 EditText 上。布局大概是这样：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG354.png)

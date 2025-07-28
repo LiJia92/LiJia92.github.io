@@ -2,7 +2,7 @@
 title: 关于 ConcurrentModificationException 异常
 date: 2017-07-11 16:24:35
 tags:
- - java
+ - Java
 ---
 
 List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：

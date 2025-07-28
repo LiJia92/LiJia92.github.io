@@ -2,7 +2,7 @@
 title: Android Notification使用小记
 date: 2016-01-11 20:46:50
 tags:
- - 日常开发
+ - Android 基础
 ---
 
 ## 介绍

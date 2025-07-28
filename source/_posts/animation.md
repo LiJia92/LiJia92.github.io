@@ -2,7 +2,7 @@
 title: Android 动画序列的实现
 date: 2019-02-02 14:19:14
 tags:
- - 日常开发
+ - Android 进阶
 ---
 老规矩，上需求：
 ![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/animation.gif)

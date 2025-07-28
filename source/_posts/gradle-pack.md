@@ -2,7 +2,7 @@
 title: Android Studio 使用 Gradle 进行多渠道打包
 date: 2016-03-09 14:39:58
 tags:
- - gradle
+ - 日常开发
 ---
 
 使用Android Studio也有一段时间了，最近项目开发完成，内部测试也已经通过。下一步就是渠道打包，然后上线了。

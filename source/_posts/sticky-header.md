@@ -2,7 +2,7 @@
 title: Android 列表 Header 吸顶效果
 date: 2018-07-23 15:19:58
 tags:
- - 日常开发
+ - Android 进阶
 ---
 现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。
 页面大致如下：
