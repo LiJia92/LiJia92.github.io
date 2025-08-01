@@ -1,37 +1,68 @@
 ---
 title: CodeBuddy IDE 初体验
-date: 2025-07-28 11:43:50
+date: 2025-08-01 08:43:50
 tags:
  - AI
 ---
-在上周五的时候，观看了一些公众号讲解关于 CodeBuddy IDE 的文章，让让我对这款腾讯云最新推出的AI编程工具产生了浓厚兴趣。作为国内首个实现"产品-设计-研发部署"全流程AI一体化的开发工作台，CodeBuddy IDE的出现正在重塑软件开发的范式。
+最近腾讯发布了 CodeBuddy IDE，也看了一些公众号讲解关于 CodeBuddy IDE 的文章，让我对这款腾讯最新推出的 AI 编程工具产生了浓厚兴趣。但是这个 IDE 需要邀请码才可以使用，蹲了几个公众号抽奖都没抽到，无奈只能去官网自己申请注册码试一下了。本身也没抱什么希望，唉（二声），你还别说，后面还真通过了，给我发了邀请码：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/3.png" width="50%">
+于是这几天就捣鼓了起来，简单记录一下。
 
 <!-- more -->
 
-### 产品定位：AI驱动的全栈开发新时代
-CodeBuddy IDE不仅仅是一个代码编辑器，它定位为开发者的AI搭档，能够理解设计意图、生成代码、重构应用，甚至处理部署流程。它的目标是将开发者从繁琐的编码工作中解放出来，专注于创意和架构设计等更高层次的工作<mcreference link="https://cloud.tencent.com/developer/article/2545999?policyId=1003" index="1"></mcreference>。腾讯云开发者产品总经理刘毅表示，未来AI编程将分化成两种范式：简单应用开发需求，非技术背景的个人开发者通过氛围编程即可实现；复杂系统需要专业化的团队协作，则需要基于共同规范的规约编程<mcreference link="http://m.toutiao.com/group/7530234199454827046/" index="2"></mcreference>。
+IDE 使用需要使用 Google 账号进行登录，懂得都懂。登录后输入邀请码，便可以开始了。初始界面是这样的：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/1.png)
 
-### 核心功能概览
-CodeBuddy IDE集成了多项革命性功能，彻底改变了传统开发流程：
+乍一看挺有感觉的，好感一下子就起来了。国际版目前支持 5 个模型：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/2.png" width="50%">
 
-**AI设计生成**：将手绘概念和创意转化为高保真交互原型，缩短设计周期，快速验证创意<mcreference link="https://cloud.tencent.com/developer/article/2545999?policyId=1003" index="1"></mcreference>。用户可以上传手绘草图、线框图，甚至是参考图片，AI都能智能解析并转化为可交互的产品原型<mcreference link="https://cloud.tencent.com/developer/article/2546451" index="5"></mcreference>。
+啥也不说了，使用 Claude-4.0-Sonnet 先来一把再说。我直接抽取了相应的提示词，把[上一篇关于爬楼的文章](https://lastwarmth.win/2025/07/25/climb/)进行优化。然后它工作的时候是这样的：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/4.png)
 
-**AI代码补全**：基于先进AI技术的智能实时代码预测与自动补全，提高编码效率，减少语法错误<mcreference link="https://cloud.tencent.com/developer/article/2545999?policyId=1003" index="1"></mcreference>。
+这个工作中的界面，交互，感觉起来还是很喜欢的。最后生成的文字，我阅读后十分满意。AI 味儿没有那么浓，也比我自己写的文字要规范准确一些，索性就直接保存发布了。
+我的博客从 15 年开始写，到现在也差不多 10 个年头了，早期的很多稚嫩仍然保留在博客里。现在回首望去，感慨还是蛮多的。开发过程中，碰到一些老问题，我还是经常翻看自己的博客，找之前记录的文章。比如前阵子更换办公电脑，我就看之前的文章在新电脑上部署博客环境。现在文章越来越多，找起来就变得麻烦了，早期设置的 Tag 也是随手一写，也没有用心维护。遂决定用这个 IDE 帮我优化一下 Tag，方便后面根据 Tag 寻找文章。
+<div style="width: 50%; float: left;">
+  <img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/10.png" width="100%">
+  <p style="text-align: center; margin-top: 5px; margin-bottom: 10px; font-style: italic;">优化后</p>
+</div>
+<div style="clear: both;"></div>
 
-**设计到代码转换**：将Figma设计以99.9%的精确度转换为生产就绪代码，消除设计与开发之间的鸿沟，加速产品迭代<mcreference link="https://cloud.tencent.com/developer/article/2545999?policyId=1003" index="1"></mcreference>。
+然后我输入了提示词：
+> 将 _posts 文件下面的所有文章的标签进行梳理，结合文章内容，重新分类进行设置标签，总的标签个数不超要超过 9 个。
 
-**多模型支持**：国际版整合了Claude、GPT、Gemini等顶尖AI模型，国内版支持腾讯混元、DeepSeek等模型，满足不同开发者的需求<mcreference link="http://m.toutiao.com/group/7530234199454827046/" index="2"></mcreference>。
+于是它开始工作了。
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/6.png)
 
-**全流程开发支持**：从需求分析到PRD生成，再到设计、开发和部署，CodeBuddy IDE提供了一站式解决方案。用户只需用自然语言描述产品构想，AI即可辅助进行深度需求分析，生成结构化的需求文档（PRD）<mcreference link="https://cloud.tencent.com/developer/article/2546451" index="5"></mcreference>。
+工作过程的每一步，有个小箭头，点开后可以看它具体是怎么干的。初步看了一眼结果，不是很满意，有的 Tag 下面只有一篇文章。于是修改提示词，重新运行：
+> 将 _posts 文件下面的所有文章的标签进行梳理，结合文章内容，重新分类进行设置标签，总的标签个数不超要超过 9 个，每个标签下面的文章不要少于 8 个。
 
-### 革命性的开发体验
-传统软件开发需要产品、设计、研发多个团队接力协作，涉及产品规划、设计、研发和部署多个环节。而CodeBuddy IDE允许用户一个人担任"产品经理、设计师和前后端工程师"，实现从创意到产品的全流程开发<mcreference link="http://m.toutiao.com/group/7530234199454827046/" index="2"></mcreference>。
+它创建了一些 py 来进行梳理，执行 py 拿到结果然后输入。一通操作后我得到的结果是这样的：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/7.png)
 
-例如，开发一个"二手书交易平台"，用户只需输入需求，CodeBuddy就能处理从需求分析、界面设计到后端逻辑、数据库配置的全流程。通过内置BaaS服务和强大的AI编程助手，极大简化了动态网站的开发过程<mcreference link="https://cloud.tencent.com/developer/article/2546451" index="5"></mcreference>。
+但是我看了一眼结果，Android 标签设置得太多，有点重复，于是重新修改提示词：
+> _posts 下面的文章太杂了，我现在梳理了 8 个标签，帮我按照文章内容，将文章归类到相应的标签下面：
+> 1. 生活杂谈（与技术无关，纯唠嗑）
+> 2. Android 基础（比较简单一点的安卓技术，放到这个标签）
+> 3. Android 进阶（比较复杂一点的安卓技术，放到这个标签）
+> 4. 日常开发（比较零碎的代码开发，不适合放在基础或进阶的，放这个标签）
+> 5. 博客（跟写博客相关的技术）
+> 6. 开发工具（安卓技术之外使用的一些工具记录）
+> 7. Java(纯 Java 技术)
+> 8. 技术思路（不涉及具体代码，讲解技术思路的）
 
-### 适用人群与未来展望
-CodeBuddy IDE不仅适合专业开发者提升效率，更降低了软件开发的门槛，让非技术背景的从业者也能快速实现创意<mcreference link="http://m.toutiao.com/group/7530234199454827046/" index="2"></mcreference>。腾讯云开发者产品总经理刘毅认为，这将催生更多独立开发者，形成一个增量市场<mcreference link="http://m.toutiao.com/group/7530234199454827046/" index="2"></mcreference>。
+但是这次结果比上次还差一些了...
+于是我切换到了 Gemini-2.5-Pro 模型，再运行一次。这个模型好傻，它竟然是每 3 篇文章执行一次：
+![](https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/9.png)
 
-随着AI技术的不断发展，CodeBuddy IDE有望在以下方面持续进化：更精准的代码生成能力、更自然的交互方式、更深度的行业解决方案定制，以及更广泛的生态系统整合。对于开发者而言，拥抱这类AI辅助工具将成为提升竞争力的关键。
+差不多 200 篇文章，我等了好久好久，终于跑完了。然后对着看了一下，文章的 Tag 设置得比较符合我的想法，可能这就是慢工出细活的完美体现。只不过某些文章仍然保留了老旧的 Tag，压根没进行修改。所以最终，还是得我人力一篇一篇文章去修改，费了老大鼻子劲了。
 
-总体而言，CodeBuddy IDE代表了软件开发的未来趋势，通过AI驱动的全流程整合，它不仅提高了开发效率，更重新定义了软件开发的可能性，让创意转化为产品的过程变得前所未有的简单。
+AI 时代，虽然要保持学习，但是它的变化真的是太快了。网上看到的一张图片，深有同感。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/8/5.jpg" width="50%">
+
+通过这次 CodeBuddy IDE 的初体验，我对这款腾讯推出的 AI 编程工具有了更深入的了解。从申请邀请码的惊喜，到实际使用中的各种尝试，整个过程可以说是喜忧参半。CodeBuddy IDE 的体验感还是不错的，但是大模型解决问题的能力，依然和我前文中所说，比较拧巴，很难一下子就能戳到心窝里，当然也有可能是我的使用姿势不对。另外，CodeBuddy IDE 还有很多功能，包括 Figma 实现、MCP、远程部署等等，后续还会继续探索。
+
+回顾我的 AI 编程工具使用历程，早期也尝试过 Cursor、Trae 等 IDE，但因为费用和排队等问题最终都放弃了。后来比较稳定使用的是 VS Code 的插件 Cline，自费购买了一些 DeepSeek 的 API 服务，到现在还有些余额。不过作为插件形式存在，总感觉缺少了些"原生"的体验感。
+
+对于腾讯这家公司，我一直保持着好感和期待。在 AI 时代，技术能力固然重要，但数据资源同样是核心竞争力。腾讯凭借 QQ、微信这两大社交平台积累的海量用户数据，为其大模型训练提供了得天独厚的优势。在国内 AI 公司中，我比较看好字节、阿里和腾讯这三家，它们不仅具备强大的技术实力，更拥有丰富的数据资源和应用场景。
+
+感慨 AI 时代的发展速度实在太快了，大模型在不断更新迭代，AI Agent 也在持续升级优化，真的是日新月异。可能今天很厉害的东西，明天就成为了时代的眼泪。作为开发者，既要保持学习的热情，也要在这个快速变化的时代中找到自己的节奏。
