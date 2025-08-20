@@ -154,6 +154,68 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-code-copy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/22/code-copy/">解锁拷贝代码的新姿势</a>
+    </h1>
+  
+
+        
+        <a href="/2018/01/22/code-copy/" class="archive-article-date">
+  	<time datetime="2018-01-22T07:13:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为程序员，我们总会有各种拷贝代码的需求，例如现场部署，基友探讨，亦或是 公司电脑 -&gt; 自家电脑 等等。最最无脑的就是直接硬盘拷贝了，复制代码文件夹或压缩文件，直接拷贝到自己的硬盘或 U 盘里。但是作为安卓开发，如果要拷贝安卓代码，那就很费劲了。因为 Android Studio 会生成各种与代码无关的文件，尤其是 build 文件夹，有些时候代码可能就一两百兆，但是 build 文件夹就能有大几百兆甚至上 G 了。当然我们可以先 clean，然后再拷贝，但是如果项目复杂，多个工程多个 Module 互相依赖的，那就得每个 Module 都执行一遍 clean 了，想想那有多繁杂。</p>
+<p>现在大多的代码版本控制都是采用的 Git，我们需要的其实就只是代码文件，其他的一概不需要，而 Git 内部的 .gitignore 不是正好对应我们的需求吗？所以，我们得从版本控制的角度来拷贝代码。相信大多数公司项目的代码都是私有仓库，只能在公司内网访问到。但我们可以给代码添加远程仓库 origin，这个 origin 可以指到 Github 或自己搭建的 Git 服务器，但是如果是公司代码是不建议这么做的，泄密了嘛～若是自己写的小工具，三方库倒是没什么影响，但这也不是本文要说的重点。</p>
+<p>今天就说一下利用 Git 拷贝代码的新姿势，SVN 或其他版本控制工具不在此文范围之内。<strong>其实就是一个 Git 命令：git bundle。</strong></p>
+        
+          <a class="article-more-a" href="/2018/01/22/code-copy/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-summary-2017" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -693,72 +755,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-retrofit-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/15/retrofit-code/">Retrofit 学习小结</a>
-    </h1>
-  
-
-        
-        <a href="/2017/11/15/retrofit-code/" class="archive-article-date">
-  	<time datetime="2017-11-15T10:40:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前的一篇文章<a href="http://lastwarmth.win/2016/06/23/retrofit/">Retrofit初识</a>尝试用了下 Retrofit。说来惭愧，到现在才写这篇文章。由于项目中没有使用的缘故，一直停留在了解的程度。最近自己学习做了个<a href="https://github.com/LiJia92/Gank">Gank</a>客户端，一点点学习当前主流的技术，今天研究了下 Retrofit 的源码，颇有感触，便记录下来。</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>关于正常的使用，参考之前的那篇文章。这里再写一下结合 RxJava 的使用。</p>
-<ol>
-<li>定义接口：<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">GankService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">&quot;day/&#123;year&#125;/&#123;month&#125;/&#123;day&#125;&quot;</span>)</span><br><span class="line">    Observable&lt;GankDailyResult&gt; <span class="built_in">getDailyData</span>(<span class="variable">@Path</span>(<span class="string">&quot;year&quot;</span>) int year, <span class="variable">@Path</span>(<span class="string">&quot;month&quot;</span>) int month, <span class="variable">@Path</span>(<span class="string">&quot;day&quot;</span>) int day);</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">&quot;data/&#123;type&#125;/&#123;count&#125;/&#123;page&#125;&quot;</span>)</span><br><span class="line">    Observable&lt;GankCategoryResult&gt; <span class="built_in">getCategoryData</span>(<span class="variable">@Path</span>(<span class="string">&quot;type&quot;</span>) String type, <span class="variable">@Path</span>(<span class="string">&quot;count&quot;</span>) int count, <span class="variable">@Path</span>(<span class="string">&quot;page&quot;</span>) int page);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>初始化 Retrofit，生成代理对象：<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.<span class="keyword">Builder()</span></span><br><span class="line"><span class="keyword"></span>        .<span class="keyword">baseUrl(BASE_GANK_URL)</span></span><br><span class="line"><span class="keyword"></span>        .<span class="keyword">addConverterFactory(GsonConverterFactory.create())</span></span><br><span class="line"><span class="keyword"></span>        .<span class="keyword">addCallAdapterFactory(RxJava2CallAdapterFactory.create())</span></span><br><span class="line"><span class="keyword"></span>        .client(okHttpClient.<span class="keyword">build())</span></span><br><span class="line"><span class="keyword"></span>        .<span class="keyword">build();</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line">mService = retrofit.create(GankService.class);</span><br></pre></td></tr></table></figure></li>
-<li>调用接口：<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GankRequestManager<span class="selector-class">.getInstance</span>()<span class="selector-class">.getCategory</span>(type, PAGE_SIZE, mPage)</span><br><span class="line">        <span class="selector-class">.subscribeOn</span>(Schedulers.io())</span><br><span class="line">        <span class="selector-class">.observeOn</span>(AndroidSchedulers.mainThread())</span><br><span class="line">        <span class="selector-class">.subscribe</span>(new Consumer&lt;GankCategoryResult&gt;() &#123;</span><br><span class="line">            <span class="keyword">@Override</span></span><br><span class="line">            public void accept(GankCategoryResult gankCategoryResult) throws Exception &#123;</span><br><span class="line">                mPage++;</span><br><span class="line">                if (mView != null) &#123;</span><br><span class="line">                    mView<span class="selector-class">.showList</span>(type, gankCategoryResult.results);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></li>
-</ol>
-        
-          <a class="article-more-a" href="/2017/11/15/retrofit-code/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>

@@ -154,6 +154,66 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-jetpack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/24/jetpack/">ViewModel + LiveData 初探</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/24/jetpack/" class="archive-article-date">
+  	<time datetime="2019-04-24T09:29:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Google 已经推出 Lifecycle、ViewModel、LiveData 等一系列架构组件已经很久了，但是自己一直没尝试使用，仅仅就是了解一点点，没有紧跟技术潮流持续学习，说来十分羞愧了。最近接到一个需求，界面如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/video.png"></p>
+        
+          <a class="article-more-a" href="/2019/04/24/jetpack/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-coordinator-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -695,66 +755,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-recyclerview-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/recyclerview-scroll/">CoordinatorLayout + RecyclerView 处理滑动</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/12/recyclerview-scroll/" class="archive-article-date">
-  	<time datetime="2018-12-12T02:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先看一下设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png"><br>最底层是个地图，再上面有一些按钮，最上层是路线信息 UI，页面可以滑动，滑动时地图和按钮不动，自然而然想到的 RecyclerView 来实现。<br>早些时候只有 2 个按钮，使用了一种很笨拙的方式，与之前写过的一篇文章类似：<a href="http://lastwarmth.win/2016/04/22/android-scroll/">一个关于Android滑动“因缺斯厅”的想法</a>。<br>这种方式，相当于有四层：地图-&gt;按钮-&gt;RecyclerView-&gt;与按钮相同位置的View，但是是透明的。界面布局就像这样：</p>
-        
-          <a class="article-more-a" href="/2018/12/12/recyclerview-scroll/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>

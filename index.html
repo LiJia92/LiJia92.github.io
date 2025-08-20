@@ -154,6 +154,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-codebuddy-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/08/20/codebuddy-1/">CodeBuddy IDE 再探</a>
+    </h1>
+  
+
+        
+        <a href="/2025/08/20/codebuddy-1/" class="archive-article-date">
+  	<time datetime="2025-08-20T01:43:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-08-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们之前做的项目是关于科二考试的，里面涉及到非常多的规则设置。比如项目完成时间 210 秒，那如果超过这个时间没有完成项目就会进行扣分。类似的规则设置非常非常多，现状是这些规则都需要手动去设置，比较麻烦。而且只有对规则非常熟悉的人，才能找到对应的规则进行设置。于是我们想能不能用 AI 来帮助我们设置这些规则，用户输入自然语言，我们识别到具体的规则标识出来，并设置好具体的规则值。比如用户输入：“项目完成时间 210 秒”，我们就识别到项目完成时间这个规则，并且设置好规则值 210。当然也可以提供编辑框，对 210 进行编辑。鉴于我们的规则非常多，所以分两步来做：</p>
+<ol>
+<li>先识别具体的项目。若有多个，则弹窗由用户选择。</li>
+<li>将这个项目的所有规则，设置为本地数据，AI 根据这个本地数据给出修改建议。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2025/08/20/codebuddy-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">AI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-codebuddy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -683,66 +747,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">生活杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-android-upgrade" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/11/09/android-upgrade/">Android 版本升级</a>
-    </h1>
-  
-
-        
-        <a href="/2023/11/09/android-upgrade/" class="archive-article-date">
-  	<time datetime="2023-11-09T09:14:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-11-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>公司内部有一套自己的基础库，各 App 或者模块都使用这个基础库进行开发。基础库有自己的迭代版本，可能是需求开发，也可能是 bugfix。项目初期，基于 16 版本的基础库进行开发，后续有若干个性化需求或者 bug 需要调整，便基于 16 的版本创建了 16-jky 的个性版本，用于自己这个项目。后面便独立出来了，不再跟进基础库的版本升级了，自己有 bug 或者需求自己改，自己升版本，自己用。<br>项目后期有一个 SDK 的需求，抽出项目中的一些功能，给出一个 SDK 由公司另一个 App 集成。这个 SDK 是基于 16-jky 版本进行开发。近期公司基础库做了很大的升级，升到了 18，适配到了 Android 14。集成的 App 也需要升级，便要求我们出一个基于最新版本基础库的 SDK。于是便开始了一次 Android 版本升级之旅，小小记录一下，万一后面项目也需要升级呢。</p>
-        
-          <a class="article-more-a" href="/2023/11/09/android-upgrade/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
