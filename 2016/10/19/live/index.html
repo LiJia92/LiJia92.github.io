@@ -9,17 +9,17 @@
   <title>【Android音视频开发】- 直播 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个【Android音视频开发】系列，此文便是开篇了！PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可">
-<meta name="keywords" content="直播">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Android音视频开发】- 直播">
 <meta property="og:url" content="http://lijia92.github.io/2016/10/19/live/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个【Android音视频开发】系列，此文便是开篇了！PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.116Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-10-19T10:05:45.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.458Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【Android音视频开发】- 直播">
-<meta name="twitter:description" content="前言2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个【Android音视频开发】系列，此文便是开篇了！PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,22 +178,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个<code>【Android音视频开发】</code>系列，此文便是开篇了！<br>PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可能根本就不适用，我通过实例验证，做下此总结。最近一直在看这一块的东西，今天抽空，趁着记忆的知识还比较新鲜记下来，好记性不如烂笔头，也希望能帮助到其他的人。</p>
-<h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><p>从技术层面上来，直播大致分为：音视频采集、美颜/滤镜/特效处理、编码、封包、推流、分发、解码/渲染/播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
+<h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><p>从技术层面上来，直播大致分为：音视频采集、美颜&#x2F;滤镜&#x2F;特效处理、编码、封包、推流、分发、解码&#x2F;渲染&#x2F;播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
 <ol>
-<li>视频实时采集：Camera预览/MediaRecorder绑定LocalSocket</li>
-<li>音频实时采集：MediaRecorder/AudioRecord/OpenSL ES</li>
+<li>视频实时采集：Camera预览&#x2F;MediaRecorder绑定LocalSocket</li>
+<li>音频实时采集：MediaRecorder&#x2F;AudioRecord&#x2F;OpenSL ES</li>
 <li>特效处理：视频磨皮美颜，音频降噪去回声等算法</li>
-<li>编解码：H264&amp;AAC，MediaCodec(API &gt;= 16)硬解，ffmpeg等三方库软解</li>
+<li>编解码：H264&amp;AAC，MediaCodec(API &gt;&#x3D; 16)硬解，ffmpeg等三方库软解</li>
 <li>流媒体传输：rtmp rtsp hls等</li>
 <li>渲染播放：MediaPlayer，ijkplayer等三方库</li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h2><h3 id="编解码"><a href="#编解码" class="headerlink" title="编解码"></a>编解码</h3><p>采集到的原始音视频数据是非常大的，不利于传输，所以就需要对这些数据进行压缩，这个过程就是编码。解码则是编码的逆向过程。编码分为硬编码、软编码，解码也是如此。</p>
 <ul>
 <li>硬编码：使用非CPU进行编码，如显卡GPU、专用的DSP、FPGA、ASIC芯片等。性能高，低码率下通常质量低于硬编码器，但部分产品在GPU硬件平台移植了优秀的软编码算法（如X264）的，质量基本等同于软编码。</li>
 <li>软编码：使用CPU进行编码。性能高，低码率下通常质量低于硬编码器，但部分产品在GPU硬件平台移植了优秀的软编码算法（如X264）的，质量基本等同于软编码。</li>
 </ul>
-<p>关于音视频压缩编码的基本原理可以参见雷神的<a href="http://blog.csdn.net/leixiaohua1020/article/details/28114081" target="_blank" rel="noopener">这篇文章</a>。</p>
+<p>关于音视频压缩编码的基本原理可以参见雷神的<a target="_blank" rel="noopener" href="http://blog.csdn.net/leixiaohua1020/article/details/28114081">这篇文章</a>。</p>
 <h3 id="视频编码"><a href="#视频编码" class="headerlink" title="视频编码"></a>视频编码</h3><p>视频编码的主要作用是将视频像素数据（RGB，YUV等）压缩成为视频码流，从而降低视频的数据量。主要视频编码一览：</p>
 <table>
 <thead>
@@ -208,16 +205,15 @@
 <th>目前使用领域</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>HEVC(H.265)</td>
-<td>MPEG/ITU-T</td>
+<td>MPEG&#x2F;ITU-T</td>
 <td>2013</td>
 <td>研发中</td>
 </tr>
 <tr>
 <td>H.264</td>
-<td>MPEG/ITU-T</td>
+<td>MPEG&#x2F;ITU-T</td>
 <td>2003</td>
 <td>各个领域</td>
 </tr>
@@ -251,8 +247,7 @@
 <td>2006</td>
 <td>微软平台</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>不难看出，目前主流的视频编码便是H264了，我们项目中选取的也是此编码标准。</p>
 <h3 id="音频编码"><a href="#音频编码" class="headerlink" title="音频编码"></a>音频编码</h3><p>音频编码的主要作用是将音频采样数据（PCM等）压缩成为音频码流，从而降低音频的数据量。主要音频编码一览：</p>
 <table>
@@ -264,8 +259,7 @@
 <th>目前使用领域</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>AAC</td>
 <td>MPEG</td>
 <td>1997</td>
@@ -289,10 +283,9 @@
 <td>1999</td>
 <td>微软平台</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p>那么主流的音频编码便是AAC了，项目选取的也是此编码标准。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.zhihu.com/question/42162310" target="_blank" rel="noopener">如何搭建一个完整的视频直播系统？</a><br><a href="http://www.jianshu.com/p/8436c7353296" target="_blank" rel="noopener">android音视频点/直播模块开发</a><br><a href="http://blog.csdn.net/leixiaohua1020/article/details/18893769" target="_blank" rel="noopener">视音频编解码技术零基础学习方法</a><br><a href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&amp;mid=2653547042&amp;idx=1&amp;sn=26d8728548a6b5b657079eeab121e283&amp;scene=1&amp;srcid=0428msEitG9LJ3JaKGaRCEjg&amp;from=groupmessage&amp;isappinstalled=0#wechat_redirect" target="_blank" rel="noopener">移动直播技术秒开优化经验</a><br><a href="http://dev.qq.com/topic/5811d42e7fd6ec467453bf58" target="_blank" rel="noopener">从0到1打造直播 App</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/42162310">如何搭建一个完整的视频直播系统？</a><br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/8436c7353296">android音视频点&#x2F;直播模块开发</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/leixiaohua1020/article/details/18893769">视音频编解码技术零基础学习方法</a><br><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547042&idx=1&sn=26d8728548a6b5b657079eeab121e283&scene=1&srcid=0428msEitG9LJ3JaKGaRCEjg&from=groupmessage&isappinstalled=0#wechat_redirect">移动直播技术秒开优化经验</a><br><a target="_blank" rel="noopener" href="http://dev.qq.com/topic/5811d42e7fd6ec467453bf58">从0到1打造直播 App</a></p>
 
       
 
@@ -306,7 +299,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -430,7 +423,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -509,7 +502,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -517,87 +510,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -649,15 +586,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -674,10 +611,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

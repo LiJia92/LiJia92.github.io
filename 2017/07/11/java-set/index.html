@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>关于 ConcurrentModificationException 异常 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：1234567Integer[] numbers = new Integer[]&amp;#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&amp;#125;;List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;(Arrays.asList(numbe">
-<meta name="keywords" content="java">
+  <meta name="description" content="List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如： 1234567Integer[] numbers &#x3D; new Integer[]&amp;#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&amp;#125;;List&lt;Integer&gt; list &#x3D; new ArrayList&lt;&gt;(Arrays.asList(numb">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 ConcurrentModificationException 异常">
 <meta property="og:url" content="http://lijia92.github.io/2017/07/11/java-set/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：1234567Integer[] numbers = new Integer[]&amp;#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&amp;#125;;List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;(Arrays.asList(numbe">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.106Z">
+<meta property="og:description" content="List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如： 1234567Integer[] numbers &#x3D; new Integer[]&amp;#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&amp;#125;;List&lt;Integer&gt; list &#x3D; new ArrayList&lt;&gt;(Arrays.asList(numb">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-07-11T08:24:35.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.448Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 ConcurrentModificationException 异常">
-<meta name="twitter:description" content="List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：1234567Integer[] numbers = new Integer[]&amp;#123;1, 2, 3, 4, 5, 6, 7, 8, 9, 10&amp;#125;;List&amp;lt;Integer&amp;gt; list = new ArrayList&amp;lt;&amp;gt;(Arrays.asList(numbe">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -181,27 +177,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Integer</span>[] numbers = new <span class="keyword">Integer</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line">List&lt;<span class="keyword">Integer</span>&gt; list = new ArrayList&lt;&gt;(Arrays.asList(numbers));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">Integer</span> <span class="keyword">integer</span> : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">integer</span> % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="keyword">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码在执行的时候便会抛出异常：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.util</span><span class="selector-class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.checkForComodification(ArrayList<span class="selector-class">.java</span>:<span class="number">901</span>)</span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.next(ArrayList<span class="selector-class">.java</span>:<span class="number">851</span>)</span><br><span class="line">	at com<span class="selector-class">.example</span><span class="selector-class">.MyClass</span><span class="selector-class">.main</span>(MyClass<span class="selector-class">.java</span>:<span class="number">16</span>)</span><br></pre></td></tr></table></figure></p>
-<p>这个异常出现通常是遍历一个集合的同时，在修改这个集合。看到<code>next</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> E next() &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkForComodification();</span><br><span class="line">    int var1 = <span class="keyword">this</span>.cursor;</span><br><span class="line">    <span class="keyword">if</span>(var1 &gt;= ArrayList.<span class="keyword">this</span>.size) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new NoSuchElementException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Object[] var2 = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span>(var1 &gt;= var2.length) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.cursor = var1 + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> var2[<span class="keyword">this</span>.lastRet = var1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后看到<code>checkForComodification</code>：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="function"><span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span>[] numbers = <span class="built_in">new</span> <span class="type">Integer</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line">List&lt;<span class="type">Integer</span>&gt; list = <span class="built_in">new</span> ArrayList&lt;&gt;(Arrays.asList(numbers));</span><br><span class="line"><span class="keyword">for</span> (<span class="type">Integer</span> <span class="type">integer</span> : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="type">integer</span> % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="type">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码在执行的时候便会抛出异常：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">&quot;main&quot;</span> java<span class="selector-class">.util</span><span class="selector-class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="selector-class">.util</span>.ArrayList<span class="variable">$Itr</span><span class="selector-class">.checkForComodification</span>(ArrayList<span class="selector-class">.java</span>:<span class="number">901</span>)</span><br><span class="line">	at java<span class="selector-class">.util</span>.ArrayList<span class="variable">$Itr</span><span class="selector-class">.next</span>(ArrayList<span class="selector-class">.java</span>:<span class="number">851</span>)</span><br><span class="line">	at com<span class="selector-class">.example</span><span class="selector-class">.MyClass</span><span class="selector-class">.main</span>(MyClass<span class="selector-class">.java</span>:<span class="number">16</span>)</span><br></pre></td></tr></table></figure>
+<p>这个异常出现通常是遍历一个集合的同时，在修改这个集合。看到<code>next</code>方法：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.<span class="built_in">checkForComodification</span>();</span><br><span class="line">    <span class="type">int</span> var1 = <span class="keyword">this</span>.cursor;</span><br><span class="line">    <span class="keyword">if</span>(var1 &gt;= ArrayList.<span class="keyword">this</span>.size) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">NoSuchElementException</span>();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Object[] var2 = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span>(var1 &gt;= var<span class="number">2.l</span>ength) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">ConcurrentModificationException</span>();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.cursor = var1 + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> var2[<span class="keyword">this</span>.lastRet = var1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后看到<code>checkForComodification</code>：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="type">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">ConcurrentModificationException</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>即当<code>modCount 与 expectedModCount 不相等时，会抛 ConcurrentModificationException 异常</code>。其实很早之前就会碰到这个问题，使用<code>Iterator</code>进行遍历和操作就不会出现这个问题了，但是一直没有深究其原因。</p>
-<a id="more"></a>
-<p>之前听同事说，<code>for each</code>内部就是使用的<code>Iterator</code>。但是最近项目中就算使用了<code>for each</code>也还是出现了上面的异常。于是决心细究一番。<br>将上面的示例代码转成 class 文件，可以看到：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Integer</span>[] numbers = new <span class="keyword">Integer</span>[]&#123;<span class="keyword">Integer</span>.valueOf(<span class="number">1</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">2</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">3</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">4</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">5</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">6</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">7</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">8</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">9</span>), <span class="keyword">Integer</span>.valueOf(<span class="number">10</span>)&#125;;</span><br><span class="line">ArrayList list = new ArrayList(Arrays.asList(numbers));</span><br><span class="line">Iterator var4 = list.iterator();</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(var4.hasNext()) &#123;</span><br><span class="line">    <span class="keyword">Integer</span> <span class="keyword">integer</span> = (<span class="keyword">Integer</span>)var4.next();</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">integer</span>.intValue() % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="keyword">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>确实看到了<code>Iterator</code>的身影，但是却忽视了真正重要的一点:<code>remove()方法的执行者</code>。<br>将遍历代码改成如下:<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Iterator </span><span class="keyword">iterator </span>= list.<span class="keyword">iterator();</span></span><br><span class="line"><span class="keyword">while </span>(<span class="keyword">iterator.hasNext()) </span>&#123;</span><br><span class="line">    Integer integer = (Integer) <span class="keyword">iterator.next();</span></span><br><span class="line"><span class="keyword"> </span>   <span class="meta">if</span> (integer % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">iterator.remove();</span></span><br><span class="line"><span class="keyword"> </span>   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>便可执行通过了。看到 class 文件如下：<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(iterator.hasNext()) &#123;</span><br><span class="line">    <span class="keyword">Integer</span> <span class="keyword">integer</span> = (<span class="keyword">Integer</span>)iterator.next();</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">integer</span>.intValue() % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        iterator.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>可以看到都是通过<code>Iterator</code>进行遍历，唯独在执行<code>remove</code>操作的时候，报错的示例执行对象是<code>list本身</code>，而正确的示例执行对象是<code>iterator</code>。那么接下来对比下二者的<code>remove</code>方法，便可找到真相了。<br>看到<code>ArrayList</code>自身实现的<code>remove</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> boolean remove(Object var1) &#123;</span><br><span class="line">    int var2;</span><br><span class="line">    <span class="keyword">if</span>(var1 == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(var2 = <span class="number">0</span>; var2 &lt; <span class="keyword">this</span>.size; ++var2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.elementData[var2] == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.fastRemove(var2);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(var2 = <span class="number">0</span>; var2 &lt; <span class="keyword">this</span>.size; ++var2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(var1.equals(<span class="keyword">this</span>.elementData[var2])) &#123;</span><br><span class="line">                <span class="keyword">this</span>.fastRemove(var2);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> void fastRemove(int var1) &#123;</span><br><span class="line">    ++<span class="keyword">this</span>.modCount;</span><br><span class="line">    int var2 = <span class="keyword">this</span>.size - var1 - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(var2 &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        System.arraycopy(<span class="keyword">this</span>.elementData, var1 + <span class="number">1</span>, <span class="keyword">this</span>.elementData, var1, var2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.elementData[--<span class="keyword">this</span>.size] = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>看到<code>ArrayList中Iterator</code>实现的<code>remove</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> void remove() &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.lastRet &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new IllegalStateException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ArrayList.<span class="keyword">this</span>.remove(<span class="keyword">this</span>.lastRet);</span><br><span class="line">            <span class="keyword">this</span>.cursor = <span class="keyword">this</span>.lastRet;</span><br><span class="line">            <span class="keyword">this</span>.lastRet = <span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">this</span>.expectedModCount = ArrayList.<span class="keyword">this</span>.modCount;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException var2) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<p>之前听同事说，<code>for each</code>内部就是使用的<code>Iterator</code>。但是最近项目中就算使用了<code>for each</code>也还是出现了上面的异常。于是决心细究一番。<br>将上面的示例代码转成 class 文件，可以看到：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span>[] numbers = <span class="built_in">new</span> <span class="type">Integer</span>[]&#123;<span class="type">Integer</span>.valueOf(<span class="number">1</span>), <span class="type">Integer</span>.valueOf(<span class="number">2</span>), <span class="type">Integer</span>.valueOf(<span class="number">3</span>), <span class="type">Integer</span>.valueOf(<span class="number">4</span>), <span class="type">Integer</span>.valueOf(<span class="number">5</span>), <span class="type">Integer</span>.valueOf(<span class="number">6</span>), <span class="type">Integer</span>.valueOf(<span class="number">7</span>), <span class="type">Integer</span>.valueOf(<span class="number">8</span>), <span class="type">Integer</span>.valueOf(<span class="number">9</span>), <span class="type">Integer</span>.valueOf(<span class="number">10</span>)&#125;;</span><br><span class="line">ArrayList list = <span class="built_in">new</span> ArrayList(Arrays.asList(numbers));</span><br><span class="line">Iterator var4 = list.iterator();</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(var4.hasNext()) &#123;</span><br><span class="line">    <span class="type">Integer</span> <span class="type">integer</span> = (<span class="type">Integer</span>)var4.next();</span><br><span class="line">    <span class="keyword">if</span>(<span class="type">integer</span>.intValue() % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="type">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>确实看到了<code>Iterator</code>的身影，但是却忽视了真正重要的一点:<code>remove()方法的执行者</code>。<br>将遍历代码改成如下:</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Iterator iterator <span class="operator">=</span> list.iterator()<span class="comment">;</span></span><br><span class="line">while (iterator.hasNext()) &#123;</span><br><span class="line">    Integer integer <span class="operator">=</span> (Integer) iterator.next()<span class="comment">;</span></span><br><span class="line">    if (integer % <span class="number">5</span> <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) &#123;</span><br><span class="line">        iterator.remove()<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>便可执行通过了。看到 class 文件如下：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">while(iterator.hasNext()) &#123;</span><br><span class="line">    Integer integer <span class="operator">=</span> (Integer)iterator.next()<span class="comment">;</span></span><br><span class="line">    if(integer.intValue() % <span class="number">5</span> <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) &#123;</span><br><span class="line">        iterator.remove()<span class="comment">;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到都是通过<code>Iterator</code>进行遍历，唯独在执行<code>remove</code>操作的时候，报错的示例执行对象是<code>list本身</code>，而正确的示例执行对象是<code>iterator</code>。那么接下来对比下二者的<code>remove</code>方法，便可找到真相了。<br>看到<code>ArrayList</code>自身实现的<code>remove</code>方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> boolean remove(Object var1) &#123;</span><br><span class="line">    int var2;</span><br><span class="line">    <span class="keyword">if</span>(var1 == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(var2 = <span class="number">0</span>; var2 &lt; <span class="keyword">this</span>.size; ++var2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.elementData[var2] == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.fastRemove(var2);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(var2 = <span class="number">0</span>; var2 &lt; <span class="keyword">this</span>.size; ++var2) &#123;</span><br><span class="line">            <span class="keyword">if</span>(var1.equals(<span class="keyword">this</span>.elementData[var2])) &#123;</span><br><span class="line">                <span class="keyword">this</span>.fastRemove(var2);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> void fastRemove(int var1) &#123;</span><br><span class="line">    ++<span class="keyword">this</span>.modCount;</span><br><span class="line">    int var2 = <span class="keyword">this</span>.size - var1 - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(var2 &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        System.arraycopy(<span class="keyword">this</span>.elementData, var1 + <span class="number">1</span>, <span class="keyword">this</span>.elementData, var1, var2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>.elementData[--<span class="keyword">this</span>.size] = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到<code>ArrayList中Iterator</code>实现的<code>remove</code>方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> void remove() &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.lastRet &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new IllegalStateException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.checkForComodification();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ArrayList.<span class="keyword">this</span>.remove(<span class="keyword">this</span>.lastRet);</span><br><span class="line">            <span class="keyword">this</span>.cursor = <span class="keyword">this</span>.lastRet;</span><br><span class="line">            <span class="keyword">this</span>.lastRet = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">this</span>.expectedModCount = ArrayList.<span class="keyword">this</span>.modCount;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IndexOutOfBoundsException var2) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如此便一目了然了，<strong>ArrayList 本身的 remove 方法执行完之后没有同步 modCount 与 expectedModCount，而 Iterator 有同步。在遍历的时候会 checkForComodification，当使用的非 Iterator 的 remove 方法，会造成 2 个 count 不相等，如此便会抛出异常了</strong>。<br>那么细想一下：为什么 Java 集合在遍历的时候要做这样的检查呢？这里引用一下网友的想法，大家自行思考吧～</p>
 <blockquote>
 <p>设置modCount和expectedModCount的目的是为了检测iterator的有效性，检测是否有其它操作对HashMap的结构进行了修改，由于这些操作不是通过当前iterator进行的，因此有可能破坏iterator的有效性。通过iterator执行remove只能删除当前iterator所在的元素，不会让iterator失效。而通过HashMap.remove()实际上可以删除任意元素，这个元素有可能正是iterator内部的next变量已经引用了的元素，造成iterator失效。</p>
 </blockquote>
 <p>最后说 2 点题外话：</p>
 <ol>
-<li><code>Arrays.asList</code>不接受 Java 基本数据类型数组作为参数。原因<code>asList</code>接受的参数为<code>Object</code>，而基本数据类型不是。但是代码<code>List list = Arrays.asList(new int[]{1,2,3})</code>不会报错，因为<code>int[]</code>是<code>Object</code>，此代码会生产一个<code>size = 1</code>的列表。</li>
+<li><code>Arrays.asList</code>不接受 Java 基本数据类型数组作为参数。原因<code>asList</code>接受的参数为<code>Object</code>，而基本数据类型不是。但是代码<code>List list = Arrays.asList(new int[]&#123;1,2,3&#125;)</code>不会报错，因为<code>int[]</code>是<code>Object</code>，此代码会生产一个<code>size = 1</code>的列表。</li>
 <li>通过<code>Arrays.asList</code>方法返回的<code>List</code>是不能修改的。</li>
 </ol>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a href="http://dumbee.net/archives/41" target="_blank" rel="noopener">Java遍历HashMap并修改(remove)</a><br><a href="http://www.importnew.com/14996.html" target="_blank" rel="noopener">把Java数组转换为List时的注意事项</a><br><a href="http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html" target="_blank" rel="noopener">Java 集合细节（二）：asList 的缺陷</a></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><a target="_blank" rel="noopener" href="http://dumbee.net/archives/41">Java遍历HashMap并修改(remove)</a><br><a target="_blank" rel="noopener" href="http://www.importnew.com/14996.html">把Java数组转换为List时的注意事项</a><br><a target="_blank" rel="noopener" href="http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html">Java 集合细节（二）：asList 的缺陷</a></p>
 
       
 
@@ -215,7 +221,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -339,7 +345,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -418,7 +424,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -426,87 +432,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -558,15 +508,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -583,10 +533,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

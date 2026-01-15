@@ -9,13 +9,12 @@
   <title>Android 集成讯飞语音SDK | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="项目开发需要用到文字转语音的功能，利用 Android 系统自带的Text-to-Speech可以实现英文转语音，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的Pico TTS是不支持的，我的小米手机是度秘语音引擎支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的TTS，考虑接入讯飞语音SDK。 注册开发者账号进入讯飞开放平台注册账号。">
-<meta name="keywords" content="sdk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 集成讯飞语音SDK">
 <meta property="og:url" content="http://lijia92.github.io/2017/09/26/xunfei/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="项目开发需要用到文字转语音的功能，利用 Android 系统自带的Text-to-Speech可以实现英文转语音，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的Pico TTS是不支持的，我的小米手机是度秘语音引擎支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的TTS，考虑接入讯飞语音SDK。 注册开发者账号进入讯飞开放平台注册账号。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png">
@@ -23,10 +22,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.262Z">
+<meta property="article:published_time" content="2017-09-26T08:42:29.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.501Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 集成讯飞语音SDK">
-<meta name="twitter:description" content="项目开发需要用到文字转语音的功能，利用 Android 系统自带的Text-to-Speech可以实现英文转语音，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的Pico TTS是不支持的，我的小米手机是度秘语音引擎支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的TTS，考虑接入讯飞语音SDK。 注册开发者账号进入讯飞开放平台注册账号。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -45,7 +45,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -59,10 +59,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -119,10 +117,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -190,15 +186,20 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>项目开发需要用到<code>文字转语音</code>的功能，利用 Android 系统自带的<code>Text-to-Speech</code>可以实现<code>英文转语音</code>，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的<code>Pico TTS</code>是不支持的，我的小米手机是<code>度秘语音引擎</code>支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的<code>TTS</code>，考虑接入<code>讯飞语音SDK</code>。</p>
-<h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a href="http://passport.xfyun.cn/login" target="_blank" rel="noopener">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png" alt=""></p>
-<a id="more"></a>
-<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>登录账号，进入<code>控制台</code>，选择<code>创建新应用</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png" alt=""></p>
-<h2 id="下载SDK"><a href="#下载SDK" class="headerlink" title="下载SDK"></a>下载SDK</h2><p>点击<code>SDK下载</code>。选择下载服务、平台、应用，然后点击下载。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png" alt=""><br>我这里只选择了在线语音合成，免费的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png" alt=""><br>然后得到SDK：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png" alt=""></p>
-<h2 id="集成SDK"><a href="#集成SDK" class="headerlink" title="集成SDK"></a>集成SDK</h2><p>首先将<code>对应手机CPU平台的 so 文件</code>导入到工程中，jar 包导入到 libs 中。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png" alt=""></p>
-<p>在 Application 中初始化讯飞语音：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SpeechUtility.createUtility(<span class="keyword">this</span>, SpeechConstant.APPID +<span class="string">"=xxxxxxxx"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>在调用的地方初始化语音对象：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> SpeechSynthesizer mTts;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">initMSC</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mTts = SpeechSynthesizer.createSynthesizer(mActivity, <span class="keyword">new</span> InitListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onInit</span><span class="params">(<span class="keyword">int</span> code)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (code == ErrorCode.SUCCESS) &#123;</span><br><span class="line">                <span class="comment">// 设置在线合成</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);</span><br><span class="line">                <span class="comment">// 设置在线合成发音人</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.VOICE_NAME, <span class="string">"xiaoqi"</span>);</span><br><span class="line">                <span class="comment">//设置合成语速</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.SPEED, <span class="string">"50"</span>);</span><br><span class="line">                <span class="comment">//设置合成音调</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.PITCH, <span class="string">"50"</span>);</span><br><span class="line">                <span class="comment">//设置合成音量</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.VOLUME, <span class="string">"100"</span>);</span><br><span class="line">                <span class="comment">//设置播放器音频流类型</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.STREAM_TYPE, <span class="string">"3"</span>);</span><br><span class="line">                <span class="comment">// 设置播放合成音频打断音乐播放，默认为true</span></span><br><span class="line">                mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, <span class="string">"true"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后调用API：<br><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int <span class="keyword">code</span> = mTts.startSpeaking(<span class="string">"Hello 中国"</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">code</span> != ErrorCode.SUCCESS &amp;&amp; <span class="keyword">code</span> != ErrorCode.ERROR_COMPONENT_NOT_INSTALLED) &#123;</span><br><span class="line">    ToastUtils.showShort(mActivity, <span class="string">"语音合成失败,错误码: "</span> + <span class="keyword">code</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>过程比较简单，稍微记录一下，更多详情可以参阅<a href="http://doc.xfyun.cn/msc_android/299547" target="_blank" rel="noopener">官方文档</a>。</p>
+<h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a target="_blank" rel="noopener" href="http://passport.xfyun.cn/login">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png"></p>
+<span id="more"></span>
+
+<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>登录账号，进入<code>控制台</code>，选择<code>创建新应用</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png"></p>
+<h2 id="下载SDK"><a href="#下载SDK" class="headerlink" title="下载SDK"></a>下载SDK</h2><p>点击<code>SDK下载</code>。选择下载服务、平台、应用，然后点击下载。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png"><br>我这里只选择了在线语音合成，免费的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png"><br>然后得到SDK：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png"></p>
+<h2 id="集成SDK"><a href="#集成SDK" class="headerlink" title="集成SDK"></a>集成SDK</h2><p>首先将<code>对应手机CPU平台的 so 文件</code>导入到工程中，jar 包导入到 libs 中。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png"></p>
+<p>在 Application 中初始化讯飞语音：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SpeechUtility.createUtility(<span class="keyword">this</span>, SpeechConstant.APPID +<span class="string">&quot;=xxxxxxxx&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>在调用的地方初始化语音对象：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title class_">SpeechSynthesizer</span> mTts;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">void</span> <span class="title function_">initMSC</span>(<span class="params"></span>) &#123;</span><br><span class="line">    mTts = <span class="title class_">SpeechSynthesizer</span>.<span class="title function_">createSynthesizer</span>(mActivity, <span class="keyword">new</span> <span class="title class_">InitListener</span>() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onInit</span>(<span class="params">int code</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (code == <span class="title class_">ErrorCode</span>.<span class="property">SUCCESS</span>) &#123;</span><br><span class="line">                <span class="comment">// 设置在线合成</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">ENGINE_TYPE</span>, <span class="title class_">SpeechConstant</span>.<span class="property">TYPE_CLOUD</span>);</span><br><span class="line">                <span class="comment">// 设置在线合成发音人</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">VOICE_NAME</span>, <span class="string">&quot;xiaoqi&quot;</span>);</span><br><span class="line">                <span class="comment">//设置合成语速</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">SPEED</span>, <span class="string">&quot;50&quot;</span>);</span><br><span class="line">                <span class="comment">//设置合成音调</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">PITCH</span>, <span class="string">&quot;50&quot;</span>);</span><br><span class="line">                <span class="comment">//设置合成音量</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">VOLUME</span>, <span class="string">&quot;100&quot;</span>);</span><br><span class="line">                <span class="comment">//设置播放器音频流类型</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">STREAM_TYPE</span>, <span class="string">&quot;3&quot;</span>);</span><br><span class="line">                <span class="comment">// 设置播放合成音频打断音乐播放，默认为true</span></span><br><span class="line">                mTts.<span class="title function_">setParameter</span>(<span class="title class_">SpeechConstant</span>.<span class="property">KEY_REQUEST_FOCUS</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后调用API：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">code</span> = mTts.startSpeaking(<span class="string">&quot;Hello 中国&quot;</span>);</span><br><span class="line"><span class="built_in">if</span> (<span class="built_in">code</span> != ErrorCode.SUCCESS &amp;&amp; <span class="built_in">code</span> != ErrorCode.ERROR_COMPONENT_NOT_INSTALLED) &#123;</span><br><span class="line">    ToastUtils.showShort(mActivity, <span class="string">&quot;语音合成失败,错误码: &quot;</span> + <span class="built_in">code</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>过程比较简单，稍微记录一下，更多详情可以参阅<a target="_blank" rel="noopener" href="http://doc.xfyun.cn/msc_android/299547">官方文档</a>。</p>
 
       
 
@@ -212,7 +213,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -336,7 +337,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -415,7 +416,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -423,87 +424,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -555,15 +500,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -580,10 +525,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

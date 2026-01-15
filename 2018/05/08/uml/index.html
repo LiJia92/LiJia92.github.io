@@ -9,19 +9,19 @@
   <title>快速画 UML 图 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的ProcessOn，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到PlantUML，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！">
-<meta name="keywords" content="奇技淫巧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快速画 UML 图">
 <meta property="og:url" content="http://lijia92.github.io/2018/05/08/uml/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的ProcessOn，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到PlantUML，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/1.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.258Z">
+<meta property="article:published_time" content="2018-05-08T05:57:45.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.496Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="快速画 UML 图">
-<meta name="twitter:description" content="这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的ProcessOn，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到PlantUML，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/2.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -40,7 +40,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -54,10 +54,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -114,10 +112,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,9 +180,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的<a href="https://www.processon.com/" target="_blank" rel="noopener">ProcessOn</a>，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到<a href="http://plantuml.com/" target="_blank" rel="noopener">PlantUML</a>，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！</p>
-<a id="more"></a>
-<p>看下两个软件作图的比较：<br>ProcessOn：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/2.png" alt=""><br>PlantUML：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/1.png" alt=""><br>高下立判啊！当然，在用 PlantUML 绘图时又重新仔细思考了下类的结构，所以两张图在结构上不一样。<br>使用 PlantUML，后续若需要维护，修改起来十分方便！<strong>但是貌似有个缺点：不能表示内部类,或者是我还没找到使用的方式。</strong></p>
+        <p>这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的<a target="_blank" rel="noopener" href="https://www.processon.com/">ProcessOn</a>，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到<a target="_blank" rel="noopener" href="http://plantuml.com/">PlantUML</a>，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！</p>
+<span id="more"></span>
+
+<p>看下两个软件作图的比较：<br>ProcessOn：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/2.png"><br>PlantUML：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/8/1.png"><br>高下立判啊！当然，在用 PlantUML 绘图时又重新仔细思考了下类的结构，所以两张图在结构上不一样。<br>使用 PlantUML，后续若需要维护，修改起来十分方便！<strong>但是貌似有个缺点：不能表示内部类,或者是我还没找到使用的方式。</strong></p>
 <p>顺道帖下 UML 图推荐的几种类关系。</p>
 <h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>指的是一个类（称为子类、子接口）继承另外的一个类（称为父类、父接口）的功能，并可以增加它自己的新功能的能力，继承是类与类或者接口与接口之间最常见的关系；在Java中此类关系通过关键字extends明确标识，在设计时一般没有争议性；</p>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>指的是一个class类实现interface接口（可以是多个）的功能；实现是类与接口之间最常见的关系；在Java中此类关系通过关键字implements明确标识，在设计时一般没有争议性；</p>
@@ -195,7 +192,7 @@
 <h3 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h3><p>聚合是关联关系的一种特例，他体现的是整体与部分、拥有的关系，即has-a的关系，此时整体与部分之间是可分离的，他们可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享；比如计算机与CPU、公司与员工的关系等；表现在代码层面，和关联关系是一致的，只能从语义级别来区分；</p>
 <h3 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h3><p>组合也是关联关系的一种特例，他体现的是一种contains-a的关系，这种关系比聚合更强，也称为强聚合；他同样体现整体与部分间的关系，但此时整体与部分是不可分的，整体的生命周期结束也就意味着部分的生命周期结束；比如你和你的大脑；表现在代码层面，和关联关系是一致的，只能从语义级别来区分；</p>
 <p>对于继承、实现这两种关系没多少疑问，他们体现的是一种类与类、或者类与接口间的纵向关系；其他的四者关系则体现的是类与类、或者类与接口间的引用、横向关系，是比较难区分的，有很多事物间的关系要想准备定位是很难的，前面也提到，这几种关系都是语义级别的，所以从代码层面并不能完全区分各种关系；但总的来说，后几种关系所表现的强弱程度依次为：组合&gt;聚合&gt;关联&gt;依赖。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.heqiangfly.com/2017/07/08/development-tool-markdown-plant-uml/" target="_blank" rel="noopener">Markdown 绘制 UML 图 – PlantUML + Gravizo</a><br><a href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000" target="_blank" rel="noopener">PlantUML 在线作图网址</a><br><a href="https://blog.csdn.net/sfdev/article/details/3906243" target="_blank" rel="noopener">UML中几种类间关系</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.heqiangfly.com/2017/07/08/development-tool-markdown-plant-uml/">Markdown 绘制 UML 图 – PlantUML + Gravizo</a><br><a target="_blank" rel="noopener" href="http://www.plantuml.com/plantuml/uml/SyfFKj2rKt3CoKnELR1Io4ZDoSa70000">PlantUML 在线作图网址</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/sfdev/article/details/3906243">UML中几种类间关系</a></p>
 
       
 
@@ -209,7 +206,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">奇技淫巧</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -333,7 +330,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -412,7 +409,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,87 +417,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -552,15 +493,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -577,10 +518,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

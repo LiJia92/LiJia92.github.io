@@ -8,21 +8,21 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>Android DDMS无法输出logcat | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：1Unable to open log device‘/dev/log/main’: No such file or directory 导致连上真机却看不到log。 网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者stackoverflow上说的与">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="问题在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况： 1Unable to open log device‘&#x2F;dev&#x2F;log&#x2F;main’: No such file or directory 导致连上真机却看不到log。 网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者stackoverflow上说的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android DDMS无法输出logcat">
 <meta property="og:url" content="http://lijia92.github.io/2015/10/24/ddms-logcat/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="问题在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：1Unable to open log device‘/dev/log/main’: No such file or directory 导致连上真机却看不到log。 网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者stackoverflow上说的与">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="问题在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况： 1Unable to open log device‘&#x2F;dev&#x2F;log&#x2F;main’: No such file or directory 导致连上真机却看不到log。 网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者stackoverflow上说的">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat3.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.219Z">
+<meta property="article:published_time" content="2015-10-24T08:00:11.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.433Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android DDMS无法输出logcat">
-<meta name="twitter:description" content="问题在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：1Unable to open log device‘/dev/log/main’: No such file or directory 导致连上真机却看不到log。 网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者stackoverflow上说的与">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -41,7 +41,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +55,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -115,10 +113,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,22 +181,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable <span class="built_in">to</span> <span class="built_in">open</span> <span class="built_in">log</span> device‘/dev/<span class="built_in">log</span>/main’: No such <span class="built_in">file</span> <span class="keyword">or</span> <span class="built_in">directory</span></span><br></pre></td></tr></table></figure></p>
+        <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>在Android开发中，我们经常需要真机测试，查看log。有好几次碰到如下的情况：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable <span class="built_in">to</span> <span class="built_in">open</span> <span class="built_in">log</span> device‘/dev/<span class="built_in">log</span>/main’: No such <span class="built_in">file</span> <span class="keyword">or</span> <span class="built_in">directory</span></span><br></pre></td></tr></table></figure>
 <p>导致连上真机却看不到log。</p>
-<p>网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者<a href="http://stackoverflow.com/questions/4867971/dev-log-main-not-found" target="_blank" rel="noopener">stackoverflow</a>上说的与手机内核有关。但是对我的手机都不奏效，我的手机是华为3C，刷的MIUI的rom。</p>
+<p>网上有很多解决方法，比如各种重启，重启手机，电脑，eclipse，adb，重新安装eclipse，拨号等。又或者<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/4867971/dev-log-main-not-found">stackoverflow</a>上说的与手机内核有关。但是对我的手机都不奏效，我的手机是华为3C，刷的MIUI的rom。</p>
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>后面折腾了老半天，终于找到了原因：</p>
 <blockquote>
-<p>./system/etc/init.d目录下的脚本删掉了日志设备 </p>
+<p>.&#x2F;system&#x2F;etc&#x2F;init.d目录下的脚本删掉了日志设备 </font></p>
 </blockquote>
 <p>知道问题出在哪了，那么解决起来就很方便了。</p>
-<a id="more"></a>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="找到删掉日志设备的脚本"><a href="#找到删掉日志设备的脚本" class="headerlink" title="找到删掉日志设备的脚本"></a>找到删掉日志设备的脚本</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span></span><br><span class="line">su</span><br><span class="line"><span class="keyword">cd</span> /<span class="built_in">system</span>/etc/init.d &amp;&amp; <span class="keyword">grep</span> -r <span class="string">"rm /dev/log/main"</span></span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="找到删掉日志设备的脚本"><a href="#找到删掉日志设备的脚本" class="headerlink" title="找到删掉日志设备的脚本"></a>找到删掉日志设备的脚本</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span></span><br><span class="line">su</span><br><span class="line"><span class="keyword">cd</span> /<span class="built_in">system</span>/etc/init.d &amp;&amp; <span class="keyword">grep</span> -r <span class="string">&quot;rm /dev/log/main&quot;</span></span><br></pre></td></tr></table></figure>
 <p>找到该文件：03MTKTweakElse文件。</p>
 <p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat1.png" alt="这里写图片描述"></p>
-<h4 id="修改脚本"><a href="#修改脚本" class="headerlink" title="修改脚本"></a>修改脚本</h4><p>利用pull指令将该文件拷贝到电脑上。<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abd pull <span class="regexp">/system/</span>ect<span class="regexp">/init.d/</span><span class="number">03</span>MTKTweakElse  <span class="string">L:</span>\</span><br></pre></td></tr></table></figure></p>
+<h4 id="修改脚本"><a href="#修改脚本" class="headerlink" title="修改脚本"></a>修改脚本</h4><p>利用pull指令将该文件拷贝到电脑上。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">abd pull <span class="regexp">/system/</span>ect<span class="regexp">/init.d/</span><span class="number">03</span>MTKTweakElse  L:\</span><br></pre></td></tr></table></figure>
 <p>利用文本编辑工具（editplus、notepad++等）打开03MTKTweakElse文件，找到<code>rm    /dev/log/main</code>，然后注释掉该行。</p>
 <p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat2.png" alt="这里写图片描述"></p>
 <h4 id="将文件替换到之前的路径中"><a href="#将文件替换到之前的路径中" class="headerlink" title="将文件替换到之前的路径中"></a>将文件替换到之前的路径中</h4><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">push</span> L:\<span class="number">03</span>MTKTweakElse  /<span class="keyword">system</span>/etc/init.d</span><br></pre></td></tr></table></figure>
+
 <h4 id="重启手机"><a href="#重启手机" class="headerlink" title="重启手机"></a>重启手机</h4><p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/10/ddms-logcat3.png" alt="这里写图片描述"></p>
 <p>经过以上几个步骤，应该就可以输出logcat了。</p>
 <h3 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h3><ul>
@@ -220,7 +220,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -339,7 +339,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -418,7 +418,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -426,87 +426,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -558,15 +502,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -583,10 +527,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

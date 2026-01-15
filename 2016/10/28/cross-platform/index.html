@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>Android-iOS 跨平台传输方案调研 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="现状 iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac/iPad/iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。 Android：Wi-Fi pee">
-<meta name="keywords" content="直播">
+  <meta name="description" content="现状 iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac&#x2F;iPad&#x2F;iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。 Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android-iOS 跨平台传输方案调研">
 <meta property="og:url" content="http://lijia92.github.io/2016/10/28/cross-platform/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="现状 iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac/iPad/iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。 Android：Wi-Fi pee">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="现状 iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac&#x2F;iPad&#x2F;iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。 Android">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video8.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.218Z">
+<meta property="article:published_time" content="2016-10-28T08:21:48.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.432Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="技术思路">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android-iOS 跨平台传输方案调研">
-<meta name="twitter:description" content="现状 iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac/iPad/iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。 Android：Wi-Fi pee">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -40,7 +40,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -54,10 +54,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -114,10 +112,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,27 +181,28 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h2><ol>
-<li>iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac/iPad/iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。</li>
+<li>iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac&#x2F;iPad&#x2F;iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。</li>
 <li>Android：Wi-Fi peer-to-peer（P2P，对等网络），它允许具备相应硬件的Android 4.0（API level 14）或者更高版本的设备可以直接通过wifi而不需要其它中间中转节点就能直接通信（Android的Wi-Fi P2P框架符合Wi-Fi联盟的Wi-Fi Direct™直连认证标志）。使用这些API，你可以搜索并连接其它同样支持Wi-Fi P2P的设备，然后再通过一个高速的连接进行互相通信，并且这个连接的有效距离要比蓝牙连接的有效距离要长的多。这对于需要在用户之间共享数据的应用程序非常有用，例如多玩家游戏或者照片分享之类应用。</li>
 </ol>
-<a id="more"></a>
-<p>但是iOS的MC框架与Android的Wifi Direct不兼容，通过苹果开发者论坛<a href="https://forums.developer.apple.com/message/49337#49337" target="_blank" rel="noopener">iOS and Wi-Fi Direct</a>了解：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png" alt=""><br>关于不同技术在iOS、Android上的兼容性，如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video8.png" alt=""></p>
+<span id="more"></span>
+
+<p>但是iOS的MC框架与Android的Wifi Direct不兼容，通过苹果开发者论坛<a target="_blank" rel="noopener" href="https://forums.developer.apple.com/message/49337#49337">iOS and Wi-Fi Direct</a>了解：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png"><br>关于不同技术在iOS、Android上的兼容性，如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video8.png"></p>
 <h2 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h2><ol>
 <li>经典蓝牙阶段：在蓝牙4.0（Bluetooth Low Energy）之前，也就是所谓的经典蓝牙，苹果的蓝牙拒绝接入不信任的设备。也就是说，没得连。</li>
-<li>蓝牙4.0阶段：从ios6.0开始，iPhone支持BLe以后，问题得到了改善，因为在蓝牙4.0以后不再存在经典蓝牙的那个限制。ios7.0以后，BLe在 iOS 7 技术性提升里占到的重要位置。但是Android在这方面的脚步就慢很多了。<ul>
+<li>蓝牙4.0阶段：从ios6.0开始，iPhone支持BLe以后，问题得到了改善，因为在蓝牙4.0以后不再存在经典蓝牙的那个限制。ios7.0以后，BLe在 iOS 7 技术性提升里占到的重要位置。但是Android在这方面的脚步就慢很多了。</li>
+</ol>
+<ul>
 <li>Android4.3：SDK从4.3以后开始正式在官方层面支持蓝牙4.0，可以使用安卓设备建立主机。注意，这里是说可以建立主机，也就是只能是安卓建立主机，iOS设备连接才可以。安卓无法去连接iOS的主机。</li>
 <li>Android L：也就是Android 5.0，从这个版本开始，谷歌正式支持主从机的建立。</li>
 </ul>
-</li>
-</ol>
-<p><a href="https://www.zhihu.com/question/23246210" target="_blank" rel="noopener">Android与IOS之间如何实现蓝牙通信数据传输？</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23246210">Android与IOS之间如何实现蓝牙通信数据传输？</a></p>
 <h2 id="现有产品"><a href="#现有产品" class="headerlink" title="现有产品"></a>现有产品</h2><ol>
-<li><p><a href="http://www.kuaiya.cn/" target="_blank" rel="noopener">快牙</a></p>
+<li><p><a target="_blank" rel="noopener" href="http://www.kuaiya.cn/">快牙</a></p>
 <blockquote>
 <p>快牙（ZAPYA），是一款全球首创、实现跨平台文件传输的应用，能帮助智能手机用户之间实现高速海量数据传输。支持安卓（Android）、苹果（iOS）、WP、PC等多种智能终端间的互联互通。通过快牙，可以和任何人分享应用、照片、视频、音乐及其他任意格式文件。目前快牙全球用户数量已超3亿，遍及海内外178个国家和地区，在同类型的传输应用中稳居第一。</p>
 </blockquote>
 </li>
-<li><p><a href="https://www.ushareit.com/" target="_blank" rel="noopener">茄子快传</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://www.ushareit.com/">茄子快传</a></p>
 <blockquote>
 <p>茄子快传是北京众联极享科技有限公司推出的一款跨平台、多场景的移动数字互动平台（手机内容传输工具）。通过设备间建立的数据传输通路，茄子快传实现了在没有外部WiFi网络或者数据网络的情况下的数据高速收发，过程中无需消耗数据流量。用户操作简单，没有复杂的配对配置，无需登录账户、添加好友，支持多人互传，让用户摆脱数据线、蓝牙等复杂的分享方式，用一种简单、直观的交互让用户体验到近距离线下社交中与人分享的快乐。</p>
 </blockquote>
@@ -214,17 +211,17 @@
 <p>通过以上2款产品，可以实现跨平台数据传输。</p>
 <p>我利用2台Android手机测试，都是需要创建<code>热点</code>进行传输。Android与iOS测试，也是需要开启<code>热点</code>的，并且在iOS下需要手动链接到对应的热点。</p>
 <h2 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h2><ol>
-<li><p><a href="https://allseenalliance.org/" target="_blank" rel="noopener">AllJoyn</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://allseenalliance.org/">AllJoyn</a></p>
 <blockquote>
 <p>AllJoyn，由高通公司主导的高通创新中心（Qualcomm Innovation Center）所开发的开放源代码专案，主要用于近距离无线传输，透过Wifi或蓝牙技术，进行定位与点对点档案传输。</p>
 </blockquote>
 </li>
-<li><p><a href="http://www.opengarden.com/" target="_blank" rel="noopener">FireChat</a></p>
+<li><p><a target="_blank" rel="noopener" href="http://www.opengarden.com/">FireChat</a></p>
 <blockquote>
 <p>FireChat，是一个专门用于手机的APP，由开放花园公司开发。它能使智能手机在没有网络存取时，经由无线网状网络的蓝牙、Wi-Fi，或苹果公司的多点连线（Multipeer Connectivity）对等网络架构连线。</p>
 </blockquote>
 </li>
-<li><p><a href="http://underdark.io/" target="_blank" rel="noopener">Underdark</a></p>
+<li><p><a target="_blank" rel="noopener" href="http://underdark.io/">Underdark</a></p>
 <blockquote>
 <p>Mobile peer-to-peer mesh networking library.Integrates into iOS and Android apps and works over Wi-Fi and Bluetooth.</p>
 </blockquote>
@@ -232,7 +229,7 @@
 </ol>
 <p>目前只是知道这些三方库，至于其内部的实现原理还不了解，但应该是结合Wi-Fi与蓝牙来实现的。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过目前已有的技术（不做多余的工作），应该是做不到跨平台传输的。但是如果自己通过开发Wi-Fi以及蓝牙，应该是可以实现跨平台传输的。至于开发的难点以及技术点，我也不清楚。</p>
-<h2 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h2><p><a href="http://blog.moritzhaarmann.de/blog/2014/04/27/sorry-state-of-p2p/" target="_blank" rel="noopener">The Sorry State of Peer to Peer iOS to Android connectivity</a><br><a href="http://stackoverflow.com/questions/28906948/peer-to-peer-android-and-ios-with-wifi-direct-multipeer-connectivity" target="_blank" rel="noopener">Peer to peer android and iOS with Wifi direct (multipeer connectivity?)</a><br><a href="http://stackoverflow.com/questions/19067794/is-ios-7-multipeer-connectivity-compatible-with-android-wi-fi-direct" target="_blank" rel="noopener">Is iOS 7 Multipeer Connectivity compatible with Android Wi-Fi Direct?</a><br><a href="http://thenextweb.com/apps/2015/07/10/9-of-the-best-apps-for-sharing-files-between-devices-and-friends/" target="_blank" rel="noopener">9 of the best apps for sharing files between devices and friends</a></p>
+<h2 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h2><p><a target="_blank" rel="noopener" href="http://blog.moritzhaarmann.de/blog/2014/04/27/sorry-state-of-p2p/">The Sorry State of Peer to Peer iOS to Android connectivity</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/28906948/peer-to-peer-android-and-ios-with-wifi-direct-multipeer-connectivity">Peer to peer android and iOS with Wifi direct (multipeer connectivity?)</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/19067794/is-ios-7-multipeer-connectivity-compatible-with-android-wi-fi-direct">Is iOS 7 Multipeer Connectivity compatible with Android Wi-Fi Direct?</a><br><a target="_blank" rel="noopener" href="http://thenextweb.com/apps/2015/07/10/9-of-the-best-apps-for-sharing-files-between-devices-and-friends/">9 of the best apps for sharing files between devices and friends</a></p>
 
       
 
@@ -246,7 +243,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">直播</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>
@@ -370,7 +367,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -449,7 +446,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -457,87 +454,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -589,15 +530,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -614,10 +555,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

@@ -9,17 +9,17 @@
   <title>记一次 ANR 寻根之旅 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。在 SplashActivity onCr">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次 ANR 寻根之旅">
 <meta property="og:url" content="http://lijia92.github.io/2019/07/04/anr/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。在 SplashActivity onCr">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.210Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-07-04T07:12:38.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.418Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次 ANR 寻根之旅">
-<meta name="twitter:description" content="最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。在 SplashActivity onCr">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -181,14 +177,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。<br>在 SplashActivity onCreate 的方法里打断点进都进不去，有点懵，所以将目标定位到 Application 初始化了。看着 Application 相关初始化的代码，没发现什么大问题。打断点逐步调试，运行到某一行时直接就无响应了，后面的代码也不执行了，logcat 也看不到有用的信息，有点摸不着头脑。后面 Google 发现可以直接看到手机 ANR 的日志，路径为：/data/anr/traces.txt，于是很欢快的将日志导出到电脑：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull <span class="regexp">/data/</span>anr<span class="regexp">/traces.txt d:/</span>test</span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>然后看到 traces.txt：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">----- pid <span class="number">1928</span> at <span class="number">2019</span><span class="number">-07</span><span class="number">-03</span> <span class="number">17</span>:<span class="number">42</span>:<span class="number">50</span> -----</span><br><span class="line">Cmd <span class="string">line:</span> cn.xxx.xxx.xxx</span><br><span class="line">Build <span class="string">fingerprint:</span> <span class="string">'Xiaomi/gemini/gemini:6.0.1/MXB48T/V8.0.10.0.MAACNDH:user/release-keys'</span></span><br><span class="line"><span class="string">ABI:</span> <span class="string">'arm'</span></span><br><span class="line">Build <span class="string">type:</span> optimized</span><br><span class="line">Zygote loaded classes=<span class="number">4121</span> post zygote classes=<span class="number">1287</span></span><br><span class="line">Intern <span class="string">table:</span> <span class="number">54279</span> strong; <span class="number">161</span> weak</span><br><span class="line"><span class="string">JNI:</span> CheckJNI is on; globals=<span class="number">322</span> (plus <span class="number">266</span> weak)</span><br><span class="line"><span class="string">Libraries:</span> <span class="regexp">/data/</span>app<span class="regexp">/cn.xxx.xxx.xxx-1/</span>lib<span class="regexp">/arm/</span>libBDSpeechDecoder_V1.so <span class="regexp">/data/</span>app<span class="regexp">/cn.xxx.xxx.xxx-1/</span>lib<span class="regexp">/arm/</span>libbd_etts.so <span class="regexp">/data/</span>app<span class="regexp">/cn.xxx.xxx.xxx-1/</span>lib<span class="regexp">/arm/</span>libbdtts.so <span class="regexp">/data/</span>app<span class="regexp">/cn.xxx.xxx.xxx-1/</span>lib<span class="regexp">/arm/</span>libgnustl_shared.so <span class="regexp">/data/</span>app<span class="regexp">/cn.xxx.xxx.xxx-1/</span>lib<span class="regexp">/arm/</span>libtnpn.so <span class="regexp">/system/</span>app<span class="regexp">/WebViewGoogle/</span>WebViewGoogle.apk!<span class="regexp">/lib/</span>armeabi-v7a<span class="regexp">/libwebviewchromium.so /</span>system<span class="regexp">/lib/</span>libandroid.so <span class="regexp">/system/</span>lib<span class="regexp">/libcompiler_rt.so /</span>system<span class="regexp">/lib/</span>libjavacrypto.so <span class="regexp">/system/</span>lib<span class="regexp">/libjnigraphics.so /</span>system<span class="regexp">/lib/</span>libmedia_jni.so <span class="regexp">/system/</span>lib<span class="regexp">/libmiuinative.so /</span>system<span class="regexp">/lib/</span>libqti_performance.so <span class="regexp">/system/</span>lib<span class="regexp">/libsechook.so /</span>system<span class="regexp">/lib/</span>libwebviewchromium_loader.so <span class="regexp">/system/</span>lib/libwebviewchromium_plat_support.so libjavacore.so (<span class="number">17</span>)</span><br><span class="line"><span class="string">Heap:</span> <span class="number">24</span>% free， <span class="number">21</span>MB/<span class="number">28</span>MB; <span class="number">47008</span> objects</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="string">"main"</span> prio=<span class="number">5</span> tid=<span class="number">1</span> Waiting</span><br><span class="line">  | group=<span class="string">"main"</span> sCount=<span class="number">1</span> dsCount=<span class="number">0</span> obj=<span class="number">0x744885e0</span> self=<span class="number">0xf4f76500</span></span><br><span class="line">  | sysTid=<span class="number">1928</span> nice=<span class="number">-1</span> cgrp=bg_non_interactive sched=<span class="number">0</span>/<span class="number">0</span> handle=<span class="number">0xf7194b34</span></span><br><span class="line">  | state=S schedstat=( <span class="number">236711085</span> <span class="number">326769009</span> <span class="number">310</span> ) utm=<span class="number">17</span> stm=<span class="number">6</span> core=<span class="number">0</span> HZ=<span class="number">100</span></span><br><span class="line">  | stack=<span class="number">0xff4ef000</span><span class="number">-0xff4f1000</span> stackSize=<span class="number">8</span>MB</span><br><span class="line">  | held mutexes=</span><br><span class="line">  at cn.xxx.android.core.glide.GlideProgressManager.getOkHttpClient(GlideProgressManager.<span class="string">java:</span><span class="number">36</span>)</span><br><span class="line">  - waiting on &lt;<span class="number">0x08da7fbe</span>&gt; (a java.lang.Class&lt;cn.xxx.android.core.http.XXXHttpClient&gt;)</span><br><span class="line">  at cn.xxx.android.core.glide.XXXAppGlideModule.registerComponents(XXXAppGlideModule.<span class="string">java:</span><span class="number">44</span>)</span><br><span class="line">  at com.bumptech.glide.GeneratedAppGlideModuleImpl.registerComponents(GeneratedAppGlideModuleImpl.<span class="string">java:</span><span class="number">38</span>)</span><br><span class="line">  at com.bumptech.glide.Glide.initializeGlide(Glide.<span class="string">java:</span><span class="number">273</span>)</span><br><span class="line">  at com.bumptech.glide.Glide.initializeGlide(Glide.<span class="string">java:</span><span class="number">223</span>)</span><br><span class="line">  at com.bumptech.glide.Glide.checkAndInitializeGlide(Glide.<span class="string">java:</span><span class="number">184</span>)</span><br><span class="line">  at com.bumptech.glide.Glide.get(Glide.<span class="string">java:</span><span class="number">168</span>)</span><br><span class="line">  - locked &lt;<span class="number">0x02e8781f</span>&gt; (a java.lang.Class&lt;com.bumptech.glide.Glide&gt;)</span><br><span class="line">  at cn.xxx.xxx.xxx.VygApplication.onTrimMemory(VygApplication.<span class="string">java:</span><span class="number">93</span>)</span><br><span class="line">  at android.app.ActivityThread.handleTrimMemory(ActivityThread.<span class="string">java:</span><span class="number">4420</span>)</span><br><span class="line">  at android.app.ActivityThread$H.handleMessage(ActivityThread.<span class="string">java:</span><span class="number">1548</span>)</span><br><span class="line">  at android.os.Handler.dispatchMessage(Handler.<span class="string">java:</span><span class="number">102</span>)</span><br><span class="line">  at android.os.Looper.loop(Looper.<span class="string">java:</span><span class="number">148</span>)</span><br><span class="line">  at android.app.ActivityThread.main(ActivityThread.<span class="string">java:</span><span class="number">5458</span>)</span><br><span class="line">  at java.lang.reflect.Method.invoke!(Native method)</span><br><span class="line">  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.<span class="string">java:</span><span class="number">738</span>)</span><br><span class="line">  at com.android.internal.os.ZygoteInit.main(ZygoteInit.<span class="string">java:</span><span class="number">628</span>)</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>日志很多，Cmd line 就是当前 ANR 应用的包名，通过日志，可以得到一些有效信息：<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">main：main标识是主线程，如果是线程，那么命名成“Thread-X”的格式，x 表示线程 id，逐步递增</span><br><span class="line"><span class="keyword">prio</span>：线程优先级，默认是 <span class="number">5</span></span><br><span class="line">tid：tid 不是线程的 id，是线程唯一标识 ID</span><br><span class="line"><span class="keyword">group</span>：是线程组名称</span><br><span class="line">sCount：该线程被挂起的次数</span><br><span class="line">dsCount：是线程被调试器挂起的次数</span><br><span class="line">obj：对象地址</span><br><span class="line"><span class="literal">self</span>：该线程 Native 的地址</span><br><span class="line">sysTid：是线程号(主线程的线程号和进程号相同)</span><br><span class="line">nice：是线程的调度优先级</span><br><span class="line">sched：分别标志了线程的调度策略和优先级</span><br><span class="line">cgrp：调度归属组</span><br><span class="line">handle：线程处理函数的地址</span><br><span class="line"><span class="keyword">state</span>：是调度状态</span><br><span class="line">schedstat：从 /proc/[pid]/task/[tid]/schedstat 读出，三个值分别表示线程在 cpu 上执行的时间、线程的等待时间和线程执行的时间片长度，不支持这项信息的三个值都是 <span class="number">0</span></span><br><span class="line">utm：是线程用户态下使用的时间值(单位是 jiffies）</span><br><span class="line">stm：是内核态下的调度时间值</span><br><span class="line">core：是最后执行这个线程的 cpu 核的序号</span><br></pre></td></tr></table></figure></p>
-<p>找到 “main”，可以看到，在 Application 的 onTrimMemory 时调用了 Glide 的 get 方法，后面一系列操作导致的主线程变成 Waiting 状态了。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> void onTrimMemory(int level) &#123;</span><br><span class="line">    <span class="keyword">super</span>.onTrimMemory(level);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (level == TRIM_MEMORY_UI_HIDDEN) &#123;</span><br><span class="line">        Glide.<span class="keyword">get</span>(<span class="keyword">this</span>).clearMemory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Glide.<span class="keyword">get</span>(<span class="keyword">this</span>).trimMemory(level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>最终会调用到 GlideAppModule 的 registerComponents 方法：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> registerComponents(Context context， Glide glide， Registry registry) &#123;</span><br><span class="line">    registry.replace(GlideUrl.<span class="keyword">class</span>， InputStream.<span class="keyword">class</span>，</span><br><span class="line">            <span class="keyword">new</span> OkHttpUrlLoader.Factory(GlideProgressManager.getOkHttpClient()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (CollectionUtils.isNotEmpty(libraryGlideModuleList)) &#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="keyword">size</span> = libraryGlideModuleList.<span class="keyword">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">size</span>; i++) &#123;</span><br><span class="line">            libraryGlideModuleList.get(i).registerComponents(context， glide， registry);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后看到 GlideProgressManager：<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">static OkHttpClient getOkHttpClient() &#123;</span><br><span class="line">    <span class="keyword">if</span> (okHttpClient == <span class="literal">null</span>) &#123;</span><br><span class="line">        okHttpClient = XXXHttpClient.getDefaultHttpClient().newBuilder()</span><br><span class="line">                .addNetworkInterceptor(<span class="keyword">new</span> Interceptor() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    <span class="keyword">public</span> <span class="built_in">Response</span> intercept(@NonNull Chain chain) throws IOException &#123;</span><br><span class="line">                        <span class="built_in">Request</span> <span class="built_in">request</span> = chain.<span class="built_in">request</span>();</span><br><span class="line">                        <span class="built_in">Response</span> <span class="built_in">response</span> = chain.proceed(<span class="built_in">request</span>);</span><br><span class="line">                        return <span class="built_in">response</span>.newBuilder()</span><br><span class="line">                                .body(<span class="keyword">new</span> ProgressResponseBody(<span class="built_in">request</span>.url().toString()， <span class="built_in">response</span>.body()， LISTENER))</span><br><span class="line">                                .build();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line">    &#125;</span><br><span class="line">    return okHttpClient;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>XXXHttpClient：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> OkHttpClient defaultHttpClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function">OkHttpClient <span class="title">getDefaultHttpClient</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (defaultHttpClient == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (MucangHttpClient.class) &#123;</span><br><span class="line">            <span class="keyword">if</span> (defaultHttpClient == <span class="keyword">null</span>) &#123;</span><br><span class="line">                defaultHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> defaultHttpClient;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。<br>在 SplashActivity onCreate 的方法里打断点进都进不去，有点懵，所以将目标定位到 Application 初始化了。看着 Application 相关初始化的代码，没发现什么大问题。打断点逐步调试，运行到某一行时直接就无响应了，后面的代码也不执行了，logcat 也看不到有用的信息，有点摸不着头脑。后面 Google 发现可以直接看到手机 ANR 的日志，路径为：&#x2F;data&#x2F;anr&#x2F;traces.txt，于是很欢快的将日志导出到电脑：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull <span class="regexp">/data/</span>anr<span class="regexp">/traces.txt d:/</span>test</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>然后看到 traces.txt：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">----- pid 1928 at 2019-07-03 17:42:50 -----</span><br><span class="line">Cmd line: cn.xxx.xxx.xxx</span><br><span class="line">Build fingerprint: <span class="string">&#x27;Xiaomi/gemini/gemini:6.0.1/MXB48T/V8.0.10.0.MAACNDH:user/release-keys&#x27;</span></span><br><span class="line">ABI: <span class="string">&#x27;arm&#x27;</span></span><br><span class="line">Build type: optimized</span><br><span class="line">Zygote loaded <span class="attribute">classes</span>=4121 post zygote <span class="attribute">classes</span>=1287</span><br><span class="line">Intern table: 54279 strong; 161 weak</span><br><span class="line">JNI: CheckJNI is on; <span class="attribute">globals</span>=322 (plus 266 weak)</span><br><span class="line">Libraries: /data/app/cn.xxx.xxx.xxx-1/lib/arm/libBDSpeechDecoder_V1.so /data/app/cn.xxx.xxx.xxx-1/lib/arm/libbd_etts.so /data/app/cn.xxx.xxx.xxx-1/lib/arm/libbdtts.so /data/app/cn.xxx.xxx.xxx-1/lib/arm/libgnustl_shared.so /data/app/cn.xxx.xxx.xxx-1/lib/arm/libtnpn.so /system/app/WebViewGoogle/WebViewGoogle.apk!/lib/armeabi-v7a/libwebviewchromium.so /system/lib/libandroid.so /system/lib/libcompiler_rt.so /system/lib/libjavacrypto.so /system/lib/libjnigraphics.so /system/lib/libmedia_jni.so /system/lib/libmiuinative.so /system/lib/libqti_performance.so /system/lib/libsechook.so /system/lib/libwebviewchromium_loader.so /system/lib/libwebviewchromium_plat_support.so libjavacore.so (17)</span><br><span class="line">Heap: 24% free， 21MB/28MB; 47008 objects</span><br><span class="line"></span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;main&quot;</span> <span class="attribute">prio</span>=5 <span class="attribute">tid</span>=1 Waiting</span><br><span class="line">  | <span class="attribute">group</span>=<span class="string">&quot;main&quot;</span> <span class="attribute">sCount</span>=1 <span class="attribute">dsCount</span>=0 <span class="attribute">obj</span>=0x744885e0 <span class="attribute">self</span>=0xf4f76500</span><br><span class="line">  | <span class="attribute">sysTid</span>=1928 <span class="attribute">nice</span>=-1 <span class="attribute">cgrp</span>=bg_non_interactive <span class="attribute">sched</span>=0/0 <span class="attribute">handle</span>=0xf7194b34</span><br><span class="line">  | <span class="attribute">state</span>=S schedstat=( 236711085 326769009 310 ) <span class="attribute">utm</span>=17 <span class="attribute">stm</span>=6 <span class="attribute">core</span>=0 <span class="attribute">HZ</span>=100</span><br><span class="line">  | <span class="attribute">stack</span>=0xff4ef000-0xff4f1000 <span class="attribute">stackSize</span>=8MB</span><br><span class="line">  | held mutexes=</span><br><span class="line">  at cn.xxx.android.core.glide.GlideProgressManager.getOkHttpClient(GlideProgressManager.java:36)</span><br><span class="line">  - waiting on &lt;0x08da7fbe&gt; (a java.lang.Class&lt;cn.xxx.android.core.http.XXXHttpClient&gt;)</span><br><span class="line">  at cn.xxx.android.core.glide.XXXAppGlideModule.registerComponents(XXXAppGlideModule.java:44)</span><br><span class="line">  at com.bumptech.glide.GeneratedAppGlideModuleImpl.registerComponents(GeneratedAppGlideModuleImpl.java:38)</span><br><span class="line">  at com.bumptech.glide.Glide.initializeGlide(Glide.java:273)</span><br><span class="line">  at com.bumptech.glide.Glide.initializeGlide(Glide.java:223)</span><br><span class="line">  at com.bumptech.glide.Glide.checkAndInitializeGlide(Glide.java:184)</span><br><span class="line">  at com.bumptech.glide.Glide.<span class="built_in">get</span>(Glide.java:168)</span><br><span class="line">  - locked &lt;0x02e8781f&gt; (a java.lang.Class&lt;com.bumptech.glide.Glide&gt;)</span><br><span class="line">  at cn.xxx.xxx.xxx.VygApplication.onTrimMemory(VygApplication.java:93)</span><br><span class="line">  at android.app.ActivityThread.handleTrimMemory(ActivityThread.java:4420)</span><br><span class="line">  at android.app.ActivityThread<span class="variable">$H</span>.handleMessage(ActivityThread.java:1548)</span><br><span class="line">  at android.os.Handler.dispatchMessage(Handler.java:102)</span><br><span class="line">  at android.os.Looper.loop(Looper.java:148)</span><br><span class="line">  at android.app.ActivityThread.main(ActivityThread.java:5458)</span><br><span class="line">  at java.lang.reflect.Method.invoke!(Native method)</span><br><span class="line">  at com.android.internal.os.ZygoteInit<span class="variable">$MethodAndArgsCaller</span>.<span class="built_in">run</span>(ZygoteInit.java:738)</span><br><span class="line">  at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:628)</span><br><span class="line"></span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>日志很多，Cmd line 就是当前 ANR 应用的包名，通过日志，可以得到一些有效信息：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">main：main标识是主线程，如果是线程，那么命名成“Thread-X”的格式，x 表示线程 id，逐步递增</span><br><span class="line"><span class="keyword">prio</span>：线程优先级，默认是 <span class="number">5</span></span><br><span class="line">tid：tid 不是线程的 id，是线程唯一标识 ID</span><br><span class="line"><span class="keyword">group</span>：是线程组名称</span><br><span class="line">sCount：该线程被挂起的次数</span><br><span class="line">dsCount：是线程被调试器挂起的次数</span><br><span class="line">obj：对象地址</span><br><span class="line"><span class="literal">self</span>：该线程 Native 的地址</span><br><span class="line">sysTid：是线程号(主线程的线程号和进程号相同)</span><br><span class="line">nice：是线程的调度优先级</span><br><span class="line">sched：分别标志了线程的调度策略和优先级</span><br><span class="line">cgrp：调度归属组</span><br><span class="line">handle：线程处理函数的地址</span><br><span class="line"><span class="keyword">state</span>：是调度状态</span><br><span class="line">schedstat：从 /proc/[pid]/task/[tid]/schedstat 读出，三个值分别表示线程在 cpu 上执行的时间、线程的等待时间和线程执行的时间片长度，不支持这项信息的三个值都是 <span class="number">0</span></span><br><span class="line">utm：是线程用户态下使用的时间值(单位是 jiffies）</span><br><span class="line">stm：是内核态下的调度时间值</span><br><span class="line">core：是最后执行这个线程的 cpu 核的序号</span><br></pre></td></tr></table></figure>
+<p>找到 “main”，可以看到，在 Application 的 onTrimMemory 时调用了 Glide 的 get 方法，后面一系列操作导致的主线程变成 Waiting 状态了。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> void onTrimMemory(int level) &#123;</span><br><span class="line">    <span class="keyword">super</span>.onTrimMemory(level);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (level == TRIM_MEMORY_UI_HIDDEN) &#123;</span><br><span class="line">        Glide.<span class="keyword">get</span>(<span class="keyword">this</span>).clearMemory();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Glide.<span class="keyword">get</span>(<span class="keyword">this</span>).trimMemory(level);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终会调用到 GlideAppModule 的 registerComponents 方法：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function">Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="type">void</span> <span class="title">registerComponents</span><span class="params">(Context context， Glide glide， Registry registry)</span> </span>&#123;</span><br><span class="line">    registry.<span class="built_in">replace</span>(GlideUrl.<span class="keyword">class</span>， InputStream.<span class="keyword">class</span>，</span><br><span class="line">            <span class="keyword">new</span> OkHttpUrlLoader.<span class="built_in">Factory</span>(GlideProgressManager.<span class="built_in">getOkHttpClient</span>()));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (CollectionUtils.<span class="built_in">isNotEmpty</span>(libraryGlideModuleList)) &#123;</span><br><span class="line">        <span class="type">int</span> size = libraryGlideModuleList.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">            libraryGlideModuleList.<span class="built_in">get</span>(i).<span class="built_in">registerComponents</span>(context， glide， registry);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后看到 GlideProgressManager：</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">static OkHttpClient getOkHttpClient() &#123;</span><br><span class="line">    <span class="keyword">if</span> (okHttpClient == <span class="literal">null</span>) &#123;</span><br><span class="line">        okHttpClient = XXXHttpClient.getDefaultHttpClient().newBuilder()</span><br><span class="line">                .addNetworkInterceptor(<span class="keyword">new</span> Interceptor() &#123;</span><br><span class="line">                    @Override</span><br><span class="line">                    <span class="keyword">public</span> <span class="built_in">Response</span> intercept(@NonNull Chain chain) throws IOException &#123;</span><br><span class="line">                        <span class="built_in">Request</span> <span class="built_in">request</span> = chain.<span class="built_in">request</span>();</span><br><span class="line">                        <span class="built_in">Response</span> <span class="built_in">response</span> = chain.proceed(<span class="built_in">request</span>);</span><br><span class="line">                        return <span class="built_in">response</span>.newBuilder()</span><br><span class="line">                                .body(<span class="keyword">new</span> ProgressResponseBody(<span class="built_in">request</span>.url().<span class="keyword">to</span><span class="built_in">String</span>()， <span class="built_in">response</span>.body()， LISTENER))</span><br><span class="line">                                .build();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;).build();</span><br><span class="line">    &#125;</span><br><span class="line">    return okHttpClient;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>XXXHttpClient：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> OkHttpClient defaultHttpClient;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> OkHttpClient <span class="title">getDefaultHttpClient</span>()</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (defaultHttpClient == <span class="literal">null</span>) &#123;</span><br><span class="line">        synchronized (MucangHttpClient.<span class="keyword">class</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (defaultHttpClient == <span class="literal">null</span>) &#123;</span><br><span class="line">                defaultHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> defaultHttpClient;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>很标准的 Double-Check 单例模式，感觉没啥大问题，但是为啥会导致 ANR 呢？<br>因为升大版本，将绝大多数注意力都放到升级注意项了，比如 FileProvider 等等，但是正好基础库在大版本升级时，将 OkHttp 从 2.x 升到 3.x，上面的代码正时此时添加进来的，所以没升大版本一切正常。解决问题的话，将 Application 中 Glide 相关操作直接干掉就好了，Glide 内部有自己的内存控制策略，无需开发者关心了吧。<br>写这篇文章主要是记录一下可以<strong>通过拉取 traces.text 日志来分析 ANR</strong>，但是为什么这样的代码导致了 ANR 还没研究透，待我研究好了再来更新此文。</p>
 
       
@@ -203,7 +208,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -327,7 +332,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -406,7 +411,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -414,87 +419,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -546,15 +495,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -571,10 +520,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

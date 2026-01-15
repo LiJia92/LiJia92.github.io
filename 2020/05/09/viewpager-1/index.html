@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>ViewPager 左右突出 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单： 123456&lt;android.support.v4.view.ViewPager    android:layout_width&#x3D;&quot;match_parent&quot;    android:layout_height&#x3D;&quot;match_parent&quot;    android:clipTo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ViewPager 左右突出">
 <meta property="og:url" content="http://lijia92.github.io/2020/05/09/viewpager-1/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单： 123456&lt;android.support.v4.view.ViewPager    android:layout_width&#x3D;&quot;match_parent&quot;    android:layout_height&#x3D;&quot;match_parent&quot;    android:clipTo">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.259Z">
+<meta property="article:published_time" content="2020-05-09T08:29:19.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.496Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ViewPager 左右突出">
-<meta name="twitter:description" content="日常开发中经常会有如下需求： ViewPager 左右突出，实现起来非常简单：123456&amp;lt;android.support.v4.view.ViewPager    android:layout_width=&quot;match_parent&quot;    android:layout_height=&quot;match_parent&quot;    android:clipToPadding=&quot;false&quot;    an">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -183,25 +179,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>日常开发中经常会有如下需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png" alt=""></p>
-<p>ViewPager 左右突出，实现起来非常简单：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v4.view.ViewPager</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">clipToPadding</span>=<span class="string">"false"</span></span><br><span class="line">    android:<span class="attribute">paddingLeft</span>=<span class="string">"48dp"</span></span><br><span class="line">    android:<span class="attribute">paddingRight</span>=<span class="string">"48dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+        <p>日常开发中经常会有如下需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png"></p>
+<p>ViewPager 左右突出，实现起来非常简单：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v4.view.ViewPager</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">clipToPadding</span>=<span class="string">&quot;false&quot;</span></span><br><span class="line">    android:<span class="attribute">paddingLeft</span>=<span class="string">&quot;48dp&quot;</span></span><br><span class="line">    android:<span class="attribute">paddingRight</span>=<span class="string">&quot;48dp&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
 <p>添加 padding、clipToPadding 即可。<br>现在还有几个需求：</p>
 <ol>
 <li>两边的 item 小一点，并且有透明度</li>
 <li>item 之间的间距固定</li>
 <li>滑动有动画效果</li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>第 1点使用 scale 进行缩放即可，但是<strong>左边需要向右缩放，右边需要向左缩放</strong>，才能保证第 2 点。<br>第 2 点使用 setPageMargin。<br>第 3 点使用 setPageTransformer。</p>
 <p>transformPage 有 2 个参数：</p>
 <ol>
 <li>page，View: Apply the transformation to this page</li>
 <li>position，float: Position of page relative to the current front-and-center position of the pager. 0 is front and center. 1 is one full page position to the right, and -1 is one page position to the left.</li>
 </ol>
-<p>也就是左边的 View -1~0 变化，右边的 View 0~1 变化。<br>下面问题来了，显示的页面并非在中间的时候缩放到最大，而是要滑动到左边的边缘才是最大。通过断点调试，发现 postion 值就没有出现过0，也就是从来没有滑到“正中间”。看到代码调用 transformPage 的地方：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onPageScrolled</span><span class="params">(<span class="keyword">int</span> position, <span class="keyword">float</span> offset, <span class="keyword">int</span> offsetPixels)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mPageTransformer != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> scrollX = getScrollX();</span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">int</span> childCount = getChildCount();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> View child = getChildAt(i);</span><br><span class="line">            <span class="keyword">final</span> LayoutParams lp = (LayoutParams) child.getLayoutParams();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (lp.isDecor) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">float</span> transformPos = (<span class="keyword">float</span>) (child.getLeft() - scrollX) / getClientWidth();</span><br><span class="line">            mPageTransformer.transformPage(child, transformPos);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>传回来的 transformPos 在进行计算时，没有考虑 ViewPager 的 padding，</strong>一切似乎都对应上了。<br>自己计算位置，最终代码：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">viewPager.pageMargin = DimenUtils.dp2px(10f)</span><br><span class="line">viewPager.setPageTransformer(<span class="literal">false</span>) &#123; page: View, <span class="symbol">_</span>: Float -&gt;</span><br><span class="line">    <span class="built_in">var</span> <span class="built_in">position</span> = getPositionConsiderPadding(<span class="built_in">view</span>.itemView.schoolViewPager, page)</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> &lt; -<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">position</span> = -1f</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">position</span> &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">position</span> = 1f</span><br><span class="line">    &#125;</span><br><span class="line">    val <span class="built_in">scale</span>: Float</span><br><span class="line">    val alpha: Float</span><br><span class="line">    val pivotX: Float</span><br><span class="line">    val pivotY: Float</span><br><span class="line">    when &#123;</span><br><span class="line">        <span class="built_in">position</span> &lt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f + <span class="built_in">position</span> * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.</span>5f + <span class="number">0.</span>5f * (<span class="number">1</span> + <span class="built_in">position</span>))</span><br><span class="line">            pivotX = <span class="built_in">width</span>.toFloat()</span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">position</span> &gt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f - <span class="built_in">position</span> * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.</span>5f + <span class="number">0.</span>5f * (<span class="number">1</span> - <span class="built_in">position</span>))</span><br><span class="line">            pivotX = <span class="number">0f</span></span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            <span class="built_in">scale</span> = 1f</span><br><span class="line">            alpha = 1f</span><br><span class="line">            pivotX = <span class="built_in">width</span> / 2f</span><br><span class="line">            pivotY = <span class="built_in">height</span> / 2f</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    page.alpha = alpha</span><br><span class="line">    page.pivotX = pivotX</span><br><span class="line">    page.pivotY = pivotY</span><br><span class="line">    page.scaleX = <span class="built_in">scale</span></span><br><span class="line">    page.scaleY = <span class="built_in">scale</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据 padding 计算真实的 position</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">private fun getPositionConsiderPadding(viewPager: ViewPager, page: View): Float &#123;</span><br><span class="line">    val clientWidth = (viewPager.measuredWidth - viewPager.paddingLeft - viewPager.paddingRight).toFloat()</span><br><span class="line">    <span class="built_in">return</span> ((page.left - viewPager.scrollX - viewPager.paddingLeft) / clientWidth)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>也就是左边的 View -1<del>0 变化，右边的 View 0</del>1 变化。<br>下面问题来了，显示的页面并非在中间的时候缩放到最大，而是要滑动到左边的边缘才是最大。通过断点调试，发现 postion 值就没有出现过0，也就是从来没有滑到“正中间”。看到代码调用 transformPage 的地方：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onPageScrolled</span><span class="params">(<span class="type">int</span> position, <span class="type">float</span> offset, <span class="type">int</span> offsetPixels)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mPageTransformer != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">scrollX</span> <span class="operator">=</span> getScrollX();</span><br><span class="line">        <span class="keyword">final</span> <span class="type">int</span> <span class="variable">childCount</span> <span class="operator">=</span> getChildCount();</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; childCount; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">View</span> <span class="variable">child</span> <span class="operator">=</span> getChildAt(i);</span><br><span class="line">            <span class="keyword">final</span> <span class="type">LayoutParams</span> <span class="variable">lp</span> <span class="operator">=</span> (LayoutParams) child.getLayoutParams();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (lp.isDecor) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">float</span> <span class="variable">transformPos</span> <span class="operator">=</span> (<span class="type">float</span>) (child.getLeft() - scrollX) / getClientWidth();</span><br><span class="line">            mPageTransformer.transformPage(child, transformPos);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>传回来的 transformPos 在进行计算时，没有考虑 ViewPager 的 padding，</strong>一切似乎都对应上了。<br>自己计算位置，最终代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">viewPager.pageMargin = DimenUtils.dp2px(<span class="number">10f</span>)</span><br><span class="line">viewPager.setPageTransformer(<span class="literal">false</span>) &#123; page: View, _: <span class="built_in">Float</span> -&gt;</span><br><span class="line">    <span class="keyword">var</span> position = getPositionConsiderPadding(view.itemView.schoolViewPager, page)</span><br><span class="line">    <span class="keyword">if</span> (position &lt; -<span class="number">1</span>) &#123;</span><br><span class="line">        position = -<span class="number">1f</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (position &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        position = <span class="number">1f</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> scale: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> alpha: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> pivotX: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">val</span> pivotY: <span class="built_in">Float</span></span><br><span class="line">    <span class="keyword">when</span> &#123;</span><br><span class="line">        position &lt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            scale = <span class="number">1f</span> + position * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.5f</span> + <span class="number">0.5f</span> * (<span class="number">1</span> + position))</span><br><span class="line">            pivotX = width.toFloat()</span><br><span class="line">            pivotY = height / <span class="number">2f</span></span><br><span class="line">        &#125;</span><br><span class="line">        position &gt; <span class="number">0</span> -&gt; &#123;</span><br><span class="line">            scale = <span class="number">1f</span> - position * (<span class="number">1</span> - ORIGIN_SCALE)</span><br><span class="line">            alpha = (<span class="number">0.5f</span> + <span class="number">0.5f</span> * (<span class="number">1</span> - position))</span><br><span class="line">            pivotX = <span class="number">0f</span></span><br><span class="line">            pivotY = height / <span class="number">2f</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> -&gt; &#123;</span><br><span class="line">            scale = <span class="number">1f</span></span><br><span class="line">            alpha = <span class="number">1f</span></span><br><span class="line">            pivotX = width / <span class="number">2f</span></span><br><span class="line">            pivotY = height / <span class="number">2f</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    page.alpha = alpha</span><br><span class="line">    page.pivotX = pivotX</span><br><span class="line">    page.pivotY = pivotY</span><br><span class="line">    page.scaleX = scale</span><br><span class="line">    page.scaleY = scale</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据 padding 计算真实的 position</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">getPositionConsiderPadding</span><span class="params">(viewPager: <span class="type">ViewPager</span>, page: <span class="type">View</span>)</span></span>: <span class="built_in">Float</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> clientWidth = (viewPager.measuredWidth - viewPager.paddingLeft - viewPager.paddingRight).toFloat()</span><br><span class="line">    <span class="keyword">return</span> ((page.left - viewPager.scrollX - viewPager.paddingLeft) / clientWidth)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注：scale 动画可以设置 x、y 的参照点，<strong>代码设置为相对值，不是百分比，所以需要根据百分比映射到真实的位置</strong>。</p>
-<p>参考：<a href="https://www.itcodemonkey.com/article/9599.html" target="_blank" rel="noopener">解决几个ViewPager 异常问题 | 深入剖析</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.itcodemonkey.com/article/9599.html">解决几个ViewPager 异常问题 | 深入剖析</a></p>
 
       
 
@@ -215,7 +215,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -339,7 +339,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -418,7 +418,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -426,87 +426,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -558,15 +502,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -583,10 +527,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

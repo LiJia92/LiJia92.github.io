@@ -9,20 +9,20 @@
   <title>关于重构的一些实践 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多Deprecated标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn">
-<meta name="keywords" content="重构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于重构的一些实践">
 <meta property="og:url" content="http://lijia92.github.io/2018/05/07/refactor/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多Deprecated标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507103810.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/1.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.246Z">
+<meta property="article:published_time" content="2018-05-07T02:11:43.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.477Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="技术思路">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于重构的一些实践">
-<meta name="twitter:description" content="关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多Deprecated标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -41,7 +41,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +55,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -115,10 +113,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,19 +181,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png" alt=""><br>Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多<code>Deprecated</code>标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。</p>
-<a id="more"></a>
-<h2 id="包名修改"><a href="#包名修改" class="headerlink" title="包名修改"></a>包名修改</h2><p>重构针对迁移包路径的，算是改动量最小的了。直接全局搜索相应的包名，进行替换即可。<br><strong>注意：这里千万不要加上 import ，因为很有可能 Core 中自定义 View 也更换了包名，同时在 xml 中有引用，加上 import 是搜不出 xml 中的引用的。</strong><br>举个例子：cn.xxx.android.ui.framework.view.commonview.CommonViewPager -&gt; cn.xxx.android.core.widget.CommonViewPager。<br>某某 xml 中：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;cn<span class="selector-class">.xxx</span><span class="selector-class">.android</span><span class="selector-class">.ui</span><span class="selector-class">.framework</span><span class="selector-class">.view</span><span class="selector-class">.commonview</span><span class="selector-class">.CommonViewPager</span></span><br><span class="line">    android:id=<span class="string">"@+id/view_pager"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_below=<span class="string">"@+id/divider"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507103810.png" alt=""><br>注意去掉图中的 import！</p>
-<h2 id="Deprecated-类或方法删除"><a href="#Deprecated-类或方法删除" class="headerlink" title="@Deprecated 类或方法删除"></a>@Deprecated 类或方法删除</h2><p>一般我们标记一个类或者方法为 @Deprecated 时，都会指出它的替代方案，就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/1.png" alt=""><br>这种情况就很简单了，根据替代方案进行相应修改即可。<br>但是这个比较依赖人工注释，如若有同事忘记写这个了，那么就很头疼了：你不知道用什么方法来替代它。若能询问到标记 @Deprecated 的同事那也还好，万一同事离职了或他自己都忘记了，那如何处理呢？</p>
+        <p>关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png"><br>Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多<code>Deprecated</code>标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。</p>
+<span id="more"></span>
+
+<h2 id="包名修改"><a href="#包名修改" class="headerlink" title="包名修改"></a>包名修改</h2><p>重构针对迁移包路径的，算是改动量最小的了。直接全局搜索相应的包名，进行替换即可。<br><strong>注意：这里千万不要加上 import ，因为很有可能 Core 中自定义 View 也更换了包名，同时在 xml 中有引用，加上 import 是搜不出 xml 中的引用的。</strong><br>举个例子：cn.xxx.android.ui.framework.view.commonview.CommonViewPager -&gt; cn.xxx.android.core.widget.CommonViewPager。<br>某某 xml 中：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;cn<span class="selector-class">.xxx</span><span class="selector-class">.android</span><span class="selector-class">.ui</span><span class="selector-class">.framework</span><span class="selector-class">.view</span><span class="selector-class">.commonview</span><span class="selector-class">.CommonViewPager</span></span><br><span class="line">    android:id=<span class="string">&quot;@+id/view_pager&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_below=<span class="string">&quot;@+id/divider&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507103810.png"><br>注意去掉图中的 import！</p>
+<h2 id="Deprecated-类或方法删除"><a href="#Deprecated-类或方法删除" class="headerlink" title="@Deprecated 类或方法删除"></a>@Deprecated 类或方法删除</h2><p>一般我们标记一个类或者方法为 @Deprecated 时，都会指出它的替代方案，就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/1.png"><br>这种情况就很简单了，根据替代方案进行相应修改即可。<br>但是这个比较依赖人工注释，如若有同事忘记写这个了，那么就很头疼了：你不知道用什么方法来替代它。若能询问到标记 @Deprecated 的同事那也还好，万一同事离职了或他自己都忘记了，那如何处理呢？</p>
 <ol>
 <li>读懂代码，自己寻找替代方案</li>
 <li>从 Core 中 copy 一份到自己的代码中</li>
 </ol>
 <p>方案一只有在业务简单，逻辑清晰的情况下适用，当业务十分复杂，逻辑阅读起来也比较费力时，方案一的工作量就很庞大了。这个时候选择方案二合适点，后续有空再来优化。当然，这个<code>后续有空</code>可能就和<code>明天</code>一样，哈哈哈…</p>
 <h2 id="功能模块整个删除"><a href="#功能模块整个删除" class="headerlink" title="功能模块整个删除"></a>功能模块整个删除</h2><p>Core 之前有一套网络请求模块，在升级后，使用了另外一套，两套是完全不同的东西。但是在 Saturn 中很多网络请求仍然使用着旧的那套东西。碰到这种情况，目前想到的就只有 copy 了。其实对这种升级，我是很厌烦的，因为它完全不考虑兼容，强制所有用到 Core 的都进行整改，也不考虑其他同事的工作量，虽然它已经标记为 @Deprecated 很久了。</p>
-<h2 id="自定义-View"><a href="#自定义-View" class="headerlink" title="自定义 View"></a>自定义 View</h2><p>碰到自定义 View 也给删除的，若没有替代方案，也只能 copy 代码了。但是自定义 View 的 copy 要多一步：资源文件。很多自定义 View 有自定义的属性或者样式之类的，这就要求你在 copy 代码同时，也要 copy 相应的资源文件。<br><strong>这里有个坑：Saturn 作为一个 Lib，如果原封不动的直接将文件 copy 过来，那么考虑一下 Venus。Venus 在兼容 Core 升级的时候，很有可能和 Saturn 采用同样的做法，那么两份相同的资源文件就会导致冲突了。这个冲突不是 Saturn 自身能测试得到的，只有在 Mercury App 进行集成的时候才会暴露出来。所以最好提前考虑一下，针对资源文件加上独有的前缀。</strong><br>比如：<br><figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;declare-styleable <span class="built_in">name</span>=<span class="string">"RoundCornerButton"</span>&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_radius"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_radius_lt"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_radius_rt"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_radius_lb"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_radius_rb"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_bg_color"</span> <span class="built_in">format</span>=<span class="string">"color"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_elevation"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_stroke_color"</span> <span class="built_in">format</span>=<span class="string">"color"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"round_button_stroke_width"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">&lt;/declare-styleable&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 改成如下 --&gt;</span><br><span class="line">&lt;declare-styleable <span class="built_in">name</span>=<span class="string">"saturn__RoundCornerButton"</span>&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__radius"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__radius_lt"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__radius_rt"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__radius_lb"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__radius_rb"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__bg_color"</span> <span class="built_in">format</span>=<span class="string">"color"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__elevation"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__stroke_color"</span> <span class="built_in">format</span>=<span class="string">"color"</span> /&gt;</span><br><span class="line">    &lt;attr <span class="built_in">name</span>=<span class="string">"saturn__stroke_width"</span> <span class="built_in">format</span>=<span class="string">"dimension"</span> /&gt;</span><br><span class="line">&lt;/declare-styleable&gt;</span><br></pre></td></tr></table></figure></p>
-<p>为了完全避免冲突，最好样式名、自定义属性名都加上前缀，如果过长可适当删减，同时记得修改自定义 View 中的引用。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> RoundCornerButton(Context context, AttributeSet attrs, <span class="built_in">int</span> defStyleAttr) &#123;</span><br><span class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">    <span class="comment">// 获取自定义的属性,设置相应背景</span></span><br><span class="line">    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.saturn__RoundCornerButton);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="built_in">float</span> allRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">float</span> ltRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_lt, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">float</span> rtRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_rt, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">float</span> lbRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_lb, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">float</span> rbRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_rb, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">color</span> = typedArray.getColor(R.styleable.saturn__RoundCornerButton_saturn__bg_color, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">int</span> strokeColor = typedArray.getColor(R.styleable.saturn__RoundCornerButton_saturn__stroke_color, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">int</span> strokeWidth = typedArray.getDimensionPixelOffset(R.styleable.</span><br><span class="line">                saturn__RoundCornerButton_saturn__stroke_width, <span class="number">0</span>);</span><br><span class="line">        <span class="built_in">float</span> elevation = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__elevation, <span class="number">0</span>);</span><br><span class="line">        drawable = <span class="keyword">new</span> GradientDrawable();</span><br><span class="line">        drawable.setColor(<span class="built_in">color</span>);</span><br><span class="line">        <span class="keyword">if</span> (allRadius == <span class="number">0</span>) &#123;</span><br><span class="line">            drawable.setCornerRadii(<span class="keyword">new</span> <span class="built_in">float</span>[]&#123;ltRadius, ltRadius, rtRadius, rtRadius,</span><br><span class="line">                    rbRadius, rbRadius, lbRadius, lbRadius&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            drawable.setCornerRadius(allRadius);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (strokeColor != <span class="number">0</span>) &#123;</span><br><span class="line">            drawable.setStroke(strokeWidth, strokeColor);</span><br><span class="line">        &#125;</span><br><span class="line">        ViewCompat.setBackground(<span class="keyword">this</span>, drawable);</span><br><span class="line">        changeElevation(elevation);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        LogUtils.d(<span class="string">"exception"</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        typedArray.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="自定义-View"><a href="#自定义-View" class="headerlink" title="自定义 View"></a>自定义 View</h2><p>碰到自定义 View 也给删除的，若没有替代方案，也只能 copy 代码了。但是自定义 View 的 copy 要多一步：资源文件。很多自定义 View 有自定义的属性或者样式之类的，这就要求你在 copy 代码同时，也要 copy 相应的资源文件。<br><strong>这里有个坑：Saturn 作为一个 Lib，如果原封不动的直接将文件 copy 过来，那么考虑一下 Venus。Venus 在兼容 Core 升级的时候，很有可能和 Saturn 采用同样的做法，那么两份相同的资源文件就会导致冲突了。这个冲突不是 Saturn 自身能测试得到的，只有在 Mercury App 进行集成的时候才会暴露出来。所以最好提前考虑一下，针对资源文件加上独有的前缀。</strong><br>比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;RoundCornerButton&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_radius&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_radius_lt&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_radius_rt&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_radius_lb&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_radius_rb&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_bg_color&quot;</span> <span class="attr">format</span>=<span class="string">&quot;color&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_elevation&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_stroke_color&quot;</span> <span class="attr">format</span>=<span class="string">&quot;color&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;round_button_stroke_width&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 改成如下 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;saturn__RoundCornerButton&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__radius&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__radius_lt&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__radius_rt&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__radius_lb&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__radius_rb&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__bg_color&quot;</span> <span class="attr">format</span>=<span class="string">&quot;color&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__elevation&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__stroke_color&quot;</span> <span class="attr">format</span>=<span class="string">&quot;color&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;saturn__stroke_width&quot;</span> <span class="attr">format</span>=<span class="string">&quot;dimension&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>为了完全避免冲突，最好样式名、自定义属性名都加上前缀，如果过长可适当删减，同时记得修改自定义 View 中的引用。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">RoundCornerButton</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">    <span class="comment">// 获取自定义的属性,设置相应背景</span></span><br><span class="line">    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.saturn__RoundCornerButton);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">float</span> allRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">float</span> ltRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_lt, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">float</span> rtRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_rt, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">float</span> lbRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_lb, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">float</span> rbRadius = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__radius_rb, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">int</span> color = typedArray.getColor(R.styleable.saturn__RoundCornerButton_saturn__bg_color, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">int</span> strokeColor = typedArray.getColor(R.styleable.saturn__RoundCornerButton_saturn__stroke_color, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">int</span> strokeWidth = typedArray.getDimensionPixelOffset(R.styleable.</span><br><span class="line">                saturn__RoundCornerButton_saturn__stroke_width, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">float</span> elevation = typedArray.getDimension(R.styleable.saturn__RoundCornerButton_saturn__elevation, <span class="number">0</span>);</span><br><span class="line">        drawable = <span class="keyword">new</span> GradientDrawable();</span><br><span class="line">        drawable.setColor(color);</span><br><span class="line">        <span class="keyword">if</span> (allRadius == <span class="number">0</span>) &#123;</span><br><span class="line">            drawable.setCornerRadii(<span class="keyword">new</span> <span class="keyword">float</span>[]&#123;ltRadius, ltRadius, rtRadius, rtRadius,</span><br><span class="line">                    rbRadius, rbRadius, lbRadius, lbRadius&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            drawable.setCornerRadius(allRadius);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (strokeColor != <span class="number">0</span>) &#123;</span><br><span class="line">            drawable.setStroke(strokeWidth, strokeColor);</span><br><span class="line">        &#125;</span><br><span class="line">        ViewCompat.setBackground(<span class="keyword">this</span>, drawable);</span><br><span class="line">        changeElevation(elevation);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        LogUtils.d(<span class="string">&quot;exception&quot;</span>, e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        typedArray.recycle();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>针对这种重构，小结一下：</p>
 <ol>
 <li>有替代方案直接上替代方案。</li>
@@ -219,7 +220,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">重构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>
@@ -343,7 +344,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -422,7 +423,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -430,87 +431,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -562,15 +507,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -587,10 +532,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

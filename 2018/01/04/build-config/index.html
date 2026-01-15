@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>Android 获取 BuildConfig 信息 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="项目开发中，我们的 App 这个 Module 定义了3个 buildType：1234567891011buildTypes &amp;#123;    release &amp;#123;        buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &apos;0&apos;)    &amp;#125;    debug &amp;#123;        buildConfigField(&quot;Integer">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="项目开发中，我们的 App 这个 Module 定义了3个 buildType： 1234567891011buildTypes &amp;#123;    release &amp;#123;        buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &amp;#x27;0&amp;#x27;)    &amp;#125;    debug &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 获取 BuildConfig 信息">
 <meta property="og:url" content="http://lijia92.github.io/2018/01/04/build-config/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="项目开发中，我们的 App 这个 Module 定义了3个 buildType：1234567891011buildTypes &amp;#123;    release &amp;#123;        buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &apos;0&apos;)    &amp;#125;    debug &amp;#123;        buildConfigField(&quot;Integer">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="项目开发中，我们的 App 这个 Module 定义了3个 buildType： 1234567891011buildTypes &amp;#123;    release &amp;#123;        buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &amp;#x27;0&amp;#x27;)    &amp;#125;    debug &amp;#123;">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.212Z">
+<meta property="article:published_time" content="2018-01-04T01:36:15.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.418Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 获取 BuildConfig 信息">
-<meta name="twitter:description" content="项目开发中，我们的 App 这个 Module 定义了3个 buildType：1234567891011buildTypes &amp;#123;    release &amp;#123;        buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &apos;0&apos;)    &amp;#125;    debug &amp;#123;        buildConfigField(&quot;Integer">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -183,23 +179,35 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>项目开发中，我们的 App 这个 Module 定义了3个 buildType：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">buildTypes </span>&#123;</span><br><span class="line">    <span class="class">release </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class">debug </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'1'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="class">beta </span>&#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'2'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。<br>项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png" alt=""><br>App 作为 Application，其他作为 Library。</p>
-<a id="more"></a>
-<p>现在需要在收银机登录页打上版本的标识，方便调试（因为经常搞混…）。例如 v3.1.0(debug)，v3.1.0(beta)，正式版本则是 v3.1.0。<br>那么现在就需要在收银机 Module 中获取 BuildConfig 的信息，一个是 BuildConfig.DEBUG，以及 BuildConfig.BUILD_TYPE。但是无论我 App 切换成 debug，beta，还是 release，收银机中获取到的值都是<code>BuildConfig.DEBUG = false，BuildConfig.BUILD_TYPE = &quot;release&quot;</code>。可以看出来，<strong>BuildConfig 信息是根据当前 Module 来的，每个 Module 的 BuildConfig 是各自进行配置的</strong>。而作为 Library Module，我们直接把 debug 给忽略了，所以 Library Module 一直是 release 版本。<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">"debug"</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>项目开发中，我们的 App 这个 Module 定义了3个 buildType：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildTypes</span> &#123;</span><br><span class="line">    <span class="keyword">release</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">debug</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">beta</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。<br>项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png"><br>App 作为 Application，其他作为 Library。</p>
+<span id="more"></span>
+
+<p>现在需要在收银机登录页打上版本的标识，方便调试（因为经常搞混…）。例如 v3.1.0(debug)，v3.1.0(beta)，正式版本则是 v3.1.0。<br>那么现在就需要在收银机 Module 中获取 BuildConfig 的信息，一个是 BuildConfig.DEBUG，以及 BuildConfig.BUILD_TYPE。但是无论我 App 切换成 debug，beta，还是 release，收银机中获取到的值都是<code>BuildConfig.DEBUG = false，BuildConfig.BUILD_TYPE = &quot;release&quot;</code>。可以看出来，<strong>BuildConfig 信息是根据当前 Module 来的，每个 Module 的 BuildConfig 是各自进行配置的</strong>。而作为 Library Module，我们直接把 debug 给忽略了，所以 Library Module 一直是 release 版本。</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">&quot;debug&quot;</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么 <strong>如何在 Library Module 获取 App Module 中的 BuildConfig 信息呢？</strong></p>
-<h2 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h2><p>Library Module 进行与 App Module 一样的 buildType 设置。然后 App 的依赖就像这样：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">dependencies</span> &#123;</span><br><span class="line">    <span class="selector-tag">releaseCompile</span> <span class="selector-tag">project</span>(<span class="attribute">path</span>: <span class="string">':Library'</span>, <span class="attribute">configuration</span>: <span class="string">'release'</span>)</span><br><span class="line">    <span class="selector-tag">debugCompile</span> <span class="selector-tag">project</span>(<span class="attribute">path</span>: <span class="string">':Library'</span>, <span class="attribute">configuration</span>: <span class="string">'debug'</span>)</span><br><span class="line">    <span class="selector-tag">betaCompile</span> <span class="selector-tag">project</span>(<span class="attribute">path</span>: <span class="string">':Library'</span>, <span class="attribute">configuration</span>: <span class="string">'beta'</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h2><p>Library Module 进行与 App Module 一样的 buildType 设置。然后 App 的依赖就像这样：</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    releaseCompile <span class="literal">project</span>(<span class="built_in">path</span>: <span class="string">&#x27;:Library&#x27;</span>, configuration: <span class="string">&#x27;release&#x27;</span>)</span><br><span class="line">    debugCompile <span class="literal">project</span>(<span class="built_in">path</span>: <span class="string">&#x27;:Library&#x27;</span>, configuration: <span class="string">&#x27;debug&#x27;</span>)</span><br><span class="line">    betaCompile <span class="literal">project</span>(<span class="built_in">path</span>: <span class="string">&#x27;:Library&#x27;</span>, configuration: <span class="string">&#x27;beta&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这当然可以解决问题，但是 Library 添加多个编译类型无疑会加长编译时间，而且所有 buildVariant 都得进行配置，侵入性太强，不可取。</p>
-<h2 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h2><p>使 Library Module 能够 import 到外层真正运行 App 的 BuildConfig，如下：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> AppUtils &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">Boolean</span> isDebug = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> isDebug() &#123;</span><br><span class="line">        <span class="keyword">return</span> isDebug == <span class="keyword">null</span> ? <span class="keyword">false</span> : isDebug.booleanValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> syncIsDebug(Context context) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isDebug == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                String packageName = context.getPackageName();</span><br><span class="line">                <span class="keyword">Class</span> buildConfig = <span class="keyword">Class</span>.forName(packageName + <span class="string">".BuildConfig"</span>);</span><br><span class="line">                Field DEBUG = buildConfig.getField(<span class="string">"DEBUG"</span>);</span><br><span class="line">                DEBUG.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">                isDebug = DEBUG.getBoolean(<span class="keyword">null</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                <span class="comment">// Do nothing</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过反射得到真正执行的 Module 的 BuildConfig，在自己的 Application 内调用：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AppUtils.syncIsDebug(getApplicationContext())<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h2><p>使 Library Module 能够 import 到外层真正运行 App 的 BuildConfig，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">Boolean</span> <span class="variable">isDebug</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isDebug</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> isDebug == <span class="literal">null</span> ? <span class="literal">false</span> : isDebug.booleanValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">syncIsDebug</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isDebug == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">packageName</span> <span class="operator">=</span> context.getPackageName();</span><br><span class="line">                <span class="type">Class</span> <span class="variable">buildConfig</span> <span class="operator">=</span> Class.forName(packageName + <span class="string">&quot;.BuildConfig&quot;</span>);</span><br><span class="line">                <span class="type">Field</span> <span class="variable">DEBUG</span> <span class="operator">=</span> buildConfig.getField(<span class="string">&quot;DEBUG&quot;</span>);</span><br><span class="line">                DEBUG.setAccessible(<span class="literal">true</span>);</span><br><span class="line">                isDebug = DEBUG.getBoolean(<span class="literal">null</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">                <span class="comment">// Do nothing</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过反射得到真正执行的 Module 的 BuildConfig，在自己的 Application 内调用：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AppUtils.syncIsDebug(getApplicationContext())<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>这样看起来达到目的了。<br>但仔细想想会发现这种解决方案还是有问题，因为 BuildConfig.java 的 packageName 是 Module 的 Package Name，即 AndroidManifest.xml 中的 package 属性，而 context.getPackageName() 得到的是应用的 applicationId，这个 applicationId 通过 build.gradle 是可以修改的。所以当 build.gradle 中的 applicationId 与 AndroidManifest.xml 中的 package 属性不一致时，上面的反射查找类路径便会出错。而恰恰项目中利用了 gradle 配置的 applicationId，所以此方案也不可取。</p>
-<h2 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h2><p>AppCommon 中新建一个类，利用这个类保存 App Module 中的 BuildConfig 信息。<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> BuildTypeHelper &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否可调试</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">boolean</span> mIsDebug = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 编译类型：debug、beta、release</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">String</span> mBuildType = <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> init(<span class="built_in">boolean</span> isDebug, <span class="built_in">String</span> buildType) &#123;</span><br><span class="line">        mIsDebug = isDebug;</span><br><span class="line">        mBuildType = buildType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">String</span> getBuildType() &#123;</span><br><span class="line">        <span class="keyword">return</span> mBuildType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">boolean</span> isDebug() &#123;</span><br><span class="line">        <span class="keyword">return</span> mIsDebug;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后在 App Module 中的 Application 初始化时进行赋值：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        <span class="type">BuildTypeHelper</span>.init(<span class="type">BuildConfig</span>.<span class="type">DEBUG</span>, <span class="type">BuildConfig</span>.<span class="type">BUILD_TYPE</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后在 Library Module 中取值使用：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">if</span> (BuildTypeHelper.isDebug()) &#123;</span><br><span class="line">    mVersionTv.setText(<span class="keyword">String</span>.format(<span class="string">"v%s(%s)"</span>, AppUtils.getCurrentVersionName(<span class="keyword">this</span>), BuildTypeHelper.getBuildType()));</span><br><span class="line">&#125; <span class="built_in">else</span> &#123;</span><br><span class="line">    mVersionTv.setText(<span class="keyword">String</span>.format(<span class="string">"v%s"</span>, AppUtils.getCurrentVersionName(<span class="keyword">this</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="再说一点"><a href="#再说一点" class="headerlink" title="再说一点"></a>再说一点</h2><p>如果只是想获取 BuildConfig.DEBUG，可以使用 ApplicationInfo.FLAG_DEBUGGABLE。我们反编译 Debug 包和 Release 包对比看看有没有其他的区别，会发现他们 AndroidManifest.xml 中 Application 节点的 android:debuggable 值是不同的。Debug 包值为 true，Release 包值为 false，这是编译自动修改的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Boolean isDebug = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isDebug</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> isDebug == <span class="keyword">null</span> ? <span class="keyword">false</span> : isDebug.booleanValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">syncIsDebug</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (isDebug == <span class="keyword">null</span>) &#123;</span><br><span class="line">            isDebug = context.getApplicationInfo() != <span class="keyword">null</span> &amp;&amp;</span><br><span class="line">                    (context.getApplicationInfo().flags &amp; ApplicationInfo.FLAG_DEBUGGABLE) != <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在自己的 Application 内调用进行初始化：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AppUtils.syncIsDebug(getApplicationContext())<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h2><p>AppCommon 中新建一个类，利用这个类保存 App Module 中的 BuildConfig 信息。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BuildTypeHelper</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否可调试</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">boolean</span> mIsDebug = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 编译类型：debug、beta、release</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="title class_">String</span> mBuildType = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> <span class="title function_">init</span>(<span class="params"><span class="built_in">boolean</span> isDebug, <span class="title class_">String</span> buildType</span>) &#123;</span><br><span class="line">        mIsDebug = isDebug;</span><br><span class="line">        mBuildType = buildType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="title class_">String</span> <span class="title function_">getBuildType</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> mBuildType;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">boolean</span> <span class="title function_">isDebug</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> mIsDebug;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 App Module 中的 Application 初始化时进行赋值：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line">        <span class="type">BuildTypeHelper</span>.init(<span class="type">BuildConfig</span>.<span class="type">DEBUG</span>, <span class="type">BuildConfig</span>.<span class="type">BUILD_TYPE</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 Library Module 中取值使用：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">if</span> (BuildTypeHelper.<span class="built_in">isDebug</span>()) &#123;</span><br><span class="line">    <span class="selector-tag">mVersionTv</span><span class="selector-class">.setText</span>(String.<span class="built_in">format</span>(<span class="string">&quot;v%s(%s)&quot;</span>, AppUtils.<span class="built_in">getCurrentVersionName</span>(this), BuildTypeHelper.<span class="built_in">getBuildType</span>()));</span><br><span class="line">&#125; <span class="selector-tag">else</span> &#123;</span><br><span class="line">    <span class="selector-tag">mVersionTv</span><span class="selector-class">.setText</span>(String.<span class="built_in">format</span>(<span class="string">&quot;v%s&quot;</span>, AppUtils.<span class="built_in">getCurrentVersionName</span>(this)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="再说一点"><a href="#再说一点" class="headerlink" title="再说一点"></a>再说一点</h2><p>如果只是想获取 BuildConfig.DEBUG，可以使用 ApplicationInfo.FLAG_DEBUGGABLE。我们反编译 Debug 包和 Release 包对比看看有没有其他的区别，会发现他们 AndroidManifest.xml 中 Application 节点的 android:debuggable 值是不同的。Debug 包值为 true，Release 包值为 false，这是编译自动修改的。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="title class_">Boolean</span> isDebug = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">boolean</span> <span class="title function_">isDebug</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> isDebug == <span class="literal">null</span> ? <span class="literal">false</span> : isDebug.<span class="title function_">booleanValue</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> <span class="title function_">syncIsDebug</span>(<span class="params"><span class="title class_">Context</span> context</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (isDebug == <span class="literal">null</span>) &#123;</span><br><span class="line">            isDebug = context.<span class="title function_">getApplicationInfo</span>() != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">                    (context.<span class="title function_">getApplicationInfo</span>().<span class="property">flags</span> &amp; <span class="title class_">ApplicationInfo</span>.<span class="property">FLAG_DEBUGGABLE</span>) != <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在自己的 Application 内调用进行初始化：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AppUtils.syncIsDebug(getApplicationContext())<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>这样以后调用 AppUtils.isDebug() 即可判断是否是 Debug 版本，比如在上面的 LogUtils 中。同时适用于 Module 是 Lib 和 applicationId 被修改的情况，比 BuildConfig.DEBUG 靠谱的多。<br>这个方案有个注意事项就是自己 App Module 中不能主动设置 android:debuggable，否则无论 Debug 还是 Release 版会始终是设置的值。当然本身就没有自动设置的必要。<br>但是因为本例中还需要获取 BuildConfig.BUILD_TYPE，所以没有采取此方案。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.trinea.cn/android/android-whether-debug-mode-why-buildconfig-debug-always-false/" target="_blank" rel="noopener">Android Debug 版本判断及为什么 BuildConfig.DEBUG 始终为 false</a><br><a href="https://huzongyao.github.io/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/" target="_blank" rel="noopener">AndroidStudio多模块编译之子模块的调试</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="http://www.trinea.cn/android/android-whether-debug-mode-why-buildconfig-debug-always-false/">Android Debug 版本判断及为什么 BuildConfig.DEBUG 始终为 false</a><br><a target="_blank" rel="noopener" href="https://huzongyao.github.io/2017/10/21/8.AndroidStudio%E5%A4%9A%E6%A8%A1%E5%9D%97%E7%BC%96%E8%AF%91%E4%B9%8B%E5%AD%90%E6%A8%A1%E5%9D%97%E7%9A%84%E8%B0%83%E8%AF%95/">AndroidStudio多模块编译之子模块的调试</a></p>
 
       
 
@@ -213,7 +221,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -337,7 +345,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -416,7 +424,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -424,87 +432,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -556,15 +508,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -581,10 +533,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

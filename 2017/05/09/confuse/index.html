@@ -9,17 +9,17 @@
   <title>关于混淆的一个小纰漏 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。 问题是这样的：有一个实体类PrintTemplate类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。 假设现在的版本是 V1.0，测试打">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于混淆的一个小纰漏">
 <meta property="og:url" content="http://lijia92.github.io/2017/05/09/confuse/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。 问题是这样的：有一个实体类PrintTemplate类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。 假设现在的版本是 V1.0，测试打">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.076Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-05-09T05:37:46.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.430Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于混淆的一个小纰漏">
-<meta name="twitter:description" content="混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。 问题是这样的：有一个实体类PrintTemplate类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。 假设现在的版本是 V1.0，测试打">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,9 +180,12 @@
         <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
 <p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
 <p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
-<a id="more"></a>
-<p>示例代码：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> PrintTemplate getPrinterTemplate(<span class="keyword">String</span> bookId, <span class="built_in">int</span> templateId) &#123;</span><br><span class="line">    PrintTemplate template = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">String</span> <span class="built_in">str</span> = getString(KEY_PRINTER_TEMPLATE + <span class="string">"_"</span> + bookId + <span class="string">"_"</span> + templateId);</span><br><span class="line">    <span class="keyword">if</span> (!TextUtils.isEmpty(<span class="built_in">str</span>)) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 这里没有添加异常捕获，导致直接崩溃</span></span><br><span class="line">            template = JSON.parseObject(<span class="built_in">str</span>, PrintTemplate.class);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            template = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> template;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> savePrinterTemplate(List&lt;PrintTemplate&gt; templates, <span class="keyword">String</span> bookId) &#123;</span><br><span class="line">    List&lt;TemplateBean&gt; templateTypes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (PrintTemplate template : templates) &#123;</span><br><span class="line">        <span class="comment">// 逐一保存每个模板</span></span><br><span class="line">        <span class="keyword">String</span> <span class="built_in">str</span> = <span class="keyword">JSONObject</span>.toJSONString(template);</span><br><span class="line">        putString(KEY_PRINTER_TEMPLATE + <span class="string">"_"</span> + bookId + <span class="string">"_"</span> + template.id, <span class="built_in">str</span>);</span><br><span class="line"></span><br><span class="line">        TemplateBean bean = <span class="keyword">new</span> TemplateBean();</span><br><span class="line">        bean.id = template.id;</span><br><span class="line">        bean.name = template.typeName;</span><br><span class="line">        <span class="keyword">if</span> (!templateTypes.contains(bean)) &#123;</span><br><span class="line">            templateTypes.<span class="built_in">add</span>(bean);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 保存所有的业务类型</span></span><br><span class="line">    <span class="keyword">String</span> typeValues = <span class="keyword">JSONArray</span>.toJSONString(templateTypes);</span><br><span class="line">    putString(KEY_PRINTER_TEMPLATE_TYPE, typeValues);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>问题的根源很简单，就是类被混淆了嘛。举个栗子，类的属性为 id, name，存入的字符串可能是<code>&quot;{&quot;a&quot;:1,&quot;b&quot;:&quot;2&quot;}&quot;</code>，a 对应 id，b 对应 name，但是当版本升级后，这个类混淆后属性可能就变成了 c 和 d，那么当拿到那个混淆后的字符串进行重新解析的时候肯定就会有问题了。但是只有版本升级的时候才会出现这个问题，平时自己的测试恰好就把这个问题给规避了。这里记录一下，还好尽早改正了，对用户的影响不大。</p>
+<span id="more"></span>
+
+<p>示例代码：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="title class_">PrintTemplate</span> <span class="title function_">getPrinterTemplate</span>(<span class="params"><span class="title class_">String</span> bookId, int templateId</span>) &#123;</span><br><span class="line">    <span class="title class_">PrintTemplate</span> template = <span class="literal">null</span>;</span><br><span class="line">    <span class="title class_">String</span> str = <span class="title function_">getString</span>(<span class="variable constant_">KEY_PRINTER_TEMPLATE</span> + <span class="string">&quot;_&quot;</span> + bookId + <span class="string">&quot;_&quot;</span> + templateId);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(str)) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 这里没有添加异常捕获，导致直接崩溃</span></span><br><span class="line">            template = <span class="title class_">JSON</span>.<span class="title function_">parseObject</span>(str, <span class="title class_">PrintTemplate</span>.<span class="property">class</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="title class_">Exception</span> e) &#123;</span><br><span class="line">            template = <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> template;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">void</span> <span class="title function_">savePrinterTemplate</span>(<span class="params"><span class="title class_">List</span>&lt;<span class="title class_">PrintTemplate</span>&gt; templates, <span class="title class_">String</span> bookId</span>) &#123;</span><br><span class="line">    <span class="title class_">List</span>&lt;<span class="title class_">TemplateBean</span>&gt; templateTypes = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="title class_">PrintTemplate</span> template : templates) &#123;</span><br><span class="line">        <span class="comment">// 逐一保存每个模板</span></span><br><span class="line">        <span class="title class_">String</span> str = <span class="title class_">JSON</span><span class="built_in">Object</span>.<span class="title function_">toJSONString</span>(template);</span><br><span class="line">        <span class="title function_">putString</span>(<span class="variable constant_">KEY_PRINTER_TEMPLATE</span> + <span class="string">&quot;_&quot;</span> + bookId + <span class="string">&quot;_&quot;</span> + template.<span class="property">id</span>, str);</span><br><span class="line"></span><br><span class="line">        <span class="title class_">TemplateBean</span> bean = <span class="keyword">new</span> <span class="title class_">TemplateBean</span>();</span><br><span class="line">        bean.<span class="property">id</span> = template.<span class="property">id</span>;</span><br><span class="line">        bean.<span class="property">name</span> = template.<span class="property">typeName</span>;</span><br><span class="line">        <span class="keyword">if</span> (!templateTypes.<span class="title function_">contains</span>(bean)) &#123;</span><br><span class="line">            templateTypes.<span class="title function_">add</span>(bean);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 保存所有的业务类型</span></span><br><span class="line">    <span class="title class_">String</span> typeValues = <span class="title class_">JSON</span><span class="built_in">Array</span>.<span class="title function_">toJSONString</span>(templateTypes);</span><br><span class="line">    <span class="title function_">putString</span>(<span class="variable constant_">KEY_PRINTER_TEMPLATE_TYPE</span>, typeValues);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>问题的根源很简单，就是类被混淆了嘛。举个栗子，类的属性为 id, name，存入的字符串可能是<code>&quot;&#123;&quot;a&quot;:1,&quot;b&quot;:&quot;2&quot;&#125;&quot;</code>，a 对应 id，b 对应 name，但是当版本升级后，这个类混淆后属性可能就变成了 c 和 d，那么当拿到那个混淆后的字符串进行重新解析的时候肯定就会有问题了。但是只有版本升级的时候才会出现这个问题，平时自己的测试恰好就把这个问题给规避了。这里记录一下，还好尽早改正了，对用户的影响不大。</p>
 <p>这里顺便贴一下混淆的一些规则，开发中要保持警惕：</p>
 <ol>
 <li>如果使用了Gson之类的工具要使JavaBean类即实体类不被混淆。</li>
@@ -207,7 +206,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -331,7 +330,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -410,7 +409,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -418,87 +417,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -550,15 +493,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -575,10 +518,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

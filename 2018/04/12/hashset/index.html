@@ -9,17 +9,17 @@
   <title>Java HashSet 的原理 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="项目里有用到 HashSet 数据结构，之前几乎没怎么用过，只是了解一点，不能存放重复的元素。但是一直没有看过代码。今天基于这个契机，看了下代码研究了下内在原理。颇有感触，在此记录一下。">
-<meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java HashSet 的原理">
 <meta property="og:url" content="http://lijia92.github.io/2018/04/12/hashset/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="项目里有用到 HashSet 数据结构，之前几乎没怎么用过，只是了解一点，不能存放重复的元素。但是一直没有看过代码。今天基于这个契机，看了下代码研究了下内在原理。颇有感触，在此记录一下。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.095Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-04-12T06:49:04.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.443Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java HashSet 的原理">
-<meta name="twitter:description" content="项目里有用到 HashSet 数据结构，之前几乎没怎么用过，只是了解一点，不能存放重复的元素。但是一直没有看过代码。今天基于这个契机，看了下代码研究了下内在原理。颇有感触，在此记录一下。">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,12 +178,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>项目里有用到 HashSet 数据结构，之前几乎没怎么用过，只是了解一点，不能存放重复的元素。但是一直没有看过代码。今天基于这个契机，看了下代码研究了下内在原理。颇有感触，在此记录一下。</p>
-<a id="more"></a>
-<p>当看到 HashSet 的代码时，瞅了一眼，算上注释竟然不足 400 行。可以说，整个 HashSet 最重要的便是它的构造函数了。<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">HashMap</span>&lt;E,<span class="keyword">Object</span>&gt; <span class="built_in">map</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt; instance has</span></span><br><span class="line"><span class="comment"> * default initial capacity (16) and load factor (0.75).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> HashSet() &#123;</span><br><span class="line">    <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs a new set containing the elements in the specified</span></span><br><span class="line"><span class="comment"> * collection.  The &lt;tt&gt;HashMap&lt;/tt&gt; is created with default load factor</span></span><br><span class="line"><span class="comment"> * (0.75) and an initial capacity sufficient to contain the elements in</span></span><br><span class="line"><span class="comment"> * the specified collection.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param c the collection whose elements are to be placed into this set</span></span><br><span class="line"><span class="comment"> * @throws NullPointerException if the specified collection is null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> HashSet(Collection&lt;? extends E&gt; c) &#123;</span><br><span class="line">    <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;(Math.<span class="built_in">max</span>((<span class="built_in">int</span>) (c.<span class="built_in">size</span>()/<span class="number">.75</span>f) + <span class="number">1</span>, <span class="number">16</span>));</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt; instance has</span></span><br><span class="line"><span class="comment"> * the specified initial capacity and the specified load factor.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param      initialCapacity   the initial capacity of the hash map</span></span><br><span class="line"><span class="comment"> * @param      loadFactor        the load factor of the hash map</span></span><br><span class="line"><span class="comment"> * @throws     IllegalArgumentException if the initial capacity is less</span></span><br><span class="line"><span class="comment"> *             than zero, or if the load factor is nonpositive</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> HashSet(<span class="built_in">int</span> initialCapacity, <span class="built_in">float</span> loadFactor) &#123;</span><br><span class="line">    <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt; instance has</span></span><br><span class="line"><span class="comment"> * the specified initial capacity and default load factor (0.75).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param      initialCapacity   the initial capacity of the hash table</span></span><br><span class="line"><span class="comment"> * @throws     IllegalArgumentException if the initial capacity is less</span></span><br><span class="line"><span class="comment"> *             than zero</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> HashSet(<span class="built_in">int</span> initialCapacity) &#123;</span><br><span class="line">    <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;&gt;(initialCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs a new, empty linked hash set.  (This package private</span></span><br><span class="line"><span class="comment"> * constructor is only used by LinkedHashSet.) The backing</span></span><br><span class="line"><span class="comment"> * HashMap instance is a LinkedHashMap with the specified initial</span></span><br><span class="line"><span class="comment"> * capacity and the specified load factor.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param      initialCapacity   the initial capacity of the hash map</span></span><br><span class="line"><span class="comment"> * @param      loadFactor        the load factor of the hash map</span></span><br><span class="line"><span class="comment"> * @param      dummy             ignored (distinguishes this</span></span><br><span class="line"><span class="comment"> *             constructor from other int, float constructor.)</span></span><br><span class="line"><span class="comment"> * @throws     IllegalArgumentException if the initial capacity is less</span></span><br><span class="line"><span class="comment"> *             than zero, or if the load factor is nonpositive</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">HashSet(<span class="built_in">int</span> initialCapacity, <span class="built_in">float</span> loadFactor, <span class="built_in">boolean</span> dummy) &#123;</span><br><span class="line">    <span class="built_in">map</span> = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>怎么样，一目了然了吧？HashSet 特喵的就是用的 HashMap 来实现的。那么 HashSet 如何避免元素被重复添加呢？看下 add 方法：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> <span class="built_in">add</span>(E e) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">map</span>.put(e, PRESENT)==<span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>简短得不能再短。看下 PRESENT 是什么：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Dummy value to associate with an Object in the backing Map</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">Object</span> PRESENT = <span class="keyword">new</span> <span class="keyword">Object</span>();</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<p>当看到 HashSet 的代码时，瞅了一眼，算上注释竟然不足 400 行。可以说，整个 HashSet 最重要的便是它的构造函数了。</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">private<span class="keyword"> transient</span> HashMap&lt;E,Object&gt; map;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt;<span class="built_in"> instance </span>has</span><br><span class="line"> * default initial capacity (16)<span class="built_in"> and </span>load factor (0.75).</span><br><span class="line"> */<span class="keyword"></span></span><br><span class="line"><span class="keyword">public</span> HashSet() &#123;</span><br><span class="line">    map =<span class="built_in"> new </span>HashMap&lt;&gt;();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Constructs a<span class="built_in"> new </span>set containing the elements in the specified</span><br><span class="line"> * collection.  The &lt;tt&gt;HashMap&lt;/tt&gt; is created with default load factor</span><br><span class="line"> * (0.75)<span class="built_in"> and </span>an initial capacity sufficient to contain the elements in</span><br><span class="line"> * the specified collection.</span><br><span class="line"> *</span><br><span class="line"> * @param c the collection whose elements are to be placed into this set</span><br><span class="line"> * @throws NullPointerException<span class="built_in"> if </span>the specified collection is null</span><br><span class="line"> */<span class="keyword"></span></span><br><span class="line"><span class="keyword">public</span> HashSet(Collection&lt;? extends E&gt; c) &#123;</span><br><span class="line">    map =<span class="built_in"> new </span>HashMap&lt;&gt;(Math.max((int) (c.size()/.75f) + 1, 16));</span><br><span class="line">    addAll(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt;<span class="built_in"> instance </span>has</span><br><span class="line"> * the specified initial capacity<span class="built_in"> and </span>the specified load factor.</span><br><span class="line"> *</span><br><span class="line"> * @param      initialCapacity   the initial capacity of the hash map</span><br><span class="line"> * @param      loadFactor        the load factor of the hash map</span><br><span class="line"> * @throws     IllegalArgumentException<span class="built_in"> if </span>the initial capacity is less</span><br><span class="line"> *             than zero,<span class="built_in"> or </span>if the load factor is nonpositive</span><br><span class="line"> */<span class="keyword"></span></span><br><span class="line"><span class="keyword">public</span> HashSet(int initialCapacity,<span class="built_in"> float </span>loadFactor) &#123;</span><br><span class="line">    map =<span class="built_in"> new </span>HashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Constructs a new, empty set; the backing &lt;tt&gt;HashMap&lt;/tt&gt;<span class="built_in"> instance </span>has</span><br><span class="line"> * the specified initial capacity<span class="built_in"> and </span>default load factor (0.75).</span><br><span class="line"> *</span><br><span class="line"> * @param      initialCapacity   the initial capacity of the hash table</span><br><span class="line"> * @throws     IllegalArgumentException<span class="built_in"> if </span>the initial capacity is less</span><br><span class="line"> *             than zero</span><br><span class="line"> */<span class="keyword"></span></span><br><span class="line"><span class="keyword">public</span> HashSet(int initialCapacity) &#123;</span><br><span class="line">    map =<span class="built_in"> new </span>HashMap&lt;&gt;(initialCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Constructs a new, empty linked hash set.  (This package<span class="keyword"> private</span></span><br><span class="line"> *<span class="keyword"> constructor</span> is only used by LinkedHashSet.) The backing</span><br><span class="line"> * HashMap<span class="built_in"> instance </span>is a LinkedHashMap with the specified initial</span><br><span class="line"> * capacity<span class="built_in"> and </span>the specified load factor.</span><br><span class="line"> *</span><br><span class="line"> * @param      initialCapacity   the initial capacity of the hash map</span><br><span class="line"> * @param      loadFactor        the load factor of the hash map</span><br><span class="line"> * @param      dummy             ignored (distinguishes this</span><br><span class="line"> *            <span class="keyword"> constructor</span> from other int,<span class="built_in"> float </span>constructor.)</span><br><span class="line"> * @throws     IllegalArgumentException<span class="built_in"> if </span>the initial capacity is less</span><br><span class="line"> *             than zero,<span class="built_in"> or </span>if the load factor is nonpositive</span><br><span class="line"> */</span><br><span class="line">HashSet(int initialCapacity,<span class="built_in"> float </span>loadFactor, boolean dummy) &#123;</span><br><span class="line">    map =<span class="built_in"> new </span>LinkedHashMap&lt;&gt;(initialCapacity, loadFactor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>怎么样，一目了然了吧？HashSet 特喵的就是用的 HashMap 来实现的。那么 HashSet 如何避免元素被重复添加呢？看下 add 方法：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="built_in">add</span>(E e) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">map</span>.<span class="property">put</span>(e, PRESENT)==<span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简短得不能再短。看下 PRESENT 是什么：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Dummy value to associate with an Object in the backing Map</span></span><br><span class="line">private <span class="keyword">static</span> <span class="keyword">final</span> <span class="built_in">Object</span> PRESENT = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br></pre></td></tr></table></figure>
 <p>看到这就清楚了。这个 PRESENT 对象全局就只会有一个，当我们的 obejct 作为 map 的 key 时，通过 map 的 put 方法进行添加。如果 object 是一样的，那么 key 就是一样，map 通过这个 key 会找到 PRESENT 对象，这个对象和我们 add 传入的是一个对象，那么 map 就会认为元素已经存在，不再进行重复插入了。如此便实现了 Set 集合的不重复元素功能。</p>
-<p>最后看下 HashSet 的迭代器：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">public</span> <span class="keyword">Iterator&lt;E&gt; </span><span class="keyword">iterator() </span>&#123;</span><br><span class="line">    return <span class="meta">map</span>.keySet().<span class="keyword">iterator();</span></span><br><span class="line"><span class="keyword">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>最后看下 HashSet 的迭代器：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> map.<span class="built_in">keySet</span>().<span class="built_in">iterator</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>意料之中！</p>
 <p>所以啊，在做某些东西的时候，可以先思考，如何利用现有的东西。某些构思、想法真的是很奇妙，多看源码！！！</p>
 
@@ -203,7 +204,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -327,7 +328,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -406,7 +407,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -414,87 +415,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -546,15 +491,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -571,10 +516,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

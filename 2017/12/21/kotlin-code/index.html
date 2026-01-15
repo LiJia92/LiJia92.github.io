@@ -9,17 +9,17 @@
   <title>Kotlin - 代码篇 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。 空安全当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做">
-<meta name="keywords" content="Kotlin">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kotlin - 代码篇">
 <meta property="og:url" content="http://lijia92.github.io/2017/12/21/kotlin-code/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。 空安全当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.110Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-12-21T03:15:32.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.453Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kotlin - 代码篇">
-<meta name="twitter:description" content="写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。 空安全当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,55 +178,60 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。</p>
-<h2 id="空安全"><a href="#空安全" class="headerlink" title="空安全"></a>空安全</h2><p>当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做 ? )来明确地指定一个对象是否能为空。<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">//</span> <span class="string">这里不能通过编译.</span> <span class="string">Artist</span> <span class="string">不能是</span> <span class="literal">null</span></span><br><span class="line"><span class="string">var</span> <span class="attr">notNullArtist:</span> <span class="string">Artist</span> <span class="string">=</span> <span class="literal">null</span></span><br><span class="line"><span class="string">//</span> <span class="string">Artist</span> <span class="string">可以是</span> <span class="literal">null</span></span><br><span class="line"><span class="string">var</span> <span class="attr">artist:</span> <span class="string">Artist?</span> <span class="string">=</span> <span class="literal">null</span></span><br><span class="line"><span class="string">//</span> <span class="string">无法编译,</span> <span class="string">artist可能是</span> <span class="literal">null</span><span class="string">,我们需要进行处理</span></span><br><span class="line"><span class="string">artist.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">只要在artist</span> <span class="string">!=</span> <span class="literal">null</span><span class="string">时才会打印</span></span><br><span class="line"><span class="string">artist?.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">智能转换.</span> <span class="string">如果我们在之前进行了空检查,则不需要使用安全调用操作符调用</span></span><br><span class="line"><span class="string">if</span> <span class="string">(artist</span> <span class="string">!=</span> <span class="literal">null</span><span class="string">)</span> <span class="string">&#123;</span></span><br><span class="line">  <span class="string">artist.print()</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">//</span> <span class="string">只有在确保</span> <span class="string">artist</span> <span class="string">不是</span> <span class="literal">null</span> <span class="string">的情况下才能这么调用，否则它会抛出异常</span></span><br><span class="line"><span class="string">artist!!.print()</span></span><br><span class="line"><span class="string">//</span> <span class="string">使用</span> <span class="string">Elvis操作符</span> <span class="string">来给定一个在是</span> <span class="literal">null</span> <span class="string">的情况下的替代值</span></span><br><span class="line"><span class="string">val</span> <span class="string">name</span> <span class="string">=</span> <span class="string">artist?.name</span> <span class="string">?:</span> <span class="string">"empty"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="空安全"><a href="#空安全" class="headerlink" title="空安全"></a>空安全</h2><p>当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做 ? )来明确地指定一个对象是否能为空。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里不能通过编译. Artist 不能是 null</span></span><br><span class="line"><span class="built_in">var</span> notNullArtist: Artist = <span class="literal">null</span></span><br><span class="line"><span class="comment">// Artist 可以是 null</span></span><br><span class="line"><span class="built_in">var</span> artist: Artist? = <span class="literal">null</span></span><br><span class="line"><span class="comment">// 无法编译, artist可能是 null,我们需要进行处理</span></span><br><span class="line">artist.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 只要在artist != null时才会打印</span></span><br><span class="line">artist?.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 智能转换. 如果我们在之前进行了空检查,则不需要使用安全调用操作符调用</span></span><br><span class="line"><span class="keyword">if</span> (artist != <span class="literal">null</span>) &#123;</span><br><span class="line">  artist.<span class="keyword">print</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 只有在确保 artist 不是 null 的情况下才能这么调用，否则它会抛出异常</span></span><br><span class="line">artist!!.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 使用 Elvis操作符 来给定一个在是 null 的情况下的替代值</span></span><br><span class="line">val name = artist?.name ?: <span class="string">&quot;empty&quot;</span></span><br></pre></td></tr></table></figure>
 <p>关于 Elvis操作符 其实是三目条件运算符的简略写法。可以这样理解：</p>
 <ol>
-<li>A ?: B 等价于 if(A == null) B</li>
-<li>A?.B ?: C 等价于 if(A != null) A.B else C</li>
+<li>A ?: B 等价于 if(A &#x3D;&#x3D; null) B</li>
+<li>A?.B ?: C 等价于 if(A !&#x3D; null) A.B else C</li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>所有的变量都需要由 val 或 var 来修饰，val 代表不可变变量，初始化后无法被修改，而 var 代表可变变量，后面允许被修改。在 Kotlin 中，一个非抽象的属性在构造函数执行完之前需要被赋值，如果声明的时候带上了 ? 表示可以为空，那么之后使用时就得各种<code>?</code>或<code>!!</code>操作符了，极其不便。很多时候，我们的赋值肯定不为空，但是依赖 Activity 或 Fragment 等 Android 组件的生命周期，无法直接赋值。这个时候有 2 种做法：</p>
 <ol>
-<li>使用 <strong>lazyinit</strong>：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private lateinit <span class="selector-tag">var</span> tableRegionAdapter: CommonMetaAdapter</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">onCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// 进行初始化</span></span><br><span class="line">  tableRegionAdapter = CommonMetaAdapter(mActivity)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><code>lateinit</code>修饰符所修饰的属性必须是非空类型，而且不能是原生类型（Int、Float、Char等），而且该修饰符只能用于类体中，不能在主构造函数中，也不能修饰局部变量，并且只可用于 var 类型变量。</p>
-<ol>
+<li>使用 <strong>lazyinit</strong>：<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">private lateinit <span class="selector-tag">var</span> tableRegionAdapter: CommonMetaAdapter</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">onCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// 进行初始化</span></span><br><span class="line">  tableRegionAdapter = <span class="built_in">CommonMetaAdapter</span>(mActivity)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<code>lateinit</code>修饰符所修饰的属性必须是非空类型，而且不能是原生类型（Int、Float、Char等），而且该修饰符只能用于类体中，不能在主构造函数中，也不能修饰局部变量，并且只可用于 var 类型变量。</li>
 <li><strong>by lazy</strong>：<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> val menus: <span class="built_in">Array</span>&lt;<span class="built_in">String</span>&gt; <span class="keyword">by</span> lazy &#123; arrayOf(MENU_PRINT_MANAGE) &#125;</span><br></pre></td></tr></table></figure>
-</li>
+<code>by lazy</code>是使用了属性委托的方式，来实现懒初始化，用于修饰 val 变量。只会在第一次调用的时候进行初始化，后续调用时直接返回同样的值。当变量仅仅初始化一次并且全局共享，且更多的是内部使用时应该使用这种模式。属性委托中还有一种声明非空属性的方法：<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> val menus <span class="keyword">by</span> Delegates.notNull&lt;<span class="built_in">Array</span>&lt;<span class="built_in">String</span>&gt;&gt;()</span><br></pre></td></tr></table></figure>
+利用<code>Delegates.notNull</code>可直接声明非空变量，并在其他地方进行初始化。关于属性委托的更多信息，请参考<a target="_blank" rel="noopener" href="https://www.kotlincn.net/docs/reference/delegated-properties.html">委托属性</a>。<br><strong>注意：val 修饰的变量并不代表就是常量</strong>，具体请参考<a target="_blank" rel="noopener" href="http://droidyue.com/blog/2017/11/05/dive-into-kotlin-constants/index.html">Kotlin中常量的探究</a>。</li>
 </ol>
-<p><code>by lazy</code>是使用了属性委托的方式，来实现懒初始化，用于修饰 val 变量。只会在第一次调用的时候进行初始化，后续调用时直接返回同样的值。当变量仅仅初始化一次并且全局共享，且更多的是内部使用时应该使用这种模式。属性委托中还有一种声明非空属性的方法：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> val menus <span class="keyword">by</span> Delegates.notNull&lt;<span class="built_in">Array</span>&lt;<span class="built_in">String</span>&gt;&gt;()</span><br></pre></td></tr></table></figure></p>
-<p>利用<code>Delegates.notNull</code>可直接声明非空变量，并在其他地方进行初始化。关于属性委托的更多信息，请参考<a href="https://www.kotlincn.net/docs/reference/delegated-properties.html" target="_blank" rel="noopener">委托属性</a>。<br><strong>注意：val 修饰的变量并不代表就是常量</strong>，具体请参考<a href="http://droidyue.com/blog/2017/11/05/dive-into-kotlin-constants/index.html" target="_blank" rel="noopener">Kotlin中常量的探究</a>。</p>
-<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>之前的 Java 代码使用 Activity 跳转的时候经常在目标 Activity 中定义 navigateTo 方法，就像这样：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">DeliverActivity</span> <span class="keyword">extends</span> <span class="title">AppBarActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public static <span class="keyword">final</span> <span class="type">String</span> <span class="type">EXTRA_KEY_MANIFEST</span> = <span class="string">"extra.manifest"</span>;</span><br><span class="line"></span><br><span class="line">    public static void navigateToForResult(<span class="type">Fragment</span> fragment, int requestCode, <span class="type">Manifest</span> manifest) &#123;</span><br><span class="line">        <span class="type">Intent</span> intent = <span class="keyword">new</span> <span class="type">Intent</span>(fragment.getActivity(), <span class="type">DeliverActivity</span>.<span class="keyword">class</span>);</span><br><span class="line">        intent.putExtra(<span class="type">EXTRA_KEY_MANIFEST</span>, manifest);</span><br><span class="line">        fragment.startActivityForResult(intent, requestCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><p>之前的 Java 代码使用 Activity 跳转的时候经常在目标 Activity 中定义 navigateTo 方法，就像这样：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">DeliverActivity</span> <span class="keyword">extends</span> <span class="title">AppBarActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public static <span class="keyword">final</span> <span class="type">String</span> <span class="type">EXTRA_KEY_MANIFEST</span> = <span class="string">&quot;extra.manifest&quot;</span>;</span><br><span class="line"></span><br><span class="line">    public static void navigateToForResult(<span class="type">Fragment</span> fragment, int requestCode, <span class="type">Manifest</span> manifest) &#123;</span><br><span class="line">        <span class="type">Intent</span> intent = <span class="keyword">new</span> <span class="type">Intent</span>(fragment.getActivity(), <span class="type">DeliverActivity</span>.<span class="keyword">class</span>);</span><br><span class="line">        intent.putExtra(<span class="type">EXTRA_KEY_MANIFEST</span>, manifest);</span><br><span class="line">        fragment.startActivityForResult(intent, requestCode);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们定义的 EXTRA_KEY_MANIFEST 设为 private，只有 DeliverActivity 类能使用，避免定义成 public 影响到其他类。所有的变量都是内部消化，跳转时不用进行拷贝。<br>而 Kotlin 中没有静态方法这一说，可以使用 伴生对象 来实现静态：</p>
 <blockquote>
 <p>Kotlin允许我们去定义一些行为与静态对象一样的对象。尽管这些对象可以用众所周知的模式来实现，比如容易实现的单例模式。我们需要一个类里面有一些静态的属性、常量或者函数，我们可以使用 companion object。这个对象被这个类的所有对象所共享，就像Java中的静态属性或者方法。</p>
 </blockquote>
-<p>使用起来就是这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChooseDiningTableActivity</span> : <span class="type">AppBarActivity</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> StaticDiningTable &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> EXTRA_RESULT = <span class="string">"extra.result"</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_TABLE_LIST = <span class="string">"extra.tableList"</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_TABLE_REGION_LIST = <span class="string">"extra.tableRegionList"</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_PEOPLE_COUNT = <span class="string">"extra.peopleCount"</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">navigateTo</span><span class="params">(fragment: <span class="type">BaseFragment</span>, requestCode: <span class="type">Int</span>, tableList: <span class="type">ArrayList</span>&lt;<span class="type">DiningTable</span>&gt;, tableTypeList: <span class="type">ArrayList</span>&lt;<span class="type">TableRegion</span>&gt;, peopleCount: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">            <span class="keyword">val</span> intent = Intent(fragment.context, ChooseDiningTableActivity::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">            intent.putExtra(EXTRA_TABLE_LIST, tableList)</span><br><span class="line">            intent.putExtra(EXTRA_TABLE_REGION_LIST, tableTypeList)</span><br><span class="line">            intent.putExtra(EXTRA_PEOPLE_COUNT, peopleCount)</span><br><span class="line">            fragment.startActivityForResult(intent, requestCode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用跟 Java 调用静态方法一样</span></span><br><span class="line">ChooseDiningTableActivity.navigateTo(<span class="keyword">this</span>, REQUEST_CODE_FOR_CHOOSE_TABLE, diningTableList, tableTypeList, item.customerNumber)</span><br></pre></td></tr></table></figure></p>
-<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><p>高阶函数是将函数用作参数或返回值的函数，就有点像 c++ 中的函数指针。当你提供一个方法，方法执行完之后接收一个回调，然后执行回调中的方法，这种场景想必大家都遇到过。一般就是定义一个接口，然后传入一个接口实现类进去，就像 setOnClickListener 一样。但是高阶函数就省去了接口这一步，直接传入一个函数作为参数，进行回调。举个栗子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R, C : MutableCollection&lt;in R&gt;</span>&gt; Iterable<span class="type">&lt;T&gt;</span>.<span class="title">mapTo</span><span class="params">(destination: <span class="type">C</span>, transform: (<span class="type">T</span>)</span></span> -&gt; R): C &#123;</span><br><span class="line">    <span class="keyword">for</span> (item <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        destination.add(transform(item))</span><br><span class="line">    <span class="keyword">return</span> destination</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用时：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">showTableRegions</span><span class="params">(tableRegionList: <span class="type">MutableList</span>&lt;<span class="type">TableRegion</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> allRegion = CommonMetaBean()</span><br><span class="line">    allRegion.name = ALL_TABLE_REGION</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> list = ArrayList&lt;CommonMetaBean&gt;()</span><br><span class="line">    list.add(allRegion)</span><br><span class="line"></span><br><span class="line">    tableRegionList.mapTo(list) &#123; CommonMetaBean(it.regionID, it.regionName) &#125;</span><br><span class="line">    tableRegionAdapter.setDataList(list)</span><br><span class="line">    tableRegionAdapter.notifyDataSetChanged()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>集合操作符 mapTo 接收一个函数 transform 作为参数，将自身的 item 转化为另外一个对象，然后 add 到 destination 目标集合中。<br>一个有用的约定：<strong>如果函数字面值只有一个参数， 那么它的声明可以省略（连同 -&gt;），其名称是 it。</strong> 就像我实例中的代码一样。<br>再举个很实用的例子：列表定义 Adapter，如果有点击事件，我们一般会在 Adapter 中定义一个接口，然后在 Adapter 初始化的时候传入接口的实现类，就像这样：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="type">Adapter</span>(<span class="type">Context</span> context, <span class="type">OnFunctionClickListener</span> listener) &#123;</span><br><span class="line">        mListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">View</span> getView(int position, <span class="type">View</span> convertView, <span class="type">ViewGroup</span> parent) &#123;</span><br><span class="line">        holder.moreIv.setOnClickListener(v -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (mListener != <span class="literal">null</span>) &#123;</span><br><span class="line">                mListener.onFunctionClick(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public interface <span class="type">OnFunctionClickListener</span> &#123;</span><br><span class="line">        onFunctionClick(<span class="type">Object</span> obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当使用 Kotlin 之后，我们可以直接忽略接口的定义，直接传入一个匿名函数，就可以实现这样的功能了，简单很多，就像这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LogTimeAdapter</span></span>(<span class="keyword">private</span> <span class="keyword">val</span> context: Context, dataList: ArrayList&lt;TimeBean&gt;, <span class="keyword">private</span> <span class="keyword">val</span> onClick: (TimeBean) -&gt; <span class="built_in">Unit</span>)</span><br><span class="line">    : RecyclerView.Adapter&lt;LogTimeAdapter.ViewHolder&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBindViewHolder</span><span class="params">(holder: <span class="type">ViewHolder</span>, position: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> timeBean = dataList[position]</span><br><span class="line">        <span class="keyword">val</span> timeDesc = DateUtils.getDateString(timeBean.beginTime.toInt()) + <span class="string">" 至 "</span> + DateUtils.getDateString(timeBean.endTime.toInt())</span><br><span class="line">        with(holder.itemView) &#123;</span><br><span class="line">            <span class="comment">// 注意这里，onClick 是在构造函数中直接传入的匿名函数，省去了接口的定义</span></span><br><span class="line">            setOnClickListener &#123;</span><br><span class="line">                onClick(timeBean)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getItemCount</span><span class="params">()</span></span>: <span class="built_in">Int</span> = dataList.size</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ViewHolder</span></span>(itemView: View) : RecyclerView.ViewHolder(itemView)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>Kotlin 的使用是离不开 lambda 表达式的。最典型的例子：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">view</span><span class="selector-class">.setOnClickListener</span>() &#123; <span class="selector-tag">toast</span>(<span class="string">"Hello world!"</span>) &#125;</span><br></pre></td></tr></table></figure></p>
-<p>请注意，如果 lambda 是该调用的唯一参数，则调用中的圆括号可以完全省略：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">view<span class="selector-class">.setOnClickListener</span> &#123; toast(<span class="string">"Hello world!"</span>) &#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果 lambda 表达式的参数未使用，那么可以用下划线取代其名称：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>.forEach &#123; _, value -&gt; <span class="built_in">println</span>(<span class="string">"$value!"</span>) &#125;</span><br></pre></td></tr></table></figure></p>
+<p>使用起来就是这样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ChooseDiningTableActivity</span> : <span class="type">AppBarActivity</span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> StaticDiningTable &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">val</span> EXTRA_RESULT = <span class="string">&quot;extra.result&quot;</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_TABLE_LIST = <span class="string">&quot;extra.tableList&quot;</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_TABLE_REGION_LIST = <span class="string">&quot;extra.tableRegionList&quot;</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">val</span> EXTRA_PEOPLE_COUNT = <span class="string">&quot;extra.peopleCount&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">fun</span> <span class="title">navigateTo</span><span class="params">(fragment: <span class="type">BaseFragment</span>, requestCode: <span class="type">Int</span>, tableList: <span class="type">ArrayList</span>&lt;<span class="type">DiningTable</span>&gt;, tableTypeList: <span class="type">ArrayList</span>&lt;<span class="type">TableRegion</span>&gt;, peopleCount: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">            <span class="keyword">val</span> intent = Intent(fragment.context, ChooseDiningTableActivity::<span class="keyword">class</span>.java)</span><br><span class="line">            intent.putExtra(EXTRA_TABLE_LIST, tableList)</span><br><span class="line">            intent.putExtra(EXTRA_TABLE_REGION_LIST, tableTypeList)</span><br><span class="line">            intent.putExtra(EXTRA_PEOPLE_COUNT, peopleCount)</span><br><span class="line">            fragment.startActivityForResult(intent, requestCode)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用跟 Java 调用静态方法一样</span></span><br><span class="line">ChooseDiningTableActivity.navigateTo(<span class="keyword">this</span>, REQUEST_CODE_FOR_CHOOSE_TABLE, diningTableList, tableTypeList, item.customerNumber)</span><br></pre></td></tr></table></figure>
+
+<h2 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h2><p>高阶函数是将函数用作参数或返回值的函数，就有点像 c++ 中的函数指针。当你提供一个方法，方法执行完之后接收一个回调，然后执行回调中的方法，这种场景想必大家都遇到过。一般就是定义一个接口，然后传入一个接口实现类进去，就像 setOnClickListener 一样。但是高阶函数就省去了接口这一步，直接传入一个函数作为参数，进行回调。举个栗子：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">inline</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T, R, C : MutableCollection&lt;in R&gt;</span>&gt; Iterable<span class="type">&lt;T&gt;</span>.<span class="title">mapTo</span><span class="params">(destination: <span class="type">C</span>, transform: (<span class="type">T</span>) -&gt; <span class="type">R</span>)</span></span>: C &#123;</span><br><span class="line">    <span class="keyword">for</span> (item <span class="keyword">in</span> <span class="keyword">this</span>)</span><br><span class="line">        destination.add(transform(item))</span><br><span class="line">    <span class="keyword">return</span> destination</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用时：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">showTableRegions</span><span class="params">(tableRegionList: <span class="type">MutableList</span>&lt;<span class="type">TableRegion</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> allRegion = CommonMetaBean()</span><br><span class="line">    allRegion.name = ALL_TABLE_REGION</span><br><span class="line"></span><br><span class="line">    <span class="keyword">val</span> list = ArrayList&lt;CommonMetaBean&gt;()</span><br><span class="line">    list.add(allRegion)</span><br><span class="line"></span><br><span class="line">    tableRegionList.mapTo(list) &#123; CommonMetaBean(it.regionID, it.regionName) &#125;</span><br><span class="line">    tableRegionAdapter.setDataList(list)</span><br><span class="line">    tableRegionAdapter.notifyDataSetChanged()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>集合操作符 mapTo 接收一个函数 transform 作为参数，将自身的 item 转化为另外一个对象，然后 add 到 destination 目标集合中。<br>一个有用的约定：<strong>如果函数字面值只有一个参数， 那么它的声明可以省略（连同 -&gt;），其名称是 it。</strong> 就像我实例中的代码一样。<br>再举个很实用的例子：列表定义 Adapter，如果有点击事件，我们一般会在 Adapter 中定义一个接口，然后在 Adapter 初始化的时候传入接口的实现类，就像这样：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">BaseAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="type">Adapter</span>(<span class="type">Context</span> context, <span class="type">OnFunctionClickListener</span> listener) &#123;</span><br><span class="line">        mListener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">View</span> getView(int position, <span class="type">View</span> convertView, <span class="type">ViewGroup</span> parent) &#123;</span><br><span class="line">        holder.moreIv.setOnClickListener(v -&gt; &#123;</span><br><span class="line">            <span class="keyword">if</span> (mListener != <span class="literal">null</span>) &#123;</span><br><span class="line">                mListener.onFunctionClick(data);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public interface <span class="type">OnFunctionClickListener</span> &#123;</span><br><span class="line">        onFunctionClick(<span class="type">Object</span> obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用 Kotlin 之后，我们可以直接忽略接口的定义，直接传入一个匿名函数，就可以实现这样的功能了，简单很多，就像这样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LogTimeAdapter</span>(<span class="keyword">private</span> <span class="keyword">val</span> context: Context, dataList: ArrayList&lt;TimeBean&gt;, <span class="keyword">private</span> <span class="keyword">val</span> onClick: (TimeBean) -&gt; <span class="built_in">Unit</span>)</span><br><span class="line">    : RecyclerView.Adapter&lt;LogTimeAdapter.ViewHolder&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onBindViewHolder</span><span class="params">(holder: <span class="type">ViewHolder</span>, position: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">val</span> timeBean = dataList[position]</span><br><span class="line">        <span class="keyword">val</span> timeDesc = DateUtils.getDateString(timeBean.beginTime.toInt()) + <span class="string">&quot; 至 &quot;</span> + DateUtils.getDateString(timeBean.endTime.toInt())</span><br><span class="line">        with(holder.itemView) &#123;</span><br><span class="line">            <span class="comment">// 注意这里，onClick 是在构造函数中直接传入的匿名函数，省去了接口的定义</span></span><br><span class="line">            setOnClickListener &#123;</span><br><span class="line">                onClick(timeBean)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getItemCount</span><span class="params">()</span></span>: <span class="built_in">Int</span> = dataList.size</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">ViewHolder</span>(itemView: View) : RecyclerView.ViewHolder(itemView)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><p>Kotlin 的使用是离不开 lambda 表达式的。最典型的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">view.<span class="title function_">setOnClickListener</span>(<span class="params"></span>) &#123; <span class="title function_">toast</span>(<span class="string">&quot;Hello world!&quot;</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p>请注意，如果 lambda 是该调用的唯一参数，则调用中的圆括号可以完全省略：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">view<span class="selector-class">.setOnClickListener</span> &#123; <span class="built_in">toast</span>(<span class="string">&quot;Hello world!&quot;</span>) &#125;</span><br></pre></td></tr></table></figure>
+<p>如果 lambda 表达式的参数未使用，那么可以用下划线取代其名称：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">map</span>.forEach &#123; _, value -&gt; <span class="built_in">println</span>(<span class="string">&quot;$value!&quot;</span>) &#125;</span><br></pre></td></tr></table></figure>
 <p>关于 lambda 一个简短的概述：</p>
 <ol>
 <li>lambda 表达式总是被大括号括着；</li>
 <li>其参数（如果有的话）在 -&gt; 之前声明（参数类型可以省略）；</li>
 <li>函数体（如果存在的话）在 -&gt; 后面。</li>
 </ol>
-<p>如果推断出的该 lambda 的返回类型不是 Unit，那么该 lambda 主体中的最后一个（或可能是单个）表达式会视为返回值。因此，下两个片段是等价的：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ints.filter &#123;</span><br><span class="line">    <span class="keyword">val</span> shouldFilter = it &gt; <span class="number">0</span></span><br><span class="line">    shouldFilter</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ints.filter &#123;</span><br><span class="line">    <span class="keyword">val</span> shouldFilter = it &gt; <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span><span class="symbol">@filter</span> shouldFilter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果推断出的该 lambda 的返回类型不是 Unit，那么该 lambda 主体中的最后一个（或可能是单个）表达式会视为返回值。因此，下两个片段是等价的：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ints.<span class="keyword">filter</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> shouldFilter <span class="operator">=</span> it <span class="operator">&gt;</span> <span class="number">0</span></span><br><span class="line">    shouldFilter</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ints.<span class="keyword">filter</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> shouldFilter <span class="operator">=</span> it <span class="operator">&gt;</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span><span class="operator">@</span>filter shouldFilter</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li><p>默认任何类都是基础继承自 Any (与java中的 Object 类似)，但是我们可以继承其它类。所有的类默认都是不可继承的(final)，所以我们只能继承那些明确声明 open 或者 abstract 的类:</p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">open <span class="keyword">class</span> Animal(<span class="keyword">name</span>: <span class="keyword">String</span>)</span><br><span class="line"><span class="keyword">class</span> Person(<span class="keyword">name</span>: <span class="keyword">String</span>, surname: <span class="keyword">String</span>) : Animal(<span class="keyword">name</span>)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>拓展函数：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> Fragment.<span class="title">toast</span><span class="params">(message: <span class="type">CharSequence</span>, duration: <span class="type">Int</span> = Toast.LENGTH_SHORT)</span></span> &#123;</span><br><span class="line">    Toast.makeText(getActivity(), message, duration).show()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fragment.toast(<span class="string">"Hello world!"</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>扩展函数并不是真正地修改了原来的类，它是以静态导入的方式来实现的。扩展函数可以被声明在任何文件中，因此有个通用的实践是把一系列有关的函数放在一个新建的文件里。</p>
-<ol>
+<li>默认任何类都是基础继承自 Any (与java中的 Object 类似)，但是我们可以继承其它类。所有的类默认都是不可继承的(final)，所以我们只能继承那些明确声明 open 或者 abstract 的类:<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">open <span class="keyword">class</span> <span class="symbol">Animal</span>(<span class="symbol">name: <span class="symbol">String</span></span>)</span><br><span class="line"><span class="symbol">class</span> <span class="symbol">Person</span>(<span class="symbol">name: <span class="symbol">String</span>, <span class="symbol">surname</span>: <span class="symbol">String</span></span>) : <span class="symbol">Animal</span>(<span class="symbol">name</span>)</span><br></pre></td></tr></table></figure></li>
+<li>拓展函数：<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> Fragment.<span class="title">toast</span><span class="params">(message: <span class="type">CharSequence</span>, duration: <span class="type">Int</span> = Toast.LENGTH_SHORT)</span></span> &#123;</span><br><span class="line">    Toast.makeText(getActivity(), message, duration).show()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fragment.toast(<span class="string">&quot;Hello world!&quot;</span>)</span><br></pre></td></tr></table></figure>
+扩展函数并不是真正地修改了原来的类，它是以静态导入的方式来实现的。扩展函数可以被声明在任何文件中，因此有个通用的实践是把一系列有关的函数放在一个新建的文件里。</li>
 <li>集合操作符：forEach、max、filter、mapTo等等，Kotlin 中的集合为我们提供了很多的操作符，但是你大可不必去背它。当我们用 Java 写出一些集合操作的代码时， Android Studio 会智能识别我们的代码，然后提示可以被哪些操作符给替代，这个时候转一下就好了。</li>
 <li>其他操作符：Kotlin 还提供了很多其他的操作符，let、with、apply等等，这些操作符都可以简化我们的代码。</li>
 </ol>
@@ -247,7 +248,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -371,7 +372,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -450,7 +451,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,87 +459,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -590,15 +535,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -615,10 +560,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

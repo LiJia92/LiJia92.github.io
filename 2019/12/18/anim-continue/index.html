@@ -14,11 +14,12 @@
 <meta property="og:url" content="http://lijia92.github.io/2019/12/18/anim-continue/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="嗯，这篇文章是接着上一篇的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：  scroll T">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.209Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-12-18T03:28:39.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.415Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次动画实践-续">
-<meta name="twitter:description" content="嗯，这篇文章是接着上一篇的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：  scroll T">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -36,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -50,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -110,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -180,7 +177,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>嗯，这篇文章是接着<a href="http://lastwarmth.win/2019/12/12/anim/" target="_blank" rel="noopener">上一篇</a>的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。<br>如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：</p>
+        <p>嗯，这篇文章是接着<a target="_blank" rel="noopener" href="http://lastwarmth.win/2019/12/12/anim/">上一篇</a>的，因为需求“变”了。上一篇文章中已经实现了滑动动画效果，现在需求变为：当停止滑动时，判断当前状态，若满足一个阈值就直接展开或者收起，也就是动画进度为 0 或 1 的状态。<br>如果只是单纯这种展开或者收起的效果，使用 layout_scrollFlags 的 snap 效果即可实现。layout_scrollFlags 有 5 种效果，摘录一片博客中的内容：</p>
 <ol>
 <li>scroll<blockquote>
 <p>The view will be scroll in direct relation to scroll events. This flag needs to be set for any of the other flags to take effect. If any sibling views before this one do not have this flag, then this value has no effect.</p>
@@ -188,40 +185,44 @@
 </li>
 </ol>
 <p>Child View 伴随着滚动事件而滚出或滚进屏幕。注意两点：第一点，如果使用了其他值，必定要使用这个值才能起作用；第二点：如果在这个 Child View 前面的任何其他 Child View 没有设置这个值，那么这个 Child View 的设置将失去作用。</p>
-<a id="more"></a>
-<ol>
+<span id="more"></span>
+
+<ol start="2">
 <li>enterAlways<blockquote>
 <p>When entering (scrolling on screen) the view will scroll on any downwards scroll event, regardless of whether the scrolling view is also scrolling. This is commonly referred to as the ‘quick return’ pattern.</p>
 </blockquote>
 </li>
 </ol>
 <p>快速返回模式。其实就是向下滚动时 Scrolling View 和 Child View 之间的滚动优先级问题。对比 scroll 和 scroll | enterAlways 设置，发生向下滚动事件时，前者优先滚动 Scrolling View，后者优先滚动 Child View，当优先滚动的一方已经全部滚进屏幕之后，另一方才开始滚动。</p>
-<ol>
+<ol start="3">
 <li>enterAlwaysCollapsed<blockquote>
 <p>An additional flag for ‘enterAlways’ which modifies the returning view to only initially scroll back to it’s collapsed height. Once the scrolling view has reached the end of it’s scroll range, the remainder of this view will be scrolled into view. The collapsed height is defined by the view’s minimum height.</p>
 </blockquote>
 </li>
 </ol>
 <p>enterAlways的附加值。这里涉及到 Child View 的高度和最小高度，向下滚动时，Child View 先向下滚动最小高度值，然后 Scrolling View 开始滚动，到达边界时，Child View 再向下滚动，直至显示完全。</p>
-<ol>
+<ol start="4">
 <li>exitUntilCollapsed<blockquote>
 <p>When exiting (scrolling off screen) the view will be scrolled until it is ‘collapsed’. The collapsed height is defined by the view’s minimum height.</p>
 </blockquote>
 </li>
 </ol>
 <p>这里也涉及到最小高度。发生向上滚动事件时，Child View 向上滚动退出直至最小高度，然后 Scrolling View 开始滚动。也就是，Child View 不会完全退出屏幕。</p>
-<ol>
+<ol start="5">
 <li>snap<blockquote>
 <p>Upon a scroll ending, if the view is only partially visible then it will be snapped and scrolled to it’s closest edge. For example, if the view only has it’s bottom 25% displayed, it will be scrolled off screen completely. Conversely, if it’s bottom 75% is visible then it will be scrolled fully into view.</p>
 </blockquote>
 </li>
 </ol>
 <p>简单理解，就是 Child View 滚动比例的一个吸附效果。也就是说，Child View 不会存在局部显示的情况，滚动 Child View 的部分高度，当我们松开手指时，Child View 要么向上全部滚出屏幕，要么向下全部滚进屏幕，有点类似 ViewPager 的左右滑动。</p>
-<p>给 bgView 添加使用 snap 效果：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;ImageView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/bgView"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"375dp"</span></span><br><span class="line">    android:<span class="attribute">layout_marginBottom</span>=<span class="string">"-217dp"</span></span><br><span class="line">    android:<span class="attribute">scaleType</span>=<span class="string">"fitXY"</span></span><br><span class="line">    android:<span class="attribute">src</span>=<span class="string">"@drawable/jiakao_ke3_exam_route_unbuy_banner"</span></span><br><span class="line">    app:<span class="attribute">layout_scrollFlags</span>=<span class="string">"scroll|snap"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>运行后  bgView 一直是张开状态，收不起来。如果把 marginBottom 去掉则可以收起了。目测是必须要滑到 <strong>一半的距离</strong> 才可以收起。于是跑到源码里去看，研究了一阵没发现修改这个距离的办法。由于是原生提供，所以我更倾向这个方案。无奈界面的覆盖效果，必须使用 marginBottom 设置负值，所以只能另寻他法了。<br>那么便只能自己监听事件，来做滑动了。<br>自定义 CoordinatorLayout 判断上滑、下滑：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExamVideoCoordinatorLayout</span></span>(context: Context, attr: AttributeSet) : CoordinatorLayout(context, attr) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> listener: ExamVideoScrollListener? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> originY = <span class="number">0</span>F</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> scrollHandler = Handler()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressLint(<span class="meta-string">"ClickableViewAccessibility"</span>)</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">dispatchTouchEvent</span><span class="params">(event: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (event.action == MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">            originY = event.y</span><br><span class="line">            scrollHandler.removeCallbacksAndMessages(<span class="literal">null</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event.action == MotionEvent.ACTION_UP) &#123;</span><br><span class="line">            <span class="keyword">val</span> y = event.y</span><br><span class="line">            <span class="keyword">if</span> (y &gt; originY) &#123;</span><br><span class="line">                scrollHandler.postDelayed(&#123;</span><br><span class="line">                    listener?.scrollDown()</span><br><span class="line">                &#125;, <span class="number">100</span>L)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                scrollHandler.postDelayed(&#123;</span><br><span class="line">                    listener?.scrollUp()</span><br><span class="line">                &#125;, <span class="number">100</span>L)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ExamVideoScrollListener</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">scrollUp</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">scrollDown</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后设置 listener：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">coordinator.listener = <span class="keyword">object</span> : ExamVideoScrollListener &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">scrollUp</span><span class="params">()</span></span> &#123;</span><br><span class="line">        appBarLayout.post &#123;</span><br><span class="line">            <span class="keyword">val</span> behavior = (appBarLayout?.layoutParams <span class="keyword">as</span>? CoordinatorLayout.LayoutParams)?.behavior</span><br><span class="line">            <span class="keyword">if</span> (behavior <span class="keyword">is</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">                <span class="keyword">val</span> topAndBottomOffset = behavior.topAndBottomOffset</span><br><span class="line">                <span class="keyword">if</span> (Math.abs(topAndBottomOffset) &gt; DimenUtils.dp2px(<span class="number">150</span>F) * <span class="number">0.2</span>) &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">scrollDown</span><span class="params">()</span></span> &#123;</span><br><span class="line">        appBarLayout.post &#123;</span><br><span class="line">            <span class="keyword">val</span> behavior = (appBarLayout?.layoutParams <span class="keyword">as</span>? CoordinatorLayout.LayoutParams)?.behavior</span><br><span class="line">            <span class="keyword">if</span> (behavior <span class="keyword">is</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">                <span class="keyword">val</span> topAndBottomOffset = behavior.topAndBottomOffset</span><br><span class="line">                <span class="keyword">if</span> (Math.abs(topAndBottomOffset) &lt; DimenUtils.dp2px(<span class="number">150</span>F) * <span class="number">0.8</span>) &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>给 bgView 添加使用 snap 效果：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;ImageView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">&quot;@+id/bgView&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;375dp&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_marginBottom</span>=<span class="string">&quot;-217dp&quot;</span></span><br><span class="line">    android:<span class="attribute">scaleType</span>=<span class="string">&quot;fitXY&quot;</span></span><br><span class="line">    android:<span class="attribute">src</span>=<span class="string">&quot;@drawable/jiakao_ke3_exam_route_unbuy_banner&quot;</span></span><br><span class="line">    app:<span class="attribute">layout_scrollFlags</span>=<span class="string">&quot;scroll|snap&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>运行后  bgView 一直是张开状态，收不起来。如果把 marginBottom 去掉则可以收起了。目测是必须要滑到 <strong>一半的距离</strong> 才可以收起。于是跑到源码里去看，研究了一阵没发现修改这个距离的办法。由于是原生提供，所以我更倾向这个方案。无奈界面的覆盖效果，必须使用 marginBottom 设置负值，所以只能另寻他法了。<br>那么便只能自己监听事件，来做滑动了。<br>自定义 CoordinatorLayout 判断上滑、下滑：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ExamVideoCoordinatorLayout</span>(context: Context, attr: AttributeSet) : CoordinatorLayout(context, attr) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> listener: ExamVideoScrollListener? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> originY = <span class="number">0F</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> scrollHandler = Handler()</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressLint(<span class="string">&quot;ClickableViewAccessibility&quot;</span>)</span></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">dispatchTouchEvent</span><span class="params">(event: <span class="type">MotionEvent</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (event.action == MotionEvent.ACTION_DOWN) &#123;</span><br><span class="line">            originY = event.y</span><br><span class="line">            scrollHandler.removeCallbacksAndMessages(<span class="literal">null</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (event.action == MotionEvent.ACTION_UP) &#123;</span><br><span class="line">            <span class="keyword">val</span> y = event.y</span><br><span class="line">            <span class="keyword">if</span> (y &gt; originY) &#123;</span><br><span class="line">                scrollHandler.postDelayed(&#123;</span><br><span class="line">                    listener?.scrollDown()</span><br><span class="line">                &#125;, <span class="number">100L</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                scrollHandler.postDelayed(&#123;</span><br><span class="line">                    listener?.scrollUp()</span><br><span class="line">                &#125;, <span class="number">100L</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.dispatchTouchEvent(event)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ExamVideoScrollListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">scrollUp</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">scrollDown</span><span class="params">()</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后设置 listener：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">coordinator.listener = <span class="keyword">object</span> : ExamVideoScrollListener &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">scrollUp</span><span class="params">()</span></span> &#123;</span><br><span class="line">        appBarLayout.post &#123;</span><br><span class="line">            <span class="keyword">val</span> behavior = (appBarLayout?.layoutParams <span class="keyword">as</span>? CoordinatorLayout.LayoutParams)?.behavior</span><br><span class="line">            <span class="keyword">if</span> (behavior <span class="keyword">is</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">                <span class="keyword">val</span> topAndBottomOffset = behavior.topAndBottomOffset</span><br><span class="line">                <span class="keyword">if</span> (Math.abs(topAndBottomOffset) &gt; DimenUtils.dp2px(<span class="number">150F</span>) * <span class="number">0.2</span>) &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">scrollDown</span><span class="params">()</span></span> &#123;</span><br><span class="line">        appBarLayout.post &#123;</span><br><span class="line">            <span class="keyword">val</span> behavior = (appBarLayout?.layoutParams <span class="keyword">as</span>? CoordinatorLayout.LayoutParams)?.behavior</span><br><span class="line">            <span class="keyword">if</span> (behavior <span class="keyword">is</span> AppBarLayout.Behavior) &#123;</span><br><span class="line">                <span class="keyword">val</span> topAndBottomOffset = behavior.topAndBottomOffset</span><br><span class="line">                <span class="keyword">if</span> (Math.abs(topAndBottomOffset) &lt; DimenUtils.dp2px(<span class="number">150F</span>) * <span class="number">0.8</span>) &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    appBarLayout.setExpanded(<span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过判断 AppBarLayout 的 topAndBottomOffset 值，来执行 <strong>appBarLayout.setExpanded()</strong> 方法，第一个参数为 appBarLayout 是否打开，第二个参数为是否使用动画。<br>使用此种方式，基本能实现效果，但是有小概率操作（手指 fling），会导致 AppBarLayout 处于中间态，目前还没发现好的解决办法，只能先妥协了~</p>
-<p>参考：<br><a href="https://www.jianshu.com/p/7caa5f4f49bd" target="_blank" rel="noopener">Android 详细分析AppBarLayout的五种ScrollFlags</a></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7caa5f4f49bd">Android 详细分析AppBarLayout的五种ScrollFlags</a></p>
 
       
 
@@ -230,6 +231,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -348,7 +360,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -427,7 +439,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -435,87 +447,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -567,15 +523,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -592,10 +548,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

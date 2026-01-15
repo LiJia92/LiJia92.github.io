@@ -9,23 +9,23 @@
   <title>Android Studio发布项目到JCenter | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。">
-<meta name="keywords" content="android studio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Studio发布项目到JCenter">
 <meta property="og:url" content="http://lijia92.github.io/2016/09/12/jcenter/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter3.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter4.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter5.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter6.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter7.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.231Z">
+<meta property="article:published_time" content="2016-09-12T08:40:48.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.453Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Studio发布项目到JCenter">
-<meta name="twitter:description" content="在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter2.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -44,7 +44,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -58,10 +58,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -118,10 +116,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -189,22 +185,27 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。</p>
-<a id="more"></a>
-<h2 id="注册Binatry"><a href="#注册Binatry" class="headerlink" title="注册Binatry"></a>注册Binatry</h2><p>到<a href="https://bintray.com" target="_blank" rel="noopener">Binatry官网</a>注册账号。<br>然后到<code>Your Profile</code>点击<code>Edit</code>，在下面会看到<code>API Key</code>，记录下这个Key备用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter2.png" alt=""></p>
-<h2 id="配置gradle"><a href="#配置gradle" class="headerlink" title="配置gradle"></a>配置gradle</h2><p>我是使用的<code>gradle-bintray-plugin</code>插件来上传项目的，在项目的<code>build.gradle</code>下添加如下配置:<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'com.android.library'</span></span><br><span class="line"></span><br><span class="line">apply plugin: <span class="string">'com.github.dcendents.android-maven'</span></span><br><span class="line">apply plugin: <span class="string">'com.jfrog.bintray'</span></span><br><span class="line"><span class="comment">//提交到仓库中的版本号</span></span><br><span class="line">version = <span class="string">"1.0.0"</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">23</span></span><br><span class="line">    buildToolsVersion <span class="string">"23.0.3"</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">16</span></span><br><span class="line">        targetSdkVersion <span class="number">23</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">"1.0"</span></span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</span><br><span class="line">    testCompile <span class="string">'junit:junit:4.12'</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.android.support:appcompat-v7:23.2.1'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> siteUrl = <span class="string">'https://github.com/LiJia92/CustomArcSeekBar'</span>         <span class="comment">// 项目的主页</span></span><br><span class="line"><span class="keyword">def</span> gitUrl = <span class="string">'https://github.com/LiJia92/CustomArcSeekBar'</span>          <span class="comment">// Git仓库的url</span></span><br><span class="line"><span class="keyword">group</span> = <span class="string">"com.android.lovesixgod.customarcseekbar"</span>                   <span class="comment">// Maven Group ID for the artifact，一般填你唯一的包名</span></span><br><span class="line">install &#123;</span><br><span class="line">    <span class="keyword">repositories</span>.mavenInstaller &#123;</span><br><span class="line">        <span class="comment">// This generates POM.xml with proper parameters</span></span><br><span class="line">        pom &#123;</span><br><span class="line">            <span class="keyword">project</span> &#123;</span><br><span class="line">                packaging <span class="string">'aar'</span></span><br><span class="line">                <span class="comment">// Add your description here</span></span><br><span class="line">                name <span class="string">'Custom arc seek bar'</span> 	<span class="comment">//项目描述</span></span><br><span class="line">                url siteUrl</span><br><span class="line">                <span class="comment">// Set your license</span></span><br><span class="line">                licenses &#123;</span><br><span class="line">                    license &#123;</span><br><span class="line">                        name <span class="string">'The Apache Software License, Version 2.0'</span></span><br><span class="line">                        url <span class="string">'http://www.apache.org/licenses/LICENSE-2.0.txt'</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                developers &#123;</span><br><span class="line">                    developer &#123;</span><br><span class="line">                        id <span class="string">'lijia92'</span>		<span class="comment">//填写的一些基本信息</span></span><br><span class="line">                        name <span class="string">'lastwarmth'</span></span><br><span class="line">                        email <span class="string">'243244898@qq.com'</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                scm &#123;</span><br><span class="line">                    connection gitUrl</span><br><span class="line">                    developerConnection gitUrl</span><br><span class="line">                    url siteUrl</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> sourcesJar(type: Jar) &#123;</span><br><span class="line">    <span class="keyword">from</span> android.<span class="keyword">sourceSets</span>.main.java.srcDirs</span><br><span class="line">    classifier = <span class="string">'sources'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> javadoc(type: Javadoc) &#123;</span><br><span class="line">    <span class="keyword">source</span> = android.<span class="keyword">sourceSets</span>.main.java.srcDirs</span><br><span class="line">    <span class="keyword">classpath</span> += <span class="keyword">project</span>.files(android.getBootClasspath().<span class="keyword">join</span>(<span class="keyword">File</span>.pathSeparator))</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> javadocJar(type: Jar, dependsOn: javadoc) &#123;</span><br><span class="line">    classifier = <span class="string">'javadoc'</span></span><br><span class="line">    <span class="keyword">from</span> javadoc.<span class="keyword">destinationDir</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">artifacts</span> &#123;</span><br><span class="line">    archives javadocJar</span><br><span class="line">    archives sourcesJar</span><br><span class="line">&#125;</span><br><span class="line">Properties properties = <span class="keyword">new</span> Properties()</span><br><span class="line">properties.load(<span class="keyword">project</span>.rootProject.<span class="keyword">file</span>(<span class="string">'local.properties'</span>).newDataInputStream())</span><br><span class="line">bintray &#123;</span><br><span class="line">    user = properties.getProperty(<span class="string">"bintray.user"</span>)</span><br><span class="line">    key = properties.getProperty(<span class="string">"bintray.apikey"</span>)</span><br><span class="line">    <span class="keyword">configurations</span> = [<span class="string">'archives'</span>]</span><br><span class="line">    pkg &#123;</span><br><span class="line">        repo = <span class="string">"maven"</span></span><br><span class="line">        name = <span class="string">"arcseekbar"</span>	        <span class="comment">//发布到JCenter上的项目名字</span></span><br><span class="line">        websiteUrl = siteUrl</span><br><span class="line">        vcsUrl = gitUrl</span><br><span class="line">        licenses = [<span class="string">"Apache-2.0"</span>]</span><br><span class="line">        publish = <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解决GBK乱码</span></span><br><span class="line">javadoc &#123;</span><br><span class="line">    <span class="keyword">options</span>&#123;</span><br><span class="line">        encoding <span class="string">"UTF-8"</span></span><br><span class="line">        charSet <span class="string">'UTF-8'</span></span><br><span class="line">        author <span class="keyword">true</span></span><br><span class="line">        version <span class="keyword">true</span></span><br><span class="line">        links <span class="string">"http://docs.oracle.com/javase/7/docs/api"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="配置name-amp-key"><a href="#配置name-amp-key" class="headerlink" title="配置name&amp;key"></a>配置name&amp;key</h2><p>在<code>local.propertis</code>里配置binatry的名称与api key：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bintray.<span class="attribute">user</span>=username</span><br><span class="line">bintray.<span class="attribute">apikey</span>=key</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<h2 id="注册Binatry"><a href="#注册Binatry" class="headerlink" title="注册Binatry"></a>注册Binatry</h2><p>到<a target="_blank" rel="noopener" href="https://bintray.com/">Binatry官网</a>注册账号。<br>然后到<code>Your Profile</code>点击<code>Edit</code>，在下面会看到<code>API Key</code>，记录下这个Key备用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter2.png"></p>
+<h2 id="配置gradle"><a href="#配置gradle" class="headerlink" title="配置gradle"></a>配置gradle</h2><p>我是使用的<code>gradle-bintray-plugin</code>插件来上传项目的，在项目的<code>build.gradle</code>下添加如下配置:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">&#x27;com.android.library&#x27;</span></span><br><span class="line"></span><br><span class="line">apply plugin: <span class="string">&#x27;com.github.dcendents.android-maven&#x27;</span></span><br><span class="line">apply plugin: <span class="string">&#x27;com.jfrog.bintray&#x27;</span></span><br><span class="line"><span class="comment">//提交到仓库中的版本号</span></span><br><span class="line">version = <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">    compileSdkVersion <span class="number">23</span></span><br><span class="line">    buildToolsVersion <span class="string">&quot;23.0.3&quot;</span></span><br><span class="line"></span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        minSdkVersion <span class="number">16</span></span><br><span class="line">        targetSdkVersion <span class="number">23</span></span><br><span class="line">        versionCode <span class="number">1</span></span><br><span class="line">        versionName <span class="string">&quot;1.0&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    buildTypes &#123;</span><br><span class="line">        release &#123;</span><br><span class="line">            minifyEnabled <span class="keyword">false</span></span><br><span class="line">            proguardFiles getDefaultProguardFile(<span class="string">&#x27;proguard-android.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="keyword">fileTree</span>(dir: <span class="string">&#x27;libs&#x27;</span>, <span class="keyword">include</span>: [<span class="string">&#x27;*.jar&#x27;</span>])</span><br><span class="line">    testCompile <span class="string">&#x27;junit:junit:4.12&#x27;</span></span><br><span class="line">    <span class="keyword">compile</span> <span class="string">&#x27;com.android.support:appcompat-v7:23.2.1&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> siteUrl = <span class="string">&#x27;https://github.com/LiJia92/CustomArcSeekBar&#x27;</span>         <span class="comment">// 项目的主页</span></span><br><span class="line"><span class="keyword">def</span> gitUrl = <span class="string">&#x27;https://github.com/LiJia92/CustomArcSeekBar&#x27;</span>          <span class="comment">// Git仓库的url</span></span><br><span class="line"><span class="keyword">group</span> = <span class="string">&quot;com.android.lovesixgod.customarcseekbar&quot;</span>                   <span class="comment">// Maven Group ID for the artifact，一般填你唯一的包名</span></span><br><span class="line">install &#123;</span><br><span class="line">    <span class="keyword">repositories</span>.mavenInstaller &#123;</span><br><span class="line">        <span class="comment">// This generates POM.xml with proper parameters</span></span><br><span class="line">        pom &#123;</span><br><span class="line">            <span class="keyword">project</span> &#123;</span><br><span class="line">                packaging <span class="string">&#x27;aar&#x27;</span></span><br><span class="line">                <span class="comment">// Add your description here</span></span><br><span class="line">                name <span class="string">&#x27;Custom arc seek bar&#x27;</span> 	<span class="comment">//项目描述</span></span><br><span class="line">                url siteUrl</span><br><span class="line">                <span class="comment">// Set your license</span></span><br><span class="line">                licenses &#123;</span><br><span class="line">                    license &#123;</span><br><span class="line">                        name <span class="string">&#x27;The Apache Software License, Version 2.0&#x27;</span></span><br><span class="line">                        url <span class="string">&#x27;http://www.apache.org/licenses/LICENSE-2.0.txt&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                developers &#123;</span><br><span class="line">                    developer &#123;</span><br><span class="line">                        id <span class="string">&#x27;lijia92&#x27;</span>		<span class="comment">//填写的一些基本信息</span></span><br><span class="line">                        name <span class="string">&#x27;lastwarmth&#x27;</span></span><br><span class="line">                        email <span class="string">&#x27;243244898@qq.com&#x27;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                scm &#123;</span><br><span class="line">                    connection gitUrl</span><br><span class="line">                    developerConnection gitUrl</span><br><span class="line">                    url siteUrl</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> sourcesJar(type: Jar) &#123;</span><br><span class="line">    <span class="keyword">from</span> android.<span class="keyword">sourceSets</span>.main.java.srcDirs</span><br><span class="line">    classifier = <span class="string">&#x27;sources&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> javadoc(type: Javadoc) &#123;</span><br><span class="line">    <span class="keyword">source</span> = android.<span class="keyword">sourceSets</span>.main.java.srcDirs</span><br><span class="line">    <span class="keyword">classpath</span> += <span class="keyword">project</span>.files(android.getBootClasspath().<span class="keyword">join</span>(<span class="keyword">File</span>.pathSeparator))</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">task</span> javadocJar(type: Jar, dependsOn: javadoc) &#123;</span><br><span class="line">    classifier = <span class="string">&#x27;javadoc&#x27;</span></span><br><span class="line">    <span class="keyword">from</span> javadoc.<span class="keyword">destinationDir</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">artifacts</span> &#123;</span><br><span class="line">    archives javadocJar</span><br><span class="line">    archives sourcesJar</span><br><span class="line">&#125;</span><br><span class="line">Properties properties = <span class="keyword">new</span> Properties()</span><br><span class="line">properties.load(<span class="keyword">project</span>.rootProject.<span class="keyword">file</span>(<span class="string">&#x27;local.properties&#x27;</span>).newDataInputStream())</span><br><span class="line">bintray &#123;</span><br><span class="line">    user = properties.getProperty(<span class="string">&quot;bintray.user&quot;</span>)</span><br><span class="line">    key = properties.getProperty(<span class="string">&quot;bintray.apikey&quot;</span>)</span><br><span class="line">    <span class="keyword">configurations</span> = [<span class="string">&#x27;archives&#x27;</span>]</span><br><span class="line">    pkg &#123;</span><br><span class="line">        repo = <span class="string">&quot;maven&quot;</span></span><br><span class="line">        name = <span class="string">&quot;arcseekbar&quot;</span>	        <span class="comment">//发布到JCenter上的项目名字</span></span><br><span class="line">        websiteUrl = siteUrl</span><br><span class="line">        vcsUrl = gitUrl</span><br><span class="line">        licenses = [<span class="string">&quot;Apache-2.0&quot;</span>]</span><br><span class="line">        publish = <span class="keyword">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解决GBK乱码</span></span><br><span class="line">javadoc &#123;</span><br><span class="line">    <span class="keyword">options</span>&#123;</span><br><span class="line">        encoding <span class="string">&quot;UTF-8&quot;</span></span><br><span class="line">        charSet <span class="string">&#x27;UTF-8&#x27;</span></span><br><span class="line">        author <span class="keyword">true</span></span><br><span class="line">        version <span class="keyword">true</span></span><br><span class="line">        links <span class="string">&quot;http://docs.oracle.com/javase/7/docs/api&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置name-key"><a href="#配置name-key" class="headerlink" title="配置name&amp;key"></a>配置name&amp;key</h2><p>在<code>local.propertis</code>里配置binatry的名称与api key：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">bintray.user</span>=username</span><br><span class="line"><span class="attr">bintray.apikey</span>=key</span><br></pre></td></tr></table></figure>
 <p>user即是你注册的名称，key则是第一步中保存的值。</p>
-<h2 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h2><p>首先Sync Gradle File，当build成功后，打开Terminal，执行指令：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradlew <span class="keyword">install</span></span><br></pre></td></tr></table></figure></p>
-<p>build成功后在执行指令：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gradlew bintrayUpload</span></span><br></pre></td></tr></table></figure></p>
-<p>成功后便能在binatry上看到自己上传的项目了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter3.png" alt=""></p>
-<h2 id="同步到JCenter"><a href="#同步到JCenter" class="headerlink" title="同步到JCenter"></a>同步到JCenter</h2><p>点开自己的项目，有一个<code>Add to JCenter</code>，点击后填写描述即可提交申请给binatry了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter4.png" alt=""><br>最后便是等待审核了，审核通过后会收到如下的消息：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter5.png" alt=""><br>然后我们进入到项目详情页，会看到<code>Add to JCenter</code>按钮消失了，说明审核已经通过。<br>点到Gradle便能看到gradle依赖的代码：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter6.png" alt=""><br>迫不及待的在AS中试了一下，真的可以用了，成就感十足，哈哈。</p>
+<h2 id="上传"><a href="#上传" class="headerlink" title="上传"></a>上传</h2><p>首先Sync Gradle File，当build成功后，打开Terminal，执行指令：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradlew <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
+<p>build成功后在执行指令：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">gradlew bintrayUpload</span></span><br></pre></td></tr></table></figure>
+<p>成功后便能在binatry上看到自己上传的项目了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter3.png"></p>
+<h2 id="同步到JCenter"><a href="#同步到JCenter" class="headerlink" title="同步到JCenter"></a>同步到JCenter</h2><p>点开自己的项目，有一个<code>Add to JCenter</code>，点击后填写描述即可提交申请给binatry了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter4.png"><br>最后便是等待审核了，审核通过后会收到如下的消息：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter5.png"><br>然后我们进入到项目详情页，会看到<code>Add to JCenter</code>按钮消失了，说明审核已经通过。<br>点到Gradle便能看到gradle依赖的代码：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter6.png"><br>迫不及待的在AS中试了一下，真的可以用了，成就感十足，哈哈。</p>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
-<li>看<a href="http://blog.csdn.net/lmj623565791/article/details/51148825" target="_blank" rel="noopener">Hongyang大神的博客</a>，打算使用<code>bintray-release</code>插件来进行上传的，但是出现了GBK中文编码乱码的问题，除了将代码中的中文全部换成英文之外，没找到其他好的方法，便放弃了这个方法，采用的<code>gradle-bintray-plugin</code>插件可通过配置javadoc的编码来解决这个问题。</li>
-<li>包名非常不好看，以后得起个好点的包名。而且不能瞎用“com.android….”，这是google android团队的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter7.png" alt=""></li>
-<li>出现如下的错误：<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Execution failed <span class="keyword">for</span> task <span class="string">':library:bintrayUpload'</span>.</span><br><span class="line">&gt; Could <span class="keyword">not</span> create package <span class="string">'lijia92/maven/CustomArcSeekBar'</span>: HTTP/<span class="number">1.1</span> <span class="number">404</span> <span class="keyword">Not</span> Found [<span class="keyword">message</span>:Repo <span class="string">'maven'</span> was <span class="keyword">not</span> found]</span><br></pre></td></tr></table></figure>
-</li>
+<li>看<a target="_blank" rel="noopener" href="http://blog.csdn.net/lmj623565791/article/details/51148825">Hongyang大神的博客</a>，打算使用<code>bintray-release</code>插件来进行上传的，但是出现了GBK中文编码乱码的问题，除了将代码中的中文全部换成英文之外，没找到其他好的方法，便放弃了这个方法，采用的<code>gradle-bintray-plugin</code>插件可通过配置javadoc的编码来解决这个问题。</li>
+<li>包名非常不好看，以后得起个好点的包名。而且不能瞎用“com.android….”，这是google android团队的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/jcenter7.png"></li>
+<li>出现如下的错误：<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Execution failed <span class="keyword">for</span> task <span class="string">&#x27;:library:bintrayUpload&#x27;</span>.</span><br><span class="line">&gt; Could <span class="keyword">not</span> <span class="keyword">create</span> package <span class="string">&#x27;lijia92/maven/CustomArcSeekBar&#x27;</span>: HTTP/<span class="number">1.1</span> <span class="number">404</span> <span class="keyword">Not</span> <span class="built_in">Found</span> [message:Repo <span class="string">&#x27;maven&#x27;</span> was <span class="keyword">not</span> <span class="built_in">found</span>]</span><br></pre></td></tr></table></figure>
+说是maven不存在，于是我在binatry下创建了一个名为<code>maven</code>的仓库，然后重新上传便成功了。（非常坑，找了半天的原因，看的好多博客都没说这个，可能是他们账号下面本身就已经存在maven仓库了）</li>
 </ol>
-<p>说是maven不存在，于是我在binatry下创建了一个名为<code>maven</code>的仓库，然后重新上传便成功了。（非常坑，找了半天的原因，看的好多博客都没说这个，可能是他们账号下面本身就已经存在maven仓库了）</p>
 
       
 
@@ -218,7 +219,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -342,7 +343,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -421,7 +422,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,87 +430,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -561,15 +506,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -586,10 +531,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

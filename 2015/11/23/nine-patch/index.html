@@ -9,13 +9,12 @@
   <title>Android Studio中使用.9（Nine Patch）图 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="本文主要结合Android Studio讲述一下.9图片的原理与使用。  原理在Android的设计过程中，为了适配不同的手机分辨率，图片大多需要拉伸或者压缩，这样就出现了可以任意调整大小的一种图片格式“.9.png”。这种图片是用于Android开发的一种特殊的图片格式，它的好处在于可以用简单的方式把一张图片中哪些区域可以拉伸，哪些区域不可以拉伸设定好，同时可以把显示内容区域的位置标示清楚。 .">
-<meta name="keywords" content="日常开发,android studio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Studio中使用.9（Nine Patch）图">
 <meta property="og:url" content="http://lijia92.github.io/2015/11/23/nine-patch/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="本文主要结合Android Studio讲述一下.9图片的原理与使用。  原理在Android的设计过程中，为了适配不同的手机分辨率，图片大多需要拉伸或者压缩，这样就出现了可以任意调整大小的一种图片格式“.9.png”。这种图片是用于Android开发的一种特殊的图片格式，它的好处在于可以用简单的方式把一张图片中哪些区域可以拉伸，哪些区域不可以拉伸设定好，同时可以把显示内容区域的位置标示清楚。 .">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch3.png">
@@ -25,10 +24,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch7.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch8.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch9.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.241Z">
+<meta property="article:published_time" content="2015-11-23T02:09:38.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.463Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Studio中使用.9（Nine Patch）图">
-<meta name="twitter:description" content="本文主要结合Android Studio讲述一下.9图片的原理与使用。  原理在Android的设计过程中，为了适配不同的手机分辨率，图片大多需要拉伸或者压缩，这样就出现了可以任意调整大小的一种图片格式“.9.png”。这种图片是用于Android开发的一种特殊的图片格式，它的好处在于可以用简单的方式把一张图片中哪些区域可以拉伸，哪些区域不可以拉伸设定好，同时可以把显示内容区域的位置标示清楚。 .">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -47,7 +47,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -61,10 +61,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -121,10 +119,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -200,15 +196,17 @@
 <li>Left，图中2所示，是控制图片可纵向拉伸的区域。</li>
 <li>Right&amp;Botton，图中的3与4，结合起来控制内容显示的区域。</li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
+
 <hr>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>我们在Android Studio中新建一个项目，选择一张普通图片，置于drawable目录下。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch2.png" alt="这里写图片描述"></p>
-<p>下面我们将它改为.9图片。在Android Studio中使用.9图很简单：<font color="red">直接将图片名称以”.9.png”结束。<br>使用.9图必须注意一点：文件的后缀名必须是.9.png，不能是.png或者是.9.png.png，这样的命名都会导致编译失败。</font><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch3.png" alt="这里写图片描述"></p>
+<p>下面我们将它改为.9图片。在Android Studio中使用.9图很简单：<font color=red>直接将图片名称以”.9.png”结束。<br>使用.9图必须注意一点：文件的后缀名必须是.9.png，不能是.png或者是.9.png.png，这样的命名都会导致编译失败。</font><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch3.png" alt="这里写图片描述"></p>
 <p>将名称改好之后，重新打开图片，可以看到图片下面会有2个Tab，切换到<code>9-Patch</code>即可配置.9图片了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch4.png" alt="这里写图片描述"></p>
 <p>下面做如下配置：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch5.png" alt="这里写图片描述"></p>
 <p>在右边的效果图中，纵向只拉伸了Left所画黑线对应的区域，横向只拉伸了Top所画黑线对应的区域。至于Right与Bottom，我们可以通过勾选下方的Show content让其显示内容区域。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch6.png" alt="这里写图片描述"></p>
 <p>可以看到，这里上下左右四条黑边的作用确实如原理中所说。<br>图中效果很难看，改成这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch7.png" alt="这里写图片描述"><br>看起来效果还不错，这样我们可以尽情的配置图片该如何拉伸，针对不同分辨率，以达到一个更好的效果。</p>
-<h2 id="解惑"><a href="#解惑" class="headerlink" title="解惑"></a>解惑</h2><p>起初对Right与Bottom这2条边限定的内容区域不太了解，便做了个小测试。<br>将2条边改成如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch8.png" alt="这里写图片描述"><br>然后布局文件里引入一个TextView，将background设置为此.9图片。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">        android:<span class="attribute">layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        android:<span class="attribute">layout_centerInParent</span>=<span class="string">"true"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"@drawable/ninepatch"</span></span><br><span class="line">        android:<span class="attribute">text</span>=<span class="string">"Hello World!"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="解惑"><a href="#解惑" class="headerlink" title="解惑"></a>解惑</h2><p>起初对Right与Bottom这2条边限定的内容区域不太了解，便做了个小测试。<br>将2条边改成如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch8.png" alt="这里写图片描述"><br>然后布局文件里引入一个TextView，将background设置为此.9图片。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">        android:<span class="attribute">layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">        android:<span class="attribute">layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">        android:<span class="attribute">layout_centerInParent</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">&quot;@drawable/ninepatch&quot;</span></span><br><span class="line">        android:<span class="attribute">text</span>=<span class="string">&quot;Hello World!&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
 <p>运行后的效果：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch9.png" alt="这里写图片描述"><br>可以看到“Hello World！”显示在了图片的右下方。<br>Right与Bottom这2条边限定的内容区域所起的作用便一目了然了。</p>
 
       
@@ -223,11 +221,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">android studio</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -351,7 +345,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -430,7 +424,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -438,87 +432,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -570,15 +508,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -595,10 +533,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

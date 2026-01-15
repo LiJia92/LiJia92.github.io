@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>常用代码和指令小结 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这篇文章主要总结一下日常开发中常用的一些代码和指令。 ADB 指令设置调试 App有些时候需要在应用启动的时候直接调试，如果设好断点然后Debug App重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。1adb shell am set-debug-app -w com.example.appdebugsample 开启 GPU 过度绘制GPU 过度绘制的作用就不">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="这篇文章主要总结一下日常开发中常用的一些代码和指令。 ADB 指令设置调试 App有些时候需要在应用启动的时候直接调试，如果设好断点然后Debug App重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。 1adb shell am set-debug-app -w com.example.appdebugsample 开启 GPU 过度绘制GPU 过度绘制的作用就">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用代码和指令小结">
 <meta property="og:url" content="http://lijia92.github.io/2018/05/28/practical-cmd/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="这篇文章主要总结一下日常开发中常用的一些代码和指令。 ADB 指令设置调试 App有些时候需要在应用启动的时候直接调试，如果设好断点然后Debug App重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。1adb shell am set-debug-app -w com.example.appdebugsample 开启 GPU 过度绘制GPU 过度绘制的作用就不">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="这篇文章主要总结一下日常开发中常用的一些代码和指令。 ADB 指令设置调试 App有些时候需要在应用启动的时候直接调试，如果设好断点然后Debug App重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。 1adb shell am set-debug-app -w com.example.appdebugsample 开启 GPU 过度绘制GPU 过度绘制的作用就">
+<meta property="og:locale">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?imageslim">
-<meta property="og:updated_time" content="2018-05-28T15:07:02.361Z">
+<meta property="article:published_time" content="2018-05-28T09:23:32.000Z">
+<meta property="article:modified_time" content="2018-05-28T15:07:02.361Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用代码和指令小结">
-<meta name="twitter:description" content="这篇文章主要总结一下日常开发中常用的一些代码和指令。 ADB 指令设置调试 App有些时候需要在应用启动的时候直接调试，如果设好断点然后Debug App重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。1adb shell am set-debug-app -w com.example.appdebugsample 开启 GPU 过度绘制GPU 过度绘制的作用就不">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?imageslim">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,74 +180,96 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这篇文章主要总结一下日常开发中常用的一些代码和指令。</p>
-<h2 id="ADB-指令"><a href="#ADB-指令" class="headerlink" title="ADB 指令"></a>ADB 指令</h2><h3 id="设置调试-App"><a href="#设置调试-App" class="headerlink" title="设置调试 App"></a>设置调试 App</h3><p>有些时候需要在应用启动的时候直接调试，如果设好断点然后<code>Debug App</code>重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。<br><figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">adb </span><span class="string">shell </span><span class="string">am </span><span class="built_in">set-debug-app</span> -w <span class="string">com.</span><span class="string">example.</span><span class="string">appdebugsample</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="开启-GPU-过度绘制"><a href="#开启-GPU-过度绘制" class="headerlink" title="开启 GPU 过度绘制"></a>开启 GPU 过度绘制</h3><p>GPU 过度绘制的作用就不用多说了，直接指令开启，方便快捷。<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span><span class="bash"> setprop debug.hwui.overdraw show</span></span><br><span class="line"><span class="bash">adb shell setprop debug.hwui.overdraw <span class="literal">false</span></span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h3 id="INSTALL-FAILED-TEST-ONLY"><a href="#INSTALL-FAILED-TEST-ONLY" class="headerlink" title="INSTALL_FAILED_TEST_ONLY"></a>INSTALL_FAILED_TEST_ONLY</h3><p>安装 Apk 出现这样的错误。看下 adb install 的所有参数：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">app installation:</span><br><span class="line"> <span class="keyword">install</span> [-lrtsdg] <span class="keyword">PACKAGE</span></span><br><span class="line"> <span class="keyword">install</span>-multiple [-lrtsdpg] PACKAGE...</span><br><span class="line">     push <span class="keyword">package</span>(s) <span class="keyword">to</span> the device <span class="keyword">and</span> <span class="keyword">install</span> them</span><br><span class="line">     -l: forward <span class="keyword">lock</span> application</span><br><span class="line">     -r: <span class="keyword">replace</span> existing application</span><br><span class="line">     -t: <span class="keyword">allow</span> <span class="keyword">test</span> packages</span><br><span class="line">     -s: <span class="keyword">install</span> application <span class="keyword">on</span> sdcard</span><br><span class="line">     -d: <span class="keyword">allow</span> <span class="keyword">version</span> code <span class="keyword">downgrade</span> (debuggable packages <span class="keyword">only</span>)</span><br><span class="line">     -p: <span class="keyword">partial</span> application <span class="keyword">install</span> (<span class="keyword">install</span>-multiple <span class="keyword">only</span>)</span><br><span class="line">     -g: <span class="keyword">grant</span> all runtime permissions</span><br><span class="line"> <span class="keyword">uninstall</span> [-k] <span class="keyword">PACKAGE</span></span><br><span class="line">     remove this app <span class="keyword">package</span> <span class="keyword">from</span> the device</span><br><span class="line">     <span class="string">'-k'</span>: <span class="keyword">keep</span> the <span class="keyword">data</span> <span class="keyword">and</span> <span class="keyword">cache</span> directories</span><br></pre></td></tr></table></figure></p>
-<p>adb install 加上 -t 参数即可安装成功。<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">install</span> -d -r <span class="string">"apk path"</span></span><br></pre></td></tr></table></figure></p>
-<p>降版本覆盖安装。<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">adb</span> <span class="params">( -s 设备名 )</span> <span class="title">install</span> <span class="params">( -r )</span> 文件名称.<span class="title">apk</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="ADB-指令"><a href="#ADB-指令" class="headerlink" title="ADB 指令"></a>ADB 指令</h2><h3 id="设置调试-App"><a href="#设置调试-App" class="headerlink" title="设置调试 App"></a>设置调试 App</h3><p>有些时候需要在应用启动的时候直接调试，如果设好断点然后<code>Debug App</code>重新编译运行会很慢，通过如下指令可以直接设置调试 App，然后设置断点后自动继续。</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">adb</span> <span class="string">shell</span> <span class="string">am</span> <span class="built_in">set-debug-app</span> -<span class="string">w</span> <span class="string">com</span>.<span class="string">example</span>.<span class="string">appdebugsample</span></span><br></pre></td></tr></table></figure>
+<h3 id="开启-GPU-过度绘制"><a href="#开启-GPU-过度绘制" class="headerlink" title="开启 GPU 过度绘制"></a>开启 GPU 过度绘制</h3><p>GPU 过度绘制的作用就不用多说了，直接指令开启，方便快捷。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell </span>setprop <span class="built_in">debug</span>.hwui.overdraw <span class="keyword">show</span></span><br><span class="line"><span class="keyword"></span>adb <span class="keyword">shell </span>setprop <span class="built_in">debug</span>.hwui.overdraw false</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="INSTALL-FAILED-TEST-ONLY"><a href="#INSTALL-FAILED-TEST-ONLY" class="headerlink" title="INSTALL_FAILED_TEST_ONLY"></a>INSTALL_FAILED_TEST_ONLY</h3><p>安装 Apk 出现这样的错误。看下 adb install 的所有参数：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">app installation:</span><br><span class="line"> install [-lrtsdg] <span class="keyword">PACKAGE</span></span><br><span class="line"> <span class="title">install-multiple [-lrtsdpg] <span class="keyword">PACKAGE</span>...</span></span><br><span class="line">     push <span class="keyword">package</span>(s) to the device <span class="keyword">and</span> install them</span><br><span class="line">     -l: forward lock application</span><br><span class="line">     -r: replace existing application</span><br><span class="line">     -t: allow test packages</span><br><span class="line">     -s: install application on sdcard</span><br><span class="line">     -d: allow version code downgrade (debuggable packages only)</span><br><span class="line">     -p: partial application install (install-multiple only)</span><br><span class="line">     -g: grant <span class="keyword">all</span> runtime permissions</span><br><span class="line"> uninstall [-k] <span class="keyword">PACKAGE</span></span><br><span class="line">     <span class="title">remove th</span><span class="keyword">is</span> app <span class="keyword">package</span> <span class="title">from the device</span></span><br><span class="line">     &#x27;-k&#x27;: keep the data <span class="keyword">and</span> cache directories</span><br></pre></td></tr></table></figure>
+<p>adb install 加上 -t 参数即可安装成功。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">install</span> -d -r <span class="string">&quot;apk path&quot;</span></span><br></pre></td></tr></table></figure>
+<p>降版本覆盖安装。</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">adb</span> <span class="params">( -s 设备名 )</span> <span class="title">install</span> <span class="params">( -r )</span> 文件名称.<span class="title">apk</span></span></span><br></pre></td></tr></table></figure>
 <p>当有多个设备时，使用 <strong>-s</strong>来指定设备，使用 <strong>-r</strong> 指定是否覆盖安装。</p>
-<h3 id="查看应用信息"><a href="#查看应用信息" class="headerlink" title="查看应用信息"></a>查看应用信息</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys package com<span class="selector-class">.example</span><span class="selector-class">.appdebugsample</span></span><br></pre></td></tr></table></figure>
-<h3 id="网络调试"><a href="#网络调试" class="headerlink" title="网络调试"></a>网络调试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 电脑USB连接手机</span></span></span><br><span class="line">adb tcpip 5555</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment"># 断掉USB</span></span></span><br><span class="line">adb connect 10.10.28.35（connect后面跟上手机的ip地址）</span><br></pre></td></tr></table></figure>
-<p>断开连接<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="built_in">disconnect</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="显示Task栈内activity信息"><a href="#显示Task栈内activity信息" class="headerlink" title="显示Task栈内activity信息"></a>显示Task栈内activity信息</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span><span class="bash"> dumpsys activity activities | sed -En -e <span class="string">'/Running activities/,/Run #0/p'</span></span></span><br></pre></td></tr></table></figure>
-<p>快速获取当前Activity的名称：<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="keyword">shell</span><span class="bash"> dumpsys window windows | grep -E <span class="string">'mCurrentFocus|mFocusedApp'</span> --color=always</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="Git-指令"><a href="#Git-指令" class="headerlink" title="Git 指令"></a>Git 指令</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">git</span> <span class="selector-tag">fetch</span> <span class="selector-tag">origin</span> <span class="selector-tag">branchname</span><span class="selector-pseudo">:branchname</span></span><br></pre></td></tr></table></figure>
-<p>拉取远程分支到本地分支或者创建本地新分支<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="keyword">origin/remoteName </span>-<span class="keyword">b </span>localName</span><br></pre></td></tr></table></figure></p>
-<p>获取远程分支remoteName 到本地新分支localName，并跳到localName分支<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> -u <span class="built_in">origin</span> branchname</span><br></pre></td></tr></table></figure></p>
-<p>推送本地分支到远程分支<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch (-m | -M) <span class="tag">&lt;<span class="name">oldbranch</span>&gt;</span> <span class="tag">&lt;<span class="name">newbranch</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>重命名分支<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clean [-d] [-f] [-i] [-n] [-q] [-e &lt;pattern&gt;] [-x | -X] [--] &lt;path&gt;...</span><br><span class="line">-<span class="ruby">d   <span class="comment"># 删除未跟踪目录以及目录下的文件，如果目录下包含其他git仓库文件，并不会删除（-dff可以删除）。</span></span></span><br><span class="line"><span class="ruby">-f   <span class="comment"># 如果 git cofig 下的 clean.requireForce 为true，那么clean操作需要-f(--force)来强制执行。</span></span></span><br><span class="line"><span class="ruby">-i   <span class="comment"># 进入交互模式</span></span></span><br><span class="line"><span class="ruby">-n   <span class="comment"># 查看将要被删除的文件，并不实际删除文件</span></span></span><br></pre></td></tr></table></figure></p>
-<p>通过以上几根参数组合，基本上可以满足删除未跟踪文件的需求了。例如在删除前先查看有哪些文件将被删除运行：<br><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clean</span> -<span class="built_in">n</span></span><br></pre></td></tr></table></figure></p>
-<p>想删除当前工作目录下的未跟踪文件，但不删除文件夹运行（如果clean.requireForce为false可以不加-f选项）：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git clean -f</span></span><br></pre></td></tr></table></figure></p>
-<p>想删除当前工作目录下的未跟踪文件以及文件夹运行：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git clean -df</span></span><br></pre></td></tr></table></figure></p>
-<p>tag ：<br><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">tag</span> <span class="title">tagName</span>  // 轻量级 <span class="keyword">tag</span>，不带标注</span><br><span class="line">git <span class="keyword">tag</span> <span class="title">-a</span> tagName -m '<span class="keyword">tag</span> <span class="title">说明' // 带标注的 tag</span></span><br><span class="line">git push origin --tags // 推送本地所有 <span class="keyword">tag</span> <span class="title">到远程仓库</span></span><br><span class="line"><span class="title">git</span> push origin tagName // 推送某个 <span class="keyword">tag</span></span><br><span class="line">git <span class="keyword">tag</span> <span class="title">-d</span> tagName // 删除某个 <span class="keyword">tag</span></span><br><span class="line">git push origin :refs/tags/oldName</span><br></pre></td></tr></table></figure></p>
-<p>修复当前提交的错误：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">commit</span> <span class="comment">--amend</span></span><br></pre></td></tr></table></figure></p>
-<p>并不是直接修改原 commit 的内容，而是生成一条新的 commit。<br><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?imageslim" alt=""></p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash apply</span><br><span class="line">git stash apply stash@&#123;2&#125;</span><br><span class="line">git<span class="built_in"> config </span>[–local|–global|–system] -l</span><br></pre></td></tr></table></figure>
-<p>本地所有修改的，没有的提交的，都返回到原来的状态：<br><figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout .</span><br></pre></td></tr></table></figure></p>
+<h3 id="查看应用信息"><a href="#查看应用信息" class="headerlink" title="查看应用信息"></a>查看应用信息</h3><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys <span class="keyword">package</span> <span class="title">com.example.appdebugsample</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="网络调试"><a href="#网络调试" class="headerlink" title="网络调试"></a>网络调试</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 电脑USB连接手机</span></span><br><span class="line"><span class="attribute">adb</span> tcpip <span class="number">5555</span></span><br><span class="line"><span class="comment">## 断掉USB</span></span><br><span class="line"><span class="attribute">adb</span> connect <span class="number">10.10.28.35</span>（connect后面跟上手机的ip地址）</span><br></pre></td></tr></table></figure>
+<p>断开连接</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb disconnect</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示Task栈内activity信息"><a href="#显示Task栈内activity信息" class="headerlink" title="显示Task栈内activity信息"></a>显示Task栈内activity信息</h3><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="built_in">shell</span> dumpsys activity activities | sed -En -e &#x27;/Running activities/,/<span class="keyword">Run</span> <span class="meta">#0/p&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>快速获取当前Activity的名称：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb <span class="built_in">shell</span> dumpsys window windows | grep -E <span class="string">&#x27;mCurrentFocus|mFocusedApp&#x27;</span> <span class="comment">--color=always</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Git-指令"><a href="#Git-指令" class="headerlink" title="Git 指令"></a>Git 指令</h2><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch <span class="built_in">origin</span> branchname:branchname</span><br></pre></td></tr></table></figure>
+<p>拉取远程分支到本地分支或者创建本地新分支</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout <span class="keyword">origin/remoteName </span>-<span class="keyword">b </span>localName</span><br></pre></td></tr></table></figure>
+<p>获取远程分支remoteName 到本地新分支localName，并跳到localName分支</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> -u <span class="built_in">origin</span> branchname</span><br></pre></td></tr></table></figure>
+<p>推送本地分支到远程分支</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch (-m | -M) <span class="tag">&lt;<span class="name">oldbranch</span>&gt;</span> <span class="tag">&lt;<span class="name">newbranch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>重命名分支</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clean <span class="selector-attr">[-d]</span> <span class="selector-attr">[-f]</span> <span class="selector-attr">[-i]</span> <span class="selector-attr">[-n]</span> <span class="selector-attr">[-q]</span> <span class="selector-attr">[-e &lt;pattern&gt;]</span> <span class="selector-attr">[-x | -X]</span> <span class="selector-attr">[--]</span> &lt;<span class="selector-tag">path</span>&gt;...</span><br><span class="line">-d   # 删除未跟踪目录以及目录下的文件，如果目录下包含其他git仓库文件，并不会删除（-dff可以删除）。</span><br><span class="line">-f   # 如果 git cofig 下的 clean<span class="selector-class">.requireForce</span> 为true，那么clean操作需要-f(<span class="attr">--force</span>)来强制执行。</span><br><span class="line">-<span class="selector-tag">i</span>   # 进入交互模式</span><br><span class="line">-n   # 查看将要被删除的文件，并不实际删除文件</span><br></pre></td></tr></table></figure>
+<p>通过以上几根参数组合，基本上可以满足删除未跟踪文件的需求了。例如在删除前先查看有哪些文件将被删除运行：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clean</span> -<span class="built_in">n</span></span><br></pre></td></tr></table></figure>
+<p>想删除当前工作目录下的未跟踪文件，但不删除文件夹运行（如果clean.requireForce为false可以不加-f选项）：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git clean -f</span></span><br></pre></td></tr></table></figure>
+<p>想删除当前工作目录下的未跟踪文件以及文件夹运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clean -<span class="built_in">df</span></span><br></pre></td></tr></table></figure>
+<p>tag ：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">tag</span> <span class="title">tagName</span>  // 轻量级 <span class="keyword">tag</span>，不带标注</span><br><span class="line">git <span class="keyword">tag</span> <span class="title">-a</span> tagName -m &#x27;<span class="keyword">tag</span> <span class="title">说明&#x27; // 带标注的 tag</span></span><br><span class="line">git push origin --tags // 推送本地所有 <span class="keyword">tag</span> <span class="title">到远程仓库</span></span><br><span class="line"><span class="title">git</span> push origin tagName // 推送某个 <span class="keyword">tag</span></span><br><span class="line"><span class="title">git</span> <span class="keyword">tag</span> <span class="title">-d</span> tagName // 删除某个 <span class="keyword">tag</span></span><br><span class="line"><span class="title">git</span> push origin :refs/tags/oldName</span><br></pre></td></tr></table></figure>
+<p>修复当前提交的错误：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">commit</span> <span class="comment">--amend</span></span><br></pre></td></tr></table></figure>
+<p>并不是直接修改原 commit 的内容，而是生成一条新的 commit。<br><img src="https://user-gold-cdn.xitu.io/2017/11/21/15fdf0187f2f4b2d?imageslim"></p>
+<figure class="highlight coq"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash <span class="built_in">apply</span></span><br><span class="line">git stash <span class="built_in">apply</span> stash@&#123;<span class="number">2</span>&#125;</span><br><span class="line">git config [–local|<span class="type">–global</span>|<span class="type">–system</span>] -l</span><br></pre></td></tr></table></figure>
+<p>本地所有修改的，没有的提交的，都返回到原来的状态：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout .</span><br></pre></td></tr></table></figure>
+
 <p>windows AS 安装 git for windows 2.16.2，cmd 控制台乱码。网上找了好多解决办法，都没法解决。最后只有降 git 版本。</p>
 <blockquote>
-<p><a href="http://blog.csdn.net/QasimCyrus/article/details/65628752" target="_blank" rel="noopener">http://blog.csdn.net/QasimCyrus/article/details/65628752</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/QasimCyrus/article/details/65628752">http://blog.csdn.net/QasimCyrus/article/details/65628752</a></p>
 </blockquote>
 <h2 id="错误码"><a href="#错误码" class="headerlink" title="错误码"></a>错误码</h2><p>定义的错误码如果无法做到每个 code 对应一个描述语，那么在 Toast 或 Dialog 展示错误时带上错误码，eg：ToastUtils.showShort(mContent, “登录失败（错误码：-8）”)，这样根据 -8 这个 code 很容易定位到问题。</p>
-<h2 id="适配全面屏"><a href="#适配全面屏" class="headerlink" title="适配全面屏"></a>适配全面屏</h2><p>在 AndroidManifest.xml <application> </application> 中添加最大屏幕高宽比：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data <span class="string">android:</span>name=<span class="string">"android.max_aspect"</span> <span class="string">android:</span>value=<span class="string">"2.1"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>Android 标准接口中，支持应用声明其支持的最大屏幕高宽比（maximum aspect ratio）。具体声明如下，其中的 ratio_float 被定义为是高除以宽，以16:9为例，ratio_float = 16/9 = 1.778 (18.5:9则为2.056)。<br>若开发者没有声明该属性，ratio_float 的默认值为1.86，小于2.056，因此这类应用在三星S8上，默认不会全屏显示，屏幕两边会留黑。</p>
+<h2 id="适配全面屏"><a href="#适配全面屏" class="headerlink" title="适配全面屏"></a>适配全面屏</h2><p>在 AndroidManifest.xml <application> </application> 中添加最大屏幕高宽比：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data android:<span class="attribute">name</span>=<span class="string">&quot;android.max_aspect&quot;</span> android:<span class="attribute">value</span>=<span class="string">&quot;2.1&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>Android 标准接口中，支持应用声明其支持的最大屏幕高宽比（maximum aspect ratio）。具体声明如下，其中的 ratio_float 被定义为是高除以宽，以16:9为例，ratio_float &#x3D; 16&#x2F;9 &#x3D; 1.778 (18.5:9则为2.056)。<br>若开发者没有声明该属性，ratio_float 的默认值为1.86，小于2.056，因此这类应用在三星S8上，默认不会全屏显示，屏幕两边会留黑。</p>
 <h2 id="列表边界留白"><a href="#列表边界留白" class="headerlink" title="列表边界留白"></a>列表边界留白</h2><p>Android 上 ListView、GridView、RecyclerView 默认行都是置顶的，这样会很丑。<br>一般为了解决这个问题都会在首行或尾行加上一个隐藏的View，那样实在是太麻烦了。</p>
 <ol>
 <li>设置 ListView 或 GridView 的 android:clipToPadding ＝ false，</li>
 <li>然后通过 paddingTop 和 paddingBottom 设置距离就好了。</li>
 </ol>
-<h2 id="TextView-drawableRight"><a href="#TextView-drawableRight" class="headerlink" title="TextView drawableRight"></a>TextView drawableRight</h2><p>TextView 在添加 drawableRight 等属性时，即使设置了居中也会有不对齐的现象，给它设置一个 includeFontPadding 为 false 的属性就好了。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/topic_detail_reward_amount_tv"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">layout_marginRight</span>=<span class="string">"12dp"</span></span><br><span class="line">    android:<span class="attribute">drawablePadding</span>=<span class="string">"4dp"</span></span><br><span class="line">    android:<span class="attribute">drawableRight</span>=<span class="string">"@drawable/saturn__income_coin"</span></span><br><span class="line">    android:<span class="attribute">gravity</span>=<span class="string">"center_vertical"</span></span><br><span class="line">    android:<span class="attribute">includeFontPadding</span>=<span class="string">"false"</span></span><br><span class="line">    android:<span class="attribute">textColor</span>=<span class="string">"#FF6B00"</span></span><br><span class="line">    android:<span class="attribute">textSize</span>=<span class="string">"15sp"</span></span><br><span class="line">    tools:<span class="attribute">text</span>=<span class="string">"+200"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="TextView-drawableRight"><a href="#TextView-drawableRight" class="headerlink" title="TextView drawableRight"></a>TextView drawableRight</h2><p>TextView 在添加 drawableRight 等属性时，即使设置了居中也会有不对齐的现象，给它设置一个 includeFontPadding 为 false 的属性就好了。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">&quot;@+id/topic_detail_reward_amount_tv&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_marginRight</span>=<span class="string">&quot;12dp&quot;</span></span><br><span class="line">    android:<span class="attribute">drawablePadding</span>=<span class="string">&quot;4dp&quot;</span></span><br><span class="line">    android:<span class="attribute">drawableRight</span>=<span class="string">&quot;@drawable/saturn__income_coin&quot;</span></span><br><span class="line">    android:<span class="attribute">gravity</span>=<span class="string">&quot;center_vertical&quot;</span></span><br><span class="line">    android:<span class="attribute">includeFontPadding</span>=<span class="string">&quot;false&quot;</span></span><br><span class="line">    android:<span class="attribute">textColor</span>=<span class="string">&quot;#FF6B00&quot;</span></span><br><span class="line">    android:<span class="attribute">textSize</span>=<span class="string">&quot;15sp&quot;</span></span><br><span class="line">    tools:<span class="attribute">text</span>=<span class="string">&quot;+200&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="SeekBar"><a href="#SeekBar" class="headerlink" title="SeekBar"></a>SeekBar</h2><ol>
 <li><p>去掉滑块 thumb 周围的阴影，使用<code>android:background=&quot;@null&quot;</code>：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.xxxxxxx.widget.CustomSeekBar</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/sb_light_bar"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"190.0px"</span></span><br><span class="line">    android:<span class="attribute">layout_centerInParent</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">maxHeight</span>=<span class="string">"6dp"</span></span><br><span class="line">    android:<span class="attribute">background</span>=<span class="string">"@null"</span></span><br><span class="line">    android:<span class="attribute">progressDrawable</span>=<span class="string">"@drawable/video_light_seekbar"</span></span><br><span class="line">    android:<span class="attribute">thumb</span>=<span class="string">"@drawable/sele"</span> /&gt;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.xxxxxxx.widget.CustomSeekBar</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">&quot;@+id/sb_light_bar&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;190.0px&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_centerInParent</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">    android:<span class="attribute">maxHeight</span>=<span class="string">&quot;6dp&quot;</span></span><br><span class="line">    android:<span class="attribute">background</span>=<span class="string">&quot;@null&quot;</span></span><br><span class="line">    android:<span class="attribute">progressDrawable</span>=<span class="string">&quot;@drawable/video_light_seekbar&quot;</span></span><br><span class="line">    android:<span class="attribute">thumb</span>=<span class="string">&quot;@drawable/sele&quot;</span> /&gt;</span><br></pre></td></tr></table></figure></li>
 <li><p>seekbar默认两边会有间隙，导致不能符合预期效果。同时滑块可能会因为太大而显示不全，添加属性:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android:paddingStart="0dp"</span><br><span class="line">android:paddingEnd="0dp"</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 滑块偏移 --&gt;</span></span><br><span class="line">android:thumbOffset="0dp"</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">android:paddingStart=&quot;0dp&quot;</span><br><span class="line">android:paddingEnd=&quot;0dp&quot;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 滑块偏移 --&gt;</span></span><br><span class="line">android:thumbOffset=&quot;0dp&quot;</span><br></pre></td></tr></table></figure></li>
 <li><p>thumb 的 icon 四周透明，但是显示效果不透明</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">android:</span>splitTrack=<span class="string">"false"</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">android:</span>splitTrack=<span class="string">&quot;false&quot;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p><a href="https://www.jianshu.com/p/d7eb29d3d5c4" target="_blank" rel="noopener">https://www.jianshu.com/p/d7eb29d3d5c4</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d7eb29d3d5c4">https://www.jianshu.com/p/d7eb29d3d5c4</a></p>
 </blockquote>
-<ol>
-<li>进度颜色控制：</li>
+</li>
+<li><p>进度颜色控制：</p>
+</li>
 </ol>
 <ul>
 <li>第一进度条、第二进度条的位置不能更换，更换后第一进度条不能正常显示。</li>
 <li>背景色不能添加clip标签，添加后不能正常显示。</li>
 <li>第一、第二进度条若要正常显示，需要添加clip标签。</li>
-<li>通过调整paddingLeft、paddingRight与thumbOffset来控制thumb的起点对齐、左右被遮盖。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 背景色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@android:id/background"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#ececec"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第二进度条，用于缓冲显示（？） --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;item android:id="@android:id/secondaryProgress"&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;clip&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;shape&gt;--&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--&lt;solid android:color="#dcdcdc" /&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;/shape&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/clip&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;/item&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第一进度条，用于显示已执行的进度 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">"@android:id/progress"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">clip</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#86e7de"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">clip</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<li>通过调整paddingLeft、paddingRight与thumbOffset来控制thumb的起点对齐、左右被遮盖。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">layer-list</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 背景色 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">&quot;@android:id/background&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#ececec&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第二进度条，用于缓冲显示（？） --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;item android:id=&quot;@android:id/secondaryProgress&quot;&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;clip&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;shape&gt;--&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--&lt;solid android:color=&quot;#dcdcdc&quot; /&gt;--&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;/shape&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;/clip&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;/item&gt;--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 第一进度条，用于显示已执行的进度 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:id</span>=<span class="string">&quot;@android:id/progress&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">clip</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#86e7de&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">clip</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7f00c5361094">https://www.jianshu.com/p/7f00c5361094</a></p>
+</blockquote>
 </li>
 </ul>
-<blockquote>
-<p><a href="https://www.jianshu.com/p/7f00c5361094" target="_blank" rel="noopener">https://www.jianshu.com/p/7f00c5361094</a></p>
-</blockquote>
-<ol>
-<li>结合音乐一般是以秒为单位来设置播放进度。使用 1000d 浮点数进行运算，然后再用<code>rint</code>取最近的整数进行返回，这样显示的进度更平缓。对于暂停、续播，当检查播放器有暂停进度时，在续播开始时先 setProgress 一下。eg：<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">seekBar.setMax(duration);</span><br><span class="line"></span><br><span class="line"><span class="keyword">double</span> <span class="built_in">position</span> = SingleAudioPlayer.getInstance().getCurrentPosition();</span><br><span class="line">seekBar.setProgress((<span class="keyword">int</span>) Math.rint(<span class="built_in">position</span> / <span class="number">1000</span>d));</span><br></pre></td></tr></table></figure>
-</li>
+<ol start="5">
+<li>结合音乐一般是以秒为单位来设置播放进度。使用 1000d 浮点数进行运算，然后再用<code>rint</code>取最近的整数进行返回，这样显示的进度更平缓。对于暂停、续播，当检查播放器有暂停进度时，在续播开始时先 setProgress 一下。eg：<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">seekBar.setMax(duration)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">double position <span class="operator">=</span> SingleAudioPlayer.getInstance().getCurrentPosition()<span class="comment">;</span></span><br><span class="line">seekBar.setProgress((int) Math.rint(position / <span class="number">1000</span>d))<span class="comment">;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 
       
@@ -390,7 +408,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -469,7 +487,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -477,87 +495,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -609,15 +571,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -634,10 +596,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

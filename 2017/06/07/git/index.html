@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>关于 Git 的使用小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。 git revert场景：假定现在有一个分支develop/1.0.0，该分支用于发布1.0.0版本的包，develop/1.0.0依赖一个 module，该 module 的版本与之对应也是1.0.0，就在将要打包的时候， develop 分支新">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。 git revert场景：假定现在有一个分支develop&#x2F;1.0.0，该分支用于发布1.0.0版本的包，develop&#x2F;1.0.0依赖一个 module，该 module 的版本与之对应也是1.0.0，就在将要打包的时候， develop 分支新">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 Git 的使用小记">
 <meta property="og:url" content="http://lijia92.github.io/2017/06/07/git/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。 git revert场景：假定现在有一个分支develop/1.0.0，该分支用于发布1.0.0版本的包，develop/1.0.0依赖一个 module，该 module 的版本与之对应也是1.0.0，就在将要打包的时候， develop 分支新">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。 git revert场景：假定现在有一个分支develop&#x2F;1.0.0，该分支用于发布1.0.0版本的包，develop&#x2F;1.0.0依赖一个 module，该 module 的版本与之对应也是1.0.0，就在将要打包的时候， develop 分支新">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_001.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_002.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_003.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_004.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.223Z">
+<meta property="article:published_time" content="2017-06-07T12:04:42.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.438Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 Git 的使用小记">
-<meta name="twitter:description" content="相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。 git revert场景：假定现在有一个分支develop/1.0.0，该分支用于发布1.0.0版本的包，develop/1.0.0依赖一个 module，该 module 的版本与之对应也是1.0.0，就在将要打包的时候， develop 分支新">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_001.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -42,7 +42,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -56,10 +56,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -116,10 +114,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -188,22 +184,27 @@
       
         <p>相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。</p>
 <h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>此时<code>git log</code>可以看到 3 次提交：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_001.png" alt=""></p>
-<p>执行指令：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">revert </span><span class="number">10</span>ffa5</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_001.png"></p>
+<p>执行指令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> revert <span class="number">10</span>ffa5</span><br></pre></td></tr></table></figure>
 <p><code>10ffa5</code>为需要回退的 commit id，即上图中<code>feature B</code>那次提交，版本号没必要写全，前几位就可以了，Git会自动去找。填写提交信息：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_002.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_002.png"></p>
 <p>执行结束后，代码便回退到<code>feature A</code>的提交了,可以安心打包了。</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_003.png" alt=""></p>
-<p>打完包后，可以基于<code>develop/1.0.0</code>分支 new branch<code>develop/1.0.1</code>，然后切到<code>develop/1.0.1</code>执行指令：<br><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">git</span> <span class="keyword">revert </span><span class="number">13</span>fbb4</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_003.png"></p>
+<p>打完包后，可以基于<code>develop/1.0.0</code>分支 new branch<code>develop/1.0.1</code>，然后切到<code>develop/1.0.1</code>执行指令：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> revert <span class="number">13</span>fbb4</span><br></pre></td></tr></table></figure>
 <p>之前<code>feature B</code>的提交便回来了，可以继续开发了。</p>
-<h1 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h1><p>场景：假定现在有 2 个分支<code>feature/A</code>、<code>feature/B</code>，然后发现了一个 bug，这个 bug 是公共代码造成的，即 2 个分支都存在这样的 bug。选择在<code>feature/A</code>上修复这个 bug，但不能直接 merge <code>feature/A</code>到<code>feature/B</code>上，因为 2 个分支在进行不同特性的开发。那么可以怎么样做呢？<br><strong>cherry-pick 是对已经存在的 commit 进行再次提交。</strong><br>举个例子：<br>我们在<code>feature/A</code>分支修复问题后提交。然后切到<code>feature/B</code>分支，执行指令：<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> cherry-pick a89acbe4</span><br></pre></td></tr></table></figure></p>
+<h1 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h1><p>场景：假定现在有 2 个分支<code>feature/A</code>、<code>feature/B</code>，然后发现了一个 bug，这个 bug 是公共代码造成的，即 2 个分支都存在这样的 bug。选择在<code>feature/A</code>上修复这个 bug，但不能直接 merge <code>feature/A</code>到<code>feature/B</code>上，因为 2 个分支在进行不同特性的开发。那么可以怎么样做呢？<br><strong>cherry-pick 是对已经存在的 commit 进行再次提交。</strong><br>举个例子：<br>我们在<code>feature/A</code>分支修复问题后提交。然后切到<code>feature/B</code>分支，执行指令：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> cherry-pick a89acbe4</span><br></pre></td></tr></table></figure>
 <p>因为我的例子中，2 个分支都对同一个文件同一个位置做了修改，所以冲突了。提示：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_004.png" alt=""></p>
-<p>所以需要先解决冲突，然后执行：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick --<span class="keyword">continue</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/07%E9%80%89%E5%8C%BA_004.png"></p>
+<p>所以需要先解决冲突，然后执行：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick --<span class="keyword">continue</span></span><br></pre></td></tr></table></figure>
 <p>好了，再来看看修复bug的提交是否存在<code>feature/B</code>分支中吧。</p>
-<p>最后贴一下关于 Git 的一个很好的教程：<a href="https://github.com/geeeeeeeeek/git-recipes/wiki" target="_blank" rel="noopener">git-recipes</a></p>
+<p>最后贴一下关于 Git 的一个很好的教程：<a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki">git-recipes</a></p>
 
       
 
@@ -217,7 +218,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -341,7 +342,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -420,7 +421,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -428,87 +429,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -560,15 +505,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -585,10 +530,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

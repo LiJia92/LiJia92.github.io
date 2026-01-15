@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>博客免密提交、部署到Github | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="每次写完博客，hexo d的时候需要输入一次Github账号密码，git push的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。 hexo d 免密输入在 user 根目录下新建.netrc文件，填写内容：123machine github.comlogin username      //u">
-<meta name="keywords" content="blog">
+  <meta name="description" content="每次写完博客，hexo d的时候需要输入一次Github账号密码，git push的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。 hexo d 免密输入在 user 根目录下新建.netrc文件，填写内容： 123machine github.comlogin username      &#x2F;&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="博客免密提交、部署到Github">
 <meta property="og:url" content="http://lijia92.github.io/2017/04/19/no-password/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="每次写完博客，hexo d的时候需要输入一次Github账号密码，git push的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。 hexo d 免密输入在 user 根目录下新建.netrc文件，填写内容：123machine github.comlogin username      //u">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.130Z">
+<meta property="og:description" content="每次写完博客，hexo d的时候需要输入一次Github账号密码，git push的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。 hexo d 免密输入在 user 根目录下新建.netrc文件，填写内容： 123machine github.comlogin username      &#x2F;&#x2F;">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-04-19T02:08:07.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.463Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="博客免密提交、部署到Github">
-<meta name="twitter:description" content="每次写完博客，hexo d的时候需要输入一次Github账号密码，git push的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。 hexo d 免密输入在 user 根目录下新建.netrc文件，填写内容：123machine github.comlogin username      //u">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,14 +178,26 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>每次写完博客，<code>hexo d</code>的时候需要输入一次Github账号密码，<code>git push</code>的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。</p>
-<h2 id="hexo-d-免密输入"><a href="#hexo-d-免密输入" class="headerlink" title="hexo d 免密输入"></a>hexo d 免密输入</h2><p>在 user 根目录下新建<code>.netrc</code>文件，填写内容：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">machine github.com</span><br><span class="line">login username      <span class="comment">//username为github账户名 （不是用来登录的邮箱或手机号）</span></span><br><span class="line">password password   <span class="comment">//password为github账户的密码</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="hexo-d-免密输入"><a href="#hexo-d-免密输入" class="headerlink" title="hexo d 免密输入"></a>hexo d 免密输入</h2><p>在 user 根目录下新建<code>.netrc</code>文件，填写内容：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">machine github.com</span><br><span class="line"><span class="keyword">login</span> username      //username为github账户名 （不是用来登录的邮箱或手机号）</span><br><span class="line"><span class="keyword">password</span> <span class="keyword">password</span>   //<span class="keyword">password</span>为github账户的密码</span><br></pre></td></tr></table></figure>
 <p>保存之后，再执行 hexo d 时即可直接部署，不用输入账号密码了。</p>
-<a id="more"></a>
-<h2 id="git-push-免密输入"><a href="#git-push-免密输入" class="headerlink" title="git push 免密输入"></a>git push 免密输入</h2><p>因为是用的 https 方式，进入到 git 控制的根目录，执行：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit .git/<span class="built_in">config</span></span><br></pre></td></tr></table></figure></p>
-<p>看到：<br><figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[core]</span><br><span class="line">	repositoryformatversion = <span class="number">0</span></span><br><span class="line">	filemode = <span class="keyword">true</span></span><br><span class="line">	bare = <span class="keyword">false</span></span><br><span class="line">	logallrefupdates = <span class="keyword">true</span></span><br><span class="line">[remote <span class="string">"origin"</span>]</span><br><span class="line">	url = <span class="symbol">https:</span>/<span class="regexp">/github.com/</span>LiJia92/LiJia92.github.io.git</span><br><span class="line">	fetch = +refs/heads/*<span class="symbol">:refs/remotes/origin/*</span></span><br></pre></td></tr></table></figure></p>
-<p>编辑url为：<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>LiJia92:<span class="number">5201314</span>lijia@github.com<span class="regexp">/LiJia92/</span>LiJia92.github.io.git</span><br></pre></td></tr></table></figure></p>
-<p>即：<strong><a href="https://username:password@github.com/username/project.git" target="_blank" rel="noopener">https://username:password@github.com/username/project.git</a></strong>，username就是你账号名。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://www.akmumu.com/2015/06/02/360.html" target="_blank" rel="noopener">github https方式免密码提交代码 在git config 中添加用户名密码</a><br><a href="http://jianwl.com/2016/04/14/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0Github/" target="_blank" rel="noopener">Hexo免输入密码部署到Github</a></p>
+<span id="more"></span>
+
+<h2 id="git-push-免密输入"><a href="#git-push-免密输入" class="headerlink" title="git push 免密输入"></a>git push 免密输入</h2><p>因为是用的 https 方式，进入到 git 控制的根目录，执行：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gedit .git/config</span><br></pre></td></tr></table></figure>
+<p>看到：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[core]</span></span><br><span class="line">	<span class="attr">repositoryformatversion</span> = <span class="number">0</span></span><br><span class="line">	<span class="attr">filemode</span> = <span class="literal">true</span></span><br><span class="line">	<span class="attr">bare</span> = <span class="literal">false</span></span><br><span class="line">	<span class="attr">logallrefupdates</span> = <span class="literal">true</span></span><br><span class="line"><span class="section">[remote &quot;origin&quot;]</span></span><br><span class="line">	<span class="attr">url</span> = https://github.com/LiJia92/LiJia92.github.io.git</span><br><span class="line">	<span class="attr">fetch</span> = +refs/heads/*:refs/remotes/origin/*</span><br></pre></td></tr></table></figure>
+<p>编辑url为：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//</span>LiJia92:<span class="number">5201314</span>lijia@github.com<span class="regexp">/LiJia92/</span>LiJia92.github.io.git</span><br></pre></td></tr></table></figure>
+<p>即：<strong><a target="_blank" rel="noopener" href="https://username:password@github.com/username/project.git">https://username:password@github.com/username/project.git</a></strong>，username就是你账号名。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="http://www.akmumu.com/2015/06/02/360.html">github https方式免密码提交代码 在git config 中添加用户名密码</a><br><a target="_blank" rel="noopener" href="http://jianwl.com/2016/04/14/Hexo%E5%85%8D%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E9%83%A8%E7%BD%B2%E5%88%B0Github/">Hexo免输入密码部署到Github</a></p>
+<h2 id="2025-07-02更新"><a href="#2025-07-02更新" class="headerlink" title="2025&#x2F;07&#x2F;02更新"></a>2025&#x2F;07&#x2F;02更新</h2><p>更换新电脑后，<code>git push</code>时即使输入账户密码也无法推送成功，一直提示鉴权失败。通过 AI 得到如下解释：</p>
+<blockquote>
+<p>这是由于 GitHub 自 2021 年 8 月 13 日起已全面禁用密码认证，必须使用个人访问令牌（PAT）​或 SSH 密钥进行身份验证。</p>
+</blockquote>
+<p>于是我改用 SSH 验证了：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">git</span> <span class="string">remote</span> <span class="built_in">set-url</span> <span class="string">origin</span> <span class="string">git</span>@<span class="string">github</span>.<span class="string">com:LiJia92/</span><span class="string">LiJia92</span>.<span class="string">github</span>.<span class="string">io</span>.<span class="string">git</span></span><br></pre></td></tr></table></figure>
+<p>前提是已经将新电脑的 SSH key 配置到 Github 中。</p>
 
       
 
@@ -203,7 +211,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
         		</li>
       		
 		</ul>
@@ -327,7 +335,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -406,7 +414,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -414,87 +422,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -546,15 +498,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -571,10 +523,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

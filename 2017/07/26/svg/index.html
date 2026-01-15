@@ -9,23 +9,23 @@
   <title>尝试使用 Android SVG | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。项目开发中便遇到了这样一个设计稿： 这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中关闭按钮的实现。这个关闭按钮算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="尝试使用 Android SVG">
 <meta property="og:url" content="http://lijia92.github.io/2017/07/26/svg/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。项目开发中便遇到了这样一个设计稿： 这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中关闭按钮的实现。这个关闭按钮算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_052.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_054.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_055.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_057.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_056.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.253Z">
+<meta property="article:published_time" content="2017-07-26T10:50:34.000Z">
+<meta property="article:modified_time" content="2020-07-15T11:50:34.253Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="尝试使用 Android SVG">
-<meta name="twitter:description" content="普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。项目开发中便遇到了这样一个设计稿： 这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中关闭按钮的实现。这个关闭按钮算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -44,7 +44,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -58,10 +58,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -118,10 +116,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -188,9 +184,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。<br>项目开发中便遇到了这样一个设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png" alt=""></p>
+        <p>普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。<br>项目开发中便遇到了这样一个设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png"></p>
 <p>这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中<code>关闭按钮</code>的实现。<br>这个<code>关闭按钮</code>算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺便也是减轻设计师的工作量，经常劳烦别人也不是什么好事。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="SVG"><a href="#SVG" class="headerlink" title="SVG"></a>SVG</h2><p>什么是 SVG ?<br>简单来说：SVG 即 <strong>可缩放矢量图形</strong>(Scalable Vector Graphics)，是使用XML来描述二维图形和绘图程序的语言，其定义遵循W3C标准。它有哪些特点：</p>
 <ol>
 <li>SVG 可被非常多的工具读取和修改(比如记事本)</li>
@@ -201,15 +198,15 @@
 <p>特殊说明一下，SVG 相比 Bitmap，它最大的优点就是放大不会失真。当 Bitmap 需要为不同分辨率适配多套图标时，一套 SVG 即可搞定一切分辨率。</p>
 <h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>这里说一下最简单的使用方法：</p>
 <ol>
-<li>首先去<a href="http://www.iconfont.cn/" target="_blank" rel="noopener">阿里巴巴矢量图标库</a>(当然也有其他的网站)搜索需要的图标。</li>
+<li>首先去<a target="_blank" rel="noopener" href="http://www.iconfont.cn/">阿里巴巴矢量图标库</a>(当然也有其他的网站)搜索需要的图标。</li>
 <li>下载需要图标的 SVG 图像。</li>
-<li>到<a href="http://inloop.github.io/svg2android/" target="_blank" rel="noopener">Android SVG to VectorDrawable</a>将下载的 SVG 图像转成 XML（也可通过 Android Studio 本身的支持进行转换），然后直接用到 Android Studio 中的 drawable 中即可。</li>
+<li>到<a target="_blank" rel="noopener" href="http://inloop.github.io/svg2android/">Android SVG to VectorDrawable</a>将下载的 SVG 图像转成 XML（也可通过 Android Studio 本身的支持进行转换），然后直接用到 Android Studio 中的 drawable 中即可。</li>
 </ol>
-<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>在网站搜索<code>关闭</code>图标：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_052.png" alt=""></p>
-<p>选择上图中第三个图标，选择下载：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_054.png" alt=""></p>
-<p>选择图标颜色，大小，选择<code>SVG 下载</code>。然后将下载的文件拖到上面所说的网站中即可生产 XML：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_055.png" alt=""></p>
-<p>然后直接用到 drawable 即可：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_057.png" alt=""></p>
-<p>当然你可以利用 Android Studio 本身的 VectorDrawable 支持：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_056.png" alt=""></p>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>在网站搜索<code>关闭</code>图标：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_052.png"></p>
+<p>选择上图中第三个图标，选择下载：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_054.png"></p>
+<p>选择图标颜色，大小，选择<code>SVG 下载</code>。然后将下载的文件拖到上面所说的网站中即可生产 XML：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_055.png"></p>
+<p>然后直接用到 drawable 即可：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_057.png"></p>
+<p>当然你可以利用 Android Studio 本身的 VectorDrawable 支持：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_056.png"></p>
 <p>文中关于 SVG 的使用算是最简单的了，但是 SVG 还有很多其他的用法，它有很多标签，来实现各种效果，有兴趣的同学可以自行谷歌。</p>
 
       
@@ -348,7 +345,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -427,7 +424,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -435,87 +432,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -567,15 +508,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -592,10 +533,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

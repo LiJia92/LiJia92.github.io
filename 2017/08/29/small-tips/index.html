@@ -9,17 +9,17 @@
   <title>Android 日常开发的一些小知识 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： Gank。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。 @SerializedName现在与服务端通信通常都是Jso">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 日常开发的一些小知识">
 <meta property="og:url" content="http://lijia92.github.io/2017/08/29/small-tips/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： Gank。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。 @SerializedName现在与服务端通信通常都是Jso">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.148Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-08-29T09:06:48.000Z">
+<meta property="article:modified_time" content="2018-04-16T12:42:10.148Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 日常开发的一些小知识">
-<meta name="twitter:description" content="前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： Gank。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。 @SerializedName现在与服务端通信通常都是Jso">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -181,23 +177,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： <a href="https://github.com/LiJia92/Gank" target="_blank" rel="noopener">Gank</a>。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。</p>
-<h2 id="SerializedName"><a href="#SerializedName" class="headerlink" title="@SerializedName"></a>@SerializedName</h2><p>现在与服务端通信通常都是Json，但是服务器返回的Json串的key是服务端自己的命名规则（可能是中文key，或者大写开头），我们直接通过Gson解析就必须一一对应，但是这样的命名在Java里很不友好。<br>那么就可以通过@SerializedName注解给Bean类进行“重命名”，这样在解析的时候便可以直接利用我们自己的命名规则命名变量了。<br>举个栗子：<a href="http://gank.io/api/day/2017/08/03" target="_blank" rel="noopener">http://gank.io/api/day/2017/08/03</a><br>返回的数据包含<code>Android</code>，<code>福利</code>等不符合Java规范的key，那么就可以这样：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataResults</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"Android"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; androidList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"iOS"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; iOSList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"休息视频"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; restList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"前端"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; jsList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="meta-string">"福利"</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; welfareList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： <a target="_blank" rel="noopener" href="https://github.com/LiJia92/Gank">Gank</a>。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。</p>
+<h2 id="SerializedName"><a href="#SerializedName" class="headerlink" title="@SerializedName"></a>@SerializedName</h2><p>现在与服务端通信通常都是Json，但是服务器返回的Json串的key是服务端自己的命名规则（可能是中文key，或者大写开头），我们直接通过Gson解析就必须一一对应，但是这样的命名在Java里很不友好。<br>那么就可以通过@SerializedName注解给Bean类进行“重命名”，这样在解析的时候便可以直接利用我们自己的命名规则命名变量了。<br>举个栗子：<a target="_blank" rel="noopener" href="http://gank.io/api/day/2017/08/03">http://gank.io/api/day/2017/08/03</a><br>返回的数据包含<code>Android</code>，<code>福利</code>等不符合Java规范的key，那么就可以这样：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataResults</span> &#123;</span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;Android&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; androidList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;iOS&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; iOSList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;休息视频&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; restList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;前端&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; jsList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;福利&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; welfareList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如此便可以直接通过Gson解析，并且变量名是以我们自己的命名规则进行命令的了。</p>
-<a id="more"></a>
-<h2 id="水波纹效果"><a href="#水波纹效果" class="headerlink" title="水波纹效果"></a>水波纹效果</h2><p>Android 5.0 及以上才有水波纹效果。简单实现:<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:<span class="built_in">background</span>=<span class="string">"?attr/selectableItemBackground"</span></span><br></pre></td></tr></table></figure></p>
-<p>也可以添加手动添加drawable:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ripple</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:color</span>=<span class="string">"?android:colorControlHighlight"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">ripple</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>然后设置给布局的 background， <strong>布局必须可点击</strong>。同时为了兼容，最好建立<code>drawable-v21</code>来区分开来。建立低版本的 drawable 去对应 5.0 以下的版本。当然，目前也有很多库可以实现 5.0 以下的水波纹效果，可以参考<a href="https://github.com/traex/RippleEffect" target="_blank" rel="noopener">RippleEffect</a>。</p>
+<span id="more"></span>
+
+<h2 id="水波纹效果"><a href="#水波纹效果" class="headerlink" title="水波纹效果"></a>水波纹效果</h2><p>Android 5.0 及以上才有水波纹效果。简单实现:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:background=<span class="string">&quot;?attr/selectableItemBackground&quot;</span></span><br></pre></td></tr></table></figure>
+<p>也可以添加手动添加drawable:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ripple</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:color</span>=<span class="string">&quot;?android:colorControlHighlight&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">ripple</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后设置给布局的 background， <strong>布局必须可点击</strong>。同时为了兼容，最好建立<code>drawable-v21</code>来区分开来。建立低版本的 drawable 去对应 5.0 以下的版本。当然，目前也有很多库可以实现 5.0 以下的水波纹效果，可以参考<a target="_blank" rel="noopener" href="https://github.com/traex/RippleEffect">RippleEffect</a>。</p>
 <blockquote>
-<p><a href="http://www.jianshu.com/p/7d2a8a5836e0" target="_blank" rel="noopener">android5.0 水波纹点击效果</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/7d2a8a5836e0">android5.0 水波纹点击效果</a></p>
 </blockquote>
-<h2 id="Intent传递复杂数据"><a href="#Intent传递复杂数据" class="headerlink" title="Intent传递复杂数据"></a>Intent传递复杂数据</h2><p>我们知道可以通过 Intent 在多个 Activity、Fragment 之间进行数据传递。基本数据类型不用说，当传递自定义数据类型时，需要实现 Serializable 或 Parcelable 接口。前者通过 Intent 的 getSerializableExtra() 获取数据，后者通过 getParcelableExtra()、getParcelableArrayExtra()、getParcelableArrayListExtra() 获取数据。<br>但是当我们传递的数据是<code>ArrayList&lt;List&lt;Object&gt;&gt;</code>这种嵌套 List 数据呢？<br>当我们是通过 Parcelable 接口进行传递时，会碰到如下的错误：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">Error:</span>(<span class="number">46</span>, <span class="number">88</span>) 错误: 不兼容的类型: ArrayList<span class="params">&lt;Parcelable&gt;</span>无法转换为ArrayList<span class="params">&lt;List&lt;MyObject&gt;</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>即类型无法强转。<br>当我们通过 Serializable 接口进行传递时，没有错误，只会有警告：<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unchecked cas<span class="variable">t:</span> <span class="string">'java.io.Serializable'</span> <span class="keyword">to</span> <span class="string">'java.util.ArrayList&lt;java.util.List&lt;com.study.lijia.gank.data.MyObject&gt;&gt;'</span></span><br></pre></td></tr></table></figure></p>
-<p>这警告只需添加<code>@SuppressWarnings(&quot;unchecked&quot;)</code>即可消除。<br>看到 ArrayList 的定义:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ArrayList&lt;E&gt;</span> <span class="keyword">extends</span> <span class="title">AbstractList&lt;E&gt;</span></span></span><br><span class="line"><span class="class">        <span class="title">implements</span> <span class="title">List&lt;E&gt;</span>, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Intent传递复杂数据"><a href="#Intent传递复杂数据" class="headerlink" title="Intent传递复杂数据"></a>Intent传递复杂数据</h2><p>我们知道可以通过 Intent 在多个 Activity、Fragment 之间进行数据传递。基本数据类型不用说，当传递自定义数据类型时，需要实现 Serializable 或 Parcelable 接口。前者通过 Intent 的 getSerializableExtra() 获取数据，后者通过 getParcelableExtra()、getParcelableArrayExtra()、getParcelableArrayListExtra() 获取数据。<br>但是当我们传递的数据是<code>ArrayList&lt;List&lt;Object&gt;&gt;</code>这种嵌套 List 数据呢？<br>当我们是通过 Parcelable 接口进行传递时，会碰到如下的错误：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Error</span>:(<span class="number">46</span>, <span class="number">88</span>) 错误: 不兼容的类型: <span class="type">ArrayList</span>&lt;<span class="type">Parcelable</span>&gt;无法转换为<span class="type">ArrayList</span>&lt;<span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>即类型无法强转。<br>当我们通过 Serializable 接口进行传递时，没有错误，只会有警告：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unchecked <span class="keyword">cast</span>: <span class="string">&#x27;java.io.Serializable&#x27;</span> <span class="keyword">to</span> <span class="string">&#x27;java.util.ArrayList&lt;java.util.List&lt;com.study.lijia.gank.data.MyObject&gt;&gt;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>这警告只需添加<code>@SuppressWarnings(&quot;unchecked&quot;)</code>即可消除。<br>看到 ArrayList 的定义:</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ArrayList&lt;E&gt;</span> <span class="keyword">extends</span> <span class="title">AbstractList&lt;E&gt;</span></span></span><br><span class="line">        implements <span class="type">List</span>&lt;<span class="type">E</span>&gt;, <span class="type">RandomAccess</span>, <span class="type">Cloneable</span>, java.io.<span class="type">Serializable</span></span><br></pre></td></tr></table></figure>
 <p>实现了 Serializable，自然是能转换的，但是没有实现 Parcelable，所以无法使用 Parcelable 传递<code>ArrayList&lt;List&lt;Object&gt;&gt;</code>这种嵌套 List 数据。碰到这种需求则只能通过 Serializable 接口来了，或者更换数据传递的方式。</p>
-<h2 id="获取资源"><a href="#获取资源" class="headerlink" title="获取资源"></a>获取资源</h2><p>经常我们会通过<code>mContext.getResources().getColor(R.color.black);</code>来获取我们定义在 color.xml 中的颜色，但是 getColor(@ColorRes int id) 已经被标记为<code>@Deprecated</code>，导致代码里看起来就是一条横线，很不舒服。当然我们可以通过 getColor(@ColorRes int id, @Nullable Theme theme) 来替换它，但是又会有这个问题：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Call</span> requires API <span class="keyword">level</span> <span class="number">23</span> (<span class="keyword">current</span> <span class="keyword">min</span> <span class="keyword">is</span> <span class="number">15</span>): android.content.res.Resources#getColor</span><br></pre></td></tr></table></figure></p>
-<p>代码强迫症肯定依然受不了。此时我们可以通过 ContextCompat 来获取<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ContextCompat</span><span class="selector-class">.getColor</span>(<span class="selector-tag">mContext</span>, <span class="selector-tag">R</span><span class="selector-class">.color</span><span class="selector-class">.black</span>);</span><br></pre></td></tr></table></figure></p>
-<p>它的实现：<br><figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> getColor(Context context, <span class="keyword">@ColorRes</span> <span class="keyword">int</span> id) &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">version</span> = Build.VERSION.SDK_INT;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">version</span> &gt;= <span class="number">23</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ContextCompatApi23.getColor(context, id);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> context.getResources().getColor(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="获取资源"><a href="#获取资源" class="headerlink" title="获取资源"></a>获取资源</h2><p>经常我们会通过<code>mContext.getResources().getColor(R.color.black);</code>来获取我们定义在 color.xml 中的颜色，但是 getColor(@ColorRes int id) 已经被标记为<code>@Deprecated</code>，导致代码里看起来就是一条横线，很不舒服。当然我们可以通过 getColor(@ColorRes int id, @Nullable Theme theme) 来替换它，但是又会有这个问题：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Call</span> requires API <span class="keyword">level</span> <span class="number">23</span> (<span class="keyword">current</span> min <span class="keyword">is</span> <span class="number">15</span>): android.content.res.Resources#getColor</span><br></pre></td></tr></table></figure>
+<p>代码强迫症肯定依然受不了。此时我们可以通过 ContextCompat 来获取</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ContextCompat<span class="selector-class">.getColor</span>(mContext, <span class="attribute">R</span><span class="selector-class">.color</span><span class="selector-class">.black</span>);</span><br></pre></td></tr></table></figure>
+<p>它的实现：</p>
+<figure class="highlight d"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> getColor(Context context, <span class="keyword">@ColorRes</span> <span class="keyword">int</span> id) &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">version</span> = Build.VERSION.SDK_INT;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">version</span> &gt;= <span class="number">23</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ContextCompatApi23.getColor(context, id);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> context.getResources().getColor(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>一目了然了。</p>
 
       
@@ -336,7 +342,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -415,7 +421,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -423,87 +429,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -555,15 +505,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -580,10 +530,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>关于使用 kotlin 碰到的一个坑（二） | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。 介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：1234567891011121314151617181920212223242526272829@Overridepublic">
-<meta name="keywords" content="Kotlin">
+  <meta name="description" content="最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。 介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样： 1234567891011121314151617181920212223242526272829@Overridepublic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于使用 kotlin 碰到的一个坑（二）">
 <meta property="og:url" content="http://lijia92.github.io/2018/07/19/kotlin-question2/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。 介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：1234567891011121314151617181920212223242526272829@Overridepublic">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-23T12:11:56.928Z">
+<meta property="og:description" content="最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。 介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样： 1234567891011121314151617181920212223242526272829@Overridepublic">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-19T07:01:49.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.453Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于使用 kotlin 碰到的一个坑（二）">
-<meta name="twitter:description" content="最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。 介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：1234567891011121314151617181920212223242526272829@Overridepublic">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,15 +178,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。</p>
-<p>介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    mapView = contentView.findViewById(R.id.map_view);</span><br><span class="line">    mapView.onCreate(savedInstanceState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    mapView.onResume();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onPause</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onPause();</span><br><span class="line">    mapView.onPause();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onSaveInstanceState</span><span class="params">(Bundle outState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onSaveInstanceState(outState);</span><br><span class="line">    mapView.onSaveInstanceState(outState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    mapView.onDestroy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>然后在我写的某个 Fragment 中用到了 MapView，是用 kotlin 写的。发现每次打开这个页面，内存占用只增不减，在排除了其他因素之后，将问题定位到了高德地图的回收上。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDestroy</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy()</span><br><span class="line">    downloadMap?.onDestroy()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这是 Fragment 里的 onDestroy 调用，断点到这里，发现 downloadMap 总是为 null。这是为啥呢？这个 downloadMap 就是定义到 xml 中的 MapView 呀。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;com<span class="selector-class">.amap</span><span class="selector-class">.api</span><span class="selector-class">.maps</span><span class="selector-class">.MapView</span></span><br><span class="line">    android:id=<span class="string">"@+id/downloadMap"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>后面网上查阅资料，发现问题的本质：<strong>kotlin 在 Fragment 中使用 xml 中 id 直接使用控件，也是使用了 findViewById ，同时进行缓存。释放缓存的操作在 onDestroyView 里，所以在 onDestroy 里，使用 xml id 获取的控件已经全部被置空了，所以无法使用。 </strong></p>
-<p>AndroidStudio 中可以直接打开 kotlin Bytecode，进行反编译查看编译后的代码，Tools -&gt; Kotlin -&gt; Show Kotlin Bytecode -&gt; Decompile，看到编译后的代码：<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> void onDestroy() &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    MapView var10000 = (MapView) <span class="built_in">this</span>.<span class="literal">_</span>$_findCachedViewById(id.downloadMap);</span><br><span class="line">    <span class="keyword">if</span> (var10000 != <span class="literal">null</span>) &#123;</span><br><span class="line">        var10000.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> View <span class="literal">_</span>$_findCachedViewById(int var1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache = <span class="keyword">new</span> <span class="type">HashMap</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    View var2 = (View) <span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache.<span class="keyword">get</span>(var1);</span><br><span class="line">    <span class="keyword">if</span> (var2 == <span class="literal">null</span>) &#123;</span><br><span class="line">        View var10000 = <span class="built_in">this</span>.getView();</span><br><span class="line">        <span class="keyword">if</span> (var10000 == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var2 = var10000.findViewById(var1);</span><br><span class="line">        <span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache.put(var1, var2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> var2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void <span class="literal">_</span>$_clearFindViewByIdCache() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.<span class="literal">_</span>$_findViewCache.clear();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $FF: synthetic method</span></span><br><span class="line"><span class="keyword">public</span> void onDestroyView() &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroyView();</span><br><span class="line">    <span class="built_in">this</span>.<span class="literal">_</span>$_clearFindViewByIdCache();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onCreate</span>(<span class="params"><span class="title class_">Bundle</span> savedInstanceState</span>) &#123;</span><br><span class="line">    mapView = contentView.<span class="title function_">findViewById</span>(R.<span class="property">id</span>.<span class="property">map_view</span>);</span><br><span class="line">    mapView.<span class="title function_">onCreate</span>(savedInstanceState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onResume</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onResume</span>();</span><br><span class="line">    mapView.<span class="title function_">onResume</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onPause</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onPause</span>();</span><br><span class="line">    mapView.<span class="title function_">onPause</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onSaveInstanceState</span>(<span class="params"><span class="title class_">Bundle</span> outState</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onSaveInstanceState</span>(outState);</span><br><span class="line">    mapView.<span class="title function_">onSaveInstanceState</span>(outState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onDestroy</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onDestroy</span>();</span><br><span class="line">    mapView.<span class="title function_">onDestroy</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>然后在我写的某个 Fragment 中用到了 MapView，是用 kotlin 写的。发现每次打开这个页面，内存占用只增不减，在排除了其他因素之后，将问题定位到了高德地图的回收上。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onDestroy</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy()</span><br><span class="line">    downloadMap?.onDestroy()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是 Fragment 里的 onDestroy 调用，断点到这里，发现 downloadMap 总是为 null。这是为啥呢？这个 downloadMap 就是定义到 xml 中的 MapView 呀。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;com<span class="selector-class">.amap</span><span class="selector-class">.api</span><span class="selector-class">.maps</span><span class="selector-class">.MapView</span></span><br><span class="line">    android:id=<span class="string">&quot;@+id/downloadMap&quot;</span></span><br><span class="line">    android:layout_width=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:layout_height=<span class="string">&quot;match_parent&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>后面网上查阅资料，发现问题的本质：**kotlin 在 Fragment 中使用 xml 中 id 直接使用控件，也是使用了 findViewById ，同时进行缓存。释放缓存的操作在 onDestroyView 里，所以在 onDestroy 里，使用 xml id 获取的控件已经全部被置空了，所以无法使用。 **</p>
+<p>AndroidStudio 中可以直接打开 kotlin Bytecode，进行反编译查看编译后的代码，Tools -&gt; Kotlin -&gt; Show Kotlin Bytecode -&gt; Decompile，看到编译后的代码：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> void onDestroy() &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    MapView var10000 = (MapView) <span class="built_in">this</span><span class="number">._</span><span class="variable">$_findCachedViewById</span>(id.downloadMap);</span><br><span class="line">    <span class="keyword">if</span> (var10000 != <span class="literal">null</span>) &#123;</span><br><span class="line">        var10000.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> View <span class="literal">_</span><span class="variable">$_findCachedViewById</span>(int var1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span> == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span> = <span class="keyword">new</span><span class="type"></span> HashMap();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    View var2 = (View) <span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span>.<span class="keyword">get</span>(var1);</span><br><span class="line">    <span class="keyword">if</span> (var2 == <span class="literal">null</span>) &#123;</span><br><span class="line">        View var10000 = <span class="built_in">this</span>.getView();</span><br><span class="line">        <span class="keyword">if</span> (var10000 == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        var2 = var10000.findViewById(var1);</span><br><span class="line">        <span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span>.put(var1, var2);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> var2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void <span class="literal">_</span><span class="variable">$_clearFindViewByIdCache</span>() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span><span class="number">._</span><span class="variable">$_findViewCache</span>.clear();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// $FF: synthetic method</span></span><br><span class="line"><span class="keyword">public</span> void onDestroyView() &#123;</span><br><span class="line">    <span class="keyword">super</span>.onDestroyView();</span><br><span class="line">    <span class="built_in">this</span><span class="number">._</span><span class="variable">$_clearFindViewByIdCache</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>果不其然，所以在 onDestroy 中我执行 MapView 的 onDestroy 时 MapView 已经为 null 了，从而导致内存一直占用，无法释放。<br>那么在 Activity 中是否存在这样的问题呢？答案是不存在。Activity 中也会生成 <code>_$_clearFindViewByIdCache</code> 方法，但是没有地方调用。</p>
 <p>结论：<strong>在利用 Kotlin 编写的 Fragemnt 中，如果有些特殊的 View 需要处理销毁事件，需要写在 onDestroyView 中，并且在 super 调用之前。这里的 View 必须是直接通过 kotlin 利用 id 从 xml 获取的 View，如果是自己手动写 findViewById 的方式则不会出现这个问题。若是在 Activity 中则没有限制。</strong></p>
-<p>参考：<a href="https://blog.csdn.net/jansin_love/article/details/79140247" target="_blank" rel="noopener">Kotlin 为什么不用findViewById</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/jansin_love/article/details/79140247">Kotlin 为什么不用findViewById</a></p>
 
       
 
@@ -204,7 +206,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -328,7 +330,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -407,7 +409,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -415,87 +417,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -547,15 +493,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -572,10 +518,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

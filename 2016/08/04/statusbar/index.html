@@ -9,20 +9,20 @@
   <title>Android状态栏小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。最后做出的效果如下图：">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android状态栏小记">
 <meta property="og:url" content="http://lijia92.github.io/2016/08/04/statusbar/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。最后做出的效果如下图：">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar2.gif">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar3.gif">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.251Z">
+<meta property="article:published_time" content="2016-08-04T06:29:46.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.485Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android状态栏小记">
-<meta name="twitter:description" content="最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。最后做出的效果如下图：">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -41,7 +41,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +55,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -115,10 +113,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,12 +181,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。<br>最后做出的效果如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif" alt=""></p>
-<a id="more"></a>
-<h2 id="状态栏显示与隐藏"><a href="#状态栏显示与隐藏" class="headerlink" title="状态栏显示与隐藏"></a>状态栏显示与隐藏</h2><p>首先状态栏的显示与隐藏代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    isShowing = <span class="literal">true</span>;</span><br><span class="line">    handler.removeCallbacks(showOrHide);</span><br><span class="line">    handler.postDelayed(showOrHide, <span class="number">5000</span>);</span><br><span class="line">    <span class="comment">// 显示状态栏</span></span><br><span class="line">    WindowManager.LayoutParams attr = getWindow().getAttributes();</span><br><span class="line">    attr.flags &amp;= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);</span><br><span class="line">    getWindow().setAttributes(attr);</span><br><span class="line">    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</span><br><span class="line"></span><br><span class="line">    top.setTranslationY(getStatusBarHeight());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取状态栏高度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getStatusBarHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> resourceId = getResources().getIdentifier(<span class="string">"status_bar_height"</span>, <span class="string">"dimen"</span>, <span class="string">"android"</span>);</span><br><span class="line">    <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 隐藏状态栏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideOperation</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    isShowing = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 隐藏状态栏</span></span><br><span class="line">    WindowManager.LayoutParams lp = getWindow().getAttributes();</span><br><span class="line">    lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;</span><br><span class="line">    getWindow().setAttributes(lp);</span><br><span class="line">    getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</span><br><span class="line"></span><br><span class="line">    top.setTranslationY(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>使用handler来进行自动收起，在每次有效操作时，刷新时间重新数5秒。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Runnable showOrHide = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        hideOperation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">handler</span>.removeCallbacks(showOrHide);</span><br><span class="line"><span class="keyword">handler</span>.postDelayed(showOrHide, <span class="number">5000</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="全屏透明状态栏"><a href="#全屏透明状态栏" class="headerlink" title="全屏透明状态栏"></a>全屏透明状态栏</h2><p>首先在Application的Theme里，我进行的如下配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- Customize your theme here. --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimary"</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorPrimaryDark"</span>&gt;</span>@color/live_gray_bg<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"colorAccent"</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"windowNoTitle"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowNoTitle"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowFullscreen"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>整个App所有界面都是<code>FullScreen</code>的，<code>colorPrimaryDark</code>是状态栏的颜色，我这里设置的是<code>#4d000000</code>，一个带透明度的黑色,该属性只在<code>android5.0及以上</code>有效。<br>然后在activity的onCreate里，在setContentView()之前，调用如下代码：<br><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (<span class="keyword">Build</span>.VERSION.SDK_INT &gt; <span class="number">16</span>) &#123;</span><br><span class="line">    getWindow().getDecorView().setSystemUiVisibility(<span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">            | <span class="keyword">View</span>.SYSTEM_UI_LAYOUT_FLAGS | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">            | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <p>最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。<br>最后做出的效果如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif"></p>
+<span id="more"></span>
+
+<h2 id="状态栏显示与隐藏"><a href="#状态栏显示与隐藏" class="headerlink" title="状态栏显示与隐藏"></a>状态栏显示与隐藏</h2><p>首先状态栏的显示与隐藏代码如下：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showOperation</span>()</span> &#123;</span><br><span class="line">    isShowing = <span class="literal">true</span>;</span><br><span class="line">    handler.removeCallbacks(showOrHide);</span><br><span class="line">    handler.postDelayed(showOrHide, <span class="number">5000</span>);</span><br><span class="line">    <span class="comment">// 显示状态栏</span></span><br><span class="line">    WindowManager.LayoutParams attr = getWindow().getAttributes();</span><br><span class="line">    attr.flags &amp;= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);</span><br><span class="line">    getWindow().setAttributes(attr);</span><br><span class="line">    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</span><br><span class="line"></span><br><span class="line">    top.setTranslationY(getStatusBarHeight());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取状态栏高度</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">getStatusBarHeight</span>()</span> &#123;</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> resourceId = getResources().getIdentifier(<span class="string">&quot;status_bar_height&quot;</span>, <span class="string">&quot;dimen&quot;</span>, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        result = getResources().getDimensionPixelSize(resourceId);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 隐藏状态栏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">hideOperation</span>()</span> &#123;</span><br><span class="line">    isShowing = <span class="literal">false</span>;</span><br><span class="line">    <span class="comment">// 隐藏状态栏</span></span><br><span class="line">    WindowManager.LayoutParams lp = getWindow().getAttributes();</span><br><span class="line">    lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;</span><br><span class="line">    getWindow().setAttributes(lp);</span><br><span class="line">    getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</span><br><span class="line"></span><br><span class="line">    top.setTranslationY(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用handler来进行自动收起，在每次有效操作时，刷新时间重新数5秒。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Runnable showOrHide = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        hideOperation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">handler</span>.removeCallbacks(showOrHide);</span><br><span class="line"><span class="keyword">handler</span>.postDelayed(showOrHide, <span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="全屏透明状态栏"><a href="#全屏透明状态栏" class="headerlink" title="全屏透明状态栏"></a>全屏透明状态栏</h2><p>首先在Application的Theme里，我进行的如下配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">&quot;AppTheme&quot;</span> <span class="attr">parent</span>=<span class="string">&quot;Theme.AppCompat.Light.DarkActionBar&quot;</span>&gt;</span><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">    <span class="comment">&lt;!-- Customize your theme here. --&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;colorPrimary&quot;</span>&gt;</span>@color/colorPrimary<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;colorPrimaryDark&quot;</span>&gt;</span>@color/live_gray_bg<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;colorAccent&quot;</span>&gt;</span>@color/colorAccent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;windowNoTitle&quot;</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:windowNoTitle&quot;</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">&quot;android:windowFullscreen&quot;</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>整个App所有界面都是<code>FullScreen</code>的，<code>colorPrimaryDark</code>是状态栏的颜色，我这里设置的是<code>#4d000000</code>，一个带透明度的黑色,该属性只在<code>android5.0及以上</code>有效。<br>然后在activity的onCreate里，在setContentView()之前，调用如下代码：</p>
+<figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (Build.VERSION.SDK_INT &gt; <span class="number">16</span>) &#123;</span><br><span class="line">    getWindow().getDecorView().set<span class="params">System</span>UiVisibility(View.<span class="params">SYSTEM</span>_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">            | View.<span class="params">SYSTEM</span>_UI_LAYOUT_FLAGS | View.<span class="params">SYSTEM</span>_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">            | View.<span class="params">SYSTEM</span>_UI_FLAG_LAYOUT_HIDE_NAVIGATION)<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>针对View的各种FLAG这里列一下说明：</p>
 <ol>
 <li>View.SYSTEM_UI_FLAG_VISIBLE：显示状态栏，Activity不全屏显示(恢复到有状态的正常情况)；</li>
@@ -202,9 +204,10 @@
 <li>View.SYSTEM_UI_FLAG_HIDE_NAVIGATION：隐藏虚拟按键(导航栏)。有些手机会用虚拟按键来代替物理按键；</li>
 <li>View.SYSTEM_UI_FLAG_LOW_PROFILE：状态栏显示处于低能显示状态(low profile模式)，状态栏上一些图标显示会被隐藏。</li>
 </ol>
-<h2 id="状态栏显示时布局调整"><a href="#状态栏显示时布局调整" class="headerlink" title="状态栏显示时布局调整"></a>状态栏显示时布局调整</h2><p>通过上面的代码，这样整个状态栏就是按照我设置的颜色来显示了，他会直接覆盖在我们的布局上。<br>那么问题来了，当状态栏显示的时候，他会盖在我们的布局上，那么如果布局顶部有View，那么就会被遮盖住，要如何解决呢？<br>网上查了很多，说是在activity的根布局设置属性<code>android:fitsSystemWindows=&quot;true&quot;</code>，确实，设置后就不会遮盖在布局了，但是它会单独占据空间，设置的半透明的黑色背景也无作用了，另外界面会被压缩，然后屏幕会跳一下。<br>发个图感受一下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar2.gif" alt=""><br>可以看到界面会跳，而且视频这种具有一定长宽比的可能会自适应，导致黑边，所以这不是一个解决方案，所以我没有添加这个属性。<br>那么到底要怎么解决呢？<br>其实是一个很笨的方法，上面的代码已经写到了：<code>在状态栏显示的时候，直接将被挡住的View下移</code>。<br>即上面代码中的：<br><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">top.setTranslationY(getStatusBarHeight())<span class="comment">;</span></span><br><span class="line">top.setTranslationY(<span class="number">0</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="状态栏显示时布局调整"><a href="#状态栏显示时布局调整" class="headerlink" title="状态栏显示时布局调整"></a>状态栏显示时布局调整</h2><p>通过上面的代码，这样整个状态栏就是按照我设置的颜色来显示了，他会直接覆盖在我们的布局上。<br>那么问题来了，当状态栏显示的时候，他会盖在我们的布局上，那么如果布局顶部有View，那么就会被遮盖住，要如何解决呢？<br>网上查了很多，说是在activity的根布局设置属性<code>android:fitsSystemWindows=&quot;true&quot;</code>，确实，设置后就不会遮盖在布局了，但是它会单独占据空间，设置的半透明的黑色背景也无作用了，另外界面会被压缩，然后屏幕会跳一下。<br>发个图感受一下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar2.gif"><br>可以看到界面会跳，而且视频这种具有一定长宽比的可能会自适应，导致黑边，所以这不是一个解决方案，所以我没有添加这个属性。<br>那么到底要怎么解决呢？<br>其实是一个很笨的方法，上面的代码已经写到了：<code>在状态栏显示的时候，直接将被挡住的View下移</code>。<br>即上面代码中的：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">top</span><span class="selector-class">.setTranslationY</span>(getStatusBarHeight());</span><br><span class="line"><span class="attribute">top</span><span class="selector-class">.setTranslationY</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p>在这里也可以添加动画，使效果更柔和一点。</p>
-<h2 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h2><p>在android4.4上达不到半透明这样的效果，设置的<code>colorPrimaryDark</code>是不起作用的，他会是一整个黑条（黑色和rom有关吧），看起来效果就会差一些了，不知道该要怎么解决，望了解的朋友可以指导一下~<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar3.gif" alt=""><br>Tip：找到很多修改颜色的文章，但是都是用到了<code>android:fitsSystemWindows=&quot;true&quot;</code>属性，故不是我的解决方案~</p>
+<h2 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h2><p>在android4.4上达不到半透明这样的效果，设置的<code>colorPrimaryDark</code>是不起作用的，他会是一整个黑条（黑色和rom有关吧），看起来效果就会差一些了，不知道该要怎么解决，望了解的朋友可以指导一下~<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar3.gif"><br>Tip：找到很多修改颜色的文章，但是都是用到了<code>android:fitsSystemWindows=&quot;true&quot;</code>属性，故不是我的解决方案~</p>
 
       
 
@@ -218,7 +221,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -342,7 +345,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -421,7 +424,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,87 +432,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -561,15 +508,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -586,10 +533,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

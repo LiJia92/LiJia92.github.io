@@ -9,17 +9,17 @@
   <title>Android自定义属性 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。 起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android自定义属性">
 <meta property="og:url" content="http://lijia92.github.io/2016/05/10/custom-attr/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="前言项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。 起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.081Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-05-10T07:42:43.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.433Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android自定义属性">
-<meta name="twitter:description" content="前言项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。 起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,18 +180,23 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。</p>
 <p>起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例呢？我不是又得写啦~</p>
 <p>抱着偷懒的态度，我设想用自定义属性来解决这个问题，自己设置比例，这样只用自定义一个View，然后根据传入的比例再行计算即可。</p>
-<a id="more"></a>
-<h2 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h2><h3 id="添加属性"><a href="#添加属性" class="headerlink" title="添加属性"></a>添加属性</h3><p>在<code>res/value</code>文件夹下定义一个<code>attr.xml</code>文件，添加如下代码：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"CertainScaleImageView"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"radio"</span> <span class="attr">format</span>=<span class="string">"float"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<h2 id="自定义属性"><a href="#自定义属性" class="headerlink" title="自定义属性"></a>自定义属性</h2><h3 id="添加属性"><a href="#添加属性" class="headerlink" title="添加属性"></a>添加属性</h3><p>在<code>res/value</code>文件夹下定义一个<code>attr.xml</code>文件，添加如下代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">resources</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">&quot;CertainScaleImageView&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">&quot;radio&quot;</span> <span class="attr">format</span>=<span class="string">&quot;float&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>radio即是代表比例，这里是高比宽。我是先获取宽，然后根据比例计算高。</p>
-<h3 id="设置属性"><a href="#设置属性" class="headerlink" title="设置属性"></a>设置属性</h3><p>在xml顶层布局中添加<code>xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</code>，然后利用<code>app:radio</code>设置属性，示例代码如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="attribute">version</span>=<span class="string">"1.0"</span> <span class="attribute">encoding</span>=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;FrameLayout xmlns:<span class="attribute">android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    xmlns:<span class="attribute">app</span>=<span class="string">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;FrameLayout</span><br><span class="line">        android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">        android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">        android:<span class="attribute">layout_marginBottom</span>=<span class="string">"8dp"</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">"#ffffff"</span></span><br><span class="line">        android:<span class="attribute">focusable</span>=<span class="string">"true"</span></span><br><span class="line">        android:<span class="attribute">focusableInTouchMode</span>=<span class="string">"true"</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;com.miamusic.android.live.ui.widget.CertainScaleImageView</span><br><span class="line">            android:<span class="attribute">id</span>=<span class="string">"@+id/anchor_profile_background"</span></span><br><span class="line">            android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">            android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">            android:<span class="attribute">scaleType</span>=<span class="string">"centerCrop"</span></span><br><span class="line">            android:<span class="attribute">transitionName</span>=<span class="string">"cover"</span></span><br><span class="line">            app:<span class="attribute">radio</span>=<span class="string">"1.779"</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="built_in">..</span>.</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置属性"><a href="#设置属性" class="headerlink" title="设置属性"></a>设置属性</h3><p>在xml顶层布局中添加<code>xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</code>，然后利用<code>app:radio</code>设置属性，示例代码如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="attribute">version</span>=<span class="string">&quot;1.0&quot;</span> <span class="attribute">encoding</span>=<span class="string">&quot;utf-8&quot;</span>?&gt;</span><br><span class="line">&lt;FrameLayout xmlns:<span class="attribute">android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span><br><span class="line">    xmlns:<span class="attribute">app</span>=<span class="string">&quot;http://schemas.android.com/apk/res-auto&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;match_parent&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;FrameLayout</span><br><span class="line">        android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">        android:<span class="attribute">layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">        android:<span class="attribute">layout_marginBottom</span>=<span class="string">&quot;8dp&quot;</span></span><br><span class="line">        android:<span class="attribute">background</span>=<span class="string">&quot;#ffffff&quot;</span></span><br><span class="line">        android:<span class="attribute">focusable</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">        android:<span class="attribute">focusableInTouchMode</span>=<span class="string">&quot;true&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        &lt;com.miamusic.android.live.ui.widget.CertainScaleImageView</span><br><span class="line">            android:<span class="attribute">id</span>=<span class="string">&quot;@+id/anchor_profile_background&quot;</span></span><br><span class="line">            android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">            android:<span class="attribute">layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">            android:<span class="attribute">scaleType</span>=<span class="string">&quot;centerCrop&quot;</span></span><br><span class="line">            android:<span class="attribute">transitionName</span>=<span class="string">&quot;cover&quot;</span></span><br><span class="line">            app:<span class="attribute">radio</span>=<span class="string">&quot;1.779&quot;</span> /&gt;</span><br><span class="line"></span><br><span class="line"><span class="built_in">..</span>.</span><br></pre></td></tr></table></figure>
 <p>这里我设置的1.779，即高是宽的1.779倍，显示一个瘦窄的长方形。</p>
-<h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><p>在自定义View中通过如下代码获取<code>radio</code>属性：<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public CertainScaleImageView(<span class="built_in">Context</span> <span class="built_in">context</span>, AttributeSet attrs) &#123;</span><br><span class="line">    super(<span class="built_in">context</span>, attrs)<span class="comment">;</span></span><br><span class="line">    TypedArray typedArray = <span class="built_in">context</span>.obtainStyledAttributes(attrs, R.styleable.CertainScaleImageView)<span class="comment">;</span></span><br><span class="line">    radio = typedArray.getFloat(R.styleable.CertainScaleImageView_radio, <span class="number">1</span>f)<span class="comment">;</span></span><br><span class="line">    typedArray.recycle()<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h3><p>在自定义View中通过如下代码获取<code>radio</code>属性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">CertainScaleImageView</span><span class="params">(Context context, AttributeSet attrs)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>(context, attrs);</span><br><span class="line">    <span class="type">TypedArray</span> <span class="variable">typedArray</span> <span class="operator">=</span> context.obtainStyledAttributes(attrs, R.styleable.CertainScaleImageView);</span><br><span class="line">    radio = typedArray.getFloat(R.styleable.CertainScaleImageView_radio, <span class="number">1f</span>);</span><br><span class="line">    typedArray.recycle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>radio自定义View的一个属性，通过TypedArray获取相应的值并保存起来，TypedArray用完需要调用<code>recycle()</code>。</p>
-<h3 id="计算宽高"><a href="#计算宽高" class="headerlink" title="计算宽高"></a>计算宽高</h3><p>获取属性之后，我们需要通过这个比例来计算宽高，代码如下：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> onMeasure(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec) &#123;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">width</span> = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">    <span class="keyword">int</span> widthSpec = MeasureSpec.makeMeasureSpec(<span class="built_in">width</span>, MeasureSpec.EXACTLY);</span><br><span class="line">    <span class="keyword">int</span> heightSpec = MeasureSpec.makeMeasureSpec((<span class="keyword">int</span>) (<span class="built_in">width</span> * radio), MeasureSpec.EXACTLY);</span><br><span class="line">    setMeasuredDimension(widthSpec, heightSpec);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="计算宽高"><a href="#计算宽高" class="headerlink" title="计算宽高"></a>计算宽高</h3><p>获取属性之后，我们需要通过这个比例来计算宽高，代码如下：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@<span class="function">Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="type">void</span> <span class="title">onMeasure</span><span class="params">(<span class="type">int</span> widthMeasureSpec, <span class="type">int</span> heightMeasureSpec)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> width = MeasureSpec.<span class="built_in">getSize</span>(widthMeasureSpec);</span><br><span class="line">    <span class="type">int</span> widthSpec = MeasureSpec.<span class="built_in">makeMeasureSpec</span>(width, MeasureSpec.EXACTLY);</span><br><span class="line">    <span class="type">int</span> heightSpec = MeasureSpec.<span class="built_in">makeMeasureSpec</span>((<span class="type">int</span>) (width * radio), MeasureSpec.EXACTLY);</span><br><span class="line">    <span class="built_in">setMeasuredDimension</span>(widthSpec, heightSpec);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>获得宽度值，然后根据radio计算高度，然后调用<code>setMeasuredDimension</code>即可。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过onMeasure，我们可以自行控制View要显示的区域。<br>在调用<code>setMeasuredDimension</code>时，我们不仅需要计算它确切的高宽，还要给他设置一个<code>MODE</code>。<br><code>MODE</code>有三类：</p>
 <ol>
-<li>MeasureSpec.EXACTLY：精确尺寸，当我们将控件的layout_width或layout_height指定为具体数值时如andorid:layout_width=”50dp”，或者为match_parent是，都是控件大小已经确定的情况，都是精确尺寸。</li>
+<li>MeasureSpec.EXACTLY：精确尺寸，当我们将控件的layout_width或layout_height指定为具体数值时如andorid:layout_width&#x3D;”50dp”，或者为match_parent是，都是控件大小已经确定的情况，都是精确尺寸。</li>
 <li>MeasureSpec.AT_MOST：最大尺寸，当控件的layout_width或layout_height指定为wrap_content时，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。</li>
 <li>MeasureSpec.UNSPECIFIED：未指定尺寸，这种情况不多，一般都是父控件是AdapterView，通过measure方法传入的模式。</li>
 </ol>
@@ -212,7 +213,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -336,7 +337,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -415,7 +416,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -423,87 +424,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -555,15 +500,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -580,10 +525,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

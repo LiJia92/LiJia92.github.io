@@ -9,13 +9,12 @@
   <title>使用 Charles 进行手机抓包 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="开发中，我们经常会有抓包的需求。通过抓包，能一目了然请求的参数以及返回的数据是否符合预期，在定位问题的时候有很大的帮助作用。这里便写一下自己认为还不错的一个抓包工具Charles。 下载这个根据系统版本自行谷歌、百度吧。">
-<meta name="keywords" content="奇技淫巧">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 Charles 进行手机抓包">
 <meta property="og:url" content="http://lijia92.github.io/2018/05/03/charles/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="开发中，我们经常会有抓包的需求。通过抓包，能一目了然请求的参数以及返回的数据是否符合预期，在定位问题的时候有很大的帮助作用。这里便写一下自己认为还不错的一个抓包工具Charles。 下载这个根据系统版本自行谷歌、百度吧。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163742.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503165110.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503170651.jpg">
@@ -35,10 +34,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/charles.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.213Z">
+<meta property="article:published_time" content="2018-05-03T08:41:22.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.423Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用 Charles 进行手机抓包">
-<meta name="twitter:description" content="开发中，我们经常会有抓包的需求。通过抓包，能一目了然请求的参数以及返回的数据是否符合预期，在定位问题的时候有很大的帮助作用。这里便写一下自己认为还不错的一个抓包工具Charles。 下载这个根据系统版本自行谷歌、百度吧。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163742.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -57,7 +57,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -71,10 +71,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -131,10 +129,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -203,40 +199,41 @@
       
         <p>开发中，我们经常会有抓包的需求。通过抓包，能一目了然请求的参数以及返回的数据是否符合预期，在定位问题的时候有很大的帮助作用。这里便写一下自己认为还不错的一个抓包工具<code>Charles</code>。</p>
 <h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><p>这个根据系统版本自行谷歌、百度吧。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><ol>
-<li><p>运行 Charles，点击 Proxy -&gt; Proxy Settings，设置代理端口（一般默认8888），然后勾选 Enable 的选项，点击 OK 结束设置。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163742.png" alt=""></p>
+<li><p>运行 Charles，点击 Proxy -&gt; Proxy Settings，设置代理端口（一般默认8888），然后勾选 Enable 的选项，点击 OK 结束设置。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163742.png"></p>
 </li>
-<li><p>运行 cmd 输入指令查看电脑 ip。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503165110.png" alt=""></p>
+<li><p>运行 cmd 输入指令查看电脑 ip。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503165110.png"></p>
 </li>
-<li><p>打开手机 Wlan 设置，将 Wifi 的代理设置成步骤 2 中的 ip 地址，及步骤 1 中的端口。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503170651.jpg" alt=""></p>
+<li><p>打开手机 Wlan 设置，将 Wifi 的代理设置成步骤 2 中的 ip 地址，及步骤 1 中的端口。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503170651.jpg"></p>
 </li>
 </ol>
-<p>确定之后，电脑 Charles 就会弹出对话框，询问是否允许代理，勾选 Allow。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163751.png" alt=""></p>
-<p>有些情况下，可能我们设置手机 Wlan 代理之后，一直不弹对话框。可能是 ip 已经存在导致的。点击 Proxy -&gt; Access Control Settings，可以进行连接设备的设置。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503165430.png" alt=""></p>
-<p>确认连接 OK 之后，手机上的网络请求都会走代理，到电脑的 Charles 上了，然后通过 Charles 就能看到具体的网络请求信息了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163753.png" alt=""></p>
+<p>确定之后，电脑 Charles 就会弹出对话框，询问是否允许代理，勾选 Allow。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163751.png"></p>
+<p>有些情况下，可能我们设置手机 Wlan 代理之后，一直不弹对话框。可能是 ip 已经存在导致的。点击 Proxy -&gt; Access Control Settings，可以进行连接设备的设置。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503165430.png"></p>
+<p>确认连接 OK 之后，手机上的网络请求都会走代理，到电脑的 Charles 上了，然后通过 Charles 就能看到具体的网络请求信息了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163753.png"></p>
 <h2 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h2><p>可能某些情况下，我们需要手动修改 Request 或 Reponse 的值，这就需要断点了。</p>
 <ol>
-<li><p>打开 Charles 调试开关。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503171900.png" alt=""></p>
+<li><p>打开 Charles 调试开关。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503171900.png"></p>
 </li>
-<li><p>右键需要断点的请求，勾选 Breakpoints。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163637.png" alt=""></p>
+<li><p>右键需要断点的请求，勾选 Breakpoints。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163637.png"></p>
 </li>
 </ol>
-<p>可能这个请求带有 sign 这样的唯一参数，导致后面所有的请求都会不太一样，这时可以编辑断点，去掉相应的参数。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163716.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163719.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163724.png" alt=""></p>
-<ol>
-<li><p>手机执行请求，Charles 会先拦截到 Request，这时可以修改请求的参数等等。修改结束之后点击下面的 Execute 发送请求。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163729.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163732.png" alt=""><br>图中实例的请求没有传递什么参数，所以没什么数据。</p>
+<p>可能这个请求带有 sign 这样的唯一参数，导致后面所有的请求都会不太一样，这时可以编辑断点，去掉相应的参数。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163716.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163719.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163724.png"></p>
+<ol start="3">
+<li><p>手机执行请求，Charles 会先拦截到 Request，这时可以修改请求的参数等等。修改结束之后点击下面的 Execute 发送请求。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163729.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163732.png"><br>图中实例的请求没有传递什么参数，所以没什么数据。</p>
 </li>
-<li><p>请求返回成功之后会自动拦截返回的 Reponse，这时可以查看请求的内容，以及返回的具体 Reponse，也可进行相应的修改。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163735.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163737.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163739.png" alt=""></p>
+<li><p>请求返回成功之后会自动拦截返回的 Reponse，这时可以查看请求的内容，以及返回的具体 Reponse，也可进行相应的修改。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163735.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163737.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/3/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180503163739.png"></p>
 </li>
 </ol>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>整个工具使用起来比较简单方便，也能实现基本的手机抓包需求，推荐使用。<br>就是如果不注册的话，会经常在启动也暂停几秒到十几秒不等，可以购买支持一下，当然网上也有免费的激活账号，可以自行查阅。</p>
 <h2 id="Https-抓包"><a href="#Https-抓包" class="headerlink" title="Https 抓包"></a>Https 抓包</h2><p>公司生产环境的接口都是 https 的，不做配置就抓不到了。这里说一下小米手机配置 https 抓包的操作。</p>
 <ol>
-<li>电脑 Charles 软件安装 SSL 证书。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/1.png" alt=""></li>
-<li>手机下载 SSL 证书：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2.png" alt=""><br>浏览器打开图里的地址，下载文件，记录好下载路径。</li>
+<li>电脑 Charles 软件安装 SSL 证书。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/1.png"></li>
+<li>手机下载 SSL 证书：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2.png"><br>浏览器打开图里的地址，下载文件，记录好下载路径。</li>
 <li>打开手机安全与隐私设置，小米手机在「系统安全」设置中，然后选择「加密与凭据」，再选「从存储设备安装」。<br>这时会打开文件管理器（可能需要先启用「文件」应用）。然后选择刚刚下载的路径，选择 pem 证书文件即可。</li>
 </ol>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>电脑升级到 win10 之后，抓包无效了，需要配置下网络入站规则。<br>设置 -&gt; 网络和 Internet -&gt; windows 防火墙 -&gt; 高级设置 -&gt; 入站规则<br>找到 Charles 相关的，找不到则新建一个规则，并允许连接。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/charles.png" alt=""></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>电脑升级到 win10 之后，抓包无效了，需要配置下网络入站规则。<br>设置 -&gt; 网络和 Internet -&gt; windows 防火墙 -&gt; 高级设置 -&gt; 入站规则<br>找到 Charles 相关的，找不到则新建一个规则，并允许连接。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/charles.png"></p>
 
       
 
@@ -250,7 +247,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">奇技淫巧</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -374,7 +371,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -453,7 +450,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -461,87 +458,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -593,15 +534,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -618,10 +559,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

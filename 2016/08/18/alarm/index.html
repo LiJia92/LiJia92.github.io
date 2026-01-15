@@ -9,18 +9,18 @@
   <title>Android AlarmManager使用小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？ Android中提供了AlarmManager可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android AlarmManager使用小记">
 <meta property="og:url" content="http://lijia92.github.io/2016/08/18/alarm/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？ Android中提供了AlarmManager可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.207Z">
+<meta property="article:published_time" content="2016-08-18T08:20:03.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.413Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android AlarmManager使用小记">
-<meta name="twitter:description" content="现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？ Android中提供了AlarmManager可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,10 +181,13 @@
       
         <p>现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？</p>
 <p>Android中提供了<code>AlarmManager</code>可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。</p>
-<a id="more"></a>
-<h2 id="定义接收器"><a href="#定义接收器" class="headerlink" title="定义接收器"></a>定义接收器</h2><p>首先定义一个BroadcastReceiver，在收到消息后，在onReceive里弹出一个Notification，示例代码如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneShotAlarm</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> static int <span class="type">NOTIFICATION_ID</span> = <span class="number">1001</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onReceive(<span class="type">Context</span> context, <span class="type">Intent</span> intent) &#123;</span><br><span class="line">        <span class="type">NotificationCompat</span>.<span class="type">Builder</span> mBuilder = <span class="keyword">new</span> <span class="type">NotificationCompat</span>.<span class="type">Builder</span>(context)</span><br><span class="line">                .setSmallIcon(<span class="type">R</span>.mipmap.ic_launcher)</span><br><span class="line">                .setContentTitle(<span class="string">"title"</span>)</span><br><span class="line">                .setContentText(<span class="string">"context"</span>);</span><br><span class="line">        <span class="type">NotificationManager</span> mNotifyMgr = (<span class="type">NotificationManager</span>) context.getSystemService(<span class="type">Activity</span>.<span class="type">NOTIFICATION_SERVICE</span>);</span><br><span class="line">        mNotifyMgr.notify(<span class="type">NOTIFICATION_ID</span>, mBuilder.build());</span><br><span class="line">        <span class="type">Toast</span>.makeText(context, <span class="string">"OneShotAlarm onReceive"</span>, <span class="type">Toast</span>.<span class="type">LENGTH_SHORT</span>).show();</span><br><span class="line">        <span class="type">Log</span>.e(<span class="string">"TAG"</span>, <span class="string">"OneShotAlarm onReceive"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>记得在AndroidManifest.xml中注册：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;receiver</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">".OneShotAlarm"</span></span><br><span class="line">    android:<span class="attribute">process</span>=<span class="string">":remote"</span> /&gt;</span><br><span class="line">&lt;receiver</span><br></pre></td></tr></table></figure></p>
-<p>在此讨论一下process属性，它规定了组件(activity, service, receiver等)所在的进程。<br>通常情况下，没有指定这个属性，一个应用所有的组件都运行在应用的默认进程中，进程的名字和应用的包名一致，比如manifest的package=”com.example.helloalarm”，则默认进程名就是com.example.helloalarm。<br>process属性可以为全部的组件设置一个不同的默认进程，组件可以override这个默认的进程设置，这样你的应用就可以是多进程的。<br>如果你的process属性以一个冒号开头，进程名会在原来的进程名之后附加冒号之后的字符串作为新的进程名。当组件需要时，会自动创建这个进程，这个进程是应用私有的进程。<br>如果process属性以小写字母开头，将会直接以属性中的这个名字作为进程名，这是一个全局进程，这样的进程可以被多个不同应用中的组件共享。</p>
+<span id="more"></span>
+
+<h2 id="定义接收器"><a href="#定义接收器" class="headerlink" title="定义接收器"></a>定义接收器</h2><p>首先定义一个BroadcastReceiver，在收到消息后，在onReceive里弹出一个Notification，示例代码如下：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">OneShotAlarm</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> static int <span class="type">NOTIFICATION_ID</span> = <span class="number">1001</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onReceive(<span class="type">Context</span> context, <span class="type">Intent</span> intent) &#123;</span><br><span class="line">        <span class="type">NotificationCompat</span>.<span class="type">Builder</span> mBuilder = <span class="keyword">new</span> <span class="type">NotificationCompat</span>.<span class="type">Builder</span>(context)</span><br><span class="line">                .setSmallIcon(<span class="type">R</span>.mipmap.ic_launcher)</span><br><span class="line">                .setContentTitle(<span class="string">&quot;title&quot;</span>)</span><br><span class="line">                .setContentText(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">        <span class="type">NotificationManager</span> mNotifyMgr = (<span class="type">NotificationManager</span>) context.getSystemService(<span class="type">Activity</span>.<span class="type">NOTIFICATION_SERVICE</span>);</span><br><span class="line">        mNotifyMgr.notify(<span class="type">NOTIFICATION_ID</span>, mBuilder.build());</span><br><span class="line">        <span class="type">Toast</span>.makeText(context, <span class="string">&quot;OneShotAlarm onReceive&quot;</span>, <span class="type">Toast</span>.<span class="type">LENGTH_SHORT</span>).show();</span><br><span class="line">        <span class="type">Log</span>.e(<span class="string">&quot;TAG&quot;</span>, <span class="string">&quot;OneShotAlarm onReceive&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记得在AndroidManifest.xml中注册：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;receiver</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">&quot;.OneShotAlarm&quot;</span></span><br><span class="line">    android:<span class="attribute">process</span>=<span class="string">&quot;:remote&quot;</span> /&gt;</span><br><span class="line">&lt;receiver</span><br></pre></td></tr></table></figure>
+<p>在此讨论一下process属性，它规定了组件(activity, service, receiver等)所在的进程。<br>通常情况下，没有指定这个属性，一个应用所有的组件都运行在应用的默认进程中，进程的名字和应用的包名一致，比如manifest的package&#x3D;”com.example.helloalarm”，则默认进程名就是com.example.helloalarm。<br>process属性可以为全部的组件设置一个不同的默认进程，组件可以override这个默认的进程设置，这样你的应用就可以是多进程的。<br>如果你的process属性以一个冒号开头，进程名会在原来的进程名之后附加冒号之后的字符串作为新的进程名。当组件需要时，会自动创建这个进程，这个进程是应用私有的进程。<br>如果process属性以小写字母开头，将会直接以属性中的这个名字作为进程名，这是一个全局进程，这样的进程可以被多个不同应用中的组件共享。</p>
 <h2 id="开启闹钟"><a href="#开启闹钟" class="headerlink" title="开启闹钟"></a>开启闹钟</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        <span class="type">Intent</span> intent = <span class="keyword">new</span> <span class="type">Intent</span>(<span class="type">MainActivity</span>.<span class="keyword">this</span>, <span class="type">OneShotAlarm</span>.<span class="keyword">class</span>);</span><br><span class="line">        <span class="type">PendingIntent</span> sender = <span class="type">PendingIntent</span>.getBroadcast(</span><br><span class="line">                <span class="type">MainActivity</span>.<span class="keyword">this</span>, <span class="number">0</span>, intent, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// We want the alarm to go off 10 seconds from now.</span></span><br><span class="line">        <span class="type">Calendar</span> calendar = <span class="type">Calendar</span>.getInstance();</span><br><span class="line">        calendar.setTimeInMillis(<span class="type">System</span>.currentTimeMillis());</span><br><span class="line">        calendar.add(<span class="type">Calendar</span>.<span class="type">SECOND</span>, <span class="number">30</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">AlarmManager</span> am = (<span class="type">AlarmManager</span>) getSystemService(<span class="type">ALARM_SERVICE</span>);</span><br><span class="line">        am.set(<span class="type">AlarmManager</span>.<span class="type">RTC_WAKEUP</span>, calendar.getTimeInMillis(), sender);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>启动Activity之后30秒我们便能看到Toast，以及打出的Log和Notification了。<br>通过这种方式，我们可以定时的发送通知，这样应该能改善推送到达率低的问题。</p>
 <h2 id="AlarmManager"><a href="#AlarmManager" class="headerlink" title="AlarmManager"></a>AlarmManager</h2><p>常用方法有三个：</p>
@@ -205,14 +204,17 @@
 <li>AlarmManager.RTC_WAKEUP：表示闹钟在睡眠状态下会唤醒系统并执行提示功能，该状态下闹钟使用绝对时间，状态值为0</li>
 <li>AlarmManager.POWER_OFF_WAKEUP：表示闹钟在手机关机状态下也能正常进行提示功能，所以是5个状态中用的最多的状态之一，该状态下闹钟也是用绝对时间，状态值为4；不过本状态好像受SDK版本影响，某些版本并不支持</li>
 </ol>
-<p>PendingIntent为设置接收消息类的参数，一般通过如下代码生成：<br><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">PendingIntent sender</span> = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);</span><br></pre></td></tr></table></figure></p>
+<p>PendingIntent为设置接收消息类的参数，一般通过如下代码生成：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PendingIntent sender = PendingIntent.getBroadcast(MainActivity.<span class="keyword">this</span>, <span class="number">0</span>, <span class="built_in">int</span>ent, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 <p>注意第二个参数为<code>requestCode</code>，该参数是闹钟的标识，如果不停设置闹钟，这个参数都一样，那么后设置的闹钟会覆盖之前的闹钟。所以如果需要多个闹钟，则需要将这个参数设为唯一。</p>
 <p>若要取消闹钟，则直接调用cancel即可，官方是这样说的：</p>
 <blockquote>
 <p>void cancel (PendingIntent operation)<br>Remove any alarms with a matching Intent. Any alarm, of any type, whose Intent matches this one (as defined by filterEquals(Intent)), will be canceled.</p>
 </blockquote>
-<p>只有符合filterEquals的intent才会被取消。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> boolean filterEquals(Intent other) &#123;</span><br><span class="line">    <span class="keyword">if</span> (other == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mAction, other.mAction)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mData, other.mData)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mType, other.mType)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mPackage, other.mPackage)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mComponent, other.mComponent)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mCategories, other.mCategories)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于即时性比较强的应用，比如直播类，闹钟定的时间要与正在直播的推送分开，不然用户就有可能收到2次通知了，所以闹钟就要定提前一点：XXX即将开始直播，类似这样。那么就会有一个问题：用户看到闹钟的这个通知后，进入应用，但是XXX是没有直播的（即将开始直播），所以对于用户当前是没有正确信息来显示的，这种体验可能不太好。如果将闹钟设置退后，XXX已经开始直播，又会显得非常怪异。<br>我的心情：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg" alt=""><br>求同学们支招~</p>
+<p>只有符合filterEquals的intent才会被取消。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> boolean filterEquals(Intent other) &#123;</span><br><span class="line">    <span class="keyword">if</span> (other == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mAction, other.mAction)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mData, other.mData)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mType, other.mType)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mPackage, other.mPackage)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mComponent, other.mComponent)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Objects.equals(<span class="keyword">this</span>.mCategories, other.mCategories)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>对于即时性比较强的应用，比如直播类，闹钟定的时间要与正在直播的推送分开，不然用户就有可能收到2次通知了，所以闹钟就要定提前一点：XXX即将开始直播，类似这样。那么就会有一个问题：用户看到闹钟的这个通知后，进入应用，但是XXX是没有直播的（即将开始直播），所以对于用户当前是没有正确信息来显示的，这种体验可能不太好。如果将闹钟设置退后，XXX已经开始直播，又会显得非常怪异。<br>我的心情：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/seekbar3.jpg"><br>求同学们支招~</p>
 
       
 
@@ -226,7 +228,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -350,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -429,7 +431,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -437,87 +439,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -569,15 +515,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -594,10 +540,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

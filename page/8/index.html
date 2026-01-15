@@ -12,9 +12,9 @@
 <meta property="og:title" content="听雪楼">
 <meta property="og:url" content="http://lijia92.github.io/page/8/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
+<meta property="article:author" content="最后的温存">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听雪楼">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -32,7 +32,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -46,10 +46,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -106,10 +104,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -158,89 +154,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-github-star" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-keepalive" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/04/github-star/">管理 Github 上的 star</a>
+      <a class="article-title" href="/2019/09/06/keepalive/">Android 保活设置适配</a>
     </h1>
   
 
         
-        <a href="/2017/08/04/github-star/" class="archive-article-date">
-  	<time datetime="2017-08-04T09:01:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-04</time>
+        <a href="/2019/09/06/keepalive/" class="archive-article-date">
+  	<time datetime="2019-09-06T06:39:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Github 逛久了，相信大家都会有很多<code>star</code>，虽然很多<code>star</code>后面再也不会看的。但是只要有那么一丁点的可能回头看，我们还是需要将自己的<code>star</code>整理一下，不然感觉都是无从下手。那么问题便来了：如何管理 Github 上的 star ?<br>答案便是 <a href="https://app.astralapp.com" target="_blank" rel="noopener">Astral</a>。这是我偶然发现的一个网站，它可以用来给 Github 上的 star 分类。<br>具体界面是这样子的:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/08/04/%E9%80%89%E5%8C%BA_075.png" alt=""></p>
-<p>界面很简单，打开就能直接上手用，整理了一个下午，终于将自己的 200 多个 star 全部清理个便，分了几个 TAG，后面再回顾的时候便会方便多了。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-svg" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
+        <p>随着 Android 开发的越来越规范，那些“黑科技”的保活手段基本没什么用了，所以只能通过引导，让用户自己去设置相关保活的选项，就像 Rom 的白名单。只不过白名单是系统帮你设置，没有白名单就得自己去引导了。保活相关的一般包含<strong>自启动</strong>和<strong>防睡眠</strong>，当然功能在各个 Rom 的描述不尽相同，不用纠结于此。<br>针对各大厂商，做了一些准备工作，如下。</p>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/26/svg/">尝试使用 Android SVG</a>
-    </h1>
-  
-
-        
-        <a href="/2017/07/26/svg/" class="archive-article-date">
-  	<time datetime="2017-07-26T10:50:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>普遍的 Android 开发可以理解为移动端界面开发，那么界面自然是重中之重。当设计师给到你设计稿时，你便需要将设计稿中的东西用代码做出来。<br>项目开发中便遇到了这样一个设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/07/26/%E9%80%89%E5%8C%BA_053.png" alt=""></p>
-<p>这算是一个很基本的对话框了，没什么难度。写这篇文章主要是为了记一下图中<code>关闭按钮</code>的实现。<br>这个<code>关闭按钮</code>算是再简单不过的一个图标了，那么要如何实现呢？当然可以找到设计师要切图。但是这里我想尝试一下 Android 中的 SVG，顺便也是减轻设计师的工作量，经常劳烦别人也不是什么好事。</p>
-        
-          <a class="article-more-a" href="/2017/07/26/svg/#more">more >></a>
+          <a class="article-more-a" href="/2019/09/06/keepalive/#more">more >></a>
         
       
 
@@ -278,33 +214,37 @@
 
 
   
-    <article id="post-java-set" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-livedata" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/11/java-set/">关于 ConcurrentModificationException 异常</a>
+      <a class="article-title" href="/2019/09/02/livedata/">使用 LiveData 实现消息总线</a>
     </h1>
   
 
         
-        <a href="/2017/07/11/java-set/" class="archive-article-date">
-  	<time datetime="2017-07-11T08:24:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-11</time>
+        <a href="/2019/09/02/livedata/" class="archive-article-date">
+  	<time datetime="2019-09-02T05:46:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-02</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>List、Map等这类数据结构在日常开发中的使用不可谓不多，经常会有遍历的同时进行修改的情况。例如：<br><figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Integer</span>[] numbers = new <span class="keyword">Integer</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line">List&lt;<span class="keyword">Integer</span>&gt; list = new ArrayList&lt;&gt;(Arrays.asList(numbers));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">Integer</span> <span class="keyword">integer</span> : list) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">integer</span> % <span class="number">5</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        list.remove(<span class="keyword">integer</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码在执行的时候便会抛出异常：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java<span class="selector-class">.util</span><span class="selector-class">.ConcurrentModificationException</span></span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.checkForComodification(ArrayList<span class="selector-class">.java</span>:<span class="number">901</span>)</span><br><span class="line">	at java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span><span class="variable">$Itr</span>.next(ArrayList<span class="selector-class">.java</span>:<span class="number">851</span>)</span><br><span class="line">	at com<span class="selector-class">.example</span><span class="selector-class">.MyClass</span><span class="selector-class">.main</span>(MyClass<span class="selector-class">.java</span>:<span class="number">16</span>)</span><br></pre></td></tr></table></figure></p>
-<p>这个异常出现通常是遍历一个集合的同时，在修改这个集合。看到<code>next</code>方法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> E next() &#123;</span><br><span class="line">    <span class="keyword">this</span>.checkForComodification();</span><br><span class="line">    int var1 = <span class="keyword">this</span>.cursor;</span><br><span class="line">    <span class="keyword">if</span>(var1 &gt;= ArrayList.<span class="keyword">this</span>.size) &#123;</span><br><span class="line">        <span class="keyword">throw</span> new NoSuchElementException();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        Object[] var2 = ArrayList.<span class="keyword">this</span>.elementData;</span><br><span class="line">        <span class="keyword">if</span>(var1 &gt;= var2.length) &#123;</span><br><span class="line">            <span class="keyword">throw</span> new ConcurrentModificationException();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.cursor = var1 + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">return</span> var2[<span class="keyword">this</span>.lastRet = var1];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后看到<code>checkForComodification</code>：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="function"><span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.expectedModCount) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>即当<code>modCount 与 expectedModCount 不相等时，会抛 ConcurrentModificationException 异常</code>。其实很早之前就会碰到这个问题，使用<code>Iterator</code>进行遍历和操作就不会出现这个问题了，但是一直没有深究其原因。</p>
+        <p>作为 Android 开发，对消息总线总不会陌生，当需要告知某些界面进行一些操作的时候，都会通过发送消息来做。早期的可以有广播，或者回调的方式，但是写起来都会比较麻烦，所以才会出现 EventBus 这种三方库，它使用起来非常方便，极大的解耦了我们的代码，所以当它一出现就受到了广大开发者的青睐。那用了这么久的 EventBus，香确实是很香，但是感觉还可以有优化的地方：</p>
+<ol>
+<li>只在界面可见的时候进行处理（生命周期感知功能）；</li>
+<li>每次都得显式 register，unregister；</li>
+<li>回调方法名称固定为 onEventMainThread 等等几个规定的名称，在 Android Studio 里会显示成 <strong>xxx is never used</strong>，警告也是很烦人的；</li>
+<li>多个同类型消息不能只处理一次，这其实也和第 1 点呼应；</li>
+<li>不同类型的消息，但是导致的业务操作其实是一致的，这种情景其实只需要处理一次即可，但 EventBus 做不到；</li>
+</ol>
+<p>所以，在新出了 LiveData 之后，基于它的特性，是否可以进行改造呢？当然是可以的。</p>
         
-          <a class="article-more-a" href="/2017/07/11/java-set/#more">more >></a>
+          <a class="article-more-a" href="/2019/09/02/livedata/#more">more >></a>
         
       
 
@@ -318,7 +258,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -342,33 +282,477 @@
 
 
   
-    <article id="post-viewpager" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-cl-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/30/viewpager/">关于 ViewPager 的2点特性</a>
+      <a class="article-title" href="/2019/08/13/cl-2/">MotionLayout 使用介绍</a>
     </h1>
   
 
         
-        <a href="/2017/06/30/viewpager/" class="archive-article-date">
-  	<time datetime="2017-06-30T01:54:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-30</time>
+        <a href="/2019/08/13/cl-2/" class="archive-article-date">
+  	<time datetime="2019-08-13T08:18:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-13</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>新手引导是每个 App 都具备的。如果新手引导直接用 Activity 来做，可能就会比较繁杂和冗余。所以一般都是 ViewPager 来实现。那么便会有 2 个问题：</p>
-<ol>
-<li>不能手动滑动</li>
-<li>当前 item 跳转到下一个 item 要平滑滑动</li>
+        <p>MotionLayout 是 ConstraintLayout 2.0 版本引入进来的，目前还在测试版本中，但感觉还挺有意思的，就写一篇记录一下。</p>
+<blockquote>
+<p>MotionLayout 类继承自 ConstraintLayout 类，允许你为各种状态之间的布局设置过渡动画。由于 MotionLayout 继承了 ConstraintLayout，因此可以直接在 XML 布局文件中使用 MotionLayout 替换 ConstraintLayout。MotionLayout 是完全声明式的，你可以完全在 XML 文件中描述一个复杂的过渡动画而无需任何代码。</p>
+</blockquote>
+<p>MotionLayout 与 ConstraintLayout 不同的是 MotionLayout 需要链接到一个 MotionScene 文件。使用 MotionLayout 的 app:layoutDescription 属性将 MotionLayout 链接到一个 MotionScene 文件。另外，<strong>MotionLayout 所有的直接子 View 需要指定 id</strong>，不然会报错：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">All</span> children of ConstraintLayout must have ids <span class="selector-tag">to</span> <span class="selector-tag">use</span> ConstraintSet.</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2019/08/13/cl-2/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-handlerthread" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/05/handlerthread/">高德地图 Marker 聚合</a>
+    </h1>
+  
+
+        
+        <a href="/2019/08/05/handlerthread/" class="archive-article-date">
+  	<time datetime="2019-08-05T06:36:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>高德地图有个<a target="_blank" rel="noopener" href="https://github.com/amap-demo/android-cluster-marker">官方 Demo</a>用来实现 Marker 聚合，但不是在 SDK 里。项目里也有这个需求，但是比较简单，不用做到数量计算，只需要当 Marker 数量很多的的时候，只展示部分 Marker，显示了会覆盖的 Marker 则直接不显示。每次移动地图都会请求新的数据，然后来进行展示，为了避免移动地图导致频繁请求数据，可以做个简单的优化：移动后延迟一定时间再去请求数据，在延迟时间内再次移动地图，则取消上次请求的动作，重新请求。综合考虑，使用 HandlerThread 便是不二之选了，在这里记录一下，以后或许用得到。</p>
+        
+          <a class="article-more-a" href="/2019/08/05/handlerthread/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-multi-form" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/12/multi-form/">Android 实现大文件分片上传</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/12/multi-form/" class="archive-article-date">
+  	<time datetime="2019-07-12T07:57:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中有视频上传的功能，但一直没做断点续传，针对大视频上传不友好，最近的版本需求将断点续传加上了，服务端采用的是 multipart&#x2F;form-data 编码方式来实现，那么客户端也依照这个方式来做就好了。</p>
+<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart&#x2F;form-data"></a>multipart&#x2F;form-data</h2><p>multipart&#x2F;form-data 方式用于大数据 Post 请求，用做分片正好合适。它对数据有一定的格式，参照示例：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST http:<span class="symbol">//www.example.com</span> HTTP<span class="symbol">/1.1</span></span><br><span class="line">Content-Type:multipart<span class="symbol">/form-data</span>; <span class="attr">boundary</span><span class="operator">=</span><span class="operator">-</span>---WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"><span class="params">Content-Disposition:</span> form-data; <span class="attr">name</span><span class="operator">=</span><span class="string">&quot;text&quot;</span></span><br><span class="line"></span><br><span class="line">title</span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA</span><br><span class="line"><span class="params">Content-Disposition:</span> form-data; <span class="attr">name</span><span class="operator">=</span><span class="string">&quot;file&quot;</span>; <span class="attr">filename</span><span class="operator">=</span><span class="string">&quot;chrome.png&quot;</span></span><br><span class="line"><span class="params">Content-Type:</span> image<span class="symbol">/png</span></span><br><span class="line"></span><br><span class="line">PNG ... content of chrome.png ...</span><br><span class="line"><span class="operator">-</span>-----WebKitFormBoundaryrGKCBY7qhFd3TrwA--</span><br></pre></td></tr></table></figure>
+<p>每部分都是以<code>--boundary</code>开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（文本或二进制）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以<code>--boundary--</code>标示结束。</p>
+        
+          <a class="article-more-a" href="/2019/07/12/multi-form/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-anr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/04/anr/">记一次 ANR 寻根之旅</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/04/anr/" class="archive-article-date">
+  	<time datetime="2019-07-04T07:12:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目升大版本，targetSdkVersion 从 Android 6.0（version 21） 直接升到 Adnroid 9.0（version 28），跨度有点大，但是没有像升到 Android 6.0 那样工作量大。升完之后，在小米5、小米4C 2款测试机上 App 启动直接无响应了，在我的小米 MIX 上没问题。于是测试机调试之旅开始了。。。<br>在 SplashActivity onCreate 的方法里打断点进都进不去，有点懵，所以将目标定位到 Application 初始化了。看着 Application 相关初始化的代码，没发现什么大问题。打断点逐步调试，运行到某一行时直接就无响应了，后面的代码也不执行了，logcat 也看不到有用的信息，有点摸不着头脑。后面 Google 发现可以直接看到手机 ANR 的日志，路径为：&#x2F;data&#x2F;anr&#x2F;traces.txt，于是很欢快的将日志导出到电脑：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb pull <span class="regexp">/data/</span>anr<span class="regexp">/traces.txt d:/</span>test</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2019/07/04/anr/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cat" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/cat/">养猫一个星期后</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/28/cat/" class="archive-article-date">
+  	<time datetime="2019-06-28T08:40:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我有一个梦想：养一只二哈，或者柴犬、金毛也可以，哈哈。<br>但是狗的话，天性好动，需要每天带出去溜溜（或许是狗溜我）。我现在一个人住，普遍情况下家里是没人的，养一只狗确实没太多的时间和精力。退而求其次，养只猫或许可行？猫的话，比较爱干净，也能一整天待在家里不需要你带出去溜，只要我在家的时间能陪陪他便好了。也做了很久的思想斗争，养不好怎么办，这不是耽误猫生吗？最后还是开悟了，人生不就是这样吗？要多多体验没经历过的事情，之前没养过猫，现在养一只，也是一种经历，会养慢慢学习总能变好的。<br>早些日子就找过一家猫舍看过猫，也加了微信，总能在朋友圈看到各种各样的小猫咪，内心总是蠢蠢欲动。心动不如行动，就在上周日，我去猫舍买了一只美短虎斑，很调皮的一个小家伙，我给他取名「土豆」。</p>
+        
+          <a class="article-more-a" href="/2019/06/28/cat/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">生活杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-cl" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/13/cl/">ConstraintLayout 真香</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/13/cl/" class="archive-article-date">
+  	<time datetime="2019-06-13T02:37:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ConstraintLayout 出来蛮久了，但是一直没怎么用，说是可以直接进行拖拽来实现布局，但是 xml 里全是写死的 dp，不实用。然后用代码吧，属性都贼长贼多，有些难记。最近同学强力安利，说多写写就熟悉了，于是项目新的布局基本都用 ConstraintLayout 来写了，刚开始写的时候确实比较慢，很多属性不知道，有些属性有什么用也不晓得，但是用了几天后，发现真好用！人类的本质啊，真香怪！</p>
+<h2 id="基本属性"><a href="#基本属性" class="headerlink" title="基本属性"></a>基本属性</h2><ol>
+<li>layout_constraintRight_toLeftOf</li>
+<li>layout_constraintRight_toRightOf</li>
+<li>layout_constraintLeft_toLeftOf</li>
+<li>layout_constraintLeft_toRightOf</li>
+<li>layout_constraintTop_toTopOf</li>
+<li>layout_constraintTop_toBottomOf</li>
+<li>layout_constraintBottom_toTopOf</li>
+<li>layout_constraintBottom_toBottomOf</li>
+<li>layout_constraintBaseline_toBaselineOf</li>
 </ol>
         
-          <a class="article-more-a" href="/2017/06/30/viewpager/#more">more >></a>
+          <a class="article-more-a" href="/2019/06/13/cl/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-scroll-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/17/scroll-1/">RecyclerView 滑动小记</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/17/scroll-1/" class="archive-article-date">
+  	<time datetime="2019-05-17T07:58:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于 RecyclerView 的滑动方法有很多：</p>
+<ol>
+<li>scrollToPosition</li>
+<li>scrollTo</li>
+<li>scrollBy</li>
+<li>smoothScrollBy</li>
+<li>smoothScrollToPosition</li>
+</ol>
+<p>针对 LineaderLayoutManager 还有一个很重要的方法：scrollToPositionWithOffset，下面逐一进行说明。</p>
+        
+          <a class="article-more-a" href="/2019/05/17/scroll-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-h5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/16/h5/">Android H5 与原生交互那点事</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/16/h5/" class="archive-article-date">
+  	<time datetime="2019-05-16T07:19:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>鉴于 H5 丰富的表现力，产品决定将项目中的某个详情页改为 H5 展示，评论、点赞仍由原生实现，于是便需要原生与 H5 交互。之前对于这块少有涉及，恰巧合作的前端同事对于这块也不太熟悉，所以耗时良久。现在功能做得差不多了，稍微记录一下。</p>
+        
+          <a class="article-more-a" href="/2019/05/16/h5/#more">more >></a>
         
       
 
@@ -383,375 +767,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-zsh" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/09/zsh/">初识 zsh</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/09/zsh/" class="archive-article-date">
-  	<time datetime="2017-06-09T02:21:18.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停<code>git branch</code>来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波<code>zsh</code>了。</p>
-<p>同事有用<code>zsh</code>的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现<code>bash</code>相比<code>zsh</code>确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很熟悉，虽然现在是在用，但是对于 Linux 的很多特性都不是很了解，命令行、Shell 脚本算是 Linux 一大特色。</p>
-<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
-<p>关于<code>oh-my-zsh</code>的安装直接照着 github 中的<code>README</code>一步一步来就好了。就提醒一点，安装完之后需要注销掉用户，重启也可以，然后再重新登录，才可以看到<code>zsh</code>。</p>
-        
-          <a class="article-more-a" href="/2017/06/09/zsh/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-git" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/07/git/">关于 Git 的使用小记</a>
-    </h1>
-  
-
-        
-        <a href="/2017/06/07/git/" class="archive-article-date">
-  	<time datetime="2017-06-07T12:04:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>相信选择选择绝大部分开发者都使用的 Git 来进行版本控制，关于 Git 比较基本的东西就不说了，这里主要记录一下我用到的 2 个较为进阶一点的命令。</p>
-<h1 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h1><p>场景：假定现在有一个分支<code>develop/1.0.0</code>，该分支用于发布<code>1.0.0</code>版本的包，<code>develop/1.0.0</code>依赖一个 module，该 module 的版本与之对应也是<code>1.0.0</code>，就在将要打包的时候， develop 分支新增了一个提交，这个提交依赖 module 的<code>1.0.1</code>版本，可能是由于同事之间的沟通不足导致这种问题，不需要提交的被提交了。在发布<code>1.0.0</code>版本的包时，是不应该包含最新的提交的。那么可以怎么样做呢？<br><strong>revert 意为回退。可以使用<code>git revert</code>指令，回退最新的一次提交。</strong><br>举个例子：<br>初始化一个 git 仓库，添加一个文件<code>git</code>，做一次提交<code>init</code>。<br>然后编辑<code>git</code>文件，做一次提交<code>feature A</code>。<br>准备以当前节点打包时，又多了一次提交<code>feature B</code>，此次提交是不需要包含到此次打包的代码里的。</p>
-        
-          <a class="article-more-a" href="/2017/06/07/git/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-confuse" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/09/confuse/">关于混淆的一个小纰漏</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/09/confuse/" class="archive-article-date">
-  	<time datetime="2017-05-09T05:37:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>混淆，相信只要是上线的的应用都会运用到。这里记一下项目中因为混淆而导致的一个较难发现的问题。</p>
-<p>问题是这样的：有一个实体类<code>PrintTemplate</code>类，当我调用一个网络接口，会从服务器获取这个类的一个 list，然后我会用 Json 转成字符串存到本地，当要用的时候根据 key 去取对应的模板字符串，然后转成类实体进行使用。当然，混淆规则中没有保持这个类不被混淆。</p>
-<p>假设现在的版本是 V1.0，测试打出来的 Release 包是没有问题的。然后版本更新到 V1.1，单独测试也是没问题的。但是，如果是从 V1.0 升到的 V1.1，那么在<code>取对应的模板字符串，然后转成类实体进行使用</code>这一步就会出错了，无法解析到正常的类。如果没有添加异常保护，则会直接崩溃了。</p>
-        
-          <a class="article-more-a" href="/2017/05/09/confuse/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-multi-type" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/09/multi-type/">针对ListView多Type的优化</a>
-    </h1>
-  
-
-        
-        <a href="/2017/05/09/multi-type/" class="archive-article-date">
-  	<time datetime="2017-05-09T02:46:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在之前写过一篇多 Type 的错误使用<a href="http://lastwarmth.win/2017/04/18/wrong/" target="_blank" rel="noopener">使用ListView多Type的错误姿势</a>，下面写一下针对这种使用场景的优化。</p>
-        
-          <a class="article-more-a" href="/2017/05/09/multi-type/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-mvp-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/25/mvp-1/">关于 MVP 模式的一点思考</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/25/mvp-1/" class="archive-article-date">
-  	<time datetime="2017-04-25T07:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。</p>
-<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a href="https://github.com/android-cn/android-discuss/issues/468" target="_blank" rel="noopener">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
-        
-          <a class="article-more-a" href="/2017/04/25/mvp-1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-no-password" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/04/19/no-password/">博客免密提交、部署到Github</a>
-    </h1>
-  
-
-        
-        <a href="/2017/04/19/no-password/" class="archive-article-date">
-  	<time datetime="2017-04-19T02:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>每次写完博客，<code>hexo d</code>的时候需要输入一次Github账号密码，<code>git push</code>的时候又需要输入一次，有点烦了。最近转到 Ubuntu 工作，也换了台电脑，之前的配置都忘记了，于是重新查了一下，这里摘录一下，忘记了后面可以回头来看。</p>
-<h2 id="hexo-d-免密输入"><a href="#hexo-d-免密输入" class="headerlink" title="hexo d 免密输入"></a>hexo d 免密输入</h2><p>在 user 根目录下新建<code>.netrc</code>文件，填写内容：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">machine github.com</span><br><span class="line">login username      <span class="comment">//username为github账户名 （不是用来登录的邮箱或手机号）</span></span><br><span class="line">password password   <span class="comment">//password为github账户的密码</span></span><br></pre></td></tr></table></figure></p>
-<p>保存之后，再执行 hexo d 时即可直接部署，不用输入账号密码了。</p>
-        
-          <a class="article-more-a" href="/2017/04/19/no-password/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">blog</a>
         		</li>
       		
 		</ul>
@@ -777,7 +792,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/7/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/9/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -789,7 +804,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -868,7 +883,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -876,87 +891,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1008,15 +967,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -1033,10 +992,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

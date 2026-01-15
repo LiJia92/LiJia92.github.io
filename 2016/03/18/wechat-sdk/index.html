@@ -9,13 +9,12 @@
   <title>android接入微信支付SDK | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。 前期准备接入微信支付SDK前期需要许多前期准备。 微信开放平台 注册微信开放平台账号。 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。 进入应用详情，获取AppID，以及申请开通微信支付能力。 等待审核通过。">
-<meta name="keywords" content="sdk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android接入微信支付SDK">
 <meta property="og:url" content="http://lijia92.github.io/2016/03/18/wechat-sdk/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。 前期准备接入微信支付SDK前期需要许多前期准备。 微信开放平台 注册微信开放平台账号。 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。 进入应用详情，获取AppID，以及申请开通微信支付能力。 等待审核通过。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png">
@@ -24,10 +23,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.260Z">
+<meta property="article:published_time" content="2016-03-18T07:04:30.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.496Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="android接入微信支付SDK">
-<meta name="twitter:description" content="本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。 前期准备接入微信支付SDK前期需要许多前期准备。 微信开放平台 注册微信开放平台账号。 登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。 进入应用详情，获取AppID，以及申请开通微信支付能力。 等待审核通过。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -46,7 +46,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -60,10 +60,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -120,10 +118,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -193,41 +189,44 @@
         <p>本文主要讲述一下android接入微信支付SDK的步骤以及需要注意的一些Tips。</p>
 <h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>接入微信支付SDK前期需要许多前期准备。</p>
 <h3 id="微信开放平台"><a href="#微信开放平台" class="headerlink" title="微信开放平台"></a>微信开放平台</h3><ol>
-<li>注册<a href="https://open.weixin.qq.com/" target="_blank" rel="noopener">微信开放平台</a>账号。</li>
-<li>登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png" alt=""><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png" alt=""></li>
-<li>进入应用详情，获取<code>AppID</code>，以及申请开通微信支付能力。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png" alt=""></li>
+<li>注册<a target="_blank" rel="noopener" href="https://open.weixin.qq.com/">微信开放平台</a>账号。</li>
+<li>登录账号，进入管理中心，创建你的App应用，创建应用的包名与签名要与你实际的应用一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk1.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk5.png"></li>
+<li>进入应用详情，获取<code>AppID</code>，以及申请开通微信支付能力。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk2.png"></li>
 <li>等待审核通过。</li>
 </ol>
-<a id="more"></a>
+<span id="more"></span>
+
 <h3 id="微信商户平台"><a href="#微信商户平台" class="headerlink" title="微信商户平台"></a>微信商户平台</h3><ol>
-<li>注册<a href="https://pay.weixin.qq.com" target="_blank" rel="noopener">微信商户平台</a>账号。</li>
-<li>登录账号，在基本信息中获得<code>微信支付商户号</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk3.png" alt=""></li>
-<li>安装操作证书，然后进入API安全设置<code>秘钥</code>，最好使用UUID自动生成的，记住这个<code>秘钥</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk4.png" alt=""><br>OK，前期准备做完，下面进行代码接入。</li>
+<li>注册<a target="_blank" rel="noopener" href="https://pay.weixin.qq.com/">微信商户平台</a>账号。</li>
+<li>登录账号，在基本信息中获得<code>微信支付商户号</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk3.png"></li>
+<li>安装操作证书，然后进入API安全设置<code>秘钥</code>，最好使用UUID自动生成的，记住这个<code>秘钥</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk4.png"><br>OK，前期准备做完，下面进行代码接入。</li>
 </ol>
-<h2 id="工程接入SDK"><a href="#工程接入SDK" class="headerlink" title="工程接入SDK"></a>工程接入SDK</h2><h3 id="新建应用工程"><a href="#新建应用工程" class="headerlink" title="新建应用工程"></a>新建应用工程</h3><p>以AS为例，新建工程，注意包名与使用的签名要与微信开放平台申请应用时填写的一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png" alt=""></p>
+<h2 id="工程接入SDK"><a href="#工程接入SDK" class="headerlink" title="工程接入SDK"></a>工程接入SDK</h2><h3 id="新建应用工程"><a href="#新建应用工程" class="headerlink" title="新建应用工程"></a>新建应用工程</h3><p>以AS为例，新建工程，注意包名与使用的签名要与微信开放平台申请应用时填写的一致。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk8.png"></p>
 <h3 id="引入libs"><a href="#引入libs" class="headerlink" title="引入libs"></a>引入libs</h3><p>将<code>libammsdk.jar</code>放到libs文件夹下。</p>
-<h3 id="配置debug、release的签名文件"><a href="#配置debug、release的签名文件" class="headerlink" title="配置debug、release的签名文件"></a>配置debug、release的签名文件</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">signingConfigs</span> &#123;</span><br><span class="line">        <span class="section">debug</span> &#123;</span><br><span class="line">            <span class="attribute">storeFile</span> file(<span class="string">"你的keystore路径"</span>)</span><br><span class="line">            storePassword <span class="string">"xxx"</span></span><br><span class="line">            keyAlias <span class="string">"xxx"</span></span><br><span class="line">            keyPassword <span class="string">"xxx"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        release &#123;</span><br><span class="line">            <span class="attribute">storeFile</span> file(<span class="string">"你的keystore路径"</span>)</span><br><span class="line">            storePassword <span class="string">"xxx"</span></span><br><span class="line">            keyAlias <span class="string">"xxx"</span></span><br><span class="line">            keyPassword <span class="string">"xxx"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置debug、release的签名文件"><a href="#配置debug、release的签名文件" class="headerlink" title="配置debug、release的签名文件"></a>配置debug、release的签名文件</h3><figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">signingConfigs</span> &#123;</span><br><span class="line">        <span class="variable">debug</span> &#123;</span><br><span class="line">            <span class="variable">storeFile</span> <span class="function"><span class="title">file</span>(<span class="string">&quot;你的keystore路径&quot;</span>)</span></span><br><span class="line">            <span class="variable">storePassword</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">            <span class="variable">keyAlias</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">            <span class="variable">keyPassword</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="variable">release</span> &#123;</span><br><span class="line">            <span class="variable">storeFile</span> <span class="function"><span class="title">file</span>(<span class="string">&quot;你的keystore路径&quot;</span>)</span></span><br><span class="line">            <span class="variable">storePassword</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">            <span class="variable">keyAlias</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">            <span class="variable">keyPassword</span> <span class="string">&quot;xxx&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这里debug、realse我采用的是一样的签名。不论是debug，还是release都能对应上。</p>
-<h3 id="AndroidManifest-xml中配置"><a href="#AndroidManifest-xml中配置" class="headerlink" title="AndroidManifest.xml中配置"></a>AndroidManifest.xml中配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">".MainActivity"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.VIEW"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"你的AppID"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="AndroidManifest-xml中配置"><a href="#AndroidManifest-xml中配置" class="headerlink" title="AndroidManifest.xml中配置"></a>AndroidManifest.xml中配置</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MainActivity&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.VIEW&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.DEFAULT&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">&quot;你的AppID&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>也别忘记加入网络权限。</p>
 <h3 id="获取prepay-id"><a href="#获取prepay-id" class="headerlink" title="获取prepay_id"></a>获取prepay_id</h3><p>在支付之前，都需要调用微信的接口<code>https://api.mch.weixin.qq.com/pay/unifiedorder</code>来获得prepay_id。</p>
 <h3 id="支付"><a href="#支付" class="headerlink" title="支付"></a>支付</h3><p>获取到prepay_id之后，调用<code>IWXAPI</code>的<code>sendReq</code>方法即可完成支付。</p>
-<h3 id="添加支付成功回调Activity"><a href="#添加支付成功回调Activity" class="headerlink" title="添加支付成功回调Activity"></a>添加支付成功回调Activity</h3><p>添加<code>wxapi</code>的包名，在这个包名下必须要有<code>WXPayEntryActivity</code>这个Activity，支付成功后会显示此界面。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png" alt=""></p>
-<p>另外，声明此 Activity 需要添加如下属性：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">".wxapi.WXPayEntryActivity"</span></span><br><span class="line">    android:<span class="attribute">exported</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">launchMode</span>=<span class="string">"singleTop"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>调用接口相关参数以及返回值参考<a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1" target="_blank" rel="noopener">开发者手册</a>。</p>
+<h3 id="添加支付成功回调Activity"><a href="#添加支付成功回调Activity" class="headerlink" title="添加支付成功回调Activity"></a>添加支付成功回调Activity</h3><p>添加<code>wxapi</code>的包名，在这个包名下必须要有<code>WXPayEntryActivity</code>这个Activity，支付成功后会显示此界面。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk6.png"></p>
+<p>另外，声明此 Activity 需要添加如下属性：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">&quot;.wxapi.WXPayEntryActivity&quot;</span></span><br><span class="line">    android:<span class="attribute">exported</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">    android:<span class="attribute">launchMode</span>=<span class="string">&quot;singleTop&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>调用接口相关参数以及返回值参考<a target="_blank" rel="noopener" href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_1">开发者手册</a>。</p>
 <h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>下面说一下接入过程中需要注意的点。</p>
 <ol>
 <li>官网下的demo，第一次支付时，能成功。之后就会一直支付失败。原因是：支付的时候商户唯一订单ID是唯一的，测试的时候请不断的更换订单ID参数支付。若要继续使用demo支付，可以微信清除数据、或者退出登录重新登录。</li>
 <li>微信支付返回-1，一般是<code>签名</code>错误。这个签名有2种意思：1、Apk签名文件，debug与release最好使用同样的keystore；2、参数MD5签名生成的sign。要仔细检查是否正确。</li>
 <li>签名、包名必须跟微信开放平台申请的一致.</li>
 <li>获取prepay_id最好是在服务器完成，由服务器去跟微信服务器交互，客户端不需要参与，以免泄露重要信息。</li>
-<li>与微信接口交互时，参数都需要签名。签名方法如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png" alt=""><br>这里重点说一下。<ul>
+<li>与微信接口交互时，参数都需要签名。签名方法如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/wechat-sdk7.png"><br>这里重点说一下。</li>
+</ol>
+<ul>
 <li>参数名ASCII码从小到大排序（字典序）</li>
 <li>参数名区分大小写，包括sign。</li>
 <li>需要添加商户key值，这个key即是在前期准备中，我所说的微信商户的那个<code>秘钥</code>。</li>
 </ul>
-</li>
-</ol>
 <p>若接入过程中注意到这些Tips，一步一步来，那么应该是能支付成功了。</p>
 
       
@@ -242,7 +241,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -366,7 +365,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -445,7 +444,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -453,87 +452,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -585,15 +528,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -610,10 +553,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

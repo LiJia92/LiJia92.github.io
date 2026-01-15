@@ -12,9 +12,9 @@
 <meta property="og:title" content="听雪楼">
 <meta property="og:url" content="http://lijia92.github.io/page/3/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
+<meta property="article:author" content="最后的温存">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="听雪楼">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -32,7 +32,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -46,10 +46,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -106,10 +104,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -158,37 +154,29 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-scroll-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-screen-record-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/17/scroll-1/">RecyclerView 滑动小记</a>
+      <a class="article-title" href="/2023/03/07/screen-record-2/">录屏权限 clone 使用</a>
     </h1>
   
 
         
-        <a href="/2019/05/17/scroll-1/" class="archive-article-date">
-  	<time datetime="2019-05-17T07:58:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-17</time>
+        <a href="/2023/03/07/screen-record-2/" class="archive-article-date">
+  	<time datetime="2023-03-07T07:55:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-03-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于 RecyclerView 的滑动方法有很多：</p>
-<ol>
-<li>scrollToPosition</li>
-<li>scrollTo</li>
-<li>scrollBy</li>
-<li>smoothScrollBy</li>
-<li>smoothScrollToPosition</li>
-</ol>
-<p>针对 LineaderLayoutManager 还有一个很重要的方法：scrollToPositionWithOffset，下面逐一进行说明。</p>
+        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2023/02/28/screen-record-1/">关于录屏权限的问题</a>一文中，通过与 Launcher 的结合，实现了权限无感自动申请的功能。这没过几天，就有反馈说有问题：<strong>开始录屏的时候会有权限申请弹窗一闪而过</strong>。<br>最初怀疑是平板性能差，会打开一个 activity，然后马上消失，由于性能问题导致这样的“一闪而过”。但研究下来发现这个怀疑不成立。通过调试知道了<code>MediaProjectionManager.createScreenCaptureIntent()</code>返回的 intent 对应的 activity 是 MediaProjectionPermissionActivity。于是查看其代码，在 onCreate 方法中有这样的片段：</p>
         
-          <a class="article-more-a" href="/2019/05/17/scroll-1/#more">more >></a>
+          <a class="article-more-a" href="/2023/03/07/screen-record-2/#more">more >></a>
         
       
 
@@ -226,29 +214,29 @@
 
 
   
-    <article id="post-h5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-screen-record-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/16/h5/">Android H5 与原生交互那点事</a>
+      <a class="article-title" href="/2023/02/28/screen-record-1/">关于录屏权限的问题</a>
     </h1>
   
 
         
-        <a href="/2019/05/16/h5/" class="archive-article-date">
-  	<time datetime="2019-05-16T07:19:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-16</time>
+        <a href="/2023/02/28/screen-record-1/" class="archive-article-date">
+  	<time datetime="2023-02-28T07:17:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-28</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>鉴于 H5 丰富的表现力，产品决定将项目中的某个详情页改为 H5 展示，评论、点赞仍由原生实现，于是便需要原生与 H5 交互。之前对于这块少有涉及，恰巧合作的前端同事对于这块也不太熟悉，所以耗时良久。现在功能做得差不多了，稍微记录一下。</p>
+        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2023/02/21/video-record/">Android 倍速压缩视频时长</a>中，会先录屏然后对视频进行处理，录屏需要通过调用<code>MediaProjectionManager.createScreenCaptureIntent()</code>申请权限，这时会弹出系统的权限申请弹窗，用户可以选择同意或者拒绝，同时有不再询问的选项，就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG519.png"></p>
         
-          <a class="article-more-a" href="/2019/05/16/h5/#more">more >></a>
+          <a class="article-more-a" href="/2023/02/28/screen-record-1/#more">more >></a>
         
       
 
@@ -286,29 +274,31 @@
 
 
   
-    <article id="post-media" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-dialog-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/09/media/">Android 获取手机媒体数据那些事</a>
+      <a class="article-title" href="/2023/02/21/dialog-1/">使用 Dialog 的两个问题</a>
     </h1>
   
 
         
-        <a href="/2019/05/09/media/" class="archive-article-date">
-  	<time datetime="2019-05-09T11:06:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-09</time>
+        <a href="/2023/02/21/dialog-1/" class="archive-article-date">
+  	<time datetime="2023-02-21T08:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在上一篇文章 <a href="http://lastwarmth.win/2019/04/24/jetpack/" target="_blank" rel="noopener">ViewModel + LiveData 初探</a> 中的场景中，有获取手机媒体数据的操作，界面上也要展示横竖屏，展示规则很简单：宽度不小于高度则定义为横屏，否则未竖屏。在我的小米 MIX2 上，不论手机如何拍照，返回的分辨率都是 4000:3000（根据相机设置中的画幅比例），不论你是横着拍还是竖着拍。所以当拿到 4000:3000 后就全部定义成横屏了，与实际不符。所以着手解决了一下，顺便整理下获取手机媒体数据的相关代码，方便日后使用。整体代码如下：</p>
+        <p>近期在使用 Dialog 的过程中，出现过两个问题，也记录一下。</p>
+<h2 id="TextureView"><a href="#TextureView" class="headerlink" title="TextureView"></a>TextureView</h2><p>当 Dialog 布局有 TextureView 时，运行报错：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">java.lang.UnsupportedOperationException: TextureView doesn&#x27;t support displaying a <span class="built_in">background</span> drawable</span><br><span class="line">  <span class="built_in">at</span> android.<span class="built_in">view</span>.TextureView.setBackgroundDrawable(TextureView.java:<span class="number">315</span>)</span><br><span class="line">  <span class="built_in">at</span> android.<span class="built_in">view</span>.View.setBackground(View.java:<span class="number">18124</span>)</span><br><span class="line">  <span class="built_in">at</span> android.<span class="built_in">view</span>.View.&lt;init&gt;(View.java:<span class="number">4573</span>)</span><br><span class="line">  <span class="built_in">at</span> android.<span class="built_in">view</span>.View.&lt;init&gt;(View.java:<span class="number">4082</span>)</span><br><span class="line">  <span class="built_in">at</span> android.<span class="built_in">view</span>.TextureView.&lt;init&gt;(TextureView.java:<span class="number">159</span>)</span><br></pre></td></tr></table></figure>
         
-          <a class="article-more-a" href="/2019/05/09/media/#more">more >></a>
+          <a class="article-more-a" href="/2023/02/21/dialog-1/#more">more >></a>
         
       
 
@@ -346,89 +336,29 @@
 
 
   
-    <article id="post-jetpack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-video-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/24/jetpack/">ViewModel + LiveData 初探</a>
+      <a class="article-title" href="/2023/02/21/video-record/">Android 倍速压缩视频时长</a>
     </h1>
   
 
         
-        <a href="/2019/04/24/jetpack/" class="archive-article-date">
-  	<time datetime="2019-04-24T09:29:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-24</time>
+        <a href="/2023/02/21/video-record/" class="archive-article-date">
+  	<time datetime="2023-02-21T07:00:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-02-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Google 已经推出 Lifecycle、ViewModel、LiveData 等一系列架构组件已经很久了，但是自己一直没尝试使用，仅仅就是了解一点点，没有紧跟技术潮流持续学习，说来十分羞愧了。最近接到一个需求，界面如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/video.png" alt=""></p>
+        <p>最近有个“精彩时刻”的需求，记录学员精彩练车瞬间。当学员此次项目练习过程中，没有出现任何错误，则定义为“精彩时刻”。需要将学员从项目开始到结束行走轨迹记录下来，输出一个视频。然后再将视频时长压缩到 20 秒，同时附加一个音频上去，生成最终的视频。<br>这个时候，写博客的好处就来了。参考之前写的几篇文章<a target="_blank" rel="noopener" href="http://lastwarmth.win/2018/10/18/screen-record/">录制仿 Keep 轨迹动画视频</a>、<a target="_blank" rel="noopener" href="http://lastwarmth.win/2018/11/23/media-mix/">无声视频合成音频</a>、<a target="_blank" rel="noopener" href="http://lastwarmth.win/2019/09/19/media-mix2/">无声视频合成音频（续）</a>，记录了关于录屏、合成音频的代码，可以直接参考来用。那么剩下的问题便是视频时长压缩到 20 秒了，通过调研发现了两种方式，记录一下。</p>
         
-          <a class="article-more-a" href="/2019/04/24/jetpack/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Jetpack</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-coordinator-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/16/coordinator-1/">CoordinatorLayout 滑动再探</a>
-    </h1>
-  
-
-        
-        <a href="/2019/04/16/coordinator-1/" class="archive-article-date">
-  	<time datetime="2019-04-16T06:11:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>嗯，还是之前的路线详情的页面，新增了需求，导致界面结构又发生变化了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/coordinator.png" alt=""><br>添加了一个途经点的列表，与打点列表并列，可以和横向滑动切换 Tab。<br>之前写过一篇文章<a href="http://lastwarmth.win/2018/12/12/recyclerview-scroll/" target="_blank" rel="noopener">CoordinatorLayout + RecyclerView 处理滑动</a>说的也是这个页面，这里再贴一下当前的 xml 布局：</p>
-        
-          <a class="article-more-a" href="/2019/04/16/coordinator-1/#more">more >></a>
+          <a class="article-more-a" href="/2023/02/21/video-record/#more">more >></a>
         
       
 
@@ -466,33 +396,149 @@
 
 
   
-    <article id="post-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-summary-2022" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/12/scroll/">Android 滑动吸顶效果</a>
+      <a class="article-title" href="/2023/01/19/summary-2022/">不平凡的 2022</a>
     </h1>
   
 
         
-        <a href="/2019/03/12/scroll/" class="archive-article-date">
-  	<time datetime="2019-03-12T06:06:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-12</time>
+        <a href="/2023/01/19/summary-2022/" class="archive-article-date">
+  	<time datetime="2023-01-19T06:35:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-01-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>啥也不说，先上个图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/scroll.gif" alt=""><br>往上滑动的时候，有两点：</p>
-<ol>
-<li>透明度渐变显示个人主页标题栏，这个是覆盖在最上层的标题栏</li>
-<li>当 Tab 栏滑动到主页下面时，固定不动了，下面的布局继续滑动</li>
-</ol>
+        <p>今天是今年最后一天上班了，坐在工位上早已无心上班，有什么事情年后再说吧。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2023/WechatIMG65124.jpeg"></p>
         
-          <a class="article-more-a" href="/2019/03/12/scroll/#more">more >></a>
+          <a class="article-more-a" href="/2023/01/19/summary-2022/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">生活杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-anr-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/08/31/anr-1/">onDestroy 没有立刻执行</a>
+    </h1>
+  
+
+        
+        <a href="/2022/08/31/anr-1/" class="archive-article-date">
+  	<time datetime="2022-08-31T10:09:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-08-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>做了个需求：给按钮加个倒计时，时间到了之后触发点击事件（结束当前页面，打开另一个页面），当然也可以手动点击。<br>代码是这样写的：</p>
+        
+          <a class="article-more-a" href="/2022/08/31/anr-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-usb-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/07/18/usb-1/">Usb 端口在文件系统中的 index 它果然变化了...</a>
+    </h1>
+  
+
+        
+        <a href="/2022/07/18/usb-1/" class="archive-article-date">
+  	<time datetime="2022-07-18T08:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-07-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前的一篇文章<a target="_blank" rel="noopener" href="http://lastwarmth.win/2022/04/12/camera/#more">Usb 摄像头绑定</a>中，想要将实际 Usb 端口绑定到具体业务上，利用 Usb 端口在文件系统中的 index 来做的绑定。在外发的设备上暂时没有发现 index 发生变化的情况，所以就没处理了。但是最近还是有反馈说，设备重启后绑定关系就错了，应该就是 index 发生变化了。哎，该趟的坑一个都跑不掉啊。正如「墨菲定律」：如果事情有变坏的可能，不管这种可能性有多小，它总会发生。</p>
+        
+          <a class="article-more-a" href="/2022/07/18/usb-1/#more">more >></a>
         
       
 
@@ -530,29 +576,30 @@
 
 
   
-    <article id="post-wechat-tip" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-thread" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/05/wechat-tip/">记录微信分享的一个坑</a>
+      <a class="article-title" href="/2022/06/24/thread/">重温线程知识</a>
     </h1>
   
 
         
-        <a href="/2019/03/05/wechat-tip/" class="archive-article-date">
-  	<time datetime="2019-03-05T09:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-05</time>
+        <a href="/2022/06/24/thread/" class="archive-article-date">
+  	<time datetime="2022-06-24T07:24:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天碰到一个问题，社区里帖子有的可以分享到微信，有的不行，单独调试获取分享的数据，发现并无不同。生成分享数据的代码如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">WXMediaMessage mediaMessage = new WXMediaMessage(programObject);</span><br><span class="line">mediaMessage.title = shareData.getTitle();</span><br><span class="line">mediaMessage.description = shareData.getContent();</span><br><span class="line">mediaMessage.thumbData = Utils.readMiniProgramThumbImageFileData(shareData.getShareImagePath());</span><br><span class="line">//发送请求</span><br><span class="line">SendMessageToWX.Req req = new SendMessageToWX.Re<span class="string">q()</span>;</span><br><span class="line">req.transaction = String.valueOf(listenerId);</span><br><span class="line">req.message = mediaMessage;</span><br><span class="line">// 目前支持会话</span><br><span class="line">req.scene = SendMessageToWX.Req.WXSceneSession;</span><br><span class="line">doSendRe<span class="string">q(req)</span>;</span><br></pre></td></tr></table></figure></p>
-<p>shareData 是客户端单独组织的一个 Model。起初怀疑是 thumbData 太大导致的，结果后面可以分享的帖子生成的 thumbData 所占的字节还要大一些。。。<br>然后试着分享到微博、QQ 等其他平台，发现也可以分享成功，唯独微信分享给朋友或朋友圈不行。偶然的发现一个帖子分享到微博也会失败，而微博客户端给出了“内容不符合规范”类似大意的提示，于是猜测可能是 description 导致。于是分别调试了不同帖子的数据，发现不能分享的帖子生成的 description length 都是 2000+，而可以分享的帖子生成的才 1000+，没有超过 2000，于是预测是 description 超长导致的。最后调试进行截取，超长的则取前 100 个字符，发现问题解决。<br>问题比较简单，但是调试的时候很坑，因为分享失败的帖子竟然连 WxEntryActivity 里的 onResp 都不回调，所以压根无法知道失败的原因，只能对比数据靠猜测，于是便记录一下，以后碰到这类问题便知道如何解决了。<br>总结一下：<strong>微信分享传的 description 参数不能过长（测试 1800 以下是可以分享的），否则会分享失败，而且回调里的 onResp 都不会调用。</strong></p>
-
+        <p>有一个长耗时任务，需要持续性的发送数据，发送的包收到回应后，继续发送下一包，如此反复，直到数据发送完。起始时没什么好的思路，线程的知识都不太记得了，wait nofity 等方法都好久没用过了，后面看了下<a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1252599548343744/1306580911915042">廖雪峰的博客</a>，把知识重新温习了一遍，便有了如下代码：</p>
+        
+          <a class="article-more-a" href="/2022/06/24/thread/#more">more >></a>
+        
       
 
       
@@ -565,7 +612,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sdk</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>
@@ -589,29 +636,29 @@
 
 
   
-    <article id="post-feeling" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-dialog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/27/feeling/">最近的几点感悟</a>
+      <a class="article-title" href="/2022/05/31/dialog/">Dialog 新姿势</a>
     </h1>
   
 
         
-        <a href="/2019/02/27/feeling/" class="archive-article-date">
-  	<time datetime="2019-02-27T02:14:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-27</time>
+        <a href="/2022/05/31/dialog/" class="archive-article-date">
+  	<time datetime="2022-05-31T08:16:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-05-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一直有读公众号的习惯，关注了 MacTalk、Fenng、王信文等一些大咖，也读过不少文章，有一些还是蛮有感慨的，希望自己能每天变得更好一点。</p>
+        <p>近日测试同学报了一个 bug，当界面展示了雷达距离弹窗时，登录页面的按钮竟然还可以点击，点击 EditText 可以唤醒系统键盘，但是点击系统键盘后无法输出到 EditText 上。布局大概是这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG354.png"></p>
         
-          <a class="article-more-a" href="/2019/02/27/feeling/#more">more >></a>
+          <a class="article-more-a" href="/2022/05/31/dialog/#more">more >></a>
         
       
 
@@ -625,7 +672,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">杂谈</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -649,36 +696,30 @@
 
 
   
-    <article id="post-animation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-station" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/02/02/animation/">Android 动画序列的实现</a>
+      <a class="article-title" href="/2022/04/21/station/">云基站概述</a>
     </h1>
   
 
         
-        <a href="/2019/02/02/animation/" class="archive-article-date">
-  	<time datetime="2019-02-02T06:19:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
+        <a href="/2022/04/21/station/" class="archive-article-date">
+  	<time datetime="2022-04-21T02:39:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>老规矩，上需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/animation.gif" alt=""><br>这个 Gif 里有众多的动画效果，怎么实现呢？</p>
-<h3 id="拆分效果"><a href="#拆分效果" class="headerlink" title="拆分效果"></a>拆分效果</h3><p>整体的动画效果大致可以分为 3 个：</p>
-<ol>
-<li>右上角小车移动的动画</li>
-<li>图片缩放动画及文字展示的动画</li>
-<li>左侧 Logo 及底部文字的动画</li>
-</ol>
-<p>拆分完之后，依次来实现。</p>
+        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/07/08/gps/">科二考试系统</a>一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>要实现高精度定位，需要两个定位设备。设备支持设置 <strong>流动站</strong> 或者 <strong>基站</strong> 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。</p>
         
-          <a class="article-more-a" href="/2019/02/02/animation/#more">more >></a>
+          <a class="article-more-a" href="/2022/04/21/station/#more">more >></a>
         
       
 
@@ -692,74 +733,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-china-map" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/25/china-map/">Android 绘制中国地图</a>
-    </h1>
-  
-
-        
-        <a href="/2019/01/25/china-map/" class="archive-article-date">
-  	<time datetime="2019-01-25T06:07:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近的版本有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/TIM%E5%9B%BE%E7%89%8720190125141415.png" alt=""></p>
-<p>有 3 个要素：</p>
-<ol>
-<li>中国地图</li>
-<li>高亮省区</li>
-<li>中心显示数字</li>
-</ol>
-<p>面对这样一个需求，该如何实现呢？</p>
-        
-          <a class="article-more-a" href="/2019/01/25/china-map/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>
@@ -785,7 +759,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -797,7 +771,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -876,7 +850,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -884,87 +858,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1016,15 +934,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -1041,10 +959,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

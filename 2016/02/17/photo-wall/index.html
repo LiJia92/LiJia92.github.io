@@ -9,18 +9,18 @@
   <title>Android实现照片墙背景 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="项目开发中，有一个这样的需求：在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。  第一种方案起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。 显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。 第二种方案之后，我想到了GridView，">
-<meta name="keywords" content="自定义View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android实现照片墙背景">
 <meta property="og:url" content="http://lijia92.github.io/2016/02/17/photo-wall/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="项目开发中，有一个这样的需求：在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。  第一种方案起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。 显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。 第二种方案之后，我想到了GridView，">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/photo-wall1.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.243Z">
+<meta property="article:published_time" content="2016-02-17T09:34:49.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.468Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android实现照片墙背景">
-<meta name="twitter:description" content="项目开发中，有一个这样的需求：在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。  第一种方案起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。 显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。 第二种方案之后，我想到了GridView，">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/photo-wall1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -189,7 +185,8 @@
 <p>显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。</p>
 <h2 id="第二种方案"><a href="#第二种方案" class="headerlink" title="第二种方案"></a>第二种方案</h2><p>之后，我想到了GridView，显然也是可以的，在得到图片路径后传入到Adapter中即可。比起方案一稍微“优雅”些，但是也是很难将这个背景墙当成一个整体，进行将来可能会添加的动画特效需求。</p>
 <h2 id="第三种方案"><a href="#第三种方案" class="headerlink" title="第三种方案"></a>第三种方案</h2><p>最后，我想到，既然要当成一整个整体，那么自定义View或许是个不错的办法。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>思路是这样的：</p>
 <ol>
 <li>首先ImageView展示初始图片；</li>
@@ -197,16 +194,21 @@
 <li>所有图片下载完成后刷新View，显示下载的图片墙。</li>
 </ol>
 <p>下面上代码。</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>自定义ImageView：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class JointImageView extends ImageView &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Paint mPaint;<span class="comment">// 画笔</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Bitmap&gt; bitmaps;<span class="comment">// 位图</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Rect&gt; rectList; <span class="comment">// 正方形画bitmap</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> <span class="built_in">width</span>; <span class="comment">// 边长</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">int</span> pictureInRow = <span class="number">4</span>; <span class="comment">// 每一行显示4张图片</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> JointImageView(Context context) &#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> JointImageView(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">        mPaint = <span class="keyword">new</span> Paint(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置Bitmap数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param bitmaps</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setBitmaps(List&lt;Bitmap&gt; bitmaps) &#123;</span><br><span class="line">        <span class="keyword">this</span>.bitmaps = bitmaps;</span><br><span class="line">        <span class="built_in">width</span> = getMeasuredWidth() / pictureInRow;</span><br><span class="line">        createRect();</span><br><span class="line">        postInvalidate(); <span class="comment">// 在设置Bitmaps之后重绘</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> createRect() &#123; <span class="comment">// 计算12个矩形的坐标</span></span><br><span class="line">        rectList = <span class="keyword">new</span> ArrayList&lt;&gt;(AppConfigs.PROFILE_PICTURE_NUM);</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; AppConfigs.PROFILE_PICTURE_NUM; i++) &#123;</span><br><span class="line">            Rect <span class="built_in">rect</span> = <span class="keyword">new</span> Rect((i % pictureInRow) * <span class="built_in">width</span>, (i / pictureInRow) * <span class="built_in">width</span>,</span><br><span class="line">                    (i % pictureInRow + <span class="number">1</span>) * <span class="built_in">width</span>, (i / pictureInRow + <span class="number">1</span>) * <span class="built_in">width</span>);</span><br><span class="line">            rectList.<span class="built_in">add</span>(<span class="built_in">rect</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> onDraw(Canvas canvas) &#123;</span><br><span class="line">        <span class="keyword">if</span> (bitmaps == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; bitmaps.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (bitmaps.<span class="built_in">get</span>(i) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    canvas.drawBitmap(bitmaps.<span class="built_in">get</span>(i), <span class="keyword">null</span>, rectList.<span class="built_in">get</span>(i), mPaint); <span class="comment">// 画图</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>布局文件中使用：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.android.widget.JointImageView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/my_profile_background"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">scaleType</span>=<span class="string">"centerCrop"</span></span><br><span class="line">    android:<span class="attribute">src</span>=<span class="string">"@drawable/background"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>自定义ImageView：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JointImageView</span> <span class="keyword">extends</span> <span class="title class_">ImageView</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Paint mPaint;<span class="comment">// 画笔</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Bitmap&gt; bitmaps;<span class="comment">// 位图</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Rect&gt; rectList; <span class="comment">// 正方形画bitmap</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> width; <span class="comment">// 边长</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">pictureInRow</span> <span class="operator">=</span> <span class="number">4</span>; <span class="comment">// 每一行显示4张图片</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">JointImageView</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">JointImageView</span><span class="params">(Context context, AttributeSet attrs)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context, attrs);</span><br><span class="line">        mPaint = <span class="keyword">new</span> <span class="title class_">Paint</span>(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置Bitmap数据</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bitmaps</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBitmaps</span><span class="params">(List&lt;Bitmap&gt; bitmaps)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.bitmaps = bitmaps;</span><br><span class="line">        width = getMeasuredWidth() / pictureInRow;</span><br><span class="line">        createRect();</span><br><span class="line">        postInvalidate(); <span class="comment">// 在设置Bitmaps之后重绘</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">createRect</span><span class="params">()</span> &#123; <span class="comment">// 计算12个矩形的坐标</span></span><br><span class="line">        rectList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(AppConfigs.PROFILE_PICTURE_NUM);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; AppConfigs.PROFILE_PICTURE_NUM; i++) &#123;</span><br><span class="line">            <span class="type">Rect</span> <span class="variable">rect</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Rect</span>((i % pictureInRow) * width, (i / pictureInRow) * width,</span><br><span class="line">                    (i % pictureInRow + <span class="number">1</span>) * width, (i / pictureInRow + <span class="number">1</span>) * width);</span><br><span class="line">            rectList.add(rect);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onDraw</span><span class="params">(Canvas canvas)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (bitmaps == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="built_in">super</span>.onDraw(canvas);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; bitmaps.size(); i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (bitmaps.get(i) != <span class="literal">null</span>) &#123;</span><br><span class="line">                    canvas.drawBitmap(bitmaps.get(i), <span class="literal">null</span>, rectList.get(i), mPaint); <span class="comment">// 画图</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>布局文件中使用：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.android.widget.JointImageView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">&quot;@+id/my_profile_background&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">scaleType</span>=<span class="string">&quot;centerCrop&quot;</span></span><br><span class="line">    android:<span class="attribute">src</span>=<span class="string">&quot;@drawable/background&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
 <p>项目中使用的Universal-Image-Loader三方库进行图片的加载。</p>
-<p>下载图片的异步任务代码：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">BitmapLoaderTask</span> <span class="keyword">extends</span> <span class="title">AsyncTask&lt;String</span>[], <span class="title">Integer</span>, <span class="title">List&lt;Bitmap&gt;&gt;</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">List</span>&lt;<span class="type">Bitmap</span>&gt; bitmaps;</span><br><span class="line"></span><br><span class="line">    public <span class="type">BitmapLoaderTask</span>() &#123;</span><br><span class="line">        bitmaps = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="type">AppConfigs</span>.<span class="type">PROFILE_PICTURE_NUM</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="type">List</span>&lt;<span class="type">Bitmap</span>&gt; doInBackground(<span class="type">String</span>[]... params) &#123;</span><br><span class="line">        <span class="type">ImageSize</span> imageSize = <span class="keyword">new</span> <span class="type">ImageSize</span>(<span class="number">80</span>, <span class="number">80</span>); <span class="comment">// 图片压缩到80*80的大小</span></span><br><span class="line">        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; params[<span class="number">0</span>].length &amp;&amp; i &lt; <span class="type">AppConfigs</span>.<span class="type">PROFILE_PICTURE_NUM</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 使用UIL同步下载图片的方法下载图片，存到bitmap数组</span></span><br><span class="line">            <span class="type">Bitmap</span> bitmap = <span class="type">ImageLoader</span>.getInstance().loadImageSync(params[<span class="number">0</span>][i], imageSize);</span><br><span class="line">            bitmaps.add(bitmap);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bitmaps;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onPostExecute(<span class="type">List</span>&lt;<span class="type">Bitmap</span>&gt; bitmaps) &#123;</span><br><span class="line">        <span class="comment">// 全部下载完毕，通知View进行重绘</span></span><br><span class="line">        <span class="keyword">if</span> (bitmaps != <span class="literal">null</span> &amp;&amp; bitmaps.size() == <span class="type">AppConfigs</span>.<span class="type">PROFILE_PICTURE_NUM</span>) &#123;</span><br><span class="line">            profileBackground.setBitmaps(bitmaps);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCancelled() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCancelled();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下载图片的异步任务代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">BitmapLoaderTask</span> <span class="keyword">extends</span> <span class="title class_">AsyncTask</span>&lt;String[], Integer, List&lt;Bitmap&gt;&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Bitmap&gt; bitmaps;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BitmapLoaderTask</span><span class="params">()</span> &#123;</span><br><span class="line">        bitmaps = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(AppConfigs.PROFILE_PICTURE_NUM);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> List&lt;Bitmap&gt; <span class="title function_">doInBackground</span><span class="params">(String[]... params)</span> &#123;</span><br><span class="line">        <span class="type">ImageSize</span> <span class="variable">imageSize</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ImageSize</span>(<span class="number">80</span>, <span class="number">80</span>); <span class="comment">// 图片压缩到80*80的大小</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; params[<span class="number">0</span>].length &amp;&amp; i &lt; AppConfigs.PROFILE_PICTURE_NUM; i++) &#123;</span><br><span class="line">            <span class="comment">// 使用UIL同步下载图片的方法下载图片，存到bitmap数组</span></span><br><span class="line">            <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> ImageLoader.getInstance().loadImageSync(params[<span class="number">0</span>][i], imageSize);</span><br><span class="line">            bitmaps.add(bitmap);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> bitmaps;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onPostExecute</span><span class="params">(List&lt;Bitmap&gt; bitmaps)</span> &#123;</span><br><span class="line">        <span class="comment">// 全部下载完毕，通知View进行重绘</span></span><br><span class="line">        <span class="keyword">if</span> (bitmaps != <span class="literal">null</span> &amp;&amp; bitmaps.size() == AppConfigs.PROFILE_PICTURE_NUM) &#123;</span><br><span class="line">            profileBackground.setBitmaps(bitmaps);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCancelled</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCancelled();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过方案三，在实现当下需求的同时，也可以作为一个单独的View，在将来拓展可能的缩放等特效动画。</p>
 <p>但是也有一个缺点：必须所有的图片下载完毕才进行刷新。</p>
 <p>当然，也可以将刷新策略调整成下载一张刷新一次，这个就得看具体的需求了。</p>
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>对于图片中的阴影效果，我们可以采用alpha背景来实现。也可以通过色彩矩阵在绘制的时候进行调整。</p>
-<p>通过alpha背景实现很简单，在FrameLayout上遮罩一个View，alpha设置成相应的值即可。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;View</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">alpha</span>=<span class="string">"0.7"</span></span><br><span class="line">    android:<span class="attribute">background</span>=<span class="string">"#000000"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>通过色彩矩阵就得不停的调整了。<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成色彩矩阵  </span></span><br><span class="line">ColorMatrix colorMatrix = new ColorMatrix(new <span class="type">float</span>[]&#123;  </span><br><span class="line">        <span class="number">0.5</span>F, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0.5</span>F, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>F, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,  </span><br><span class="line">&#125;);  </span><br><span class="line">mPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));  <span class="comment">// 画笔设置色彩矩阵，这样再绘制的时候就会有效果了</span></span><br></pre></td></tr></table></figure></p>
+<p>通过alpha背景实现很简单，在FrameLayout上遮罩一个View，alpha设置成相应的值即可。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;View</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">alpha</span>=<span class="string">&quot;0.7&quot;</span></span><br><span class="line">    android:<span class="attribute">background</span>=<span class="string">&quot;#000000&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>通过色彩矩阵就得不停的调整了。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 生成色彩矩阵  </span></span><br><span class="line">ColorMatrix colorMatrix = <span class="keyword">new</span> <span class="built_in">ColorMatrix</span>(<span class="keyword">new</span> <span class="type">float</span>[]&#123;  </span><br><span class="line">        <span class="number">0.5F</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0.5F</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5F</span>, <span class="number">0</span>, <span class="number">0</span>,  </span><br><span class="line">        <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,  </span><br><span class="line">&#125;);  </span><br><span class="line">mPaint.<span class="built_in">setColorFilter</span>(<span class="keyword">new</span> <span class="built_in">ColorMatrixColorFilter</span>(colorMatrix));  <span class="comment">// 画笔设置色彩矩阵，这样再绘制的时候就会有效果了</span></span><br></pre></td></tr></table></figure>
 
       
 
@@ -220,7 +222,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -344,7 +346,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -423,7 +425,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -431,87 +433,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -563,15 +509,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -588,10 +534,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

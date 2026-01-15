@@ -9,21 +9,21 @@
   <title>在硬件设备上运行应用 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。 然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到官网来解决。跟到网站中可以看到  如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在硬件设备上运行应用">
 <meta property="og:url" content="http://lijia92.github.io/2017/11/01/device/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。 然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到官网来解决。跟到网站中可以看到  如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/TIM%E5%9B%BE%E7%89%8720171101152639.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_237.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.220Z">
+<meta property="article:published_time" content="2017-11-01T06:39:22.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.433Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在硬件设备上运行应用">
-<meta name="twitter:description" content="最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。 然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到官网来解决。跟到网站中可以看到  如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -42,7 +42,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -56,10 +56,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -116,10 +114,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -186,195 +182,199 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png" alt=""></p>
-<p>然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到<a href="https://developer.android.com/studio/run/device.html#setting-up" target="_blank" rel="noopener">官网</a>来解决。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png" alt=""><br>跟到网站中可以看到</p>
+        <p>最近做收银机上的软件，之前都是用无线调试，有个功能需要要测一下断网的情况，然后断网后无线调试就不能用了。然后接上 USB，通过 Android Studio 能看到设备但无法使用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_236.png"></p>
+<p>然后通过 adb devices 能看到设备，但是提示权限不允许，并且提示到<a target="_blank" rel="noopener" href="https://developer.android.com/studio/run/device.html#setting-up">官网</a>来解决。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_234.png"><br>跟到网站中可以看到</p>
 <blockquote>
 <p>如果您在 Ubuntu Linux 上开发，则需要为想要在开发中使用的每一种设备类型添加一个包含 USB 配置的 udev 规则文件。</p>
 </blockquote>
 <p>这个便是问题所在了，跟着描述进行操作后面便可以使用 USB 调试了。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <ol>
-<li>以 root 身份登录，并创建此文件：/etc/udev/rules.d/51-android.rules。<br>使用下面的格式将各个供应商添加到文件中：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SUBSYSTEM</span>=="usb", ATTR&#123;idVendor&#125;==<span class="string">"0bb4"</span>, <span class="attribute">MODE</span>=<span class="string">"0666"</span>, <span class="attribute">GROUP</span>=<span class="string">"plugdev"</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>以 root 身份登录，并创建此文件：&#x2F;etc&#x2F;udev&#x2F;rules.d&#x2F;51-android.rules。<br>使用下面的格式将各个供应商添加到文件中：<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SUBSYSTEM</span>==&quot;usb&quot;, ATTR&#123;idVendor&#125;==<span class="string">&quot;0bb4&quot;</span>, <span class="attribute">MODE</span>=<span class="string">&quot;0666&quot;</span>, <span class="attribute">GROUP</span>=<span class="string">&quot;plugdev&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>在本例中，供应商 ID 为 HTC 的 ID。MODE 赋值指定读/写权限，GROUP 则定义哪个 Unix 组拥有设备节点。</p>
+<p>在本例中，供应商 ID 为 HTC 的 ID。MODE 赋值指定读&#x2F;写权限，GROUP 则定义哪个 Unix 组拥有设备节点。</p>
 <blockquote>
 <p>注：取决于您的环境，规则语法可能稍有不同。如有需要，请查阅适用于您的系统的 udev 文档。有关规则语法的概述，请参阅编写 udev 规则的指南。</p>
 </blockquote>
-<ol>
-<li>现在，请执行：<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+r <span class="regexp">/etc/u</span>dev<span class="regexp">/rules.d/</span><span class="number">51</span>-android.rules</span><br></pre></td></tr></table></figure>
-</li>
+<ol start="2">
+<li>现在，请执行：<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+r <span class="regexp">/etc/u</span>dev<span class="regexp">/rules.d/</span><span class="number">51</span>-android.rules</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>然后文中还附上了 USB 供应商 ID 表。</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">公司</th>
-<th style="text-align:left">USB 供应商 ID</th>
+<th align="left">公司</th>
+<th align="left">USB 供应商 ID</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:left">Acer</td>
-<td style="text-align:left">502</td>
+<tbody><tr>
+<td align="left">Acer</td>
+<td align="left">502</td>
 </tr>
 <tr>
-<td style="text-align:left">ASUS</td>
-<td style="text-align:left">0b05</td>
+<td align="left">ASUS</td>
+<td align="left">0b05</td>
 </tr>
 <tr>
-<td style="text-align:left">Dell</td>
-<td style="text-align:left">413c</td>
+<td align="left">Dell</td>
+<td align="left">413c</td>
 </tr>
 <tr>
-<td style="text-align:left">Foxconn</td>
-<td style="text-align:left">489</td>
+<td align="left">Foxconn</td>
+<td align="left">489</td>
 </tr>
 <tr>
-<td style="text-align:left">Fujitsu</td>
-<td style="text-align:left">04c5</td>
+<td align="left">Fujitsu</td>
+<td align="left">04c5</td>
 </tr>
 <tr>
-<td style="text-align:left">Fujitsu Toshiba</td>
-<td style="text-align:left">04c5</td>
+<td align="left">Fujitsu Toshiba</td>
+<td align="left">04c5</td>
 </tr>
 <tr>
-<td style="text-align:left">Garmin-Asus</td>
-<td style="text-align:left">091e</td>
+<td align="left">Garmin-Asus</td>
+<td align="left">091e</td>
 </tr>
 <tr>
-<td style="text-align:left">Google</td>
-<td style="text-align:left">18d1</td>
+<td align="left">Google</td>
+<td align="left">18d1</td>
 </tr>
 <tr>
-<td style="text-align:left">Haier</td>
-<td style="text-align:left">201E</td>
+<td align="left">Haier</td>
+<td align="left">201E</td>
 </tr>
 <tr>
-<td style="text-align:left">Hisense</td>
-<td style="text-align:left">109b</td>
+<td align="left">Hisense</td>
+<td align="left">109b</td>
 </tr>
 <tr>
-<td style="text-align:left">HP</td>
-<td style="text-align:left">03f0</td>
+<td align="left">HP</td>
+<td align="left">03f0</td>
 </tr>
 <tr>
-<td style="text-align:left">HTC</td>
-<td style="text-align:left">0bb4</td>
+<td align="left">HTC</td>
+<td align="left">0bb4</td>
 </tr>
 <tr>
-<td style="text-align:left">Huawei</td>
-<td style="text-align:left">12d1</td>
+<td align="left">Huawei</td>
+<td align="left">12d1</td>
 </tr>
 <tr>
-<td style="text-align:left">Intel</td>
-<td style="text-align:left">8087</td>
+<td align="left">Intel</td>
+<td align="left">8087</td>
 </tr>
 <tr>
-<td style="text-align:left">K-Touch</td>
-<td style="text-align:left">24000</td>
+<td align="left">K-Touch</td>
+<td align="left">24000</td>
 </tr>
 <tr>
-<td style="text-align:left">KT Tech</td>
-<td style="text-align:left">2116</td>
+<td align="left">KT Tech</td>
+<td align="left">2116</td>
 </tr>
 <tr>
-<td style="text-align:left">Kyocera</td>
-<td style="text-align:left">482</td>
+<td align="left">Kyocera</td>
+<td align="left">482</td>
 </tr>
 <tr>
-<td style="text-align:left">Lenovo</td>
-<td style="text-align:left">17ef</td>
+<td align="left">Lenovo</td>
+<td align="left">17ef</td>
 </tr>
 <tr>
-<td style="text-align:left">LG</td>
-<td style="text-align:left">1004</td>
+<td align="left">LG</td>
+<td align="left">1004</td>
 </tr>
 <tr>
-<td style="text-align:left">Motorola</td>
-<td style="text-align:left">22b8</td>
+<td align="left">Motorola</td>
+<td align="left">22b8</td>
 </tr>
 <tr>
-<td style="text-align:left">MTK</td>
-<td style="text-align:left">0e8d</td>
+<td align="left">MTK</td>
+<td align="left">0e8d</td>
 </tr>
 <tr>
-<td style="text-align:left">NEC</td>
-<td style="text-align:left">409</td>
+<td align="left">NEC</td>
+<td align="left">409</td>
 </tr>
 <tr>
-<td style="text-align:left">Nook</td>
-<td style="text-align:left">2080</td>
+<td align="left">Nook</td>
+<td align="left">2080</td>
 </tr>
 <tr>
-<td style="text-align:left">Nvidia</td>
-<td style="text-align:left">955</td>
+<td align="left">Nvidia</td>
+<td align="left">955</td>
 </tr>
 <tr>
-<td style="text-align:left">OTGV</td>
-<td style="text-align:left">2257</td>
+<td align="left">OTGV</td>
+<td align="left">2257</td>
 </tr>
 <tr>
-<td style="text-align:left">Pantech</td>
-<td style="text-align:left">10a9</td>
+<td align="left">Pantech</td>
+<td align="left">10a9</td>
 </tr>
 <tr>
-<td style="text-align:left">Pegatron</td>
-<td style="text-align:left">1d4d</td>
+<td align="left">Pegatron</td>
+<td align="left">1d4d</td>
 </tr>
 <tr>
-<td style="text-align:left">Philips</td>
-<td style="text-align:left">471</td>
+<td align="left">Philips</td>
+<td align="left">471</td>
 </tr>
 <tr>
-<td style="text-align:left">PMC-Sierra</td>
-<td style="text-align:left">04da</td>
+<td align="left">PMC-Sierra</td>
+<td align="left">04da</td>
 </tr>
 <tr>
-<td style="text-align:left">Qualcomm</td>
-<td style="text-align:left">05c6</td>
+<td align="left">Qualcomm</td>
+<td align="left">05c6</td>
 </tr>
 <tr>
-<td style="text-align:left">SK Telesys</td>
-<td style="text-align:left">1f53</td>
+<td align="left">SK Telesys</td>
+<td align="left">1f53</td>
 </tr>
 <tr>
-<td style="text-align:left">Samsung</td>
-<td style="text-align:left">400000000</td>
+<td align="left">Samsung</td>
+<td align="left">400000000</td>
 </tr>
 <tr>
-<td style="text-align:left">Sharp</td>
-<td style="text-align:left">04dd</td>
+<td align="left">Sharp</td>
+<td align="left">04dd</td>
 </tr>
 <tr>
-<td style="text-align:left">Sony</td>
-<td style="text-align:left">054c</td>
+<td align="left">Sony</td>
+<td align="left">054c</td>
 </tr>
 <tr>
-<td style="text-align:left">Sony Ericsson</td>
-<td style="text-align:left">0fce</td>
+<td align="left">Sony Ericsson</td>
+<td align="left">0fce</td>
 </tr>
 <tr>
-<td style="text-align:left">Sony Mobile Communications</td>
-<td style="text-align:left">0fce</td>
+<td align="left">Sony Mobile Communications</td>
+<td align="left">0fce</td>
 </tr>
 <tr>
-<td style="text-align:left">Teleepoch</td>
-<td style="text-align:left">2340</td>
+<td align="left">Teleepoch</td>
+<td align="left">2340</td>
 </tr>
 <tr>
-<td style="text-align:left">Toshiba</td>
-<td style="text-align:left">930</td>
+<td align="left">Toshiba</td>
+<td align="left">930</td>
 </tr>
 <tr>
-<td style="text-align:left">ZTE</td>
-<td style="text-align:left">19d2</td>
+<td align="left">ZTE</td>
+<td align="left">19d2</td>
 </tr>
-</tbody>
-</table>
-<p>当你不知道自己的 USB 设备属于哪个供应商时，可以通过<code>lsusb</code>指令查看所有的 USB 设备，然后拔掉 USB，再次执行指令，然后对比一下看少了哪条记录，就能知道 USB 设备的 idVendor 了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/TIM%E5%9B%BE%E7%89%8720171101152639.png" alt=""></p>
+<tr>
+<td align="left">当你不知道自己的 USB 设备属于哪个供应商时，可以通过<code>lsusb</code>指令查看所有的 USB 设备，然后拔掉 USB，再次执行指令，然后对比一下看少了哪条记录，就能知道 USB 设备的 idVendor 了。</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/TIM%E5%9B%BE%E7%89%8720171101152639.png"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
 <p>可以看到是<code>Qualcomm -&gt; 05c6</code>。当知道供应商时直接查询表格就可以了。</p>
-<h1 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h1><p>本来不想贴表格的，觉得 Markdown 弄表格贼麻烦，但是还是搜了一下，找到一个比较方便的方法。<br><a href="http://www.jianshu.com/p/abaff828100d" target="_blank" rel="noopener">Markdown 快速生成表格</a><br>第三种方式很简单，先粘到 excel 中，然后执行 exe， Linux 下只需要在指令前面加个 wine 即可（安装过 wine 环境）。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_237.png" alt=""></p>
+<h1 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h1><p>本来不想贴表格的，觉得 Markdown 弄表格贼麻烦，但是还是搜了一下，找到一个比较方便的方法。<br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/abaff828100d">Markdown 快速生成表格</a><br>第三种方式很简单，先粘到 excel 中，然后执行 exe， Linux 下只需要在指令前面加个 wine 即可（安装过 wine 环境）。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/01/%E9%80%89%E5%8C%BA_237.png"></p>
 
       
 
@@ -388,7 +388,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -512,7 +512,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -591,7 +591,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -599,87 +599,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -731,15 +675,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -756,10 +700,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

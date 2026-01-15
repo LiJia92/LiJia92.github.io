@@ -9,13 +9,12 @@
   <title>Android自定义View实现仪表盘效果 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于买卖人这个应用，3个室友有2个做安卓，而且都在买卖人，所以我也跟着实现了一波。效果如下：">
-<meta name="keywords" content="自定义View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android自定义View实现仪表盘效果">
 <meta property="og:url" content="http://lijia92.github.io/2016/05/16/dashboard/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于买卖人这个应用，3个室友有2个做安卓，而且都在买卖人，所以我也跟着实现了一波。效果如下：">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard2.png">
@@ -23,10 +22,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard4.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard5.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard6.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.218Z">
+<meta property="article:published_time" content="2016-05-16T06:41:26.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.433Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android自定义View实现仪表盘效果">
-<meta name="twitter:description" content="本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于买卖人这个应用，3个室友有2个做安卓，而且都在买卖人，所以我也跟着实现了一波。效果如下：">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -45,7 +45,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -59,10 +59,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -119,10 +117,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -189,21 +185,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于<a href="http://www.maimairen.com/" target="_blank" rel="noopener">买卖人</a>这个应用，3个室友有2个做安卓，而且都在<code>买卖人</code>，所以我也跟着实现了一波。<br>效果如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif" alt=""></p>
-<a id="more"></a>
+        <p>本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于<a target="_blank" rel="noopener" href="http://www.maimairen.com/">买卖人</a>这个应用，3个室友有2个做安卓，而且都在<code>买卖人</code>，所以我也跟着实现了一波。<br>效果如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif"></p>
+<span id="more"></span>
+
 <h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>涉及到动画效果，首先将其拆分成<code>变化的部分</code>，和<code>不变的部分</code>。变化的部分有：颜色渐变的进度条、以及数字。不变的部分：指针刻度、灰色圆弧背景。拆分开来后，再来单独实现就非常简单了。</p>
 <ol>
-<li><p>渐变的进度条：通过<code>shader</code>，设置起点和终点的颜色，便能达到颜色渐变的一个效果了。</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mShader = new RadialGradient(<span class="number">0</span>, <span class="number">0</span>, (<span class="number">1080</span> - <span class="number">300</span>) / <span class="number">2</span>, <span class="number">0xffde5669</span>, <span class="number">0xffe79950</span>, Shader.TileMode.MIRROR);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>数字：直接调用<code>drawText</code>即可。</p>
-</li>
+<li>渐变的进度条：通过<code>shader</code>，设置起点和终点的颜色，便能达到颜色渐变的一个效果了。<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">mShader</span> = new RadialGradient(<span class="number">0</span>, <span class="number">0</span>, (<span class="number">1080</span> - <span class="number">300</span>) / <span class="number">2</span>, <span class="number">0</span>xffde5669, <span class="number">0</span>xffe79950, Shader.TileMode.MIRROR);</span><br></pre></td></tr></table></figure></li>
+<li>数字：直接调用<code>drawText</code>即可。</li>
 <li>指针刻度：先选取最好画的一个刻度，然后通过<code>旋转画布</code>重新绘制，就能画出所有的刻度了。（记得在画完之后要把画布归位）</li>
 <li>灰色圆弧背景：设置好参数，调用<code>drawArc</code>即可。</li>
 <li>动画效果：通过handler发送消息，改变变量值然后重绘就能实现了。</li>
 </ol>
-<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">DashboardView</span> <span class="title">extends</span> <span class="title">View</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    private <span class="type">Paint</span> mPaint;</span><br><span class="line">    private <span class="type">RectF</span> rectF;</span><br><span class="line">    private <span class="type">Shader</span> mShader;</span><br><span class="line"></span><br><span class="line">    private int targetDegree; <span class="comment">// 目标角度</span></span><br><span class="line">    private int currentDegree; <span class="comment">// 当前角度</span></span><br><span class="line">    private int currentNum; <span class="comment">// 当前数值</span></span><br><span class="line">    private int targetNum; <span class="comment">// 目标数值</span></span><br><span class="line"></span><br><span class="line">    public <span class="type">DashboardView</span>(<span class="type">Context</span> context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">DashboardView</span>(<span class="type">Context</span> context, <span class="type">AttributeSet</span> attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">DashboardView</span>(<span class="type">Context</span> context, <span class="type">AttributeSet</span> attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void init() &#123;</span><br><span class="line">        mPaint = <span class="function"><span class="keyword">new</span> <span class="title">Paint</span>();</span></span><br><span class="line"><span class="function">        <span class="title">rectF</span> = <span class="title">new</span> <span class="title">RectF</span>();</span></span><br><span class="line"><span class="function">        <span class="comment">// 颜色渐变的shader</span></span></span><br><span class="line"><span class="function">        <span class="title">mShader</span> = <span class="title">new</span> <span class="title">RadialGradient</span>(<span class="number">0</span>, <span class="number">0</span>, (<span class="number">1080</span> - <span class="number">300</span>) / 2, 0<span class="title">xffde5669</span>, 0<span class="title">xffe79950</span>, <span class="title">Shader</span>.<span class="title">TileMode</span>.<span class="title">MIRROR</span>);</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    /**</span></span><br><span class="line"><span class="function">     * 通过<span class="title">Handler</span>发送消息，改变变量，重绘<span class="title">View</span></span></span><br><span class="line"><span class="function">     */</span></span><br><span class="line"><span class="function">    <span class="title">private</span> <span class="title">Handler</span> <span class="title">handler</span> = <span class="title">new</span> <span class="title">Handler</span>() &#123;</span></span><br><span class="line"><span class="function">        @<span class="title">Override</span></span></span><br><span class="line"><span class="function">        <span class="title">public</span> <span class="title">void</span> <span class="title">handleMessage</span>(<span class="type">Message</span> msg) &#123;</span></span><br><span class="line"><span class="function">            <span class="title">currentDegree</span> += 5;</span></span><br><span class="line"><span class="function">            <span class="title">currentNum</span> += <span class="title">currentDegree</span> / 1000<span class="title">f</span> * 259;</span></span><br><span class="line"><span class="function">            <span class="title">if</span> (currentDegree &lt; targetDegree) &#123;</span></span><br><span class="line"><span class="function">                <span class="title">handler</span>.<span class="title">sendEmptyMessageDelayed</span>(<span class="number">0</span>, <span class="number">5</span>);</span></span><br><span class="line"><span class="function">            &#125; <span class="title">else</span> &#123;</span></span><br><span class="line"><span class="function">                <span class="title">currentDegree</span> = <span class="title">targetDegree</span>;</span></span><br><span class="line"><span class="function">                <span class="title">currentNum</span> = <span class="title">targetNum</span>;</span></span><br><span class="line"><span class="function">            &#125;</span></span><br><span class="line"><span class="function">            <span class="title">invalidate</span>();</span></span><br><span class="line"><span class="function">        &#125;</span></span><br><span class="line"><span class="function">    &#125;;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    <span class="title">public</span> <span class="title">void</span> <span class="title">setNum</span>(int num) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">targetNum</span> = <span class="title">num</span>;</span></span><br><span class="line"><span class="function">        <span class="title">targetDegree</span> = (int) (targetNum / <span class="number">1000</span>f * <span class="number">259</span>);</span></span><br><span class="line"><span class="function">        <span class="title">handler</span>.<span class="title">sendEmptyMessageDelayed</span>(<span class="number">0</span>, <span class="number">400</span>);</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">    @<span class="title">Override</span></span></span><br><span class="line"><span class="function">    <span class="title">protected</span> <span class="title">void</span> <span class="title">onDraw</span>(<span class="type">Canvas</span> canvas) &#123;</span></span><br><span class="line"><span class="function">        <span class="title">super</span>.<span class="title">onDraw</span>(canvas);</span></span><br><span class="line"><span class="function">        <span class="comment">// 画大圆弧灰色背景</span></span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">reset</span>();</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setFlags</span>(<span class="type">Paint</span>.<span class="type">ANTI_ALIAS_FLAG</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setColor</span>(<span class="type">Color</span>.<span class="type">GRAY</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStrokeWidth</span>(<span class="number">40</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStyle</span>(<span class="type">Paint</span>.<span class="type">Style</span>.<span class="type">STROKE</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStrokeCap</span>(<span class="type">Paint</span>.<span class="type">Cap</span>.<span class="type">ROUND</span>);</span></span><br><span class="line"><span class="function">        <span class="title">rectF</span>.<span class="title">top</span> = <span class="title">getMeasuredHeight</span>() / 2 - <span class="title">getMeasuredWidth</span>() / 4;</span></span><br><span class="line"><span class="function">        <span class="title">rectF</span>.<span class="title">left</span> = <span class="title">getMeasuredWidth</span>() / 4;</span></span><br><span class="line"><span class="function">        <span class="title">rectF</span>.<span class="title">right</span> = <span class="title">getWidth</span>() / 4 * 3;</span></span><br><span class="line"><span class="function">        <span class="title">rectF</span>.<span class="title">bottom</span> = <span class="title">getMeasuredHeight</span>() / 2 + <span class="title">getMeasuredWidth</span>() / 4;</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">drawArc</span>(rectF, <span class="number">140</span>, <span class="number">260</span>, false, mPaint);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">// 通过旋转画布画指针刻度</span></span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">reset</span>();</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setFlags</span>(<span class="type">Paint</span>.<span class="type">ANTI_ALIAS_FLAG</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setColor</span>(<span class="type">Color</span>.<span class="type">GRAY</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStrokeWidth</span>(<span class="number">3</span>);</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">drawLine</span>(getMeasuredWidth() / 2, <span class="title">rectF</span>.<span class="title">top</span> + 40, <span class="title">getMeasuredWidth</span>() / 2, <span class="title">rectF</span>.<span class="title">top</span> + 60, <span class="title">mPaint</span>);</span></span><br><span class="line"><span class="function">        <span class="title">for</span> (int i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span></span><br><span class="line"><span class="function">            <span class="title">int</span> <span class="title">degrees</span> = (int) (<span class="number">10</span> * (i + <span class="number">1</span>) * <span class="title">Math</span>.<span class="title">pow</span>(<span class="number">-1</span>, i));</span></span><br><span class="line"><span class="function">            <span class="title">canvas</span>.<span class="title">rotate</span>(degrees, getWidth() / 2, <span class="title">getHeight</span>() / 2);</span></span><br><span class="line"><span class="function">            <span class="title">canvas</span>.<span class="title">drawLine</span>(getMeasuredWidth() / 2, <span class="title">rectF</span>.<span class="title">top</span> + 40, <span class="title">getMeasuredWidth</span>() / 2, <span class="title">rectF</span>.<span class="title">top</span> + 60, <span class="title">mPaint</span>);</span></span><br><span class="line"><span class="function">        &#125;</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">rotate</span>(<span class="number">130</span>, getWidth() / 2, <span class="title">getHeight</span>() / 2);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">// 画中间的小圆</span></span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">reset</span>();</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setFlags</span>(<span class="type">Paint</span>.<span class="type">ANTI_ALIAS_FLAG</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setColor</span>(<span class="type">Color</span>.<span class="type">DKGRAY</span>);</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">drawCircle</span>(getMeasuredWidth() / 2, <span class="title">getMeasuredHeight</span>() / 2, 80, <span class="title">mPaint</span>);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">// 画带颜色的进度条</span></span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">reset</span>();</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setFlags</span>(<span class="type">Paint</span>.<span class="type">ANTI_ALIAS_FLAG</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setShader</span>(mShader);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStyle</span>(<span class="type">Paint</span>.<span class="type">Style</span>.<span class="type">STROKE</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStrokeWidth</span>(<span class="number">40</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setStrokeCap</span>(<span class="type">Paint</span>.<span class="type">Cap</span>.<span class="type">ROUND</span>);</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">drawArc</span>(rectF, <span class="number">140</span>, currentDegree, false, mPaint);</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        <span class="comment">// 画Text</span></span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">reset</span>();</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setFlags</span>(<span class="type">Paint</span>.<span class="type">ANTI_ALIAS_FLAG</span>);</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setColor</span>(<span class="type">Color</span>.parseColor("#ffde5669"));</span></span><br><span class="line"><span class="function">        <span class="title">mPaint</span>.<span class="title">setTextSize</span>(<span class="number">70</span>);</span></span><br><span class="line"><span class="function">        <span class="title">canvas</span>.<span class="title">drawText</span>(<span class="type">String</span>.valueOf(currentNum), <span class="title">getMeasuredWidth</span>() / 2 - 55, <span class="title">getMeasuredHeight</span>() / 2 + 25, <span class="title">mPaint</span>);</span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="画笔相关"><a href="#画笔相关" class="headerlink" title="画笔相关"></a>画笔相关</h2><p>Style有三种。<br>STROKE：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.png" alt=""><br>FILL：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard2.png" alt=""><br>FILL_AND_STROKE：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard3.png" alt=""><br>StrokeCap也有三种。<br>BUTT：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard4.png" alt=""><br>SQUARE:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard5.png" alt=""><br>ROUND：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard6.png" alt=""></p>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DashboardView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Paint mPaint;</span><br><span class="line">    <span class="keyword">private</span> RectF rectF;</span><br><span class="line">    <span class="keyword">private</span> Shader mShader;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> targetDegree; <span class="comment">// 目标角度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> currentDegree; <span class="comment">// 当前角度</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> currentNum; <span class="comment">// 当前数值</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> targetNum; <span class="comment">// 目标数值</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DashboardView</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DashboardView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DashboardView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</span><br><span class="line">        init();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mPaint = <span class="keyword">new</span> Paint();</span><br><span class="line">        rectF = <span class="keyword">new</span> RectF();</span><br><span class="line">        <span class="comment">// 颜色渐变的shader</span></span><br><span class="line">        mShader = <span class="keyword">new</span> RadialGradient(<span class="number">0</span>, <span class="number">0</span>, (<span class="number">1080</span> - <span class="number">300</span>) / <span class="number">2</span>, <span class="number">0xffde5669</span>, <span class="number">0xffe79950</span>, Shader.TileMode.MIRROR);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过Handler发送消息，改变变量，重绘View</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Handler <span class="keyword">handler</span> = <span class="keyword">new</span> Handler() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</span><br><span class="line">            currentDegree += <span class="number">5</span>;</span><br><span class="line">            currentNum += currentDegree / <span class="number">1000</span>f * <span class="number">259</span>;</span><br><span class="line">            <span class="keyword">if</span> (currentDegree &lt; targetDegree) &#123;</span><br><span class="line">                <span class="keyword">handler</span>.sendEmptyMessageDelayed(<span class="number">0</span>, <span class="number">5</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                currentDegree = targetDegree;</span><br><span class="line">                currentNum = targetNum;</span><br><span class="line">            &#125;</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">        targetNum = num;</span><br><span class="line">        targetDegree = (<span class="keyword">int</span>) (targetNum / <span class="number">1000</span>f * <span class="number">259</span>);</span><br><span class="line">        <span class="keyword">handler</span>.sendEmptyMessageDelayed(<span class="number">0</span>, <span class="number">400</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onDraw(canvas);</span><br><span class="line">        <span class="comment">// 画大圆弧灰色背景</span></span><br><span class="line">        mPaint.reset();</span><br><span class="line">        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">        mPaint.setColor(Color.GRAY);</span><br><span class="line">        mPaint.setStrokeWidth(<span class="number">40</span>);</span><br><span class="line">        mPaint.setStyle(Paint.Style.STROKE);</span><br><span class="line">        mPaint.setStrokeCap(Paint.Cap.ROUND);</span><br><span class="line">        rectF.top = getMeasuredHeight() / <span class="number">2</span> - getMeasuredWidth() / <span class="number">4</span>;</span><br><span class="line">        rectF.left = getMeasuredWidth() / <span class="number">4</span>;</span><br><span class="line">        rectF.right = getWidth() / <span class="number">4</span> * <span class="number">3</span>;</span><br><span class="line">        rectF.bottom = getMeasuredHeight() / <span class="number">2</span> + getMeasuredWidth() / <span class="number">4</span>;</span><br><span class="line">        canvas.drawArc(rectF, <span class="number">140</span>, <span class="number">260</span>, <span class="keyword">false</span>, mPaint);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过旋转画布画指针刻度</span></span><br><span class="line">        mPaint.reset();</span><br><span class="line">        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">        mPaint.setColor(Color.GRAY);</span><br><span class="line">        mPaint.setStrokeWidth(<span class="number">3</span>);</span><br><span class="line">        canvas.drawLine(getMeasuredWidth() / <span class="number">2</span>, rectF.top + <span class="number">40</span>, getMeasuredWidth() / <span class="number">2</span>, rectF.top + <span class="number">60</span>, mPaint);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> degrees = (<span class="keyword">int</span>) (<span class="number">10</span> * (i + <span class="number">1</span>) * Math.pow(<span class="number">-1</span>, i));</span><br><span class="line">            canvas.rotate(degrees, getWidth() / <span class="number">2</span>, getHeight() / <span class="number">2</span>);</span><br><span class="line">            canvas.drawLine(getMeasuredWidth() / <span class="number">2</span>, rectF.top + <span class="number">40</span>, getMeasuredWidth() / <span class="number">2</span>, rectF.top + <span class="number">60</span>, mPaint);</span><br><span class="line">        &#125;</span><br><span class="line">        canvas.rotate(<span class="number">130</span>, getWidth() / <span class="number">2</span>, getHeight() / <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 画中间的小圆</span></span><br><span class="line">        mPaint.reset();</span><br><span class="line">        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">        mPaint.setColor(Color.DKGRAY);</span><br><span class="line">        canvas.drawCircle(getMeasuredWidth() / <span class="number">2</span>, getMeasuredHeight() / <span class="number">2</span>, <span class="number">80</span>, mPaint);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 画带颜色的进度条</span></span><br><span class="line">        mPaint.reset();</span><br><span class="line">        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">        mPaint.setShader(mShader);</span><br><span class="line">        mPaint.setStyle(Paint.Style.STROKE);</span><br><span class="line">        mPaint.setStrokeWidth(<span class="number">40</span>);</span><br><span class="line">        mPaint.setStrokeCap(Paint.Cap.ROUND);</span><br><span class="line">        canvas.drawArc(rectF, <span class="number">140</span>, currentDegree, <span class="keyword">false</span>, mPaint);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 画Text</span></span><br><span class="line">        mPaint.reset();</span><br><span class="line">        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);</span><br><span class="line">        mPaint.setColor(Color.parseColor(<span class="string">&quot;#ffde5669&quot;</span>));</span><br><span class="line">        mPaint.setTextSize(<span class="number">70</span>);</span><br><span class="line">        canvas.drawText(String.valueOf(currentNum), getMeasuredWidth() / <span class="number">2</span> - <span class="number">55</span>, getMeasuredHeight() / <span class="number">2</span> + <span class="number">25</span>, mPaint);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="画笔相关"><a href="#画笔相关" class="headerlink" title="画笔相关"></a>画笔相关</h2><p>Style有三种。<br>STROKE：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.png"><br>FILL：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard2.png"><br>FILL_AND_STROKE：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard3.png"><br>StrokeCap也有三种。<br>BUTT：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard4.png"><br>SQUARE:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard5.png"><br>ROUND：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard6.png"></p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>代码比较简单，在实现带动画的View时，最好先进行拆分，找出变化的部分和不变的部分，然后各自实现，将大问题拆分成若干个小问题，逐个击破。</p>
 
       
@@ -218,7 +212,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">自定义View</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -342,7 +336,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -421,7 +415,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,87 +423,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -561,15 +499,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -586,10 +524,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

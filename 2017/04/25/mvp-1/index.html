@@ -9,17 +9,17 @@
   <title>关于 MVP 模式的一点思考 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
-<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于 MVP 模式的一点思考">
 <meta property="og:url" content="http://lijia92.github.io/2017/04/25/mvp-1/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.123Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2017-04-25T07:04:41.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.463Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="技术思路">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于 MVP 模式的一点思考">
-<meta name="twitter:description" content="针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。 在我用到 MVP 模式后，我有个疑惑：1个 Presenter 能否对应多个 View？这个问题，在网上已经有很多人展开讨论了：使用 MVP 时，如何让同一个 P 服务多个 V？">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,14 +178,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>针对 MVC 的解耦，目前 MVP 模式已经被很多开发者所使用，项目中所使用的便是 MVP 模式。</p>
-<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a href="https://github.com/android-cn/android-discuss/issues/468" target="_blank" rel="noopener">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
-<a id="more"></a>
-<p>这个issue跟我的情况很类似。我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。基于 Presenter与View 一一对应的情况下，很容易就写出如下的代码：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyPresenter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">query</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyView</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showList</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showInsertResult</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showUpdateResult</span>(<span class="params"></span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showDeleteResult</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在 IMyPresenter 的具体实现中回调 IMyView 的方法，通知界面进行展示。A B C 三个界面都实现 IMyView，然后就会有一个蛋疼的现象：<strong>很多do nothing的方法</strong>。比如 A 界面会这样：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showList</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// show something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInsertResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showUpdateResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showDeleteResult</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在我用到 MVP 模式后，我有个疑惑：<strong>1个 Presenter 能否对应多个 View？</strong><br>这个问题，在网上已经有很多人展开讨论了：<a target="_blank" rel="noopener" href="https://github.com/android-cn/android-discuss/issues/468">使用 MVP 时，如何让同一个 P 服务多个 V？</a></p>
+<span id="more"></span>
+
+<p>这个issue跟我的情况很类似。我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。基于 Presenter与View 一一对应的情况下，很容易就写出如下的代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyPresenter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">query</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">delete</span>()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IMyView</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showList</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showInsertResult</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showUpdateResult</span>()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showDeleteResult</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 IMyPresenter 的具体实现中回调 IMyView 的方法，通知界面进行展示。A B C 三个界面都实现 IMyView，然后就会有一个蛋疼的现象：<strong>很多do nothing的方法</strong>。比如 A 界面会这样：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showList</span>()</span>&#123;</span><br><span class="line">  <span class="comment">// show something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showInsertResult</span>()</span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showUpdateResult</span>()</span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showDeleteResult</span>()</span>&#123;</span><br><span class="line">  <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>因为 A 界面就没用到增删改的接口，所以自然不用实现相应的 View 接口，这看起来就很蛋疼了。</p>
 <p>现在假设我们使用多个 Presenter,使一个 Presenter 对应一个 View，也就是写3个 Presenter,一个负责查询对应界面 A，一个负责删除对应界面 B，一个负责增和改对应界面 C。显然是没什么毛病的，但是会多许多的 Presenter，除了写起来很费事繁杂，还有一个缺点：若界面有业务交集（比如 A 界面不仅有查询，还有个删除，那么就会和 B 界面重复），就会导致 Presenter 严重冗余，几个 Presenter 里面的代码大块大块的相似。另外这个 Presenter 本是增删改查一套业务，结果硬生生拆成多个 Presenter，总感觉不合适。</p>
-<p>所以在我的实际情况中，上述两种方案我都没有采用。这里便说下我的一些想法：<br><strong>Presenter 仍然独立处理业务，将 View 进行抽离解耦，提供一个顶层的 View 给 Presenter 使用，当要调到具体的 View 方法时，使用 instance of 判断，然后强转进行调用。</strong><br>修改后的代码大致如下：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public<span class="built_in"> interface </span>IMyView &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IAView extends IMyView &#123;</span><br><span class="line">    void showList();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IBView extends IMyView &#123;</span><br><span class="line">    void showDeleteResult();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>IAView extends IMyView &#123;</span><br><span class="line">  void showUpdateResult();</span><br><span class="line"></span><br><span class="line">  void showInsertResult();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后 IMyPresenter 的实现持有 IMyView 的实例，在调用的地方进行强转。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">delete</span>()&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">  <span class="keyword">if</span> (mView != <span class="literal">null</span> &amp;&amp; mView <span class="keyword">instanceof</span> IBView) &#123;</span><br><span class="line">    ((IBView) mView).showDeleteResult();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>所以在我的实际情况中，上述两种方案我都没有采用。这里便说下我的一些想法：<br><strong>Presenter 仍然独立处理业务，将 View 进行抽离解耦，提供一个顶层的 View 给 Presenter 使用，当要调到具体的 View 方法时，使用 instance of 判断，然后强转进行调用。</strong><br>修改后的代码大致如下：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="symbol">IMyView</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="symbol">IAView</span> <span class="symbol">extends</span> <span class="symbol">IMyView</span> &#123;</span><br><span class="line">    <span class="built_in">void</span> showList();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="symbol">IBView</span> <span class="symbol">extends</span> <span class="symbol">IMyView</span> &#123;</span><br><span class="line">    <span class="built_in">void</span> showDeleteResult();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="symbol">IAView</span> <span class="symbol">extends</span> <span class="symbol">IMyView</span> &#123;</span><br><span class="line">  <span class="built_in">void</span> showUpdateResult();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">void</span> showInsertResult();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后 IMyPresenter 的实现持有 IMyView 的实例，在调用的地方进行强转。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">delete</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">  <span class="keyword">if</span> (mView != <span class="literal">null</span> &amp;&amp; mView <span class="keyword">instanceof</span> <span class="title class_">IBView</span>) &#123;</span><br><span class="line">    ((<span class="title class_">IBView</span>) mView).<span class="title function_">showDeleteResult</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>用这种方法，可以一定程度上解决一个 Presenter 对应多个 View 的问题。只能是一定程度上，是因为若 View 对应的业务场景有很复杂的交叉，那么就需要定义非常多的 View 与之对应，并且有很深的继承关系，也是不太合适。若真是碰到这种场景，我可能就会考虑 Google 所说的 MVP Clean 模式了。</p>
 
       
@@ -204,7 +205,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>
@@ -328,7 +329,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -407,7 +408,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -415,87 +416,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -547,15 +492,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -572,10 +517,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

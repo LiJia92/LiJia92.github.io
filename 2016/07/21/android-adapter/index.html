@@ -9,20 +9,20 @@
   <title>Andoird开发中适配小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Andoird开发中适配小记">
 <meta property="og:url" content="http://lijia92.github.io/2016/07/21/android-adapter/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.208Z">
+<meta property="article:published_time" content="2016-07-21T01:59:06.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.415Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Andoird开发中适配小记">
-<meta name="twitter:description" content="Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -41,7 +41,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +55,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -115,10 +113,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -186,15 +182,26 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Android也做了一段时间了，做的项目也经历过大大小小的测试，这里把一些适配的实际情形写下来，方便日后查阅，后面会持续更新。<br>主要记录一些适配的实际情形，至于使用.9图、dp单位这类适配就不说了。</p>
-<a id="more"></a>
-<h2 id="适配虚拟按键"><a href="#适配虚拟按键" class="headerlink" title="适配虚拟按键"></a>适配虚拟按键</h2><p>部分手机会有虚拟按键，会占用屏幕的一定空间，当我们的界面布局存在“硬编码”的时候（固定写死多少dp），就可能导致界面显示出问题。<br>可以通过如下方法来判断是否有虚拟按键：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 是否有虚拟按键</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> checkDeviceHasNavigationBar(Context context) &#123;</span><br><span class="line">    <span class="keyword">boolean</span> hasNavigationBar = <span class="keyword">false</span>;</span><br><span class="line">    Resources rs = context.getResources();</span><br><span class="line">    <span class="keyword">int</span> id = rs.getIdentifier(<span class="string">"config_showNavigationBar"</span>, <span class="string">"bool"</span>, <span class="string">"android"</span>);</span><br><span class="line">    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        hasNavigationBar = rs.getBoolean(id);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">Class</span> systemPropertiesClass = <span class="keyword">Class</span>.forName(<span class="string">"android.os.SystemProperties"</span>);</span><br><span class="line">        Method m = systemPropertiesClass.getMethod(<span class="string">"get"</span>, String.<span class="keyword">class</span>);</span><br><span class="line">        String navBarOverride = (String) m.invoke(systemPropertiesClass, <span class="string">"qemu.hw.mainkeys"</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"1"</span>.equals(navBarOverride)) &#123;</span><br><span class="line">            hasNavigationBar = <span class="keyword">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"0"</span>.equals(navBarOverride)) &#123;</span><br><span class="line">            hasNavigationBar = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hasNavigationBar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后通过如下方法获取虚拟按键的高度：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取虚拟按键的高度</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getNavigationBarHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Resources resources = context.getResources();</span><br><span class="line">    <span class="keyword">int</span> resourceId = resources.getIdentifier(<span class="string">"navigation_bar_height"</span>, <span class="string">"dimen"</span>, <span class="string">"android"</span>);</span><br><span class="line">    <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> resources.<span class="title">getDimensionPixelSize</span><span class="params">(resourceId)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>获得到高度之后，便能代码控制之前的“硬编码”了，依情况减去或者加上虚拟按键的高度便可以解决这类问题的适配的。示例如下：<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果有虚拟按键，则加上虚拟按键的高度</span></span><br><span class="line"><span class="keyword">if</span> (checkDeviceHasNavigationBar(context)) &#123;</span><br><span class="line">    <span class="keyword">int</span> navigationBarHeight = getNavigationBarHeight();</span><br><span class="line">    RecyclerView.LayoutParams <span class="keyword">params</span> = (RecyclerView.LayoutParams) holder.root.getLayoutParams();</span><br><span class="line">    <span class="keyword">params</span>.bottomMargin = (<span class="keyword">int</span>) (context.getResources().getDimension(R.dimen.minus_living_card_height) - navigationBarHeight);</span><br><span class="line">    holder.root.setLayoutParams(<span class="keyword">params</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当然你也可以简单粗暴的隐藏掉虚拟按键。代码如下：<br><figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">View</span> decorView = getWindow().getDecorView()<span class="comment">;</span></span><br><span class="line">decorView.setSystemUiVisibility(</span><br><span class="line">           <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_HIDE_NAVIGATION <span class="comment">// hide nav bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_FULLSCREEN <span class="comment">// hide status bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_IMMERSIVE)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="Android4-4横屏弹出的对话框顶部被状态栏遮盖"><a href="#Android4-4横屏弹出的对话框顶部被状态栏遮盖" class="headerlink" title="Android4.4横屏弹出的对话框顶部被状态栏遮盖"></a>Android4.4横屏弹出的对话框顶部被状态栏遮盖</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png" alt=""><br>初步感觉是Android4.4的一个BUG，可以在Dialog创建的时候，添加如下代码来解决问题：<br><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 针对Android 4.4在横屏下顶部被状态栏遮挡的问题</span><br><span class="line"> * 暂没有4.4以下的手机进行测试</span><br><span class="line"> */</span><br><span class="line"><span class="keyword">if</span> <span class="params">(Build.VERSION.<span class="attr">SDK_INT</span> == 19)</span> &#123;</span><br><span class="line">    mWindow.<span class="keyword">set</span>Flags<span class="params">(</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN,</span></span><br><span class="line"><span class="params">            WindowManager.LayoutParams.FLAG_FULLSCREEN)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="联想K3-Note中GridView自带分隔线"><a href="#联想K3-Note中GridView自带分隔线" class="headerlink" title="联想K3 Note中GridView自带分隔线"></a>联想K3 Note中GridView自带分隔线</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png" alt=""><br>在GridViewz中添加<code>horizontalSpacing</code>、<code>verticalSpacing</code>2条属性来解决问题：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml <span class="attribute">version</span>=<span class="string">"1.0"</span> <span class="attribute">encoding</span>=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;CustomGridView xmlns:<span class="attribute">android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"match_parent"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">horizontalSpacing</span>=<span class="string">"0dp"</span></span><br><span class="line">    android:<span class="attribute">listSelector</span>=<span class="string">"@color/transparent"</span></span><br><span class="line">    android:<span class="attribute">numColumns</span>=<span class="string">"3"</span></span><br><span class="line">    android:<span class="attribute">scrollbars</span>=<span class="string">"none"</span></span><br><span class="line">    android:<span class="attribute">verticalSpacing</span>=<span class="string">"0dp"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<h2 id="VideoView切换横竖屏"><a href="#VideoView切换横竖屏" class="headerlink" title="VideoView切换横竖屏"></a>VideoView切换横竖屏</h2><p>VideoView在切换横竖屏，如果是Activity跳转，那么就会重新加载，导致切换前后不连贯。<br>所以我的做法是：只有一个Activity，点击全屏按钮将其置为横屏状态，每次切换的时候，显示一套布局，隐藏一套布局。配置activity的<code>android:configChanges=&quot;orientation|screenSize&quot;</code>，这样在切换的时候就不会重新布局，然后在<code>onConfigurationChanged</code>中进行相关操作：<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line"><span class="keyword">public</span> void onConfigurationChanged(Configuration <span class="keyword">new</span><span class="type">Config</span>) &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 适配部分机型在旋转的时候，视频尺寸没有自适应的问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">new</span><span class="type">Config</span>.orientation == Configuration.ORIENTATION_LANDSCAPE) &#123;</span><br><span class="line">        <span class="comment">// 横屏时隐藏竖屏布局</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 竖屏时隐藏横屏布局</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.onConfigurationChanged(<span class="keyword">new</span><span class="type">Config</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>但是在部分机型会导致切换后视屏尺寸没有自适应，如图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif" alt=""><br>利用如上代码<code>videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</code>即可解决问题。</p>
+<span id="more"></span>
+
+<h2 id="适配虚拟按键"><a href="#适配虚拟按键" class="headerlink" title="适配虚拟按键"></a>适配虚拟按键</h2><p>部分手机会有虚拟按键，会占用屏幕的一定空间，当我们的界面布局存在“硬编码”的时候（固定写死多少dp），就可能导致界面显示出问题。<br>可以通过如下方法来判断是否有虚拟按键：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 是否有虚拟按键</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="type">static</span> <span class="type">boolean</span> <span class="title">checkDeviceHasNavigationBar</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">    <span class="type">boolean</span> hasNavigationBar = <span class="literal">false</span>;</span><br><span class="line">    Resources rs = context.<span class="built_in">getResources</span>();</span><br><span class="line">    <span class="type">int</span> id = rs.<span class="built_in">getIdentifier</span>(<span class="string">&quot;config_showNavigationBar&quot;</span>, <span class="string">&quot;bool&quot;</span>, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        hasNavigationBar = rs.<span class="built_in">getBoolean</span>(id);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Class systemPropertiesClass = Class.forName(<span class="string">&quot;android.os.SystemProperties&quot;</span>);</span><br><span class="line">        Method m = systemPropertiesClass.<span class="built_in">getMethod</span>(<span class="string">&quot;get&quot;</span>, <span class="type">String</span>.<span class="keyword">class</span>);</span><br><span class="line">        <span class="type">String</span> navBarOverride = (<span class="type">String</span>) m.<span class="built_in">invoke</span>(systemPropertiesClass, <span class="string">&quot;qemu.hw.mainkeys&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;1&quot;</span>.<span class="built_in">equals</span>(navBarOverride)) &#123;</span><br><span class="line">            hasNavigationBar = <span class="literal">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;0&quot;</span>.<span class="built_in">equals</span>(navBarOverride)) &#123;</span><br><span class="line">            hasNavigationBar = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="built_in">catch</span> (Exception e) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hasNavigationBar;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后通过如下方法获取虚拟按键的高度：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取虚拟按键的高度</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getNavigationBarHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Resources resources = context.getResources();</span><br><span class="line">    <span class="keyword">int</span> resourceId = resources.getIdentifier(<span class="string">&quot;navigation_bar_height&quot;</span>, <span class="string">&quot;dimen&quot;</span>, <span class="string">&quot;android&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (resourceId &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> resources.<span class="title">getDimensionPixelSize</span><span class="params">(resourceId)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获得到高度之后，便能代码控制之前的“硬编码”了，依情况减去或者加上虚拟按键的高度便可以解决这类问题的适配的。示例如下：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 如果有虚拟按键，则加上虚拟按键的高度</span><br><span class="line">if (checkDeviceHasNavigationBar(context)) &#123;</span><br><span class="line">    int navigationBarHeight <span class="operator">=</span> getNavigationBarHeight()<span class="comment">;</span></span><br><span class="line">    RecyclerView.LayoutParams params <span class="operator">=</span> (RecyclerView.LayoutParams) holder.root.getLayoutParams()<span class="comment">;</span></span><br><span class="line">    params.bottomMargin <span class="operator">=</span> (int) (context.getResources().getDimension(R.dimen.minus_living_card_height) - navigationBarHeight)<span class="comment">;</span></span><br><span class="line">    holder.root.setLayoutParams(params)<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然你也可以简单粗暴的隐藏掉虚拟按键。代码如下：</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">View</span> decorView = getWindow().getDecorView()<span class="comment">;</span></span><br><span class="line">decorView.setSystemUiVisibility(</span><br><span class="line">           <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_STABLE</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_HIDE_NAVIGATION <span class="comment">// hide nav bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_FULLSCREEN <span class="comment">// hide status bar</span></span><br><span class="line">           | <span class="keyword">View</span>.SYSTEM_UI_FLAG_IMMERSIVE)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Android4-4横屏弹出的对话框顶部被状态栏遮盖"><a href="#Android4-4横屏弹出的对话框顶部被状态栏遮盖" class="headerlink" title="Android4.4横屏弹出的对话框顶部被状态栏遮盖"></a>Android4.4横屏弹出的对话框顶部被状态栏遮盖</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter1.png"><br>初步感觉是Android4.4的一个BUG，可以在Dialog创建的时候，添加如下代码来解决问题：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 针对Android 4.4在横屏下顶部被状态栏遮挡的问题</span></span><br><span class="line"><span class="comment"> * 暂没有4.4以下的手机进行测试</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">if (Build.VERSION.SDK_INT == <span class="number">19</span>) &#123;</span><br><span class="line">    mWindow<span class="selector-class">.setFlags</span>(</span><br><span class="line">            WindowManager.LayoutParams.FLAG_FULLSCREEN,</span><br><span class="line">            WindowManager.LayoutParams.FLAG_FULLSCREEN);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="联想K3-Note中GridView自带分隔线"><a href="#联想K3-Note中GridView自带分隔线" class="headerlink" title="联想K3 Note中GridView自带分隔线"></a>联想K3 Note中GridView自带分隔线</h2><p>效果就像这样：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter2.png"><br>在GridViewz中添加<code>horizontalSpacing</code>、<code>verticalSpacing</code>2条属性来解决问题：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">CustomGridView</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;wrap_content&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:horizontalSpacing</span>=<span class="string">&quot;0dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:listSelector</span>=<span class="string">&quot;@color/transparent&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:numColumns</span>=<span class="string">&quot;3&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:scrollbars</span>=<span class="string">&quot;none&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:verticalSpacing</span>=<span class="string">&quot;0dp&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="VideoView切换横竖屏"><a href="#VideoView切换横竖屏" class="headerlink" title="VideoView切换横竖屏"></a>VideoView切换横竖屏</h2><p>VideoView在切换横竖屏，如果是Activity跳转，那么就会重新加载，导致切换前后不连贯。<br>所以我的做法是：只有一个Activity，点击全屏按钮将其置为横屏状态，每次切换的时候，显示一套布局，隐藏一套布局。配置activity的<code>android:configChanges=&quot;orientation|screenSize&quot;</code>，这样在切换的时候就不会重新布局，然后在<code>onConfigurationChanged</code>中进行相关操作：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Override</span></span><br><span class="line">public void <span class="built_in">onConfigurationChanged</span>(Configuration newConfig) &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 适配部分机型在旋转的时候，视频尺寸没有自适应的问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="selector-tag">videoView</span><span class="selector-class">.getHolder</span>()<span class="selector-class">.setFixedSize</span>(videoView.<span class="built_in">getWidth</span>(), videoView.<span class="built_in">getHeight</span>());</span><br><span class="line">    <span class="selector-tag">if</span> (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) &#123;</span><br><span class="line">        <span class="comment">// 横屏时隐藏竖屏布局</span></span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        <span class="comment">// 竖屏时隐藏横屏布局</span></span><br><span class="line">    &#125;</span><br><span class="line">    super.<span class="built_in">onConfigurationChanged</span>(newConfig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是在部分机型会导致切换后视屏尺寸没有自适应，如图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/adapter3.gif"><br>利用如上代码<code>videoView.getHolder().setFixedSize(videoView.getWidth(), videoView.getHeight());</code>即可解决问题。</p>
 
       
 
@@ -208,7 +215,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -332,7 +339,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -411,7 +418,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -419,87 +426,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -551,15 +502,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -576,10 +527,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

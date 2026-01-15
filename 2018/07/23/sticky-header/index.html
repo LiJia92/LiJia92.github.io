@@ -9,18 +9,18 @@
   <title>Android 列表 Header 吸顶效果 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。页面大致如下：">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 列表 Header 吸顶效果">
 <meta property="og:url" content="http://lijia92.github.io/2018/07/23/sticky-header/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。页面大致如下：">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.251Z">
+<meta property="article:published_time" content="2018-07-23T07:19:58.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.485Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 列表 Header 吸顶效果">
-<meta name="twitter:description" content="现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。页面大致如下：">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,14 +180,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。<br>页面大致如下：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png" alt=""></p>
-<a id="more"></a>
-<p>针对本文的场景，相当于一个 HEADER 对应一组 Image。所以，最好是有个 Map 结构，然后每个 Image item 都能清楚的知道自己所属哪个 HEADER。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MatchedImageAdapter</span></span>(<span class="keyword">val</span> map: LinkedHashMap&lt;HEADER, List&lt;Image&gt;&gt;)</span><br><span class="line">    : RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> dataList = ArrayList&lt;Any&gt;()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> currentKey: HEADER? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    init &#123;</span><br><span class="line">        map.forEach &#123;</span><br><span class="line">            dataList.add(it.key)</span><br><span class="line">            dataList.addAll(it.value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * path         图片地址</span></span><br><span class="line"><span class="comment"> * key          对应的 HEADER</span></span><br><span class="line"><span class="comment"> * date         时间</span></span><br><span class="line"><span class="comment"> * selected     是否选中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Image</span></span>(<span class="keyword">val</span> path: String?, <span class="keyword">var</span> key: HEADER?, <span class="keyword">var</span> date: <span class="built_in">Long</span> = <span class="number">0</span>, <span class="keyword">var</span> lat: <span class="built_in">Double</span> = <span class="number">0.0</span>,</span><br><span class="line">  			<span class="keyword">var</span> lng: <span class="built_in">Double</span> = <span class="number">0.0</span>, <span class="keyword">var</span> selected: <span class="built_in">Boolean</span> = <span class="literal">false</span>) : Serializable</span><br></pre></td></tr></table></figure></p>
-<p>然后按照这个结构，利用泛型，来实现列表多 Type 效果。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> dataList = ArrayList&lt;Any&gt;()</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getItemViewType</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (dataList[position] <span class="keyword">is</span> Header) &#123;</span><br><span class="line">        TYPE_HEADER</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        TYPE_IMAGE_ITEM</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>另外，针对图片 Item 的网格布局，直接使用 GridLayoutManager 的 spanSize 就能达到效果。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> layoutManager = GridLayoutManager(context, MAX_COUNT)</span><br><span class="line">layoutManager.spanSizeLookup = <span class="keyword">object</span> : GridLayoutManager.SpanSizeLookup() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getSpanSize</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">if</span> (adapter!!.getItemViewType(position) == HEADER) &#123;</span><br><span class="line">            <span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>看到 Header 有个“选择”按钮是可以点击的，所以就有了本文。不用支持点击的话，可以直接使用 ItemDecoration 来达到吸顶效果了。<br>如果要支持点击效果，我采取的方案是：<strong>在 RecyclerView 上面盖一层 Header，然后用过滑动监听来设置 Header 的偏移，从而达到吸顶效果。</strong><br>那么核心便是滑动的监听了：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">matchedImageRv.addOnScrollListener(<span class="keyword">object</span> : RecyclerView.OnScrollListener() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onScrolled</span><span class="params">(recyclerView: <span class="type">RecyclerView</span>?, dx: <span class="type">Int</span>, dy: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isEmpty(adapter!!.getDataList())) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取到视图中第一个可见的item的position</span></span><br><span class="line">        <span class="keyword">val</span> firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (firstVisiblePosition &lt; <span class="number">0</span> || firstVisiblePosition &gt;= adapter!!.getDataList().size) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第一个 item 的 VH</span></span><br><span class="line">        <span class="keyword">val</span> viewHolder = matchedImageRv.findViewHolderForLayoutPosition(firstVisiblePosition) ?: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 记录当前位置的数据</span></span><br><span class="line">        currentHeader = adapter!!.getDataList()[firstVisiblePosition]</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 是否应该平移 HEADER</span></span><br><span class="line">        <span class="keyword">val</span> shouldTranslationY = shouldTranslationY(firstVisiblePosition)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据高度及 top 值判断是否需要设置 translationY</span></span><br><span class="line">        <span class="keyword">val</span> height = autoMatchHeader.height</span><br><span class="line">        <span class="keyword">if</span> (shouldTranslationY &amp;&amp; viewHolder.itemView.height + viewHolder.itemView.top &lt; height) &#123;</span><br><span class="line">            <span class="keyword">val</span> translationY = viewHolder.itemView.height + viewHolder.itemView.top - height</span><br><span class="line">            autoMatchHeader.translationY = translationY.toFloat()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            autoMatchHeader.translationY = <span class="number">0</span>f</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">       	<span class="comment">// 更新悬浮 Header 信息</span></span><br><span class="line">        refreshHeader()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<p>看下 shouldTranslationY 的代码：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 只有下一行数据是 Header，才应该进行平移</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">shouldTranslationY</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (adapter!!.getDataList()[position] <span class="keyword">is</span> HEADER) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0</span> until <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (position + <span class="number">1</span> + i &lt; adapter!!.getDataList().size) &#123;</span><br><span class="line">            <span class="keyword">val</span> <span class="keyword">data</span> = adapter!!.getDataList()[position + <span class="number">1</span> + i]</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">data</span> <span class="keyword">is</span> HEADER) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>position 是当前位置，如果当前位置是 HEADER，那么下一行数据肯定不是 HEADER，直接返回 false。如果当前位置是图片 item，那么往下数 3 个，一定能得到下一行数据的类型。中途有可能被 HEADER 类型截断，从而直接返回。然后结合高度，top 值，来判断是否需要设置 translationY，从而达到吸顶效果。<br>然后看下覆盖 HEADER 的点击事件设置：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">autoMatchHeader<span class="selector-class">.selectAllTv</span><span class="selector-class">.setOnClickListener</span> &#123;</span><br><span class="line">    val <span class="selector-tag">header</span> = <span class="keyword">if</span> (currentHeader is Image) &#123;</span><br><span class="line">        (currentHeader as Image).key</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        currentHeader</span><br><span class="line">    &#125; as HEADER</span><br><span class="line"></span><br><span class="line">    adapter!!.onAllClick(<span class="selector-tag">header</span>, adapter!!.getDataList().indexOf(header))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png"></p>
+<span id="more"></span>
+
+<p>针对本文的场景，相当于一个 HEADER 对应一组 Image。所以，最好是有个 Map 结构，然后每个 Image item 都能清楚的知道自己所属哪个 HEADER。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MatchedImageAdapter</span>(<span class="keyword">val</span> map: LinkedHashMap&lt;HEADER, List&lt;Image&gt;&gt;)</span><br><span class="line">    : RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> dataList = ArrayList&lt;Any&gt;()</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> currentKey: HEADER? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span> &#123;</span><br><span class="line">        map.forEach &#123;</span><br><span class="line">            dataList.add(it.key)</span><br><span class="line">            dataList.addAll(it.value)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * path         图片地址</span></span><br><span class="line"><span class="comment"> * key          对应的 HEADER</span></span><br><span class="line"><span class="comment"> * date         时间</span></span><br><span class="line"><span class="comment"> * selected     是否选中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Image</span>(<span class="keyword">val</span> path: String?, <span class="keyword">var</span> key: HEADER?, <span class="keyword">var</span> date: <span class="built_in">Long</span> = <span class="number">0</span>, <span class="keyword">var</span> lat: <span class="built_in">Double</span> = <span class="number">0.0</span>,</span><br><span class="line">  			<span class="keyword">var</span> lng: <span class="built_in">Double</span> = <span class="number">0.0</span>, <span class="keyword">var</span> selected: <span class="built_in">Boolean</span> = <span class="literal">false</span>) : Serializable</span><br></pre></td></tr></table></figure>
+<p>然后按照这个结构，利用泛型，来实现列表多 Type 效果。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> dataList = ArrayList&lt;Any&gt;()</span><br><span class="line"></span><br><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getItemViewType</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (dataList[position] <span class="keyword">is</span> Header) &#123;</span><br><span class="line">        TYPE_HEADER</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        TYPE_IMAGE_ITEM</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，针对图片 Item 的网格布局，直接使用 GridLayoutManager 的 spanSize 就能达到效果。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> layoutManager = GridLayoutManager(context, MAX_COUNT)</span><br><span class="line">layoutManager.spanSizeLookup = <span class="keyword">object</span> : GridLayoutManager.SpanSizeLookup() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">getSpanSize</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">if</span> (adapter!!.getItemViewType(position) == HEADER) &#123;</span><br><span class="line">            <span class="number">1</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="number">3</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到 Header 有个“选择”按钮是可以点击的，所以就有了本文。不用支持点击的话，可以直接使用 ItemDecoration 来达到吸顶效果了。<br>如果要支持点击效果，我采取的方案是：<strong>在 RecyclerView 上面盖一层 Header，然后用过滑动监听来设置 Header 的偏移，从而达到吸顶效果。</strong><br>那么核心便是滑动的监听了：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">matchedImageRv.addOnScrollListener(<span class="keyword">object</span> : RecyclerView.OnScrollListener() &#123;</span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onScrolled</span><span class="params">(recyclerView: <span class="type">RecyclerView</span>?, dx: <span class="type">Int</span>, dy: <span class="type">Int</span>)</span></span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isEmpty(adapter!!.getDataList())) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取到视图中第一个可见的item的position</span></span><br><span class="line">        <span class="keyword">val</span> firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (firstVisiblePosition &lt; <span class="number">0</span> || firstVisiblePosition &gt;= adapter!!.getDataList().size) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取第一个 item 的 VH</span></span><br><span class="line">        <span class="keyword">val</span> viewHolder = matchedImageRv.findViewHolderForLayoutPosition(firstVisiblePosition) ?: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 记录当前位置的数据</span></span><br><span class="line">        currentHeader = adapter!!.getDataList()[firstVisiblePosition]</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 是否应该平移 HEADER</span></span><br><span class="line">        <span class="keyword">val</span> shouldTranslationY = shouldTranslationY(firstVisiblePosition)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 根据高度及 top 值判断是否需要设置 translationY</span></span><br><span class="line">        <span class="keyword">val</span> height = autoMatchHeader.height</span><br><span class="line">        <span class="keyword">if</span> (shouldTranslationY &amp;&amp; viewHolder.itemView.height + viewHolder.itemView.top &lt; height) &#123;</span><br><span class="line">            <span class="keyword">val</span> translationY = viewHolder.itemView.height + viewHolder.itemView.top - height</span><br><span class="line">            autoMatchHeader.translationY = translationY.toFloat()</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            autoMatchHeader.translationY = <span class="number">0f</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">       	<span class="comment">// 更新悬浮 Header 信息</span></span><br><span class="line">        refreshHeader()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>看下 shouldTranslationY 的代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 只有下一行数据是 Header，才应该进行平移</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">shouldTranslationY</span><span class="params">(position: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (adapter!!.getDataList()[position] <span class="keyword">is</span> HEADER) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0</span> until <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (position + <span class="number">1</span> + i &lt; adapter!!.getDataList().size) &#123;</span><br><span class="line">            <span class="keyword">val</span> <span class="keyword">data</span> = adapter!!.getDataList()[position + <span class="number">1</span> + i]</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">data</span> <span class="keyword">is</span> HEADER) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>position 是当前位置，如果当前位置是 HEADER，那么下一行数据肯定不是 HEADER，直接返回 false。如果当前位置是图片 item，那么往下数 3 个，一定能得到下一行数据的类型。中途有可能被 HEADER 类型截断，从而直接返回。然后结合高度，top 值，来判断是否需要设置 translationY，从而达到吸顶效果。<br>然后看下覆盖 HEADER 的点击事件设置：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">autoMatchHeader<span class="selector-class">.selectAllTv</span><span class="selector-class">.setOnClickListener</span> &#123;</span><br><span class="line">    val <span class="selector-tag">header</span> = <span class="keyword">if</span> (currentHeader is Image) &#123;</span><br><span class="line">        (currentHeader as Image)<span class="selector-class">.key</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        currentHeader</span><br><span class="line">    &#125; as HEADER</span><br><span class="line"></span><br><span class="line">    adapter!!<span class="selector-class">.onAllClick</span>(<span class="selector-tag">header</span>, adapter!!<span class="selector-class">.getDataList</span>()<span class="selector-class">.indexOf</span>(header))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过滑动获取当前位置的数据 currentHeader，然后改变这个 currentHeader 对应数据中的具体分组的数据。<br>写的有点乱，但是要点都写出了，over~</p>
 
       
@@ -206,7 +209,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -330,7 +333,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -409,7 +412,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -417,87 +420,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -549,15 +496,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -574,10 +521,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

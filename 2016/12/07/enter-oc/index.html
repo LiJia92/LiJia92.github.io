@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>Objective-C 基本语法 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。 基础Objective-C扩展了ANSI C，是C的超集，也就是说：  任何C源程序，不经修改，即可通过Objective-C编译器成功编译。 Objective-C源程序中可以直接使用任何C语言代码。注意以下几点： OC中头文件后缀为.h，实现文件为.m，类">
-<meta name="keywords" content="iOS">
+  <meta name="description" content="最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。 基础Objective-C扩展了ANSI C，是C的超集，也就是说：  任何C源程序，不经修改，即可通过Objective-C编译器成功编译。 Objective-C源程序中可以直接使用任何C语言代码。注意以下几点：   OC中头文件后缀为.h，实现文件为.m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Objective-C 基本语法">
 <meta property="og:url" content="http://lijia92.github.io/2016/12/07/enter-oc/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。 基础Objective-C扩展了ANSI C，是C的超集，也就是说：  任何C源程序，不经修改，即可通过Objective-C编译器成功编译。 Objective-C源程序中可以直接使用任何C语言代码。注意以下几点： OC中头文件后缀为.h，实现文件为.m，类">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T12:42:10.086Z">
+<meta property="og:description" content="最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。 基础Objective-C扩展了ANSI C，是C的超集，也就是说：  任何C源程序，不经修改，即可通过Objective-C编译器成功编译。 Objective-C源程序中可以直接使用任何C语言代码。注意以下几点：   OC中头文件后缀为.h，实现文件为.m">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-12-07T03:05:24.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.433Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Objective-C 基本语法">
-<meta name="twitter:description" content="最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。 基础Objective-C扩展了ANSI C，是C的超集，也就是说：  任何C源程序，不经修改，即可通过Objective-C编译器成功编译。 Objective-C源程序中可以直接使用任何C语言代码。注意以下几点： OC中头文件后缀为.h，实现文件为.m，类">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,19 +181,26 @@
 <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
 <ul>
 <li>任何C源程序，不经修改，即可通过Objective-C编译器成功编译。</li>
-<li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：<ol>
+<li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：</li>
+</ul>
+<ol>
 <li>OC中头文件后缀为.h，实现文件为.m，类似于c++中的.h于.cpp。</li>
 <li>在OC语言中混合使用C或者C++代码，包含有C语言或者C++语言时，文件的后缀使用.mm。同时一般如果是纯粹的C++文件，源代码文件后缀为.cpp，头文件使用.hpp为后缀。</li>
 <li>import和include的功能是一样的，都是将引入的文件原封不动拷贝到当前位置。import的优点：会自动防止重复拷贝，同时兼容C语言的引入。</li>
 <li>“ ”优先在当前文件路径查找， &lt; &gt;优先在系统环境查找。</li>
 </ol>
-</li>
-</ul>
-<a id="more"></a>
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>相比Java，OC的字符串需要在前面加上“@”符号，否则编译器会理解为c语言中的字符串，导致一些莫名错误。<br><figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="keyword">title</span> = @<span class="string">"Hello"</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">title</span> == @<span class="string">"hello"</span>) &#123;&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>不带参数：<br><figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[obj <span class="function"><span class="keyword">method</span>];</span></span><br></pre></td></tr></table></figure></p>
-<p>带1个参数：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[counter increase:1]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<p>带多个参数：<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">void</span>) setColorToRed: (<span class="built_in">float</span>)red <span class="type">Green</span>: (<span class="built_in">float</span>)green <span class="type">Blue</span>:(<span class="built_in">float</span>)blue <span class="meta">&#123;...&#125;</span> //定义方法</span><br><span class="line">[myObj setColorToRed: <span class="number">1</span>.<span class="number">0</span> <span class="type">Green</span>: <span class="number">0</span>.<span class="number">8</span> <span class="type">Blue</span>: <span class="number">0</span>.<span class="number">2</span>]; //调用方法</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>相比Java，OC的字符串需要在前面加上“@”符号，否则编译器会理解为c语言中的字符串，导致一些莫名错误。</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="keyword">title</span> = @<span class="string">&quot;Hello&quot;</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">title</span> == @<span class="string">&quot;hello&quot;</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>不带参数：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[obj <span class="keyword">method</span>];</span><br></pre></td></tr></table></figure>
+<p>带1个参数：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[counter increase:1]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>带多个参数：</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>) setColorToRed: (<span class="type">float</span>)red <span class="type">Green</span>: (<span class="type">float</span>)green <span class="type">Blue</span>:(<span class="type">float</span>)blue <span class="meta">&#123;...&#125;</span> //定义方法</span><br><span class="line">[myObj setColorToRed: <span class="number">1</span>.<span class="number">0</span> <span class="type">Green</span>: <span class="number">0</span>.<span class="number">8</span> <span class="type">Blue</span>: <span class="number">0</span>.<span class="number">2</span>]; //调用方法</span><br></pre></td></tr></table></figure>
+
 <h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="接口和实现"><a href="#接口和实现" class="headerlink" title="接口和实现"></a>接口和实现</h3><p>Objective-C的类分为接口定义和实现两个部分。接口定义（Interface）放在头文件中，文件扩展名是.h，实现（implementation）放在实现文件中，文件扩展名是.m。</p>
 <blockquote>
 <p>接口定义也可以写在.m文件中，但最好不要这么干。</p>
@@ -207,37 +210,43 @@
 <li>Objective-C里，interface有且只有一个实现，Java的interface可以有0-N个实现。</li>
 <li>Objective-C里，interface可以定义成员属性，Java里不可以。</li>
 </ul>
-<p>在Objective-C里，和Java的Interface概念相似的是<code>Protocol</code>。<br>定义：<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> MyClass &#123;</span><br><span class="line">    <span class="keyword">int</span> memberVar1;</span><br><span class="line">    id  memberVar2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(return_type) instance_method1;</span><br><span class="line">-(return_type) <span class="string">instance_method2:</span> (<span class="keyword">int</span>) p1;</span><br><span class="line">-(return_type) <span class="string">instance_method3:</span> (<span class="keyword">int</span>) p1 <span class="string">andPar:</span> (<span class="keyword">int</span>) p2;</span><br><span class="line"><span class="meta">@end</span></span><br></pre></td></tr></table></figure></p>
-<p>实现：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> MyClass &#123;</span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">memberVar3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-</span>(return_type) <span class="selector-tag">instance_method1</span> &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line">-(return_type) <span class="attribute">instance_method2</span>: (int) p1 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line">-(return_type) <span class="attribute">instance_method3</span>: (int) p1 <span class="attribute">andPar</span>: (int) p2 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>在Objective-C里，和Java的Interface概念相似的是<code>Protocol</code>。<br>定义：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@interface</span> MyClass &#123;</span><br><span class="line">    int memberVar1;</span><br><span class="line">    id  memberVar2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">-</span>(return_type) instance_method1;</span><br><span class="line"><span class="built_in">-</span>(return_type) instance_method2: (int) p1;</span><br><span class="line"><span class="built_in">-</span>(return_type) instance_method3: (int) p1 andPar: (int) p2;</span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>实现：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> MyClass &#123;</span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">memberVar3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-</span>(return_type) <span class="selector-tag">instance_method1</span> &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">-</span>(return_type) <span class="attribute">instance_method2</span>: (int) p1 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">-</span>(return_type) <span class="attribute">instance_method3</span>: (int) p1 <span class="attribute">andPar</span>: (int) p2 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
 <p>接口和实现以@interface、@implementation开头，都以@end结束。“@”符号在Objective-C中是个很神奇的符号。</p>
 <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>写在.h头文件里的方法都是公开的，Objective-C里没有私有方法的概念。</p>
 <ol>
-<li>类方法：类似于Android的静态方法，是属于类的，不需要实例化对象就可以进行调用，用”+”来表示。<br>定义：<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> MyClass</span><br><span class="line">    +(void) sayHello;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@implementation</span> MyClass</span><br><span class="line"></span><br><span class="line">+(void) sayHello &#123;</span><br><span class="line">    <span class="selector-tag">NSLog</span>(@<span class="string">"Hello, World"</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="selector-tag">end</span></span><br></pre></td></tr></table></figure>
+<li><p>类方法：类似于Android的静态方法，是属于类的，不需要实例化对象就可以进行调用，用”+”来表示。<br>定义：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> MyClass</span><br><span class="line">    +(void) sayHello;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@implementation</span> MyClass</span><br><span class="line"></span><br><span class="line">+(void) sayHello &#123;</span><br><span class="line">    <span class="selector-tag">NSLog</span>(@<span class="string">&quot;Hello, World&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="selector-tag">end</span></span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[MyClass sayHello]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 </li>
+<li><p>实例方法：这就跟Android中的费静态方法类似，需要实例化对象才能进行调用，用”-“来表示。<br>定义：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">MyClass </span>: NSObject</span><br><span class="line"><span class="built_in">-</span>(void) sayHello;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@implementation</span> MyClass</span><br><span class="line"></span><br><span class="line"><span class="built_in">-</span>(void) sayHello &#123;</span><br><span class="line">    <span class="selector-tag">NSLog</span>(@<span class="string">&quot;Hello, World&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="selector-tag">end</span></span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mycls</span> = [MyClass new]<span class="comment">;</span></span><br><span class="line"><span class="section">[mycls sayHello]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>使用：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[MyClass sayHello]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>实例方法：这就跟Android中的费静态方法类似，需要实例化对象才能进行调用，用”-“来表示。<br>定义：<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> <span class="attribute">MyClass </span>: NSObject</span><br><span class="line">-(void) sayHello;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@implementation</span> MyClass</span><br><span class="line"></span><br><span class="line">-(void) sayHello &#123;</span><br><span class="line">    <span class="selector-tag">NSLog</span>(@<span class="string">"Hello, World"</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="selector-tag">end</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>使用：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mycls</span> = [MyClass new];</span><br><span class="line"><span class="section">[mycls sayHello]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>可以使用<code>@property</code>来声明属性。<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Car</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carName;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carType;</span><br><span class="line">- (<span class="built_in">NSString</span> *)carInfo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>可以使用<code>@property</code>来声明属性。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Car</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carName;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carType;</span><br><span class="line">- (<span class="built_in">NSString</span> *)carInfo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>它会自动生成getter、setter。当然你也可以复写getter、setter，添加一些额外的功能。<br>它也有一些关键字，具有特殊的作用。</p>
 <ol>
-<li><p>原子性：</p>
+<li>原子性：</li>
+</ol>
 <ul>
 <li>atomic（默认）：atomic意为操作是原子的，意味着只有一个线程访问实例变量。atomic是线程安全的，至少在当前的存取器上是安全的。它是一个默认的特性，但是很少使用，因为比较影响效率，这跟ARM平台和内部锁机制有关。</li>
 <li>nonatomic：nonatomic跟atomic刚好相反。表示非原子的，可以被多个线程访问。它的效率比atomic快。但不能保证在多线程环境下的安全性，在单线程和明确只有一个线程访问的情况下广泛使用。</li>
 </ul>
-</li>
-<li><p>存取器控制：</p>
+<ol start="2">
+<li>存取器控制：</li>
+</ol>
 <ul>
 <li>readwrite（默认）：表示该属性同时拥有setter和getter。</li>
-<li>readonly：readonly表示只有getter没有setter。<br>有时候为了语意更明确可能需要自定义访问器的名字：<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">setter</span> = mySetter:,<span class="keyword">getter</span> = myGetter ) <span class="built_in">NSString</span> *name;</span><br></pre></td></tr></table></figure>
-</li>
+<li>readonly：readonly表示只有getter没有setter。<br>有时候为了语意更明确可能需要自定义访问器的名字：<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">setter</span> = mySetter:,<span class="keyword">getter</span> = myGetter ) <span class="built_in">NSString</span> *name;</span><br></pre></td></tr></table></figure></li>
 </ul>
-</li>
-<li><p>内存管理：</p>
+<ol start="3">
+<li>内存管理：</li>
+</ol>
 <ul>
 <li>assign（默认）：assign用于值类型，如int、float、double和NSInteger，CGFloat等表示单纯的复制。还包括不存在所有权关系的对象，比如常见的delegate。</li>
 <li>retain：在setter方法中，需要对传入的对象进行引用计数加1的操作。简单来说，就是对传入的对象拥有所有权，只要对该对象拥有所有权，该对象就不会被释放。</li>
@@ -245,8 +254,6 @@
 <li>weak：在setter方法中，需要对传入的对象不进行引用计数加1的操作。简单来说，就是对传入的对象没有所有权，当该对象引用计数为0时，即该对象被释放后，用weak声明的实例变量指向nil，即实例变量的值为0。</li>
 <li>copy：与strong类似，但区别在于实例变量是对传入对象的副本拥有所有权，而非对象本身。</li>
 </ul>
-</li>
-</ol>
 
       
 
@@ -260,7 +267,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">iOS</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
         		</li>
       		
 		</ul>
@@ -384,7 +391,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -463,7 +470,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -471,87 +478,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -603,15 +554,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -628,10 +579,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

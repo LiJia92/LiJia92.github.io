@@ -9,20 +9,20 @@
   <title>Gradle 多版本管理（续） | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="之前写过一篇Gradle多版本管理，主要是通过productFlavors来控制产品版本。这篇文章将结合buildTypes来说一下多版本管理。在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后">
-<meta name="keywords" content="gradle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gradle 多版本管理（续）">
 <meta property="og:url" content="http://lijia92.github.io/2017/10/24/gradle-app-2/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="之前写过一篇Gradle多版本管理，主要是通过productFlavors来控制产品版本。这篇文章将结合buildTypes来说一下多版本管理。在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.224Z">
+<meta property="article:published_time" content="2017-10-24T02:20:01.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.443Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle 多版本管理（续）">
-<meta name="twitter:description" content="之前写过一篇Gradle多版本管理，主要是通过productFlavors来控制产品版本。这篇文章将结合buildTypes来说一下多版本管理。在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -41,7 +41,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -55,10 +55,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -115,10 +113,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -185,17 +181,24 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前写过一篇<a href="http://lastwarmth.win/2017/03/16/gradle-app/" target="_blank" rel="noopener">Gradle多版本管理</a>，主要是通过<code>productFlavors</code>来控制产品版本。这篇文章将结合<code>buildTypes</code>来说一下多版本管理。<br>在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：<strong>利用 buildTypes 来控制编译类型。</strong><br>buildTypes 默认会有 debug、release 2 个类型，当然我们还可以添加自己的。比如有个beta环境，用于外网测试。当对接一些三方平台的接口时，有的只能用外网，那么只能整一套外网的测试环境了，比如美团外卖。好，现在假设我们有 debug、beta、release 3 个 buildTypes，然后 pad、phone、custom ３个 productFlavors，接下来就是针对这些环境做配置了：</p>
-<a id="more"></a>
-<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">    lijia &#123;</span><br><span class="line">        keyAlias <span class="string">'lijia'</span></span><br><span class="line">        keyPassword <span class="string">'123456'</span></span><br><span class="line">        storeFile file(<span class="string">'../lijia.jks'</span>)</span><br><span class="line">        storePassword <span class="string">'123456'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">buildTypes &#123;</span><br><span class="line">    release &#123;</span><br><span class="line">        minifyEnabled false</span><br><span class="line">        proguardFiles getDefaultProguardFile(<span class="string">'proguard-android.txt'</span>), <span class="string">'proguard-rules.pro'</span></span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>)</span><br><span class="line">        signingConfig signingConfigs.lijia</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    debug &#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'1'</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    beta &#123;</span><br><span class="line">        buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'2'</span>)</span><br><span class="line">        signingConfig signingConfigs.lijia</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">productFlavors &#123;</span><br><span class="line">    // pad版</span><br><span class="line">    pad &#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.pad"</span></span><br><span class="line">    &#125;</span><br><span class="line">    // 手机版</span><br><span class="line">    phone &#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp.phone"</span></span><br><span class="line">    &#125;</span><br><span class="line">    // 定制版</span><br><span class="line">    custom &#123;</span><br><span class="line">        applicationId <span class="string">"com.study.lijia.gradleapp"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>除了 debug 版不需要签名，其他的编译版本都需要签名。这里随便生成一个，配置在 grandl e中。可以看到我们通过<code>buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &#39;2&#39;)</code>来进行配置<code>HOST_TYPE</code>，配置好了后需要在应用启动的时候进行设置。一般放在 Application 中：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置编译类型</span></span><br><span class="line">        <span class="type">AppCore</span>.setType(<span class="type">BuildConfig</span>.<span class="type">HOST_TYPE</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后 AppCore 根据 HOST_TYPE 来读取、操作不同环境的数据。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppCore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_RELEASE = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_DEBUG = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_BETA = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> mHostType = TYPE_DEBUG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setType</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;</span><br><span class="line">        mHostType = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getContentFromCore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mHostType == TYPE_RELEASE) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Hello World From Release"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mHostType == TYPE_DEBUG) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Hello World From Debug"</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mHostType == TYPE_BETA) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"Hello World From Beta"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello World"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>然后选择 release 版本运行会显示<code>Hello World From Release</code>，其他版本也会显示对应的字符串。那么我们在打包的时候直接打包 Release Build Variant 就行了。当 Debug 或 Beta 进行调试时，选择 Debug（Beta）Build Variant 即可，通过配置可以减少程序员可能造成的错误。当然，如果只是场景比较简单，你也可以直接代码里写<code>if (BuildConfig.DEBUG)</code>。另外如果 Release 版本出问题后面进行跟踪时， Release 的包默认是会混淆优化资源的，而且不可调试，只能改配置。但是如果是根据 Gradle 配置的，我可以直接在 debug 版本里设置 release 的值：<br><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">release </span>&#123;</span><br><span class="line">    buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class">debug </span>&#123;</span><br><span class="line">    buildConfigField(<span class="string">"Integer"</span>, <span class="string">"HOST_TYPE"</span>, <span class="string">'0'</span>) <span class="comment">// 设置和 release 一样的值，运行跟踪问题</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>另外一般接入三方 SDK 的时候都会有很多平台的 so，x86 平台一般只是虚拟机用到，在 release 版本中是不需要的，那么就可以配置，在 release 版本中去除 x86，这样也可以减小包的体积。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">buildTypes</span> &#123;</span><br><span class="line">    <span class="section">release</span> &#123;</span><br><span class="line">      <span class="section">ndk</span> &#123;</span><br><span class="line">          <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">debug</span> &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    beta &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">'armeabi'</span>, <span class="string">'armeabi-v7a'</span>, <span class="string">'x86'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过<code>buildTypes</code>与<code>productFlavors</code>二者结合可以构建出很多的版本，而且可以进行很灵活的配置。文中例子３个 buildTypes，３个 productFlavors，那么就会有<code>3 * 3 = 9</code>个Build Variant了。当然这只是一个Module的配置，当我们Module很多时，上层 App 定义产品 Build Variant，然后依赖 Module 的不同 Build Variant，这样下来我们可以构建各种各样的版本来适应各种需求定制了。<br>再说个项目中用到的场景。业务越做越广，涉及到商家之前的合作也越来越多。很多商家有自己的定制需求，比如换 Logo 啊，换启动图标啊，等等，总不能需求来一个我们就手动改下资源，然后打包吧。所以通过 Gradle 配置好了 Build Variant 了，然后不同的变种下面放置不同的资源，达到打包含不同资源（或其他定制需求）的包的目的。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">buildTypes</span> &#123;</span><br><span class="line">    <span class="section">retail</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">catering</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">takeout</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="attribute">publishNonDefault</span> <span class="literal">true</span></span><br><span class="line">productFlavors &#123;</span><br><span class="line">    <span class="section">mmr</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">xgt</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="section">efs</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这是我们项目中配置的，然后区分文件夹放置不同的资源：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata" alt=""></p>
-<p>注意这种配置并不是只有<code>3 * 3 = 9</code>个变种，而是有１５个。buildTypes 默认包含 debug，release，尽管我们没有显示的配置，所以应该是<code>5 * 3 = 15</code>个变种。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png" alt=""><br>当不需要某些变种时，可以直接忽略掉：<br><figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def ignoreVariants = [</span><br><span class="line">            <span class="string">"xgtTakeout"</span>,</span><br><span class="line">            <span class="string">"efsTakeout"</span>,</span><br><span class="line">            <span class="string">"efsCatering"</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="comment">// To check for a certain build type, use variant.buildType.name == "&lt;buildType&gt;"</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">"debug"</span>) || buildType.<span class="built_in">contains</span>(<span class="string">"release"</span>)) &#123;</span><br><span class="line">        <span class="comment">// Gradle ignores any variants that satisfy the conditions above.</span></span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ignoreVariants.<span class="built_in">contains</span>(variant.<span class="keyword">name</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>重新编译，就可以看到变种只剩６个了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png" alt=""><br>Gradle 的功能真的是太强大了，需要持续学习。</p>
+        <p>之前写过一篇<a target="_blank" rel="noopener" href="http://lastwarmth.win/2017/03/16/gradle-app/">Gradle多版本管理</a>，主要是通过<code>productFlavors</code>来控制产品版本。这篇文章将结合<code>buildTypes</code>来说一下多版本管理。<br>在正常开发中，我们一般会有至少 2 个环境：Debug、Release，即测试环境和生产环境。显然这 2 个环境要用 2 套不同的数据，那么在我们的 App 里必然就需要有个地方来控制这个环境。当然，我们可以在 Debug 的时候用 Debug 环境，然后当要发版时手动改成 Release 环境，但是这很麻烦，很难排除忘记修改的情况，那么等待重新编译将是个很漫长的过程。其实Gradle可以很好的解决这个问题：<strong>利用 buildTypes 来控制编译类型。</strong><br>buildTypes 默认会有 debug、release 2 个类型，当然我们还可以添加自己的。比如有个beta环境，用于外网测试。当对接一些三方平台的接口时，有的只能用外网，那么只能整一套外网的测试环境了，比如美团外卖。好，现在假设我们有 debug、beta、release 3 个 buildTypes，然后 pad、phone、custom ３个 productFlavors，接下来就是针对这些环境做配置了：</p>
+<span id="more"></span>
+
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">signingConfigs &#123;</span><br><span class="line">    lijia &#123;</span><br><span class="line">        keyAlias <span class="string">&#x27;lijia&#x27;</span></span><br><span class="line">        keyPassword <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">        storeFile <span class="built_in">file</span>(<span class="string">&#x27;../lijia.jks&#x27;</span>)</span><br><span class="line">        storePassword <span class="string">&#x27;123456&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">buildTypes &#123;</span><br><span class="line">    release &#123;</span><br><span class="line">        minifyEnabled false</span><br><span class="line">        proguardFiles <span class="built_in">getDefaultProguardFile</span>(<span class="string">&#x27;proguard-android.txt&#x27;</span>), <span class="string">&#x27;proguard-rules.pro&#x27;</span></span><br><span class="line">        <span class="built_in">buildConfigField</span>(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">        signingConfig signingConfigs<span class="selector-class">.lijia</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    debug &#123;</span><br><span class="line">        <span class="built_in">buildConfigField</span>(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    beta &#123;</span><br><span class="line">        <span class="built_in">buildConfigField</span>(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">        signingConfig signingConfigs<span class="selector-class">.lijia</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">productFlavors &#123;</span><br><span class="line">    <span class="comment">// pad版</span></span><br><span class="line">    pad &#123;</span><br><span class="line">        applicationId <span class="string">&quot;com.study.lijia.gradleapp.pad&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 手机版</span></span><br><span class="line">    phone &#123;</span><br><span class="line">        applicationId <span class="string">&quot;com.study.lijia.gradleapp.phone&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 定制版</span></span><br><span class="line">    custom &#123;</span><br><span class="line">        applicationId <span class="string">&quot;com.study.lijia.gradleapp&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>除了 debug 版不需要签名，其他的编译版本都需要签名。这里随便生成一个，配置在 grandl e中。可以看到我们通过<code>buildConfigField(&quot;Integer&quot;, &quot;HOST_TYPE&quot;, &#39;2&#39;)</code>来进行配置<code>HOST_TYPE</code>，配置好了后需要在应用启动的时候进行设置。一般放在 Application 中：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void onCreate() &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置编译类型</span></span><br><span class="line">        <span class="type">AppCore</span>.setType(<span class="type">BuildConfig</span>.<span class="type">HOST_TYPE</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后 AppCore 根据 HOST_TYPE 来读取、操作不同环境的数据。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppCore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_RELEASE = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_DEBUG = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> TYPE_BETA = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> mHostType = TYPE_DEBUG;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">setType</span><span class="params">(<span class="keyword">int</span> type)</span> </span>&#123;</span><br><span class="line">        mHostType = type;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function">String <span class="title">getContentFromCore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mHostType == TYPE_RELEASE) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World From Release&quot;</span>;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(mHostType == TYPE_DEBUG)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World From Debug&quot;</span>;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(mHostType == TYPE_BETA)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;Hello World From Beta&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后选择 release 版本运行会显示<code>Hello World From Release</code>，其他版本也会显示对应的字符串。那么我们在打包的时候直接打包 Release Build Variant 就行了。当 Debug 或 Beta 进行调试时，选择 Debug（Beta）Build Variant 即可，通过配置可以减少程序员可能造成的错误。当然，如果只是场景比较简单，你也可以直接代码里写<code>if (BuildConfig.DEBUG)</code>。另外如果 Release 版本出问题后面进行跟踪时， Release 的包默认是会混淆优化资源的，而且不可调试，只能改配置。但是如果是根据 Gradle 配置的，我可以直接在 debug 版本里设置 release 的值：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">release</span> &#123;</span><br><span class="line">    buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">debug</span> &#123;</span><br><span class="line">    buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>) <span class="comment">// 设置和 release 一样的值，运行跟踪问题</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外一般接入三方 SDK 的时候都会有很多平台的 so，x86 平台一般只是虚拟机用到，在 release 版本中是不需要的，那么就可以配置，在 release 版本中去除 x86，这样也可以减小包的体积。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">buildTypes</span> &#123;</span><br><span class="line">    <span class="section">release</span> &#123;</span><br><span class="line">      <span class="section">ndk</span> &#123;</span><br><span class="line">          <span class="attribute">abiFilters</span> <span class="string">&#x27;armeabi&#x27;</span>, <span class="string">&#x27;armeabi-v7a&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="literal">debug</span> &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">&#x27;armeabi&#x27;</span>, <span class="string">&#x27;armeabi-v7a&#x27;</span>, <span class="string">&#x27;x86&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    beta &#123;</span><br><span class="line">        <span class="section">ndk</span> &#123;</span><br><span class="line">            <span class="attribute">abiFilters</span> <span class="string">&#x27;armeabi&#x27;</span>, <span class="string">&#x27;armeabi-v7a&#x27;</span>, <span class="string">&#x27;x86&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过<code>buildTypes</code>与<code>productFlavors</code>二者结合可以构建出很多的版本，而且可以进行很灵活的配置。文中例子３个 buildTypes，３个 productFlavors，那么就会有<code>3 * 3 = 9</code>个Build Variant了。当然这只是一个Module的配置，当我们Module很多时，上层 App 定义产品 Build Variant，然后依赖 Module 的不同 Build Variant，这样下来我们可以构建各种各样的版本来适应各种需求定制了。<br>再说个项目中用到的场景。业务越做越广，涉及到商家之前的合作也越来越多。很多商家有自己的定制需求，比如换 Logo 啊，换启动图标啊，等等，总不能需求来一个我们就手动改下资源，然后打包吧。所以通过 Gradle 配置好了 Build Variant 了，然后不同的变种下面放置不同的资源，达到打包含不同资源（或其他定制需求）的包的目的。</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildTypes</span> &#123;</span><br><span class="line">    <span class="keyword">retail</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catering</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">takeout</span> &#123; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">publishNonDefault <span class="literal">true</span></span><br><span class="line"><span class="keyword">productFlavors</span> &#123;</span><br><span class="line">    <span class="keyword">mmr</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">xgt</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">efs</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是我们项目中配置的，然后区分文件夹放置不同的资源：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_218.GdkPixdata"></p>
+<p>注意这种配置并不是只有<code>3 * 3 = 9</code>个变种，而是有１５个。buildTypes 默认包含 debug，release，尽管我们没有显示的配置，所以应该是<code>5 * 3 = 15</code>个变种。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_219.png"><br>当不需要某些变种时，可以直接忽略掉：</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">variantFilter</span> &#123; variant -&gt;</span></span><br><span class="line">    def ignoreVariants = [</span><br><span class="line">            <span class="string">&quot;xgtTakeout&quot;</span>,</span><br><span class="line">            <span class="string">&quot;efsTakeout&quot;</span>,</span><br><span class="line">            <span class="string">&quot;efsCatering&quot;</span>,</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    def buildType = variant.buildType.<span class="keyword">name</span></span><br><span class="line">    <span class="comment">// To check for a certain build type, use variant.buildType.name == &quot;&lt;buildType&gt;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> (buildType.<span class="built_in">contains</span>(<span class="string">&quot;debug&quot;</span>) || buildType.<span class="built_in">contains</span>(<span class="string">&quot;release&quot;</span>)) &#123;</span><br><span class="line">        <span class="comment">// Gradle ignores any variants that satisfy the conditions above.</span></span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ignoreVariants.<span class="built_in">contains</span>(variant.<span class="keyword">name</span>)) &#123;</span><br><span class="line">        setIgnore(<span class="literal">true</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重新编译，就可以看到变种只剩６个了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/10/24/%E9%80%89%E5%8C%BA_220.png"><br>Gradle 的功能真的是太强大了，需要持续学习。</p>
 
       
 
@@ -209,7 +212,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">gradle</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -333,7 +336,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -412,7 +415,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -420,87 +423,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -552,15 +499,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -577,10 +524,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

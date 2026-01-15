@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>关于使用 kotlin 碰到的一个坑（一） | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：12345678override fun showRoadCondition(list: List&amp;lt;MyObject&amp;gt;) &amp;#123;    val size = Math.ceil(list.size / 8.0).toInt()    for (i in (0 until size)">
-<meta name="keywords" content="Kotlin">
+  <meta name="description" content="今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码： 12345678override fun showRoadCondition(list: List&lt;MyObject&gt;) &amp;#123;    val size &#x3D; Math.ceil(list.size &#x2F; 8.0).toInt()    for (i in (0 until size">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于使用 kotlin 碰到的一个坑（一）">
 <meta property="og:url" content="http://lijia92.github.io/2018/07/11/kotlin-question/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：12345678override fun showRoadCondition(list: List&amp;lt;MyObject&amp;gt;) &amp;#123;    val size = Math.ceil(list.size / 8.0).toInt()    for (i in (0 until size)">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-23T12:11:56.928Z">
+<meta property="og:description" content="今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码： 12345678override fun showRoadCondition(list: List&lt;MyObject&gt;) &amp;#123;    val size &#x3D; Math.ceil(list.size &#x2F; 8.0).toInt()    for (i in (0 until size">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-07-11T09:58:49.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.453Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于使用 kotlin 碰到的一个坑（一）">
-<meta name="twitter:description" content="今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：12345678override fun showRoadCondition(list: List&amp;lt;MyObject&amp;gt;) &amp;#123;    val size = Math.ceil(list.size / 8.0).toInt()    for (i in (0 until size)">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -37,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -51,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -111,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -181,15 +177,31 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">showRoadCondition</span><span class="params">(list: <span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> size = Math.ceil(list.size / <span class="number">8.0</span>).toInt()</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> (<span class="number">0</span> until size)) &#123;</span><br><span class="line">        <span class="keyword">val</span> min = Math.min((i + <span class="number">1</span>) * <span class="number">8</span>, list.size)</span><br><span class="line">        <span class="keyword">val</span> subList = list.subList(i * <span class="number">8</span>, min).toList() <span class="keyword">as</span> ArrayList&lt;MyObject&gt;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其他代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这样一个方法，需要将列表的数据，根据 8 个一组进行划分。subList 生成的一个 List 不是我们平常使用的 List，所以后面加上了 kotlin 自带的 toList() 方法，来转化成真正的 List。<br>这段代码在大多数情况下都没有什么问题，但是当 list 的长度为 9、17、25等等时就会崩溃。所报异常为：<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java<span class="selector-class">.util</span><span class="selector-class">.Collections</span><span class="variable">$SingletonList</span> cannot be cast to java<span class="selector-class">.util</span><span class="selector-class">.ArrayList</span></span><br></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<p>很显然，强制转换的异常。<br>起初真的是一脸懵逼啊，后面只能耐心解决问题，看到代码容易发现 toList 应该是问题所在。看下其源码：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a [List] containing all elements.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">toList</span><span class="params">()</span></span>: List&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> Collection) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">when</span> (size) &#123;</span><br><span class="line">            <span class="number">0</span> -&gt; emptyList()</span><br><span class="line">            <span class="number">1</span> -&gt; listOf(<span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> List) <span class="keyword">get</span>(<span class="number">0</span>) <span class="keyword">else</span> iterator().next())</span><br><span class="line">            <span class="keyword">else</span> -&gt; <span class="keyword">this</span>.toMutableList()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toMutableList().optimizeReadOnlyList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当 size == 1 时调用的 listOf，继续跟：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an immutable list containing only the specified object [element].</span></span><br><span class="line"><span class="comment"> * The returned list is serializable.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@sample</span> samples.collections.Collections.Lists.singletonReadOnlyList</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@JvmVersion</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">listOf</span><span class="params">(element: <span class="type">T</span>)</span></span>: List&lt;T&gt; = java.util.Collections.singletonList(element)</span><br></pre></td></tr></table></figure></p>
-<p>一目了然了，当 size 为 1 时，toList 方法会生成一个 singletonList，而这个 List 无法转化成 ArrayList，从而导致崩溃。嗯，我的内心也是崩溃的…<br>后面将 toList 改成 toMutableList 即可。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a [MutableList] filled with all elements of this collection.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Collection<span class="type">&lt;T&gt;</span>.<span class="title">toMutableList</span><span class="params">()</span></span>: MutableList&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> ArrayList(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>关于 kotlin 的 var 变量，我们可能经常需要可以为 null 的类型。比如：<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">var</span> <span class="built_in">data</span>: <span class="built_in">List</span>&lt;MyObject&gt;? = <span class="built_in">null</span></span><br></pre></td></tr></table></figure></p>
-<p>可以通过 ? 进行判空，或者直接使用 ?.let{} 在非 null 的时候执行某些代码。也可以加上 ?:run {} 来执行为 null 时的操作：<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="class"><span class="keyword">data</span>: <span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;? = null</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">data</span>?.let &#123;</span></span><br><span class="line"><span class="class">    <span class="title">maskView</span>.<span class="title">visibility</span> = <span class="type">View</span>.<span class="type">VISIBLE</span></span></span><br><span class="line"><span class="class">&#125; ?: kotlin.run &#123;</span></span><br><span class="line"><span class="class">    <span class="title">maskView</span>.<span class="title">visibility</span> = <span class="type">View</span>.<span class="type">GONE</span></span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure></p>
+        <p>今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">showRoadCondition</span><span class="params">(list: <span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> size = Math.ceil(list.size / <span class="number">8.0</span>).toInt()</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> (<span class="number">0</span> until size)) &#123;</span><br><span class="line">        <span class="keyword">val</span> min = Math.min((i + <span class="number">1</span>) * <span class="number">8</span>, list.size)</span><br><span class="line">        <span class="keyword">val</span> subList = list.subList(i * <span class="number">8</span>, min).toList() <span class="keyword">as</span> ArrayList&lt;MyObject&gt;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其他代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样一个方法，需要将列表的数据，根据 8 个一组进行划分。subList 生成的一个 List 不是我们平常使用的 List，所以后面加上了 kotlin 自带的 toList() 方法，来转化成真正的 List。<br>这段代码在大多数情况下都没有什么问题，但是当 list 的长度为 9、17、25等等时就会崩溃。所报异常为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java<span class="selector-class">.util</span>.Collections<span class="variable">$SingletonList</span> cannot be cast to java<span class="selector-class">.util</span>.ArrayList</span><br></pre></td></tr></table></figure>
 
+<span id="more"></span>
+
+<p>很显然，强制转换的异常。<br>起初真的是一脸懵逼啊，后面只能耐心解决问题，看到代码容易发现 toList 应该是问题所在。看下其源码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a [List] containing all elements.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Iterable<span class="type">&lt;T&gt;</span>.<span class="title">toList</span><span class="params">()</span></span>: List&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> Collection) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">when</span> (size) &#123;</span><br><span class="line">            <span class="number">0</span> -&gt; emptyList()</span><br><span class="line">            <span class="number">1</span> -&gt; listOf(<span class="keyword">if</span> (<span class="keyword">this</span> <span class="keyword">is</span> List) <span class="keyword">get</span>(<span class="number">0</span>) <span class="keyword">else</span> iterator().next())</span><br><span class="line">            <span class="keyword">else</span> -&gt; <span class="keyword">this</span>.toMutableList()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toMutableList().optimizeReadOnlyList()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 size &#x3D;&#x3D; 1 时调用的 listOf，继续跟：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns an immutable list containing only the specified object [element].</span></span><br><span class="line"><span class="comment"> * The returned list is serializable.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@sample</span> samples.collections.Collections.Lists.singletonReadOnlyList</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@JvmVersion</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">listOf</span><span class="params">(element: <span class="type">T</span>)</span></span>: List&lt;T&gt; = java.util.Collections.singletonList(element)</span><br></pre></td></tr></table></figure>
+<p>一目了然了，当 size 为 1 时，toList 方法会生成一个 singletonList，而这个 List 无法转化成 ArrayList，从而导致崩溃。嗯，我的内心也是崩溃的…<br>后面将 toList 改成 toMutableList 即可。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Returns a [MutableList] filled with all elements of this collection.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> Collection<span class="type">&lt;T&gt;</span>.<span class="title">toMutableList</span><span class="params">()</span></span>: MutableList&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> ArrayList(<span class="keyword">this</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><p>java 中一个 Model 有字段不需要序列化时，可以使用 transient 关键字：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">transient</span> Rectangle <span class="built_in">rect</span>;</span><br></pre></td></tr></table></figure>
+<p>然后 kotlin 中如此使用：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transient</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> isPlaying = <span class="keyword">false</span>;</span><br></pre></td></tr></table></figure>
+<p>如果我在 java 代码中使用 @Transient，fastjson 解析就会报错了，因为 Rectangle 没有默认构造函数：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@Transient</span><br><span class="line"><span class="keyword">public</span> Rectangle rect;</span><br></pre></td></tr></table></figure>
+<p>所以 2 个关键字（注解）都要分开使用。</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>关于 kotlin 的 var 变量，我们可能经常需要可以为 null 的类型。比如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">data</span>: List&lt;MyObject&gt;? = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<p>可以通过 ? 进行判空，或者直接使用 ?.let{} 在非 null 的时候执行某些代码。也可以加上 ?:run {} 来执行为 null 时的操作：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">var</span> <span class="class"><span class="keyword">data</span>: <span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;? = null</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">data</span>?.let &#123;</span></span><br><span class="line"><span class="class">    <span class="title">maskView</span>.<span class="title">visibility</span> = <span class="type">View</span>.<span class="type">VISIBLE</span></span></span><br><span class="line"><span class="class">&#125; ?: kotlin.run &#123;</span></span><br><span class="line"><span class="class">    <span class="title">maskView</span>.<span class="title">visibility</span> = <span class="type">View</span>.<span class="type">GONE</span></span></span><br><span class="line"><span class="class">&#125;</span></span><br></pre></td></tr></table></figure>
       
 
       
@@ -202,7 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Kotlin</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>
@@ -326,7 +338,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -405,7 +417,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -413,87 +425,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -545,15 +501,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -570,10 +526,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

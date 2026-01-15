@@ -9,19 +9,19 @@
   <title>Android Hybrid开发入门：原生Android与JS的交互 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="介绍我们知道，现在App大致分为3类：Hybrid App、Web App、Native App。Hybrid App兼具“Native App良好用户交互体验的优势”和“Web App跨平台开发的优势”，市面上现在也有许多Hybrid App。 最近做的项目，也会使用到Hybrid开发，之前没做过的。所以今天初步学习了一下，记录一下学习心得。 代码首先，新建一个新的AS module，然后新建a">
-<meta name="keywords" content="hybrid开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Hybrid开发入门：原生Android与JS的交互">
 <meta property="og:url" content="http://lijia92.github.io/2015/12/25/hybrid-introduction/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="介绍我们知道，现在App大致分为3类：Hybrid App、Web App、Native App。Hybrid App兼具“Native App良好用户交互体验的优势”和“Web App跨平台开发的优势”，市面上现在也有许多Hybrid App。 最近做的项目，也会使用到Hybrid开发，之前没做过的。所以今天初步学习了一下，记录一下学习心得。 代码首先，新建一个新的AS module，然后新建a">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction2.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.229Z">
+<meta property="article:published_time" content="2015-12-25T07:03:16.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.448Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android Hybrid开发入门：原生Android与JS的交互">
-<meta name="twitter:description" content="介绍我们知道，现在App大致分为3类：Hybrid App、Web App、Native App。Hybrid App兼具“Native App良好用户交互体验的优势”和“Web App跨平台开发的优势”，市面上现在也有许多Hybrid App。 最近做的项目，也会使用到Hybrid开发，之前没做过的。所以今天初步学习了一下，记录一下学习心得。 代码首先，新建一个新的AS module，然后新建a">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -40,7 +40,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -54,10 +54,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -114,10 +112,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -186,35 +182,39 @@
       
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>我们知道，现在App大致分为3类：<code>Hybrid App</code>、<code>Web App</code>、<code>Native App</code>。Hybrid App兼具“Native App良好用户交互体验的优势”和“Web App跨平台开发的优势”，市面上现在也有许多Hybrid App。</p>
 <p>最近做的项目，也会使用到Hybrid开发，之前没做过的。所以今天初步学习了一下，记录一下学习心得。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>首先，新建一个新的AS module，然后新建assets目录，至于src/main文件夹下。如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction1.png" alt="这里写图片描述"><br>我们再assets目录下，新建一个hello.html，编辑内容如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = <span class="string">"Hello Hybrid!"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">onclick</span>=<span class="string">"window.demo.clickOnAndroid()"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>首先，新建一个新的AS module，然后新建assets目录，至于src&#x2F;main文件夹下。如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction1.png" alt="这里写图片描述"><br>我们再assets目录下，新建一个hello.html，编辑内容如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hello Hybrid!&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;window.demo.clickOnAndroid()&quot;</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>一个很简单的html页面。</p>
-<a id="more"></a>
-<p>然后新建一个WebViewActivity。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebViewActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> WebView webView;</span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line">    <span class="keyword">private</span> Handler mHandler = <span class="keyword">new</span> Handler();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressLint</span>(<span class="string">"JavascriptInterface"</span>)</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        mContext = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">// 创建WebView对象</span></span><br><span class="line">        webView = <span class="keyword">new</span> WebView(<span class="keyword">this</span>);</span><br><span class="line">        <span class="comment">// 切换到内容视图</span></span><br><span class="line">        setContentView(webView);</span><br><span class="line">        <span class="comment">// 获取WebView配置</span></span><br><span class="line">        WebSettings ws = webView.getSettings();</span><br><span class="line">        <span class="comment">// 启用JavaScript</span></span><br><span class="line">        ws.setJavaScriptEnabled(<span class="keyword">true</span>);</span><br><span class="line">        <span class="comment">// 载入assets目录下的一个页面</span></span><br><span class="line">        webView.loadUrl(<span class="string">"file:///android_asset/hello.html"</span>);</span><br><span class="line">        <span class="comment">// 添加交互接口</span></span><br><span class="line">        webView.addJavascriptInterface(<span class="keyword">new</span> Object() &#123;</span><br><span class="line">            <span class="meta">@JavascriptInterface</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">clickOnAndroid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                Toast.makeText(mContext, <span class="string">"Hello Hybrid."</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">                mHandler.post(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        webView.loadUrl(<span class="string">"javascript:hello()"</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">"demo"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<p>然后新建一个WebViewActivity。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebViewActivity</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Activity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">WebView</span> webView;</span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">Context</span> mContext;</span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">Handler</span> mHandler = <span class="keyword">new</span> <span class="title class_">Handler</span>();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressLint</span>(<span class="string">&quot;JavascriptInterface&quot;</span>)</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">void</span> <span class="title function_">onCreate</span>(<span class="params"><span class="title class_">Bundle</span> savedInstanceState</span>) &#123;</span><br><span class="line">        <span class="variable language_">super</span>.<span class="title function_">onCreate</span>(savedInstanceState);</span><br><span class="line">        mContext = <span class="variable language_">this</span>;</span><br><span class="line">        <span class="comment">// 创建WebView对象</span></span><br><span class="line">        webView = <span class="keyword">new</span> <span class="title class_">WebView</span>(<span class="variable language_">this</span>);</span><br><span class="line">        <span class="comment">// 切换到内容视图</span></span><br><span class="line">        <span class="title function_">setContentView</span>(webView);</span><br><span class="line">        <span class="comment">// 获取WebView配置</span></span><br><span class="line">        <span class="title class_">WebSettings</span> ws = webView.<span class="title function_">getSettings</span>();</span><br><span class="line">        <span class="comment">// 启用JavaScript</span></span><br><span class="line">        ws.<span class="title function_">setJavaScriptEnabled</span>(<span class="literal">true</span>);</span><br><span class="line">        <span class="comment">// 载入assets目录下的一个页面</span></span><br><span class="line">        webView.<span class="title function_">loadUrl</span>(<span class="string">&quot;file:///android_asset/hello.html&quot;</span>);</span><br><span class="line">        <span class="comment">// 添加交互接口</span></span><br><span class="line">        webView.<span class="title function_">addJavascriptInterface</span>(<span class="keyword">new</span> <span class="title class_">Object</span>() &#123;</span><br><span class="line">            <span class="meta">@JavascriptInterface</span></span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">clickOnAndroid</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="title class_">Toast</span>.<span class="title function_">makeText</span>(mContext, <span class="string">&quot;Hello Hybrid.&quot;</span>, <span class="title class_">Toast</span>.<span class="property">LENGTH_SHORT</span>).<span class="title function_">show</span>();</span><br><span class="line">                mHandler.<span class="title function_">post</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">                    <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">run</span>(<span class="params"></span>) &#123;</span><br><span class="line">                        webView.<span class="title function_">loadUrl</span>(<span class="string">&quot;javascript:hello()&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;demo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过WebView的loadUrl，填入我们hello.html的路径，便能在App中加载这个页面了。（别忘记在AndroidManifest.xml中声明Activity）<br>loadUrl填入JS方法，则可调JS方法。<br>注意使用的handler发送消息来更新。如是直接webView.loadUrl(“javascript:hello()”);可能会导致如下错误：</p>
 <blockquote>
-<p><font color="red">java.lang.Throwable: A WebView method was called on thread ‘JavaBridge’. All WebView methods must be called on the same thread. (Expected Looper Looper (main, tid 1) {425f48a8} called on Looper (JavaBridge, tid 92104) {426508d0}, FYI main Looper is Looper (main, tid 1) {425f48a8})</font></p>
+<p><font color=red>java.lang.Throwable: A WebView method was called on thread ‘JavaBridge’. All WebView methods must be called on the same thread. (Expected Looper Looper (main, tid 1) {425f48a8} called on Looper (JavaBridge, tid 92104) {426508d0}, FYI main Looper is Looper (main, tid 1) {425f48a8})</p>
 </blockquote>
 <p>即是需要在同一个进程中进行更新，所以需要使用handler发送消息更新。</p>
-<p>回到AS帮我们自动建好的MainActivity。修改FloatingActionButton点击事件：<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);</span><br><span class="line">        fab.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">                Intent intent = <span class="keyword">new</span> Intent(MainActivity.<span class="keyword">this</span>, WebViewActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>回到AS帮我们自动建好的MainActivity。修改FloatingActionButton点击事件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">FloatingActionButton</span> <span class="variable">fab</span> <span class="operator">=</span> (FloatingActionButton) findViewById(R.id.fab);</span><br><span class="line">        fab.setOnClickListener(<span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">                <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(MainActivity.<span class="built_in">this</span>, WebViewActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
 <p>启动应用，看下效果：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/12/hybrid-introduction2.png" alt="这里写图片描述"><br>可以看到，点击“click me”的时候，弹出了Toast，并且button的text改变了，这即是android与js的交互。当然，这个交互十分简单，后面还有很多的坑要踩~</p>
 <h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><p>注意到代码中的clickOnAndroid方法上方的注解<code>@JavascriptInterface</code>，这个注解很关键。若没有这个注解，会在4.2以上版本的android上出现：<code>Uncaught TypeError: Object [object Object] has no method xxx</code>的错误。</p>
 <p>对于4.2之前的版本，采用这种方式可能会被恶意JS攻击，诸如平台型App需要访问三方Html的则不建议采用这种方式实现交互。</p>
 <h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>前面示例js调用android是通过addJavascriptInterface来进行交互的，下面再介绍2种方式。</p>
 <ul>
-<li>重写WebViewClient.shouldOverrideUrlLoading：<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">webView.setWebViewClient(<span class="keyword">new</span> WebViewClient() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</span><br><span class="line">                Toast.makeText(mContext, url, Toast.LENGTH_SHORT).show();</span><br><span class="line">                <span class="function"><span class="keyword">return</span> <span class="keyword">super</span>.<span class="title">shouldOverrideUrlLoading</span><span class="params">(view, url)</span></span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-</li>
+<li>重写WebViewClient.shouldOverrideUrlLoading：<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">webView.<span class="title function_">setWebViewClient</span>(<span class="keyword">new</span> <span class="title class_">WebViewClient</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">shouldOverrideUrlLoading</span>(<span class="params"><span class="title class_">WebView</span> view, <span class="title class_">String</span> url</span>) &#123;</span><br><span class="line">                <span class="title class_">Toast</span>.<span class="title function_">makeText</span>(mContext, url, <span class="title class_">Toast</span>.<span class="property">LENGTH_SHORT</span>).<span class="title function_">show</span>();</span><br><span class="line">                <span class="keyword">return</span> <span class="variable language_">super</span>.<span class="title function_">shouldOverrideUrlLoading</span>(view, url);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+当页面内的URL发生变化时，如点击链接、执行JavaScript（如location.href&#x3D;”xxxxxxx”）等均会触发WebViewClient.shouldOverrideUrlLoading，通过将Web调用Native的数据封装在URL，再由Native解析数据并执行响应Native方法。</li>
 </ul>
-<p>当页面内的URL发生变化时，如点击链接、执行JavaScript（如location.href=”xxxxxxx”）等均会触发WebViewClient.shouldOverrideUrlLoading，通过将Web调用Native的数据封装在URL，再由Native解析数据并执行响应Native方法。</p>
-<p>例如：将前面示例中的hello.html改成如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = <span class="string">"Hello Hybrid!"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"hybrid.html"</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">onclick</span>=<span class="string">"window.demo.clickOnAndroid()"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>例如：将前面示例中的hello.html改成如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hello Hybrid!&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;hybrid.html&quot;</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;window.demo.clickOnAndroid()&quot;</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>在点击“Click Me”之后，页面会跳转到hybrid.html，此时便会进入native执行shouldOverrideUrlLoading方法，再来解析Url，并执行相应的native方法。</p>
 <ul>
-<li>重写WebChromeClient.onJsPrompt，或onJsConfirm，或onJsAlert：<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">webView.setWebChromeClient(<span class="keyword">new</span> <span class="type">WebChromeClient</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> boolean onJsPrompt(WebView view, <span class="keyword">String</span> url, <span class="keyword">String</span> message, <span class="keyword">String</span> defaultValue, JsPromptResult result) &#123;</span><br><span class="line">                Toast.makeText(mContext, url, Toast.LENGTH_SHORT).show();</span><br><span class="line">                result.confirm(<span class="string">""</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
-</li>
+<li>重写WebChromeClient.onJsPrompt，或onJsConfirm，或onJsAlert：<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">webView.<span class="title function_">setWebChromeClient</span>(<span class="keyword">new</span> <span class="title class_">WebChromeClient</span>() &#123;</span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">boolean</span> <span class="title function_">onJsPrompt</span>(<span class="params"><span class="title class_">WebView</span> view, <span class="title class_">String</span> url, <span class="title class_">String</span> message, <span class="title class_">String</span> defaultValue, <span class="title class_">JsPromptResult</span> result</span>) &#123;</span><br><span class="line">                <span class="title class_">Toast</span>.<span class="title function_">makeText</span>(mContext, url, <span class="title class_">Toast</span>.<span class="property">LENGTH_SHORT</span>).<span class="title function_">show</span>();</span><br><span class="line">                result.<span class="title function_">confirm</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+当执行“window.prompt（“{}”）”这样的JavaScript代码时，将会触发WebChromeClient.onJsPrompt。onJsConfirm、onJsAlert也是如此。</li>
 </ul>
-<p>当执行“window.prompt（“{}”）”这样的JavaScript代码时，将会触发WebChromeClient.onJsPrompt。onJsConfirm、onJsAlert也是如此。</p>
-<p>例如：将前面示例中的hello.html改成如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">    <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">()</span> </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = <span class="string">"Hello Hybrid!"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">id</span>=<span class="string">"demo"</span> <span class="attr">onclick</span>=<span class="string">"window.prompt('Hello')"</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>例如：将前面示例中的hello.html改成如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">hello</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span> = <span class="string">&quot;Hello Hybrid!&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;window.prompt(&#x27;Hello&#x27;)&quot;</span>&gt;</span>Click Me<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当点击“Click Me”时，会进入native执行onJsPrompt方法，再来解析url，message，并执行相应的native方法。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>Github上找到一个开源库：<a href="https://github.com/pedant/safe-java-js-webview-bridge" target="_blank" rel="noopener">safe-java-js-webview-bridge</a>，便是采用的这种方式进行交互，并做了更好的封装，是个不错的选择。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>Github上找到一个开源库：<a target="_blank" rel="noopener" href="https://github.com/pedant/safe-java-js-webview-bridge">safe-java-js-webview-bridge</a>，便是采用的这种方式进行交互，并做了更好的封装，是个不错的选择。</p>
 
       
 
@@ -228,7 +228,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">hybrid开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>
@@ -352,7 +352,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -431,7 +431,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -439,87 +439,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -571,15 +515,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -596,10 +540,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

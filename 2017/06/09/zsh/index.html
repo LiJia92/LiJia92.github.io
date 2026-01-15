@@ -9,13 +9,12 @@
   <title>初识 zsh | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停git branch来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波zsh了。 同事有用zsh的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现bash相比zsh确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很">
-<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初识 zsh">
 <meta property="og:url" content="http://lijia92.github.io/2017/06/09/zsh/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停git branch来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波zsh了。 同事有用zsh的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现bash相比zsh确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_006.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF.gif">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF1.gif">
@@ -24,10 +23,11 @@
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_012.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF2.gif">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_007.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.263Z">
+<meta property="article:published_time" content="2017-06-09T02:21:18.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.501Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初识 zsh">
-<meta name="twitter:description" content="昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停git branch来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波zsh了。 同事有用zsh的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现bash相比zsh确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_006.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -46,7 +46,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -60,10 +60,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -120,10 +118,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -192,32 +188,38 @@
       
         <p>昨天写关于 git 的文章的时候，需要来回切分支，而且 bash 也看不到当前是哪个分支，得不停<code>git branch</code>来看，显得十分麻烦。于是便不得不逼着自己一把，来熟悉一波<code>zsh</code>了。</p>
 <p>同事有用<code>zsh</code>的，而且鼎力推荐，因为目前的工作和学习与命令行的交集不是很深，所以一直没有开始用。最近发现<code>bash</code>相比<code>zsh</code>确实是难用许多，便只能硬着头皮来学习了。之所以是硬着头皮，是因为自己对 Linux 系统不是很熟悉，虽然现在是在用，但是对于 Linux 的很多特性都不是很了解，命令行、Shell 脚本算是 Linux 一大特色。</p>
-<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
+<p><code>zsh</code>有着强大的功能，但是其配置也是异常复杂，于是 Github 上便有了这样的一个库：<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh">oh-my-zsh</a>，<code>oh-my-zsh</code>是为了简化zsh的配置而提供的一个配置模板，可以更好的管理zsh的各项配置。可以看到它有 55k 的 star，可见其火爆程度。现在才来接触，显得挺惭愧的。</p>
 <p>关于<code>oh-my-zsh</code>的安装直接照着 github 中的<code>README</code>一步一步来就好了。就提醒一点，安装完之后需要注销掉用户，重启也可以，然后再重新登录，才可以看到<code>zsh</code>。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <p>关于<code>zsh</code>的优势，网上众说纷纭，但是我目前用的不多，体会得不深。现在就我体会到的来说几点。</p>
 <h2 id="git支持"><a href="#git支持" class="headerlink" title="git支持"></a>git支持</h2><p>很直接的一个体现就是进入到有 git 版本控制的目录，会显示出当前所在的分支。</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_006.png" alt=""></p>
-<p>再也不同<code>git branch</code>来看当前是什么分支了。<br>另外，<code>oh-my-zsh</code>也配置了很多 git 命令别名，方便使用。比如<code>gst</code>代表<code>git status</code>，<code>gco</code>代表<code>git checkout</code>，还有许许多多的配置，可以参考<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git" target="_blank" rel="noopener">Plugin:git</a>。</p>
-<h2 id="Tab自动补全"><a href="#Tab自动补全" class="headerlink" title="Tab自动补全"></a>Tab自动补全</h2><p>比如我想进入到 blog 目录，我敲<code>cd b</code>然后按<code>Tab</code>，<code>zsh</code>变回把所有 b 开头的目录列出来，然后再按<code>Tab</code>，它会帮你选择目录，当选到自己想要的目录时，按回车就可以进入了，是不是非常方便！！！<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF.gif" alt=""></p>
-<h2 id="大小写忽略"><a href="#大小写忽略" class="headerlink" title="大小写忽略"></a>大小写忽略</h2><p>大小写切换是很常见的，在上个例子中，即使我敲成<code>cd B</code>也能找到<code>blog</code>目录。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF1.gif" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_006.png"></p>
+<p>再也不同<code>git branch</code>来看当前是什么分支了。<br>另外，<code>oh-my-zsh</code>也配置了很多 git 命令别名，方便使用。比如<code>gst</code>代表<code>git status</code>，<code>gco</code>代表<code>git checkout</code>，还有许许多多的配置，可以参考<a target="_blank" rel="noopener" href="https://github.com/robbyrussell/oh-my-zsh/wiki/Plugin:git">Plugin:git</a>。</p>
+<h2 id="Tab自动补全"><a href="#Tab自动补全" class="headerlink" title="Tab自动补全"></a>Tab自动补全</h2><p>比如我想进入到 blog 目录，我敲<code>cd b</code>然后按<code>Tab</code>，<code>zsh</code>变回把所有 b 开头的目录列出来，然后再按<code>Tab</code>，它会帮你选择目录，当选到自己想要的目录时，按回车就可以进入了，是不是非常方便！！！<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF.gif"></p>
+<h2 id="大小写忽略"><a href="#大小写忽略" class="headerlink" title="大小写忽略"></a>大小写忽略</h2><p>大小写切换是很常见的，在上个例子中，即使我敲成<code>cd B</code>也能找到<code>blog</code>目录。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF1.gif"></p>
 <h2 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h2><p>当目录层级很深的时候，想要进入到那个目录得一直<code>cd--ls--cd--ls</code>，就像这样：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_009.png" alt=""></p>
-<p>看着就觉得头疼，因为实在无法记住那么长的目录。对此，<code>autojump</code>可谓是一大神作。<br>先安装：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install autojump</span><br></pre></td></tr></table></figure></p>
-<p>然后打开<code>.zshrc</code>，找到<code>plugins</code>，加入<code>autojump</code>：<br><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">plugins</span>=(git autojump)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_009.png"></p>
+<p>看着就觉得头疼，因为实在无法记住那么长的目录。对此，<code>autojump</code>可谓是一大神作。<br>先安装：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="built_in">get</span> install autojump</span><br></pre></td></tr></table></figure>
+<p>然后打开<code>.zshrc</code>，找到<code>plugins</code>，加入<code>autojump</code>：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">plugins</span><span class="operator">=</span>(git autojump)</span><br></pre></td></tr></table></figure>
 <p>之后便是这种姿势打开目录了：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_011.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_011.png"></p>
 <p>怎么样，是不是简直爽爆了！？再也不用臃肿的敲着蛋疼的<code>cd</code>了。<br>当在一次终端行为中，有了多个进入的目录，可以直接输入<code>d</code>来看到目录，然后直接<code>输入数字</code>便可以快捷进入到相应的目录中了。</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_012.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_012.png"></p>
 <p>简直就是方便！又多了一个不得不用<code>zsh</code>的理由了！！！</p>
-<h2 id="快速打开当前所在文件夹"><a href="#快速打开当前所在文件夹" class="headerlink" title="快速打开当前所在文件夹"></a>快速打开当前所在文件夹</h2><p>编辑<code>.zshrc</code>文件，加入：<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alias</span> <span class="title">o</span>=<span class="string">"nautilus ."</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="快速打开当前所在文件夹"><a href="#快速打开当前所在文件夹" class="headerlink" title="快速打开当前所在文件夹"></a>快速打开当前所在文件夹</h2><p>编辑<code>.zshrc</code>文件，加入：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alias o<span class="operator">=</span><span class="string">&quot;nautilus .&quot;</span></span><br></pre></td></tr></table></figure>
 <p>当命令行处于某个文件夹下时，直接键入<code>o</code>即可打开当前文件夹。</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF2.gif" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09GIF2.gif"></p>
 <p>这其实只是给<code>zsh</code>配置了一个别名，任何我们常用的操作都可以根据自己喜好配置别名，方便使用。</p>
-<p>目前体验的到的可能就这几个我很欣赏的特性了。当然也是才刚刚开始使用，后面有别的再行补充。这里先贴一下网友的配置，后面可能用得到：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ZSH的环境变量</span></span><br><span class="line">export ZSH=/Users/dawang/.oh-my-zsh</span><br><span class="line"><span class="meta">#</span><span class="bash"> 主题设置</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 主题列表在 ~/.oh-my-zsh/themes/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果设置为 <span class="string">"random"</span>, 每次开启都会是不同的主题</span></span><br><span class="line">ZSH_THEME="agnoster"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果想要大小写敏感，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CASE_SENSITIVE=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果想要连接符不敏感，可以取消注释下面的一行。_ 和 - 将可以互换</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> HYPHEN_INSENSITIVE=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果不想要自动更新，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> DISABLE_AUTO_UPDATE=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 自动更新的时间间隔，单位是天，这里设置 30 天更新一次</span></span><br><span class="line">export UPDATE_ZSH_DAYS=30</span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果不想要 ls 命令输出带颜色，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> DISABLE_LS_COLORS=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 是否禁止更改终端标题,不要禁止,不然所有终端tab只显示zsh了,而不随着目录的改变而改变显示</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> DISABLE_AUTO_TITLE=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 自动纠正命令,不启用,不怎么好用</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ENABLE_CORRECTION=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 按tab键补全命令的时候,如果没什么可补全的就会出现三个红点,更人性化显示，这里我们启用</span></span><br><span class="line">COMPLETION_WAITING_DOTS="true"</span><br><span class="line"><span class="meta">#</span><span class="bash"> Uncomment the following line <span class="keyword">if</span> you want to <span class="built_in">disable</span> marking untracked files</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> under VCS as dirty. This makes repository status check <span class="keyword">for</span> large repositories</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> much, much faster.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 不要在意这些细节，不需要改动</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> DISABLE_UNTRACKED_FILES_DIRTY=<span class="string">"true"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 历史命令日期显示格式</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 有三种方式: <span class="string">"mm/dd/yyyy"</span>|<span class="string">"dd.mm.yyyy"</span>|<span class="string">"yyyy-mm-dd"</span>，我比较习惯最后那种</span></span><br><span class="line">HIST_STAMPS="yyyy-mm-dd"</span><br><span class="line"><span class="meta">#</span><span class="bash"> Would you like to use another custom folder than <span class="variable">$ZSH</span>/custom?</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ZSH_CUSTOM=/path/to/new-custom-folder</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Which plugins would you like to load? (plugins can be found <span class="keyword">in</span> ~/.oh-my-zsh/plugins/*)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Example format: plugins=(rails git textmate ruby lighthouse)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 插件设置，如果添加太多启动速度会比较慢</span></span><br><span class="line">plugins=(git autojump)</span><br><span class="line">[[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] &amp;&amp; . ~/.autojump/etc/profile.d/autojump.zsh</span><br><span class="line"><span class="meta">#</span><span class="bash"> 剩下部分比较不常改动</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> User configuration</span></span><br><span class="line">export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin"</span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> MANPATH=<span class="string">"/usr/local/man:<span class="variable">$MANPATH</span>"</span></span></span><br><span class="line">source $ZSH/oh-my-zsh.sh</span><br><span class="line"><span class="meta">#</span><span class="bash"> You may need to manually <span class="built_in">set</span> your language environment</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> LANG=en_US.UTF-8</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Preferred editor <span class="keyword">for</span> <span class="built_in">local</span> and remote sessions</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">if</span> [[ -n <span class="variable">$SSH_CONNECTION</span> ]]; <span class="keyword">then</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="built_in">export</span> EDITOR=<span class="string">'vim'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">   <span class="built_in">export</span> EDITOR=<span class="string">'mvim'</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">fi</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Compilation flags</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> ARCHFLAGS=<span class="string">"-arch x86_64"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> ssh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">export</span> SSH_KEY_PATH=<span class="string">"~/.ssh/dsa_id"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Set personal aliases, overriding those provided by oh-my-zsh libs,</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> plugins, and themes. Aliases can be placed here, though oh-my-zsh</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> users are encouraged to define aliases within the ZSH_CUSTOM folder.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> For a full list of active aliases, run `<span class="built_in">alias</span>`.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Example aliases</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">alias</span> zshconfig=<span class="string">"mate ~/.zshrc"</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="built_in">alias</span> ohmyzsh=<span class="string">"mate ~/.oh-my-zsh"</span></span></span><br></pre></td></tr></table></figure></p>
+<p>目前体验的到的可能就这几个我很欣赏的特性了。当然也是才刚刚开始使用，后面有别的再行补充。这里先贴一下网友的配置，后面可能用得到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ZSH的环境变量</span></span><br><span class="line">export ZSH=/Users/dawang/.oh-my-zsh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主题设置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主题列表在 ~/.oh-my-zsh/themes/</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果设置为 <span class="string">&quot;random&quot;</span>, 每次开启都会是不同的主题</span></span><br><span class="line">ZSH_THEME=&quot;agnoster&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果想要大小写敏感，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CASE_SENSITIVE=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果想要连接符不敏感，可以取消注释下面的一行。_ 和 - 将可以互换</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">HYPHEN_INSENSITIVE=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不想要自动更新，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DISABLE_AUTO_UPDATE=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动更新的时间间隔，单位是天，这里设置 30 天更新一次</span></span><br><span class="line">export UPDATE_ZSH_DAYS=30</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不想要 <span class="built_in">ls</span> 命令输出带颜色，可以取消注释下面的一行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DISABLE_LS_COLORS=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">是否禁止更改终端标题,不要禁止,不然所有终端tab只显示zsh了,而不随着目录的改变而改变显示</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DISABLE_AUTO_TITLE=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动纠正命令,不启用,不怎么好用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ENABLE_CORRECTION=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">按tab键补全命令的时候,如果没什么可补全的就会出现三个红点,更人性化显示，这里我们启用</span></span><br><span class="line">COMPLETION_WAITING_DOTS=&quot;true&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Uncomment the following line <span class="keyword">if</span> you want to <span class="built_in">disable</span> marking untracked files</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">under VCS as dirty. This makes repository status check <span class="keyword">for</span> large repositories</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">much, much faster.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不要在意这些细节，不需要改动</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DISABLE_UNTRACKED_FILES_DIRTY=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">历史命令日期显示格式</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">有三种方式: <span class="string">&quot;mm/dd/yyyy&quot;</span>|<span class="string">&quot;dd.mm.yyyy&quot;</span>|<span class="string">&quot;yyyy-mm-dd&quot;</span>，我比较习惯最后那种</span></span><br><span class="line">HIST_STAMPS=&quot;yyyy-mm-dd&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Would you like to use another custom folder than <span class="variable">$ZSH</span>/custom?</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ZSH_CUSTOM=/path/to/new-custom-folder</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Which plugins would you like to load? (plugins can be found <span class="keyword">in</span> ~/.oh-my-zsh/plugins/*)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Example format: plugins=(rails git textmate ruby lighthouse)</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">插件设置，如果添加太多启动速度会比较慢</span></span><br><span class="line">plugins=(git autojump)</span><br><span class="line">[[ -s ~/.autojump/etc/profile.d/autojump.zsh ]] &amp;&amp; . ~/.autojump/etc/profile.d/autojump.zsh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">剩下部分比较不常改动</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">User configuration</span></span><br><span class="line">export PATH=&quot;/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> MANPATH=<span class="string">&quot;/usr/local/man:<span class="variable">$MANPATH</span>&quot;</span></span></span><br><span class="line">source $ZSH/oh-my-zsh.sh</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">You may need to manually <span class="built_in">set</span> your language environment</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> LANG=en_US.UTF-8</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Preferred editor <span class="keyword">for</span> <span class="built_in">local</span> and remote sessions</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">if</span> [[ -n <span class="variable">$SSH_CONNECTION</span> ]]; <span class="keyword">then</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">export</span> EDITOR=<span class="string">&#x27;vim&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">else</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">export</span> EDITOR=<span class="string">&#x27;mvim&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">fi</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Compilation flags</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> ARCHFLAGS=<span class="string">&quot;-arch x86_64&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ssh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> SSH_KEY_PATH=<span class="string">&quot;~/.ssh/dsa_id&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Set personal aliases, overriding those provided by oh-my-zsh libs,</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">plugins, and themes. Aliases can be placed here, though oh-my-zsh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">users</span> are encouraged to define aliases within the ZSH_CUSTOM folder.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">For a full list of active aliases, run `<span class="built_in">alias</span>`.</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># Example aliases</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">alias</span> zshconfig=<span class="string">&quot;mate ~/.zshrc&quot;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">alias</span> ohmyzsh=<span class="string">&quot;mate ~/.oh-my-zsh&quot;</span></span></span><br></pre></td></tr></table></figure>
+
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p><code>Ubuntu</code>用了也有段时间了，但是感觉还是像用<code>Windows</code>一样在用<code>Ubuntu</code>，很多东西还是依赖图形化界面。但是作为一个开发人员，<code>Shell脚本</code>更值得去拥抱。所以决心后面多用多学，真正拥抱<code>Linux</code>。</p>
 <p>最后安利一波 Ubuntu 下录制 Gif 的方案：<br><strong>安装 Wine，下载 GifCam.exe，然后直接运行 GifCam.exe。</strong></p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_007.png" alt=""></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/06/09%E9%80%89%E5%8C%BA_007.png"></p>
 
       
 
@@ -231,7 +233,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -355,7 +357,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -434,7 +436,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -442,87 +444,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -574,15 +520,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -599,10 +545,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

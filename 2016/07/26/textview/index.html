@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>TextView使用小记 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。 格式化有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：  使用SpannableString 123SpannableString spanString = new SpannableString(&quot;He">
-<meta name="keywords" content="日常开发">
+  <meta name="description" content="相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。 格式化有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：  使用SpannableString123SpannableString spanString &#x3D; new SpannableString(&amp;quo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TextView使用小记">
 <meta property="og:url" content="http://lijia92.github.io/2016/07/26/textview/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。 格式化有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：  使用SpannableString 123SpannableString spanString = new SpannableString(&quot;He">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。 格式化有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：  使用SpannableString123SpannableString spanString &#x3D; new SpannableString(&amp;quo">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/textview1.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.256Z">
+<meta property="article:published_time" content="2016-07-26T02:46:16.000Z">
+<meta property="article:modified_time" content="2020-07-15T11:50:34.256Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TextView使用小记">
-<meta name="twitter:description" content="相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。 格式化有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：  使用SpannableString 123SpannableString spanString = new SpannableString(&quot;He">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/textview1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -186,24 +182,25 @@
         <p>相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。</p>
 <h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><p>有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：</p>
 <ol>
-<li><p>使用SpannableString</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SpannableString spanString = <span class="keyword">new</span> <span class="type">SpannableString</span>(<span class="string">"Hello world!"</span>);</span><br><span class="line">ForegroundColorSpan span = <span class="keyword">new</span> <span class="type">ForegroundColorSpan</span>(getResources().getColor(R.color.black));</span><br><span class="line">spanString.setSpan(span, <span class="number">0</span>, <span class="number">5</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用Html format</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">String</span> <span class="built_in">text</span> = <span class="string">"&lt;font color='black'&gt;Hello:&lt;/font&gt;"</span> + <span class="string">"world!"</span>;</span><br><span class="line">content.setText(Html.fromHtml(<span class="built_in">text</span>), TextView.BufferType.SPANNABLE);</span><br></pre></td></tr></table></figure>
-</li>
+<li>使用SpannableString<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SpannableString</span> <span class="variable">spanString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpannableString</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line"><span class="type">ForegroundColorSpan</span> <span class="variable">span</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ForegroundColorSpan</span>(getResources().getColor(R.color.black));</span><br><span class="line">spanString.setSpan(span, <span class="number">0</span>, <span class="number">5</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure></li>
+<li>使用Html format<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> text = <span class="string">&quot;&lt;font color=&#x27;black&#x27;&gt;Hello:&lt;/font&gt;&quot;</span> + <span class="string">&quot;world!&quot;</span>;</span><br><span class="line">content.<span class="built_in">setText</span>(Html.<span class="built_in">fromHtml</span>(text), TextView.BufferType.SPANNABLE);</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>两种方式都是可以的，但是第2种方式会导致TextView设置<code>maxLines=&quot;3&quot;、ellipsize=&quot;end&quot;</code>的情况下，文本超过3行的时候不显示<code>...</code>提示符了。所以在有<code>...</code>的需求的时候建议还是使用第一种。</p>
-<a id="more"></a>
+<span id="more"></span>
+
 <h2 id="字的行间距"><a href="#字的行间距" class="headerlink" title="字的行间距"></a>字的行间距</h2><p>如果内容过多是会换行的，要设置行间距可以如下设置：</p>
 <ol>
 <li>android:lineSpacingExtra<br>设置行间距，如”3dp”。</li>
 <li>android:lineSpacingMultiplier<br>设置行间距的倍数，如”1.2”。</li>
 </ol>
-<h2 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h2><p>有些时候一段字符大部分是固定的，只有一两位是变化的，那么可以在strings.xml中进行如下配置：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">string</span> <span class="built_in">name</span>=<span class="string">"barrage_reward"</span>&gt;%<span class="number">1</span>$s打赏了主播的专辑&lt;/<span class="built_in">string</span>&gt;</span><br><span class="line">&lt;<span class="built_in">string</span> <span class="built_in">name</span>=<span class="string">"living_view_count"</span>&gt;%<span class="number">1</span>$d人观看&lt;/<span class="built_in">string</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>1%代表第一个占位符，$s代表字符占位，$d代表数字占位。<br>然后在设置的时候，用真实的数据替换掉占位符即可。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">textView</span><span class="selector-class">.setText</span>(<span class="selector-tag">getResources</span>()<span class="selector-class">.getString</span>(<span class="selector-tag">R</span><span class="selector-class">.string</span><span class="selector-class">.barrage_reward</span>, "<span class="selector-tag">Jay</span>"));</span><br><span class="line"><span class="selector-tag">textView</span><span class="selector-class">.setText</span>(<span class="selector-tag">getResources</span>()<span class="selector-class">.getString</span>(<span class="selector-tag">R</span><span class="selector-class">.string</span><span class="selector-class">.living_view_count</span>, 10));</span><br></pre></td></tr></table></figure></p>
-<h2 id="FontMetrics"><a href="#FontMetrics" class="headerlink" title="FontMetrics"></a>FontMetrics</h2><p>FontMetrics意为字体测量。<br><figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">FontMetrics</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The maximum distance above the baseline for the tallest glyph in</span></span><br><span class="line"><span class="comment">         * the font at a given text size.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span>   top;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended distance above the baseline for singled spaced text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span>   ascent;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended distance below the baseline for singled spaced text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span>   descent;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The maximum distance below the baseline for the lowest glyph in</span></span><br><span class="line"><span class="comment">         * the font at a given text size.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span>   bottom;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended additional space to add between lines of text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">float</span>   leading;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>这五个属性分别是什么呢？看如下的图便能一目了然了：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/textview1.png" alt=""></p>
+<h2 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h2><p>有些时候一段字符大部分是固定的，只有一两位是变化的，那么可以在strings.xml中进行如下配置：</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="built_in">string</span> name=<span class="string">&quot;barrage_reward&quot;</span>&gt;%<span class="number">1</span>$s打赏了主播的专辑&lt;/<span class="built_in">string</span>&gt;</span><br><span class="line">&lt;<span class="built_in">string</span> name=<span class="string">&quot;living_view_count&quot;</span>&gt;%<span class="number">1</span>$d人观看&lt;/<span class="built_in">string</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>1%代表第一个占位符，$s代表字符占位，$d代表数字占位。<br>然后在设置的时候，用真实的数据替换掉占位符即可。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">textView</span><span class="selector-class">.setText</span>(<span class="built_in">getResources</span>().<span class="built_in">getString</span>(R.string.barrage_reward, <span class="string">&quot;Jay&quot;</span>));</span><br><span class="line"><span class="selector-tag">textView</span><span class="selector-class">.setText</span>(<span class="built_in">getResources</span>().<span class="built_in">getString</span>(R.string.living_view_count, <span class="number">10</span>));</span><br></pre></td></tr></table></figure>
+
+<h2 id="FontMetrics"><a href="#FontMetrics" class="headerlink" title="FontMetrics"></a>FontMetrics</h2><p>FontMetrics意为字体测量。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static <span class="keyword">class</span> <span class="symbol">FontMetrics</span> &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The maximum distance above the baseline for the tallest glyph in</span></span><br><span class="line"><span class="comment">         * the font at a given text size.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">float</span>   top;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended distance above the baseline for singled spaced text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">float</span>   ascent;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended distance below the baseline for singled spaced text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">float</span>   descent;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The maximum distance below the baseline for the lowest glyph in</span></span><br><span class="line"><span class="comment">         * the font at a given text size.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">float</span>   bottom;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * The recommended additional space to add between lines of text.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">float</span>   leading;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这五个属性分别是什么呢？看如下的图便能一目了然了：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/07/textview1.png"></p>
 
       
 
@@ -341,7 +338,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -420,7 +417,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -428,87 +425,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -560,15 +501,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -585,10 +526,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

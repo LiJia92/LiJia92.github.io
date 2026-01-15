@@ -9,18 +9,18 @@
   <title>Android 开发减少 shape 文件 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：vyg__route_search_bg_selector.xml，开发人员看到这个 shape 文件可以知道是在路线搜索页">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 开发减少 shape 文件">
 <meta property="og:url" content="http://lijia92.github.io/2018/09/27/shape/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：vyg__route_search_bg_selector.xml，开发人员看到这个 shape 文件可以知道是在路线搜索页">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/shape.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.250Z">
+<meta property="article:published_time" content="2018-09-27T09:15:17.000Z">
+<meta property="article:modified_time" content="2020-07-15T11:50:34.250Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 开发减少 shape 文件">
-<meta name="twitter:description" content="作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：vyg__route_search_bg_selector.xml，开发人员看到这个 shape 文件可以知道是在路线搜索页">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/shape.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -39,7 +39,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -53,10 +53,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -113,10 +111,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -184,14 +180,17 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。<br>通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：<code>vyg__route_search_bg_selector.xml</code>，开发人员看到这个 shape 文件可以知道是在路线搜索页面用到的。可是这样命名，当开发人员各自独立开发时，可能会有一大堆业务相关的 shape 文件，可能会和其他开发人员相关业务重复了。所以后面我们干脆改成这样了：<code>vyg__shape_r2_f7f7f7.xml</code>，代表 2dp 的 radius，然后填充色是 #F7F7F7。如果项目设计师严格按照一套标准来设计所有的背景，这样命名一套 shape 文件可以做到复用了。可如果设计师经常换人，或者不够专业等等其他原因，这里一个颜色，那里又是另外一个颜色，或者把 2dp 的圆角变成 4dp，如此下来，shape 文件依然会很多。就像这样：</p>
-<a id="more"></a>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/shape.png" alt=""><br>现在做的项目还是个新项目，看着这日益增多的 shape 文件感觉还是得采取点措施处理一下。本着不重复造轮子的原则，Google 了一波，发现这是广大开发者都面对过的一个问题，目前看到的有几个方案。</p>
+<span id="more"></span>
+
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/shape.png"><br>现在做的项目还是个新项目，看着这日益增多的 shape 文件感觉还是得采取点措施处理一下。本着不重复造轮子的原则，Google 了一波，发现这是广大开发者都面对过的一个问题，目前看到的有几个方案。</p>
 <h2 id="自定义View"><a href="#自定义View" class="headerlink" title="自定义View"></a>自定义View</h2><p>通过自定义 View 或 ViewGroup，解析对应的 xml 属性，来生成相应的 BackgroundDrawable，这种方式不太灵活，即使用到 Android 自带的 TextView 等控件也得在 xml 中声明自定义的 View，比较蛋疼。<br>最新的 support 包里也出了一个 Material Button，可以来设置简单的 shape 属性，和这个类似。</p>
-<p>参考：<br><a href="https://www.jianshu.com/p/4b20502f2692" target="_blank" rel="noopener">是时候跟 shape 标签说拜拜了</a><br><a href="https://material.io/develop/android/components/material-button/" target="_blank" rel="noopener">Material Button</a></p>
-<h2 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h2><p>通过代码直接生成相应的 BackgroundDrawable，然后设置到 View 上。比如这样：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">FSelector</span><span class="selector-class">.with</span>(<span class="selector-tag">tvtext1</span>)</span><br><span class="line">        <span class="selector-class">.addDrawable</span>()<span class="selector-class">.circleAngle</span>(<span class="selector-tag">dp2px</span>(15))<span class="selector-class">.bgColor</span>(<span class="selector-tag">getColors</span>(<span class="selector-tag">R</span><span class="selector-class">.color</span><span class="selector-class">.clr_fb720e</span>))</span><br><span class="line">        <span class="selector-class">.create</span>()</span><br><span class="line">        <span class="selector-class">.bind</span>();</span><br></pre></td></tr></table></figure></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4b20502f2692">是时候跟 shape 标签说拜拜了</a><br><a target="_blank" rel="noopener" href="https://material.io/develop/android/components/material-button/">Material Button</a></p>
+<h2 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h2><p>通过代码直接生成相应的 BackgroundDrawable，然后设置到 View 上。比如这样：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FSelector<span class="selector-class">.with</span>(tvtext1)</span><br><span class="line">        <span class="selector-class">.addDrawable</span>()<span class="selector-class">.circleAngle</span>(dp2px(<span class="number">15</span>))<span class="selector-class">.bgColor</span>(getColors(R.color.clr_fb720e))</span><br><span class="line">        <span class="selector-class">.create</span>()</span><br><span class="line">        <span class="selector-class">.bind</span>();</span><br></pre></td></tr></table></figure>
 <p>这种显然也不行的，每个 View 要设置背景得写多少这种代码？还不如直接写 shape 得了。</p>
-<p>参考：<br><a href="https://juejin.im/entry/5b98857ce51d450e7825e9a9" target="_blank" rel="noopener">解放双手,提高编码效率,减少大量的selecor文件</a></p>
-<h2 id="BackgroundLibrary"><a href="#BackgroundLibrary" class="headerlink" title="BackgroundLibrary"></a>BackgroundLibrary</h2><p>有没有一种更好的方式呢？找了一阵子，终于找到了个还比较满意的：<a href="https://github.com/JavaNoober/BackgroundLibrary" target="_blank" rel="noopener">BackgroundLibrary</a><br>针对这个库，作者也写了篇文章进行相关的说明，还不错。<a href="https://juejin.im/post/5b9682ebe51d450e543e3495" target="_blank" rel="noopener">无需自定义View，彻底解放shape，selector吧</a><br>引入只需要在BaseActivity里添加如下代码：<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BackgroundLibrary.<span class="keyword">inject</span>(<span class="keyword">this</span>)</span><br></pre></td></tr></table></figure></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://juejin.im/entry/5b98857ce51d450e7825e9a9">解放双手,提高编码效率,减少大量的selecor文件</a></p>
+<h2 id="BackgroundLibrary"><a href="#BackgroundLibrary" class="headerlink" title="BackgroundLibrary"></a>BackgroundLibrary</h2><p>有没有一种更好的方式呢？找了一阵子，终于找到了个还比较满意的：<a target="_blank" rel="noopener" href="https://github.com/JavaNoober/BackgroundLibrary">BackgroundLibrary</a><br>针对这个库，作者也写了篇文章进行相关的说明，还不错。<a target="_blank" rel="noopener" href="https://juejin.im/post/5b9682ebe51d450e543e3495">无需自定义View，彻底解放shape，selector吧</a><br>引入只需要在BaseActivity里添加如下代码：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BackgroundLibrary.<span class="keyword">inject</span>(<span class="keyword">this</span>)</span><br></pre></td></tr></table></figure>
 <p>然后直接在 xml 中声明对应的属性即可。通过这种方式，比较省心，也没有其他不必要的依赖，已经可以应付绝大多数场景了。用的是 Google 提供的 Api，没有使用到反射，针对高版本可能的非 SDK 接口限制的问题也不存在。缺点就是不能实时预览，也没有属性提示，熟悉后问题不大。<br>实现原理作者也说了：<strong>通过低入侵的方式，加入一个自定义的 LayoutInflater.Factory，去解析添加的自定义属性，然后生成系统提供的 GradientDrawable、RippleDrawable、StateListDrawable 即可。</strong><br>目前来看算是最好的方案了，先用着，后面有问题再跟进，给作者点个赞~</p>
 
       
@@ -330,7 +329,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -409,7 +408,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -417,87 +416,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -549,15 +492,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -574,10 +517,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

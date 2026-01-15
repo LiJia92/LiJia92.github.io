@@ -14,11 +14,12 @@
 <meta property="og:url" content="http://lijia92.github.io/2019/11/29/tips/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。 文件校验应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？最后定位问题：同事拿到数据库文件，为了确定版本是对的">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.257Z">
+<meta property="og:locale">
+<meta property="article:published_time" content="2019-11-29T10:18:21.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.491Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="日常开发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="问题集锦">
-<meta name="twitter:description" content="换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。 文件校验应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？最后定位问题：同事拿到数据库文件，为了确定版本是对的">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
   
@@ -36,7 +37,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -50,10 +51,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -110,10 +109,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -182,16 +179,21 @@
       
         <p>换了个项目组，最近忙了很多，没空写什么东西，碎碎念贴点碰到的小问题。</p>
 <h2 id="文件校验"><a href="#文件校验" class="headerlink" title="文件校验"></a>文件校验</h2><p>应用内部有本地数据库，有版本校验，会不定时更新，在使用的时候会使用 md5 进行校验。当更新版本后，发现数据库更新一直失败，调试后发现是 md5 值不一致，一脸懵逼的状态。数据库文件由服务端下发，然后复制移动到目标工程，并没有改任何东西，为何会造成 md5 值不一致呢？<br>最后定位问题：<strong>同事拿到数据库文件，为了确定版本是对的，打开 db 文件看了一眼，然后 SQLite 就会自动写入一些东西，导致 md5 值改变。</strong> 涨点姿势，以后应当注意。</p>
-<a id="more"></a>
-<h2 id="移除权限"><a href="#移除权限" class="headerlink" title="移除权限"></a>移除权限</h2><p>现在项目中难免会集成某些三方库，基础库，这些库有些时候大而全的会申明许多并未用到的权限，项目在集成时需要移除这些权限。如何在不修改三方库、基础库的基础上移除呢？<br>以蓝牙权限为例，在 AndroidManifest.xml 中声明：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:<span class="attribute">name</span>=<span class="string">"android.permission.BLUETOOTH"</span></span><br><span class="line">        tools:<span class="attribute">node</span>=<span class="string">"remove"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<span id="more"></span>
+
+<h2 id="移除权限"><a href="#移除权限" class="headerlink" title="移除权限"></a>移除权限</h2><p>现在项目中难免会集成某些三方库，基础库，这些库有些时候大而全的会申明许多并未用到的权限，项目在集成时需要移除这些权限。如何在不修改三方库、基础库的基础上移除呢？<br>以蓝牙权限为例，在 AndroidManifest.xml 中声明：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:<span class="attribute">name</span>=<span class="string">&quot;android.permission.BLUETOOTH&quot;</span></span><br><span class="line">        tools:<span class="attribute">node</span>=<span class="string">&quot;remove&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="webp-加载"><a href="#webp-加载" class="headerlink" title="webp 加载"></a>webp 加载</h2><p>为了达到某些页面效果，设计师会设计一些动态图，有时是 gif，有时是 webp。碰到的问题是 webp 的文件放到 xhdpi 文件夹会一直报错：unsolved reference，也不知道是什么原因。<strong>放到其他分辨率的文件夹下</strong> 就好了，暂时还不知道原因。</p>
 <h2 id="恢复“误删”的本地文件"><a href="#恢复“误删”的本地文件" class="headerlink" title="恢复“误删”的本地文件"></a>恢复“误删”的本地文件</h2><p>项目中有 Java、Kotlin 文件，当把 Java 文件转成 Kotlin 文件时，会生成新的 Git 记录，无法查看 .java 文件的历史提交记录。可以右键项目根目录，然后选择 Local History，然后可以搜索出 .java 文件对照着看。</p>
-<h2 id="Android-Studio-代码错位"><a href="#Android-Studio-代码错位" class="headerlink" title="Android Studio 代码错位"></a>Android Studio 代码错位</h2><p>莫名其妙 .java 文件展示了 .xml 的内容，文件全部错乱展示，为 Android Studio 编译错误导致。删除所有的编译文件：.idea、.gradle、build 文件夹，以及 /user/AndroidStudio3.5/system/caches 文件夹，然后重启。</p>
-<h2 id="View-设置背景"><a href="#View-设置背景" class="headerlink" title="View 设置背景"></a>View 设置背景</h2><p>当有这样一个 selector：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"#4A5356"</span> <span class="attr">android:state_selected</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">"@android:color/transparent"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>调用 view.setBackgroundResource 时会失败，可以使用 StateListDrawable，手动 addState。或者使用 shape：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomLeftRadius</span>=<span class="string">"4dp"</span> <span class="attr">android:topLeftRadius</span>=<span class="string">"4dp"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:right</span>=<span class="string">"-2dp"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">"rectangle"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">"1dp"</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomLeftRadius</span>=<span class="string">"4dp"</span> <span class="attr">android:topLeftRadius</span>=<span class="string">"4dp"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">"rectangle"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">"1dp"</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomRightRadius</span>=<span class="string">"4dp"</span> <span class="attr">android:topRightRadius</span>=<span class="string">"4dp"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:left</span>=<span class="string">"-2dp"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">"rectangle"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">"1dp"</span> <span class="attr">android:color</span>=<span class="string">"#333333"</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomRightRadius</span>=<span class="string">"4dp"</span> <span class="attr">android:topRightRadius</span>=<span class="string">"4dp"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Android-Studio-代码错位"><a href="#Android-Studio-代码错位" class="headerlink" title="Android Studio 代码错位"></a>Android Studio 代码错位</h2><p>莫名其妙 .java 文件展示了 .xml 的内容，文件全部错乱展示，为 Android Studio 编译错误导致。删除所有的编译文件：.idea、.gradle、build 文件夹，以及 &#x2F;user&#x2F;AndroidStudio3.5&#x2F;system&#x2F;caches 文件夹，然后重启。</p>
+<h2 id="View-设置背景"><a href="#View-设置背景" class="headerlink" title="View 设置背景"></a>View 设置背景</h2><p>当有这样一个 selector：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">&quot;#4A5356&quot;</span> <span class="attr">android:state_selected</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:color</span>=<span class="string">&quot;@android:color/transparent&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>调用 view.setBackgroundResource 时会失败，可以使用 StateListDrawable，手动 addState。或者使用 shape：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomLeftRadius</span>=<span class="string">&quot;4dp&quot;</span> <span class="attr">android:topLeftRadius</span>=<span class="string">&quot;4dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:right</span>=<span class="string">&quot;-2dp&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">&quot;1dp&quot;</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomLeftRadius</span>=<span class="string">&quot;4dp&quot;</span> <span class="attr">android:topLeftRadius</span>=<span class="string">&quot;4dp&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">&quot;1dp&quot;</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">solid</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomRightRadius</span>=<span class="string">&quot;4dp&quot;</span> <span class="attr">android:topRightRadius</span>=<span class="string">&quot;4dp&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:left</span>=<span class="string">&quot;-2dp&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">shape</span> <span class="attr">android:shape</span>=<span class="string">&quot;rectangle&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">stroke</span> <span class="attr">android:width</span>=<span class="string">&quot;1dp&quot;</span> <span class="attr">android:color</span>=<span class="string">&quot;#333333&quot;</span> /&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">corners</span> <span class="attr">android:bottomRightRadius</span>=<span class="string">&quot;4dp&quot;</span> <span class="attr">android:topRightRadius</span>=<span class="string">&quot;4dp&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">shape</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>selector 可以添加各种 item 实现不用的效果，item 内部可以使用 layer-list 来达到不同的效果覆盖。</p>
-<h2 id="TextView-走马灯"><a href="#TextView-走马灯" class="headerlink" title="TextView 走马灯"></a>TextView 走马灯</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">"@+id/titleTv"</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">"wrap_content"</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">"48dp"</span></span><br><span class="line">    android:<span class="attribute">layout_marginLeft</span>=<span class="string">"28dp"</span></span><br><span class="line">    android:<span class="attribute">layout_marginTop</span>=<span class="string">"230dp"</span></span><br><span class="line">    android:<span class="attribute">ellipsize</span>=<span class="string">"marquee"</span></span><br><span class="line">    android:<span class="attribute">focusable</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">focusableInTouchMode</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">gravity</span>=<span class="string">"center"</span></span><br><span class="line">    android:<span class="attribute">marqueeRepeatLimit</span>=<span class="string">"marquee_forever"</span></span><br><span class="line">    android:<span class="attribute">maxWidth</span>=<span class="string">"200dp"</span></span><br><span class="line">    android:<span class="attribute">singleLine</span>=<span class="string">"true"</span></span><br><span class="line">    android:<span class="attribute">textColor</span>=<span class="string">"#000"</span></span><br><span class="line">    android:<span class="attribute">textSize</span>=<span class="string">"21sp"</span></span><br><span class="line">    android:<span class="attribute">textStyle</span>=<span class="string">"bold"</span></span><br><span class="line">    app:<span class="attribute">layout_behavior</span>=<span class="string">".paid_video.behavior.ExamPlaceNameBehavior"</span></span><br><span class="line">    tools:<span class="attribute">text</span>=<span class="string">"芳草地考场"</span> /&gt;</span><br></pre></td></tr></table></figure>
-<p>可以使用 titleTv.isSelected = true 来开启走马灯效果。</p>
+<h2 id="TextView-走马灯"><a href="#TextView-走马灯" class="headerlink" title="TextView 走马灯"></a>TextView 走马灯</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;TextView</span><br><span class="line">    android:<span class="attribute">id</span>=<span class="string">&quot;@+id/titleTv&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;wrap_content&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;48dp&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_marginLeft</span>=<span class="string">&quot;28dp&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_marginTop</span>=<span class="string">&quot;230dp&quot;</span></span><br><span class="line">    android:<span class="attribute">ellipsize</span>=<span class="string">&quot;marquee&quot;</span></span><br><span class="line">    android:<span class="attribute">focusable</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">    android:<span class="attribute">focusableInTouchMode</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">    android:<span class="attribute">gravity</span>=<span class="string">&quot;center&quot;</span></span><br><span class="line">    android:<span class="attribute">marqueeRepeatLimit</span>=<span class="string">&quot;marquee_forever&quot;</span></span><br><span class="line">    android:<span class="attribute">maxWidth</span>=<span class="string">&quot;200dp&quot;</span></span><br><span class="line">    android:<span class="attribute">singleLine</span>=<span class="string">&quot;true&quot;</span></span><br><span class="line">    android:<span class="attribute">textColor</span>=<span class="string">&quot;#000&quot;</span></span><br><span class="line">    android:<span class="attribute">textSize</span>=<span class="string">&quot;21sp&quot;</span></span><br><span class="line">    android:<span class="attribute">textStyle</span>=<span class="string">&quot;bold&quot;</span></span><br><span class="line">    app:<span class="attribute">layout_behavior</span>=<span class="string">&quot;.paid_video.behavior.ExamPlaceNameBehavior&quot;</span></span><br><span class="line">    tools:<span class="attribute">text</span>=<span class="string">&quot;芳草地考场&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>可以使用 titleTv.isSelected &#x3D; true 来开启走马灯效果。</p>
 
       
 
@@ -200,6 +202,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -318,7 +331,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -397,7 +410,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -405,87 +418,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -537,15 +494,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -562,10 +519,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">

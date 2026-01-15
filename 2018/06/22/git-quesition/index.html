@@ -9,23 +9,23 @@
   <title>Git data stream error | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="今天使用 Git 碰到个问题，在此小记一下。场景：git stash当前工作区，然后git pull --rebase: 然后执行git stash pop时报错。 执行git status也报错：">
-<meta name="keywords" content="日常开发">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git data stream error">
 <meta property="og:url" content="http://lijia92.github.io/2018/06/22/git-quesition/index.html">
 <meta property="og:site_name" content="听雪楼">
 <meta property="og:description" content="今天使用 Git 碰到个问题，在此小记一下。场景：git stash当前工作区，然后git pull --rebase: 然后执行git stash pop时报错。 执行git status也报错：">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/2.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/3.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/4.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/5.png">
 <meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/6.png">
-<meta property="og:updated_time" content="2020-07-15T11:50:34.223Z">
+<meta property="article:published_time" content="2018-06-22T04:38:56.000Z">
+<meta property="article:modified_time" content="2025-09-23T10:47:11.438Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="开发工具">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Git data stream error">
-<meta name="twitter:description" content="今天使用 Git 碰到个问题，在此小记一下。场景：git stash当前工作区，然后git pull --rebase: 然后执行git stash pop时报错。 执行git status也报错：">
 <meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png">
   
     <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
@@ -44,7 +44,7 @@
 
   
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
   <div id="container" q-class="show:isCtnShow">
@@ -58,10 +58,8 @@
 			<img src="/avatar.jpg" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">最后的温存</a></h1>
+		  <h1 class="header-author"><a href="/"></a></h1>
 		</hgroup>
-		
-		<p class="header-subtitle">那是一座悲欢离合聚集的楼。</p>
 		
 
 		<nav class="header-menu">
@@ -118,10 +116,8 @@
 				<img src="/avatar.jpg" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">最后的温存</h1>
+			  <h1 class="header-author js-header-author"></h1>
 			</hgroup>
-			
-			<p class="header-subtitle"><i class="icon icon-quo-left"></i>那是一座悲欢离合聚集的楼。<i class="icon icon-quo-right"></i></p>
 			
 			
 			
@@ -188,20 +184,22 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天使用 Git 碰到个问题，在此小记一下。<br>场景：<code>git stash</code>当前工作区，然后<code>git pull --rebase</code>:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png" alt=""></p>
-<p>然后执行<code>git stash pop</code>时报错。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/2.png" alt=""></p>
-<p>执行<code>git status</code>也报错：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/3.png" alt=""></p>
-<a id="more"></a>
-<p>Google 之后大致是因为 Git 记录一些文件的版本指针被损坏了。这个损坏可能不是人为的，可能你正在 push 或者 pull 一些文件的时候，电脑突然断电或者关机了，就可能会导致这个异常发生。至于为什么在我的场景中出现了这个问题，就不得而知了。<br>下面来解决它，执行指令<code>git fsck --full</code>：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/4.png" alt=""></p>
-<p>可以看到有问题的指针引用。这串字符串的前 2 位是你的<code>.git/objects/</code>文件夹下对应的文件夹目录，然后<code>cd ./fe</code>删除掉这个字符串，<code>rm e91c5f...</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/5.png" alt=""></p>
-<p>删除掉之后，回到工作目录，继续执行<code>git fsck --full</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/6.png" alt=""></p>
+        <p>今天使用 Git 碰到个问题，在此小记一下。<br>场景：<code>git stash</code>当前工作区，然后<code>git pull --rebase</code>:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png"></p>
+<p>然后执行<code>git stash pop</code>时报错。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/2.png"></p>
+<p>执行<code>git status</code>也报错：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/3.png"></p>
+<span id="more"></span>
+
+<p>Google 之后大致是因为 Git 记录一些文件的版本指针被损坏了。这个损坏可能不是人为的，可能你正在 push 或者 pull 一些文件的时候，电脑突然断电或者关机了，就可能会导致这个异常发生。至于为什么在我的场景中出现了这个问题，就不得而知了。<br>下面来解决它，执行指令<code>git fsck --full</code>：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/4.png"></p>
+<p>可以看到有问题的指针引用。这串字符串的前 2 位是你的<code>.git/objects/</code>文件夹下对应的文件夹目录，然后<code>cd ./fe</code>删除掉这个字符串，<code>rm e91c5f...</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/5.png"></p>
+<p>删除掉之后，回到工作目录，继续执行<code>git fsck --full</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/6.png"></p>
 <p>可以看到没有错误状态的 blob 或者 commit 了。此时 git 已经可以正常使用了。</p>
-<p>再补充一下，指针的 hash 值可能由于某些原因出错了，需要重新生成 hash 值。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git hash-<span class="selector-tag">object</span> -w spec/routing/splits_routing_spec.rb</span><br></pre></td></tr></table></figure></p>
-<p>spec/routing/splits_routing_spec.rb 为对应的文件。</p>
+<p>再补充一下，指针的 hash 值可能由于某些原因出错了，需要重新生成 hash 值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">hash</span>-<span class="built_in">object</span> -w spec/routing/splits_routing_spec.rb</span><br></pre></td></tr></table></figure>
+<p>spec&#x2F;routing&#x2F;splits_routing_spec.rb 为对应的文件。</p>
 <p>参考：</p>
 <ol>
-<li><a href="https://stackoverflow.com/questions/14448326/git-commit-stopped-working-error-building-trees" target="_blank" rel="noopener">git commit stopped working - Error building trees</a></li>
-<li><a href="https://www.cnblogs.com/erbingbing/p/7263540.html" target="_blank" rel="noopener">在使用 Git pull 时候报错 error: inflate</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/14448326/git-commit-stopped-working-error-building-trees">git commit stopped working - Error building trees</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/erbingbing/p/7263540.html">在使用 Git pull 时候报错 error: inflate</a></li>
 </ol>
 
       
@@ -216,7 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>
@@ -340,7 +338,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 最后的温存
+    		&copy; 2026 最后的温存
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -419,7 +417,7 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">iOS</a>
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -427,87 +425,31 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">sdk</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">blog</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">code</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">cat</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">奇技淫巧</a>
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">java</a>
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Material Design</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">直播</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">自定义View</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">杂谈</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">android studio</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">学习</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">gradle</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">hybrid开发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Jetpack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Kotlin</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">JetPack</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">事件分发</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
               </li>
             
             <div class="clearfix"></div>
@@ -559,15 +501,15 @@
         <ul class="search-ul">
           
             <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
               <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
             </li>
           
             <li class="search-li">
               <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://aigestudio.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>爱哥</a>
             </li>
           
             <li class="search-li">
@@ -584,10 +526,6 @@
           
             <li class="search-li">
               <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="https://drakeet.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>drakeet</a>
             </li>
           
             <li class="search-li">
