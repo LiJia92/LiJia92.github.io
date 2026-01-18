@@ -154,6 +154,69 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-pag" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2023/04/26/pag/">Android PAG 之初体验</a>
+    </h1>
+  
+
+        
+        <a href="/2023/04/26/pag/" class="archive-article-date">
+  	<time datetime="2023-04-26T06:51:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-04-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>基于公司发展，App 需要配合不定期的进行一次大版本更新。改动主要是启屏页的产品宣传，以及应用主页的 UI 效果。说白了，动画越来越花哨，让人感觉起来更加“高大上”。已经经历过启屏的好几个版本更新了，每次更新都需要配合实现一大堆的动画效果，以及与设计师沟通切图细节等等，十分花费精力。这不，近期又来了一个启屏升级的需求，设计效果感觉都快和游戏差不多了，纯安卓也能做，但是很多光效、粒子等效果，最快的实现方式还是切图。在与设计师沟通的过程中，设计师提供了另一种实现思路：PAG。于是顺着这个思路研究了一下，最终觉得这个方案更好，在此记录一下。</p>
+<h2 id="PAG-简介"><a href="#PAG-简介" class="headerlink" title="PAG 简介"></a>PAG 简介</h2><blockquote>
+<p>PAG 即 Portable Animated Graphics，是一套完整的动效工作流解决方案。<br>目标是降低或消除动效相关的研发成本，能够一键将设计师在 AE（Adobe After Effects）中制作的动效内容导出成素材文件，并快速上线应用于几乎所有的主流平台。</p>
+</blockquote>
+        
+          <a class="article-more-a" href="/2023/04/26/pag/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-screen-record-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -673,67 +736,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-station" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/04/21/station/">云基站概述</a>
-    </h1>
-  
-
-        
-        <a href="/2022/04/21/station/" class="archive-article-date">
-  	<time datetime="2022-04-21T02:39:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/07/08/gps/">科二考试系统</a>一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。</p>
-<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>要实现高精度定位，需要两个定位设备。设备支持设置 <strong>流动站</strong> 或者 <strong>基站</strong> 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。</p>
-        
-          <a class="article-more-a" href="/2022/04/21/station/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
         		</li>
       		
 		</ul>

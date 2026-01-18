@@ -154,6 +154,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-station" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/21/station/">云基站概述</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/21/station/" class="archive-article-date">
+  	<time datetime="2022-04-21T02:39:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/07/08/gps/">科二考试系统</a>一文中，实现一个科二考试系统依赖于「高精度定位」。以此文来记录下相关技术思路。</p>
+<h2 id="定位"><a href="#定位" class="headerlink" title="定位"></a>定位</h2><p>要实现高精度定位，需要两个定位设备。设备支持设置 <strong>流动站</strong> 或者 <strong>基站</strong> 两种工作模式。当设置为基站之后，设备会将自己的 rtcm 数据（简单理解为差分数据）发送出去。然后流动站接收这个差分数据，再结合自身收到的卫星 gps 数据进行运算，便可以得出一个「基于基站的高精度坐标」了。</p>
+        
+          <a class="article-more-a" href="/2022/04/21/station/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-camera" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -663,66 +724,6 @@
 <p>简单来说，就是一套 UI 框架，可以编写 Kotlin 代码来替代原先的 xml 工作，这样就不用 xml 与 Java&#x2F;Kotlin 代码间来回切换了。</p>
         
           <a class="article-more-a" href="/2021/11/10/compose/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-flow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/27/flow/">Flow 初识</a>
-    </h1>
-  
-
-        
-        <a href="/2021/10/27/flow/" class="archive-article-date">
-  	<time datetime="2021-10-27T03:11:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/10/15/corutines/">上一篇文章</a>，协程里有一个很大的特性就是 Flow。经过一阵尝试、学习，可能有一点点的收获，还是记录一下吧。<br>「流」这个词，相信现在越来越多的开发者都接触并喜欢这个概念了。当 RxJava 风靡全球时，就有了「流」这个概念。基于 Kotlin，我们可以流式的写并发代码；基于 Flow，我们也可以流式的处理数据。面对复杂的数据逻辑，写出来的代码也可以像流淌的溪水一样干净，漂亮。</p>
-        
-          <a class="article-more-a" href="/2021/10/27/flow/#more">more >></a>
         
       
 

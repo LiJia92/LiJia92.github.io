@@ -154,6 +154,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-task-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/27/task-queue/">Android实现任务队列：一个入口一个出口、一个入口两个出口</a>
+    </h1>
+  
+
+        
+        <a href="/2016/05/27/task-queue/" class="archive-article-date">
+  	<time datetime="2016-05-27T07:11:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在我的<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/02/23/single-thread-queue/">Android实现简易轻量下载器：单线程任务队列</a>文章中，有提到过任务队列。当时是需要下载，实现一个简单的单线程任务队列即可。<br>最近项目中也需要用到任务队列，并且有2种需求：</p>
+<ol>
+<li>动态礼物动画：在用户送完动态礼物之后，会在界面上展现一个动画。界面上一次最多能执行1个动画，动画按顺序执行。即：<code>一个入口一个出口</code>。</li>
+<li>静态礼物动画：在用户送完静态礼物之后，会在界面上展现一个动画。界面上一次最多能并列执行2个动画，动画按顺序执行。即：<code>一个入口两个出口</code>。<br>同样都是任务队列，只不过一个是只有一个出口，另一个有两个出口。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2016/05/27/task-queue/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-alipay" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -693,80 +757,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-video-view" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/01/video-view/">Android使用VideoView进行视频播放</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/01/video-view/" class="archive-article-date">
-  	<time datetime="2016-04-01T07:07:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做一个主播类的App，里面涉及到视频播放，之前没有接触过，在探索一阵后能够播放基本视频了。特此写下小记，方便日后查看。</p>
-<p>首先，确定使用<code>VideoView</code>进行视频播放。</p>
-<p>步骤：</p>
-<ol>
-<li>在界面布局文件中定义VideoView组件，或在程序中创建VideoView组件。</li>
-<li>调用VideoView的如下两个方法来加载指定的视频:</li>
-</ol>
-<ul>
-<li>setVidePath(String path)：加载path文件代表的视频</li>
-<li>setVideoURI(Uri uri)：加载uri所对应的视频</li>
-</ul>
-<ol start="3">
-<li>调用VideoView的start()、stop()、psuse()等方法来控制视频的播放。</li>
-</ol>
-<p>若要显示进度条，可结合<code>MediaController</code>一起使用。</p>
-        
-          <a class="article-more-a" href="/2016/04/01/video-view/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
         		</li>
       		
 		</ul>

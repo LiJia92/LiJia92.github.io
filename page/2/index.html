@@ -154,6 +154,70 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-summary-2024" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/02/05/summary-2024/">2024年总结</a>
+    </h1>
+  
+
+        
+        <a href="/2025/02/05/summary-2024/" class="archive-article-date">
+  	<time datetime="2025-02-05T00:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-02-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2024年，一整年都没怎么写博客，第一是公司业务缩减，日常工作以修修补补为主，少有整体、完整的事情去做。另外经历 AI 的冲击，尝试基于安卓开发者的身份，去接受去学习，以适应新的时代，但值得记录的东西并不多。目前学习了一些 AI 技术，想要有所产出变得更容易了，便先从一篇 AI 总结写起吧。</p>
+<blockquote>
+<p>以下文字由 AI 生成，略有修改</p>
+</blockquote>
+<p>2024年是充满变化与挑战的一年。在这一年里，我经历了职业生涯的转折，见证了孩子的成长，也带着家人享受了难得的旅行时光。站在2025年开工的第一天，回顾这不平凡的一年，感慨良多。</p>
+        
+          <a class="article-more-a" href="/2025/02/05/summary-2024/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">生活杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-2023" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -668,69 +732,6 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HintDialog</span> <span class="keyword">extends</span> <span class="title class_ inherited__">DialogFragment</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">String</span> content;</span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">View</span>.<span class="property">OnClickListener</span> positiveClickListener;</span><br><span class="line">    <span class="keyword">private</span> <span class="title class_">String</span> positive;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="title class_">HintDialog</span> <span class="title function_">show</span>(<span class="params"><span class="title class_">FragmentManager</span> fm, <span class="title class_">String</span> content, <span class="title class_">String</span> positive,</span></span><br><span class="line"><span class="params">                                  <span class="title class_">View</span>.<span class="title class_">OnClickListener</span> positiveClickListener</span>) &#123;</span><br><span class="line">        <span class="title class_">HintDialog</span> hintDialog = <span class="keyword">new</span> <span class="title class_">HintDialog</span>();</span><br><span class="line">        hintDialog.<span class="property">content</span> = content;</span><br><span class="line">        hintDialog.<span class="property">positive</span> = positive;</span><br><span class="line">        hintDialog.<span class="property">positiveClickListener</span> = positiveClickListener;</span><br><span class="line">        hintDialog.<span class="title function_">show</span>(fm, <span class="string">&quot;HintDialog&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> hintDialog;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title class_">Dialog</span> <span class="title function_">onCreateDialog</span>(<span class="params"><span class="meta">@Nullable</span> <span class="title class_">Bundle</span> savedInstanceState</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">JCommonDialog</span>.<span class="title function_">createDialog</span>(<span class="title function_">getActivity</span>(), content, positive, positiveClickListener);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         
           <a class="article-more-a" href="/2023/05/22/dialog-fragment/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-pag" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/04/26/pag/">Android PAG 之初体验</a>
-    </h1>
-  
-
-        
-        <a href="/2023/04/26/pag/" class="archive-article-date">
-  	<time datetime="2023-04-26T06:51:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-04-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>基于公司发展，App 需要配合不定期的进行一次大版本更新。改动主要是启屏页的产品宣传，以及应用主页的 UI 效果。说白了，动画越来越花哨，让人感觉起来更加“高大上”。已经经历过启屏的好几个版本更新了，每次更新都需要配合实现一大堆的动画效果，以及与设计师沟通切图细节等等，十分花费精力。这不，近期又来了一个启屏升级的需求，设计效果感觉都快和游戏差不多了，纯安卓也能做，但是很多光效、粒子等效果，最快的实现方式还是切图。在与设计师沟通的过程中，设计师提供了另一种实现思路：PAG。于是顺着这个思路研究了一下，最终觉得这个方案更好，在此记录一下。</p>
-<h2 id="PAG-简介"><a href="#PAG-简介" class="headerlink" title="PAG 简介"></a>PAG 简介</h2><blockquote>
-<p>PAG 即 Portable Animated Graphics，是一套完整的动效工作流解决方案。<br>目标是降低或消除动效相关的研发成本，能够一键将设计师在 AE（Adobe After Effects）中制作的动效内容导出成素材文件，并快速上线应用于几乎所有的主流平台。</p>
-</blockquote>
-        
-          <a class="article-more-a" href="/2023/04/26/pag/#more">more >></a>
         
       
 

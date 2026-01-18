@@ -154,6 +154,67 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-alarm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/18/alarm/">Android AlarmManager使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/18/alarm/" class="archive-article-date">
+  	<time datetime="2016-08-18T08:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现在应用大多数都会使用一些三方推送的服务，例如极光、个推等，但是其到达率并不是很高，尤其是Android机型，各大手机厂商定制rom，系统拦截。那么要如何提高消息达到率呢？</p>
+<p>Android中提供了<code>AlarmManager</code>可以用来做这个事情。顾名思义，它是一个闹钟管理类，它向系统注册一个事件，时间到了之后，便会触发事件，然后我们便能做一些事情了。</p>
+        
+          <a class="article-more-a" href="/2016/08/18/alarm/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-touchevent" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -684,70 +745,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-task-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/27/task-queue/">Android实现任务队列：一个入口一个出口、一个入口两个出口</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/27/task-queue/" class="archive-article-date">
-  	<time datetime="2016-05-27T07:11:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在我的<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/02/23/single-thread-queue/">Android实现简易轻量下载器：单线程任务队列</a>文章中，有提到过任务队列。当时是需要下载，实现一个简单的单线程任务队列即可。<br>最近项目中也需要用到任务队列，并且有2种需求：</p>
-<ol>
-<li>动态礼物动画：在用户送完动态礼物之后，会在界面上展现一个动画。界面上一次最多能执行1个动画，动画按顺序执行。即：<code>一个入口一个出口</code>。</li>
-<li>静态礼物动画：在用户送完静态礼物之后，会在界面上展现一个动画。界面上一次最多能并列执行2个动画，动画按顺序执行。即：<code>一个入口两个出口</code>。<br>同样都是任务队列，只不过一个是只有一个出口，另一个有两个出口。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/05/27/task-queue/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
         		</li>
       		
 		</ul>

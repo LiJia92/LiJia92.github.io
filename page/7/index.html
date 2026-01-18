@@ -154,6 +154,74 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-viewpager-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/09/viewpager-1/">ViewPager 左右突出</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/09/viewpager-1/" class="archive-article-date">
+  	<time datetime="2020-05-09T08:29:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>日常开发中经常会有如下需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/viewpager.png"></p>
+<p>ViewPager 左右突出，实现起来非常简单：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v4.view.ViewPager</span><br><span class="line">    android:<span class="attribute">layout_width</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">layout_height</span>=<span class="string">&quot;match_parent&quot;</span></span><br><span class="line">    android:<span class="attribute">clipToPadding</span>=<span class="string">&quot;false&quot;</span></span><br><span class="line">    android:<span class="attribute">paddingLeft</span>=<span class="string">&quot;48dp&quot;</span></span><br><span class="line">    android:<span class="attribute">paddingRight</span>=<span class="string">&quot;48dp&quot;</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>添加 padding、clipToPadding 即可。<br>现在还有几个需求：</p>
+<ol>
+<li>两边的 item 小一点，并且有透明度</li>
+<li>item 之间的间距固定</li>
+<li>滑动有动画效果</li>
+</ol>
+        
+          <a class="article-more-a" href="/2020/05/09/viewpager-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-telecom" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -683,66 +751,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-adjust" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/12/adjust/">博客图片迁移</a>
-    </h1>
-  
-
-        
-        <a href="/2019/09/12/adjust/" class="archive-article-date">
-  	<time datetime="2019-09-12T08:05:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>早期博客图床使用的七牛图床，七牛图床被黄图给搞了，所以现在测试域名都只有一个月的使用期限，早些阵子就已经过期回收了，所以之前的测试域名绑定的图片全部失效了，2018-10-10 之前的博客图片全部看不了了，阿西吧~<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh118.gif">若要继续使用七牛图床，需要自己绑定加速域名，重新迁移才行。而绑定加速域名是需要已经备案过的，备案又需要实名制，而我的域名还没有实名制QAQ，不巧的是阿里域名根据工信部的条款，关闭了 .win 域名后缀的实名制认证，这就很尴尬了<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh132.gif">。然后一直等阿里云开放域名实名认证，等到现在也还没开放，今天下定决心把图片都迁移一下，不用七牛了。<br>图片所在的旧 Bucket 测试域名被回收之后，就彻底看不到图片资源了，也下载不了，只能借助七牛官方工具 <a target="_blank" rel="noopener" href="https://github.com/qiniu/qshell">qshell</a> 来进行相关操作。</p>
-        
-          <a class="article-more-a" href="/2019/09/12/adjust/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
         		</li>
       		
 		</ul>
