@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://lijia92.github.io">
   <title>SonarQube 静态代码清理 | 听雪楼</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。 修饰符排序示例： 1final static String WVJB_OVERRIDE_SCHEMA &#x3D; &quot;sp:&#x2F;&#x2F;&quot;; SonarQube 提示： 1Reorder the">
+  <meta name="description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SonarQube 静态代码清理">
 <meta property="og:url" content="http://lijia92.github.io/2026/04/16/code-clean/index.html">
 <meta property="og:site_name" content="听雪楼">
-<meta property="og:description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。 修饰符排序示例： 1final static String WVJB_OVERRIDE_SCHEMA &#x3D; &quot;sp:&#x2F;&#x2F;&quot;; SonarQube 提示： 1Reorder the">
+<meta property="og:description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2026-04-16T02:07:58.000Z">
-<meta property="article:modified_time" content="2026-04-16T13:29:28.679Z">
+<meta property="article:modified_time" content="2026-04-20T13:51:27.903Z">
 <meta property="article:author" content="最后的温存">
 <meta property="article:tag" content="Android 进阶">
 <meta name="twitter:card" content="summary">
@@ -178,6 +178,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。</p>
+<span id="more"></span>
+
 <h2 id="修饰符排序"><a href="#修饰符排序" class="headerlink" title="修饰符排序"></a>修饰符排序</h2><p>示例：</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">static</span> <span class="type">String</span> WVJB_OVERRIDE_SCHEMA = <span class="string">&quot;sp://&quot;</span>;</span><br></pre></td></tr></table></figure>
 <p>SonarQube 提示：</p>
@@ -537,11 +539,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
