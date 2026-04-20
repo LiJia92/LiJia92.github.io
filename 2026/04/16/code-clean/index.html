@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lijia92.github.io">
+  <title>SonarQube 静态代码清理 | 听雪楼</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。 修饰符排序示例： 1final static String WVJB_OVERRIDE_SCHEMA &#x3D; &quot;sp:&#x2F;&#x2F;&quot;; SonarQube 提示： 1Reorder the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SonarQube 静态代码清理">
+<meta property="og:url" content="http://lijia92.github.io/2026/04/16/code-clean/index.html">
+<meta property="og:site_name" content="听雪楼">
+<meta property="og:description" content="公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。 修饰符排序示例： 1final static String WVJB_OVERRIDE_SCHEMA &#x3D; &quot;sp:&#x2F;&#x2F;&quot;; SonarQube 提示： 1Reorder the">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-04-16T02:07:58.000Z">
+<meta property="article:modified_time" content="2026-04-16T13:29:28.679Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/"></a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/archives">存档</a></li>
+	        
+				<li><a href="/something">干货</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author"></h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">存档</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/something">干货</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-code-clean" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SonarQube 静态代码清理
+    </h1>
+  
+
+        
+        <a href="/2026/04/16/code-clean/" class="archive-article-date">
+  	<time datetime="2026-04-16T02:07:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>公司今年有个很大的任务，就是完成所有工程的静态代码清理。在搭建好 SonarQube 平台后，每个人都有一块责任田，各自负责静态代码清理。此文便是记录一下所处理的清理工作，后续开发工作应当避免这些问题。</p>
+<h2 id="修饰符排序"><a href="#修饰符排序" class="headerlink" title="修饰符排序"></a>修饰符排序</h2><p>示例：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="type">static</span> <span class="type">String</span> WVJB_OVERRIDE_SCHEMA = <span class="string">&quot;sp://&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Reorder <span class="keyword">the</span> modifiers <span class="built_in">to</span> comply <span class="keyword">with</span> <span class="keyword">the</span> Java Language Specification.</span><br></pre></td></tr></table></figure>
+<p>即<code>调整修饰符顺序以遵循Java语言规范。</code>应修改为：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">final</span> <span class="type">String</span> WVJB_OVERRIDE_SCHEMA = <span class="string">&quot;sp://&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>常见的修饰符推荐顺序为：</p>
+<ol>
+<li>访问控制符（ public &#x2F; protected &#x2F; private ）</li>
+<li>静态修饰符（ static ）</li>
+<li>最终修饰符（ final ）</li>
+<li>抽象修饰符（ abstract ）</li>
+<li>同步修饰符（ synchronized ）等</li>
+</ol>
+<h2 id="静态类构造函数"><a href="#静态类构造函数" class="headerlink" title="静态类构造函数"></a>静态类构造函数</h2><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BridgeUtil</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="title class_">String</span> <span class="title function_">parseFunctionName</span>(<span class="params"><span class="title class_">String</span> jsUrl</span>) &#123;</span><br><span class="line">        <span class="comment">// coding</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Add a <span class="keyword">private</span> constructor to hide the <span class="keyword">implicit</span> <span class="keyword">public</span> one.</span><br></pre></td></tr></table></figure>
+<p>即<code>添加私有构造方法以隐藏默认的公共构造方法。</code>应修改为：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BridgeUtil</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">BridgeUtil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="type">static</span> <span class="type">String</span> <span class="title">parseFunctionName</span><span class="params">(<span class="type">String</span> jsUrl)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// coding</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>工具类仅包含静态方法和常量，无需实例化，应该添加私有构造方法，以防止外部实例化。</p>
+<h2 id="自动资源管理"><a href="#自动资源管理" class="headerlink" title="自动资源管理"></a>自动资源管理</h2><p>示例：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">String</span> <span class="title function_">assetFile2Str</span>(Context c, <span class="built_in">String</span> urlStr) &#123;</span><br><span class="line">    InputStream in = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        in = c.<span class="property">getAssets</span>().<span class="property">open</span>(urlStr);</span><br><span class="line">        <span class="built_in">BufferedReader</span> bufferedReader = <span class="keyword">new </span><span class="class title_">BufferedReader</span>(<span class="keyword">new </span><span class="class title_">InputStreamReader</span>(in));</span><br><span class="line">        <span class="built_in">String</span> <span class="built_in">line</span> = <span class="literal">null</span>;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new </span><span class="class title_">StringBuilder</span>();</span><br><span class="line">        do &#123;</span><br><span class="line">            <span class="built_in">line</span> = bufferedReader.<span class="property">readLine</span>();</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">line</span> != <span class="literal">null</span> &amp;&amp; !<span class="built_in">line</span>.<span class="property">matches</span>(<span class="string">&quot;^\\s*\\/\\/.*&quot;</span>)) &#123;</span><br><span class="line">                sb.<span class="property">append</span>(<span class="built_in">line</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">while</span> (<span class="built_in">line</span> != <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        bufferedReader.<span class="property">close</span>();</span><br><span class="line">        in.<span class="property">close</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> sb.<span class="property">toString</span>();</span><br><span class="line">    &#125; <span class="title function_">catch</span> (Exception e) &#123;</span><br><span class="line">        e.<span class="property">printStackTrace</span>();</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (in != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                in.<span class="property">close</span>();</span><br><span class="line">            &#125; <span class="title function_">catch</span> (IOException e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Change this <span class="string">&quot;try&quot;</span> <span class="built_in">to</span> <span class="keyword">a</span> <span class="keyword">try</span>-<span class="keyword">with</span>-resources. (sonar.java.source <span class="keyword">not</span> <span class="built_in">set</span>. Assuming <span class="number">7</span> <span class="keyword">or</span> greater.)</span><br></pre></td></tr></table></figure>
+<p>即<code>将此普通 try 语句转换为带资源的 try 语句。</code>应修改为：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">String</span> <span class="title function_">assetFile2Str</span>(Context c, <span class="built_in">String</span> urlStr) &#123;</span><br><span class="line">    <span class="title function_">try</span> (InputStream in = c.<span class="property">getAssets</span>().<span class="property">open</span>(urlStr);</span><br><span class="line">            <span class="built_in">BufferedReader</span> bufferedReader = <span class="keyword">new </span><span class="class title_">BufferedReader</span>(<span class="keyword">new </span><span class="class title_">InputStreamReader</span>(in))) &#123;</span><br><span class="line"></span><br><span class="line">        StringBuilder sb = <span class="keyword">new </span><span class="class title_">StringBuilder</span>();</span><br><span class="line">        <span class="built_in">String</span> <span class="built_in">line</span>;</span><br><span class="line">        <span class="keyword">while</span> ((<span class="built_in">line</span> = bufferedReader.<span class="property">readLine</span>()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">line</span>.<span class="property">matches</span>(<span class="string">&quot;^\\s*\\/\\/.*&quot;</span>)) &#123;</span><br><span class="line">                sb.<span class="property">append</span>(<span class="built_in">line</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.<span class="property">toString</span>();</span><br><span class="line">    &#125; <span class="title function_">catch</span> (Exception e) &#123;</span><br><span class="line">        e.<span class="property">printStackTrace</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将传统的 try-catch-finally 资源管理方式，替换为 Java 7+ 引入的 try-with-resources 语法，以自动关闭资源并简化代码。</p>
+<h2 id="未使用的属性"><a href="#未使用的属性" class="headerlink" title="未使用的属性"></a>未使用的属性</h2><p>示例：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> TAG = <span class="string">&quot;BridgeWebView&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">Remove this unused &quot;TAG&quot; private field.</span></span><br></pre></td></tr></table></figure>
+<p>即<code>删除未使用的属性。</code>应直接删掉。</p>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>还是用上面的示例：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="type">String</span> TAG = <span class="string">&quot;BridgeWebView&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>假设需要保留 TAG 使用, SonarQube 提示：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Rename <span class="keyword">this</span> field <span class="string">&quot;TAG&quot;</span> to match the regular expression <span class="string">&#x27;^[a-z][a-zA-Z0-9]*$&#x27;</span>.</span><br></pre></td></tr></table></figure>
+<p>即<code>命名不规范</code>，应该改为小写驼峰形式。</p>
+<h2 id="菱形运算符"><a href="#菱形运算符" class="headerlink" title="菱形运算符"></a>菱形运算符</h2><p>示例：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;<span class="built_in">String</span>, CallBackFunction&gt; responseCallbacks = <span class="keyword">new</span> HashMap&lt;<span class="built_in">String</span>, CallBackFunction&gt;();</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Replace the <span class="keyword">type</span> specification <span class="keyword">in</span> this <span class="function"><span class="keyword">constructor</span> <span class="title">call</span> <span class="title">with</span> <span class="title">the</span> <span class="title">diamond</span> <span class="title">operator</span> <span class="params">(&quot;&lt;&gt;&quot;)</span>. <span class="params">(sonar.java.source <span class="keyword">not</span> <span class="keyword">set</span>. Assuming 7 <span class="keyword">or</span> greater.)</span></span></span><br></pre></td></tr></table></figure>
+<p>即<code>将此构造方法调用中的类型声明替换为菱形运算符（&quot;&lt;&gt;&quot;)。</code>应修改为：</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span>&lt;<span class="built_in">String</span>, CallBackFunction&gt; responseCallbacks = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure>
+
+<h2 id="注释代码块"><a href="#注释代码块" class="headerlink" title="注释代码块"></a>注释代码块</h2><p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> void <span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setVerticalScrollBarEnabled(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">this</span>.setHorizontalScrollBarEnabled(<span class="literal">false</span>);</span><br><span class="line">    <span class="keyword">this</span>.getSettings().setJavaScriptEnabled(<span class="literal">true</span>);</span><br><span class="line"><span class="comment">//        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) &#123;</span></span><br><span class="line"><span class="comment">//            WebView.setWebContentsDebuggingEnabled(true);</span></span><br><span class="line"><span class="comment">//        &#125;</span></span><br><span class="line">    setBackgroundColor(android.R.color.transparent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This <span class="keyword">block </span>of commented-out lines of code <span class="keyword">should </span><span class="keyword">be </span>removed.</span><br></pre></td></tr></table></figure>
+<p>即<code>应移除这段被注释掉的代码块。</code>应直接删掉。</p>
+<h2 id="空判断"><a href="#空判断" class="headerlink" title="空判断"></a>空判断</h2><p>示例：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (list.size() <span class="operator">=</span><span class="operator">=</span> <span class="number">0</span>) &#123;</span><br><span class="line">    // code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Use isEmpty() to<span class="built_in"> check </span>whether the collection is empty<span class="built_in"> or </span>not.</span><br></pre></td></tr></table></figure>
+<p>即<code>使用 isEmpty() 方法检查集合是否为空。</code>应修改为：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (list.<span class="built_in">isEmpty</span>()) &#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法复杂度"><a href="#方法复杂度" class="headerlink" title="方法复杂度"></a>方法复杂度</h2><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">void</span> <span class="title function_">flushMessageQueue</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Thread</span>.<span class="title function_">currentThread</span>() == <span class="title class_">Looper</span>.<span class="title function_">getMainLooper</span>().<span class="title function_">getThread</span>()) &#123;</span><br><span class="line">        <span class="title function_">loadUrl</span>(<span class="title class_">BridgeUtil</span>.<span class="property">JS_FETCH_QUEUE_FROM_JAVA</span>, <span class="keyword">new</span> <span class="title class_">CallBackFunction</span>() &#123;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onCallBack</span>(<span class="params"><span class="title class_">String</span> data</span>) &#123;</span><br><span class="line">                <span class="comment">// deserializeMessage</span></span><br><span class="line">                <span class="title class_">List</span>&lt;<span class="title class_">Message</span>&gt; list = <span class="title class_">Message</span>.<span class="title function_">toArrayList</span>(data);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (list.<span class="title function_">size</span>() == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; list.<span class="title function_">size</span>(); i++) &#123;</span><br><span class="line">                    <span class="title class_">Message</span> m = list.<span class="title function_">get</span>(i);</span><br><span class="line">                    <span class="title class_">String</span> responseId = m.<span class="title function_">getResponseId</span>();</span><br><span class="line">                    <span class="comment">// 是否是response</span></span><br><span class="line">                    <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(responseId)) &#123;</span><br><span class="line">                        <span class="title class_">CallBackFunction</span> <span class="keyword">function</span> = responseCallbacks.<span class="title function_">get</span>(responseId);</span><br><span class="line">                        <span class="title class_">String</span> responseData = m.<span class="title function_">getResponseData</span>();</span><br><span class="line">                        <span class="keyword">if</span> (<span class="keyword">function</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">                            <span class="keyword">function</span>.<span class="title function_">onCallBack</span>(responseData);</span><br><span class="line">                        &#125;</span><br><span class="line">                        responseCallbacks.<span class="title function_">remove</span>(responseId);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="title class_">CallBackFunction</span> responseFunction = <span class="literal">null</span>;</span><br><span class="line">                        <span class="comment">// if had callbackId</span></span><br><span class="line">                        final <span class="title class_">String</span> callbackId = m.<span class="title function_">getCallbackId</span>();</span><br><span class="line">                        <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(callbackId)) &#123;</span><br><span class="line">                            responseFunction = <span class="keyword">new</span> <span class="title class_">CallBackFunction</span>() &#123;</span><br><span class="line">                                <span class="meta">@Override</span></span><br><span class="line">                                <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onCallBack</span>(<span class="params"><span class="title class_">String</span> data</span>) &#123;</span><br><span class="line">                                    <span class="title class_">Message</span> responseMsg = <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">                                    responseMsg.<span class="title function_">setResponseId</span>(callbackId);</span><br><span class="line">                                    responseMsg.<span class="title function_">setResponseData</span>(data);</span><br><span class="line">                                    <span class="title function_">queueMessage</span>(responseMsg);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            responseFunction = <span class="keyword">new</span> <span class="title class_">CallBackFunction</span>() &#123;</span><br><span class="line">                                <span class="meta">@Override</span></span><br><span class="line">                                <span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onCallBack</span>(<span class="params"><span class="title class_">String</span> data</span>) &#123;</span><br><span class="line">                                    <span class="comment">// do nothing</span></span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="title class_">BridgeHandler</span> handler;</span><br><span class="line">                        <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(m.<span class="title function_">getHandlerName</span>())) &#123;</span><br><span class="line">                            <span class="title class_">String</span> handlerName =  m.<span class="title function_">getHandlerName</span>();</span><br><span class="line">                            <span class="keyword">if</span> (handlerName.<span class="title function_">contains</span>(<span class="string">&quot;/&quot;</span>)) &#123;</span><br><span class="line">                                handler = messageHandlers.<span class="title function_">get</span>(<span class="string">&quot;requestCustomPlugin&quot;</span>);</span><br><span class="line">                                <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> <span class="title class_">CustomPluginBridgeHandler</span>) &#123;</span><br><span class="line">                                    ((<span class="title class_">CustomPluginBridgeHandler</span>)handler).<span class="title function_">handler</span>(<span class="title class_">BridgeWebView</span>.<span class="property">this</span>,handlerName, m.<span class="title function_">getData</span>(), responseFunction);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                                handler = messageHandlers.<span class="title function_">get</span>(handlerName);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            handler = defaultHandler;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (handler != <span class="literal">null</span>) &#123;</span><br><span class="line">                            handler.<span class="title function_">handler</span>(<span class="title class_">BridgeWebView</span>.<span class="property">this</span>, m.<span class="title function_">getData</span>(), responseFunction);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Refactor this <span class="keyword">method</span> <span class="title function_">to</span> <span class="title function_">reduce</span> <span class="title function_">its</span> <span class="title function_">Cognitive</span> <span class="title function_">Complexity</span> <span class="title function_">from</span> 48 <span class="title function_">to</span> <span class="title function_">the</span> 15 <span class="title function_">allowed</span>.</span><br></pre></td></tr></table></figure>
+<p>即<code>重构此方法以减少其认知复杂度从 48 到 15 允许的最大值。</code>可以修改为：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">void</span> <span class="title function_">flushMessageQueue</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Thread</span>.<span class="title function_">currentThread</span>() == <span class="title class_">Looper</span>.<span class="title function_">getMainLooper</span>().<span class="title function_">getThread</span>()) &#123;</span><br><span class="line">        <span class="title function_">loadUrl</span>(<span class="title class_">BridgeUtil</span>.<span class="property">JS_FETCH_QUEUE_FROM_JAVA</span>, <span class="attr">this</span>::dispatchMessage);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 分发消息（核心逻辑抽离，降低认知复杂度）</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">void</span> <span class="title function_">dispatchMessage</span>(<span class="params"><span class="title class_">String</span> data</span>) &#123;</span><br><span class="line">    <span class="title class_">List</span>&lt;<span class="title class_">Message</span>&gt; list = <span class="title class_">Message</span>.<span class="title function_">toArrayList</span>(data);</span><br><span class="line">    <span class="keyword">if</span> (list.<span class="title function_">isEmpty</span>()) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; list.<span class="title function_">size</span>(); i++) &#123;</span><br><span class="line">        <span class="title class_">Message</span> message = list.<span class="title function_">get</span>(i);</span><br><span class="line">        <span class="title function_">handleMessage</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 处理单条消息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">void</span> <span class="title function_">handleMessage</span>(<span class="params"><span class="title class_">Message</span> message</span>) &#123;</span><br><span class="line">    <span class="title class_">String</span> responseId = message.<span class="title function_">getResponseId</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理响应消息</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(responseId)) &#123;</span><br><span class="line">        <span class="title function_">handleResponseMessage</span>(message, responseId);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理请求消息</span></span><br><span class="line">    <span class="title function_">handleRequestMessage</span>(message);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 处理 Response 类型消息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">void</span> <span class="title function_">handleResponseMessage</span>(<span class="params"><span class="title class_">Message</span> message, <span class="title class_">String</span> responseId</span>) &#123;</span><br><span class="line">    <span class="title class_">CallBackFunction</span> <span class="keyword">function</span> = responseCallbacks.<span class="title function_">get</span>(responseId);</span><br><span class="line">    <span class="title class_">String</span> responseData = message.<span class="title function_">getResponseData</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">function</span> != <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">function</span>.<span class="title function_">onCallBack</span>(responseData);</span><br><span class="line">    &#125;</span><br><span class="line">    responseCallbacks.<span class="title function_">remove</span>(responseId);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 处理 Request 类型消息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="built_in">void</span> <span class="title function_">handleRequestMessage</span>(<span class="params"><span class="title class_">Message</span> message</span>) &#123;</span><br><span class="line">    <span class="title class_">CallBackFunction</span> responseFunction = <span class="title function_">createResponseFunction</span>(message);</span><br><span class="line">    <span class="title class_">BridgeHandler</span> handler = <span class="title function_">findMessageHandler</span>(message);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (handler != <span class="literal">null</span>) &#123;</span><br><span class="line">        handler.<span class="title function_">handler</span>(<span class="title class_">BridgeWebView</span>.<span class="property">this</span>, message.<span class="title function_">getData</span>(), responseFunction);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 创建回调函数</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="title class_">CallBackFunction</span> <span class="title function_">createResponseFunction</span>(<span class="params"><span class="title class_">Message</span> message</span>) &#123;</span><br><span class="line">    final <span class="title class_">String</span> callbackId = message.<span class="title function_">getCallbackId</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(callbackId)) &#123;</span><br><span class="line">        <span class="keyword">return</span> data -&gt; &#123;</span><br><span class="line">            <span class="title class_">Message</span> responseMsg = <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">            responseMsg.<span class="title function_">setResponseId</span>(callbackId);</span><br><span class="line">            responseMsg.<span class="title function_">setResponseData</span>(data);</span><br><span class="line">            <span class="title function_">queueMessage</span>(responseMsg);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> data -&gt; &#123;</span><br><span class="line">            <span class="comment">// do nothing</span></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 查找对应的 BridgeHandler</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="keyword">private</span> <span class="title class_">BridgeHandler</span> <span class="title function_">findMessageHandler</span>(<span class="params"><span class="title class_">Message</span> message</span>) &#123;</span><br><span class="line">    <span class="title class_">String</span> handlerName = message.<span class="title function_">getHandlerName</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">TextUtils</span>.<span class="title function_">isEmpty</span>(handlerName)) &#123;</span><br><span class="line">        <span class="keyword">return</span> defaultHandler;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (handlerName.<span class="title function_">contains</span>(<span class="string">&quot;/&quot;</span>)) &#123;</span><br><span class="line">        <span class="title class_">BridgeHandler</span> handler = messageHandlers.<span class="title function_">get</span>(<span class="string">&quot;requestCustomPlugin&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> <span class="title class_">CustomPluginBridgeHandler</span>) &#123;</span><br><span class="line">            ((<span class="title class_">CustomPluginBridgeHandler</span>) handler).<span class="title function_">handler</span>(</span><br><span class="line">                    <span class="title class_">BridgeWebView</span>.<span class="property">this</span>,</span><br><span class="line">                    handlerName,</span><br><span class="line">                    message.<span class="title function_">getData</span>(),</span><br><span class="line">                    <span class="literal">null</span></span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> handler;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> messageHandlers.<span class="title function_">get</span>(handlerName);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="空方法"><a href="#空方法" class="headerlink" title="空方法"></a>空方法</h2><p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">initPageConfig</span><span class="params">(pageConfig: <span class="type">FragmentPageConfig</span>)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Add</span> a nested <span class="keyword">comment</span> explaining why this <span class="keyword">function</span> <span class="keyword">is</span> empty <span class="keyword">or</span> complete the implementation.</span><br></pre></td></tr></table></figure>
+<p>即<code>添加注释说明为什么此函数为空或完成实现。</code>可以增加相应注释：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> <span class="title">initPageConfig</span><span class="params">(pageConfig: <span class="type">FragmentPageConfig</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 子类覆写</span></span><br><span class="line">    <span class="comment">// 或者 do thing 等等</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="空代码块"><a href="#空代码块" class="headerlink" title="空代码块"></a>空代码块</h2><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="attr">sNavBarOverride</span>: <span class="title class_">String</span>? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Build</span>.<span class="property">VERSION</span>.<span class="property">SDK_INT</span> &gt;= <span class="title class_">Build</span>.<span class="property">VERSION_CODES</span>.<span class="property">KITKAT</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            val c = <span class="title class_">Class</span>.<span class="title function_">forName</span>(<span class="string">&quot;android.os.SystemProperties&quot;</span>)</span><br><span class="line">            val m = c.<span class="title function_">getDeclaredMethod</span>(<span class="string">&quot;get&quot;</span>, <span class="title class_">String</span>::<span class="keyword">class</span>.<span class="property">java</span>)</span><br><span class="line">            m.<span class="property">isAccessible</span> = <span class="literal">true</span></span><br><span class="line">            sNavBarOverride = m.<span class="title function_">invoke</span>(<span class="literal">null</span>, <span class="string">&quot;qemu.hw.mainkeys&quot;</span>) <span class="keyword">as</span> <span class="title class_">String</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="attr">e</span>: <span class="title class_">Throwable</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sNavBarOverride</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Either remove <span class="keyword">or</span> fill <span class="keyword">this</span> block of code.</span><br></pre></td></tr></table></figure>
+<p>即<code>删除或填充此代码块。</code>可以修改为：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="title function_">get</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="attr">sNavBarOverride</span>: <span class="title class_">String</span>? = <span class="literal">null</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title class_">Build</span>.<span class="property">VERSION</span>.<span class="property">SDK_INT</span> &gt;= <span class="title class_">Build</span>.<span class="property">VERSION_CODES</span>.<span class="property">KITKAT</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            val c = <span class="title class_">Class</span>.<span class="title function_">forName</span>(<span class="string">&quot;android.os.SystemProperties&quot;</span>)</span><br><span class="line">            val m = c.<span class="title function_">getDeclaredMethod</span>(<span class="string">&quot;get&quot;</span>, <span class="title class_">String</span>::<span class="keyword">class</span>.<span class="property">java</span>)</span><br><span class="line">            m.<span class="property">isAccessible</span> = <span class="literal">true</span></span><br><span class="line">            sNavBarOverride = m.<span class="title function_">invoke</span>(<span class="literal">null</span>, <span class="string">&quot;qemu.hw.mainkeys&quot;</span>) <span class="keyword">as</span> <span class="title class_">String</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (<span class="attr">e</span>: <span class="title class_">Throwable</span>) &#123;</span><br><span class="line">            e.<span class="title function_">printStackTrace</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sNavBarOverride</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>示例：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> AMIGO = <span class="string">&quot;amigo&quot;</span> <span class="comment">// 金立 // todo</span></span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Complete the <span class="keyword">task</span> associated to <span class="keyword">this</span> TODO comment.</span><br></pre></td></tr></table></figure>
+<p>即<code>完成此 TODO 注释关联的任务。</code>如有需要完成的任务，需要完善代码。如果已经完成，或不需要了，则直接删除。</p>
+<h2 id="正则优化"><a href="#正则优化" class="headerlink" title="正则优化"></a>正则优化</h2><p>示例：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">public</span> ROMInfo checkBuildProp(RomProperties properties) throws <span class="keyword">Exception</span> &#123;</span><br><span class="line">    ROMInfo <span class="keyword">info</span> = <span class="keyword">null</span>;</span><br><span class="line">    String versionName = properties.getProperty(BuildPropKeyList.Companion.getMIUI_VERSION_NANE());</span><br><span class="line">    <span class="keyword">if</span> (!TextUtils.isEmpty(versionName) &amp;&amp; versionName.matches(&quot;[Vv]\\d+&quot;)) &#123; // V9</span><br><span class="line">        try &#123;</span><br><span class="line">            <span class="keyword">info</span> = <span class="built_in">new</span> ROMInfo(getRom());</span><br><span class="line">            <span class="keyword">info</span>.setBaseVersion(<span class="type">Integer</span>.parseInt(versionName.substring(<span class="number">1</span>)));</span><br><span class="line"></span><br><span class="line">            String versionStr = properties.getProperty(BuildPropKeyList.Companion.getMIUI_VERSION());</span><br><span class="line">            <span class="keyword">if</span> (!TextUtils.isEmpty(versionStr)) &#123;</span><br><span class="line">                // 参考: <span class="number">8.1</span><span class="number">.25</span> &amp; V9<span class="number">.6</span><span class="number">.2</span><span class="number">.0</span>.ODECNFD &amp; V10<span class="number">.0</span><span class="number">.1</span><span class="number">.0</span>.OAACNFH</span><br><span class="line">                Matcher matcher = Pattern.compile(&quot;[Vv]?(\\d+(\\.\\d+)*)[.A-Za-z]*&quot;).matcher(versionStr);</span><br><span class="line">                <span class="keyword">if</span> (matcher.matches()) &#123;</span><br><span class="line">                    <span class="keyword">info</span>.setVersion(matcher.<span class="keyword">group</span>(<span class="number">1</span>));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (<span class="keyword">Exception</span> e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">info</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Refactor <span class="keyword">this</span> repetition that can lead to a stack overflow <span class="keyword">for</span> large inputs.</span><br></pre></td></tr></table></figure>
+<p>即<code>重构此重复代码，以避免栈输入过大时的溢出问题。</code>因为代码中只用到了 group(1)，所以可以把正则表达式修改为：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;[Vv]?(<span class="subst">\\</span>d+(?:<span class="subst">\\</span>.<span class="subst">\\</span>d+)*)[.A-Za-z]*&quot;</span></span><br></pre></td></tr></table></figure>
+<p>正则表达式引擎在处理重复结构时，会使用栈来跟踪匹配状态：</p>
+<ul>
+<li>原始正则的 (\.\d+)* 会为每个匹配的子组创建栈帧</li>
+<li>当输入超长时（如包含上百个版本号段），栈内存会被耗尽</li>
+<li>非捕获组 (?:\.\d+)* 不会创建额外栈帧，大幅减少内存消耗</li>
+</ul>
+<h2 id="未使用的参数"><a href="#未使用的参数" class="headerlink" title="未使用的参数"></a>未使用的参数</h2><p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">doGetRomType</span><span class="params">(context: <span class="type">Context</span>)</span></span>: ROM &#123;</span><br><span class="line">    <span class="comment">// code 没有用到 context</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">Remove this unused function parameter &quot;context&quot;.</span></span><br></pre></td></tr></table></figure>
+<p>即<code>删除未使用的函数参数 &quot;context&quot;。</code>参数未使用应直接删掉。</p>
+<h2 id="if-语句合并"><a href="#if-语句合并" class="headerlink" title="if 语句合并"></a>if 语句合并</h2><p>示例：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">checker</span><span class="variable">.checkManufacturer</span>(manufacturer)) &#123;</span><br><span class="line">    <span class="comment">// 检查完 Manufacturer 后, 再核对一遍应用列表</span></span><br><span class="line">    <span class="comment">//if (checker.checkApplication(context))</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">checker</span><span class="variable">.checkRom</span>()) <span class="keyword">return</span> <span class="keyword">checker</span><span class="variable">.getRom</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Merge this <span class="string">&quot;if&quot;</span> statement <span class="keyword">with</span> <span class="keyword">the</span> nested <span class="literal">one</span>.</span><br></pre></td></tr></table></figure>
+<p>即<code>将此 if 语句与嵌套的 if 语句合并。</code>应修改为：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">checker</span><span class="variable">.checkManufacturer</span>(manufacturer) &amp;&amp; <span class="keyword">checker</span><span class="variable">.checkRom</span>()) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">checker</span><span class="variable">.getRom</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法参数过长"><a href="#方法参数过长" class="headerlink" title="方法参数过长"></a>方法参数过长</h2><p>示例：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">private</span> <span class="selector-tag">fun</span> <span class="selector-tag">loadNotificationImage</span>(</span><br><span class="line">        <span class="attribute">context</span>: Context,</span><br><span class="line">        <span class="attribute">imageUrl</span>: String,</span><br><span class="line">        <span class="variable">@DrawableRes</span> <span class="attribute">placeholderId</span>: Int,</span><br><span class="line">        <span class="variable">@DrawableRes</span> <span class="attribute">errorDrawableId</span>: Int = placeholderId,</span><br><span class="line">        <span class="attribute">notyId</span>: Int = <span class="number">0</span>,</span><br><span class="line">        <span class="attribute">notyBuilder</span>: NotificationCompat.Builder? = null,</span><br><span class="line">        <span class="attribute">roundingRadiusDp</span>: Int = <span class="number">10</span>,</span><br><span class="line">        <span class="attribute">failed</span>: (() -&gt; Unit)? = null,</span><br><span class="line">        <span class="attribute">bitmapBlock</span>: (<span class="attribute">bitmap</span>: Bitmap, <span class="attribute">nId</span>: Int, <span class="attribute">nBuilder</span>: NotificationCompat.Builder?) -&gt; Unit = &#123; <span class="selector-tag">_</span>, <span class="selector-tag">_</span>, <span class="selector-tag">_</span> <span class="selector-tag">-</span>&gt; &#125;</span><br><span class="line">    ) &#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This <span class="keyword">function</span> <span class="title">has</span> 9 parameters, which <span class="keyword">is</span> greater than the <span class="number">7</span> authorized.</span><br></pre></td></tr></table></figure>
+<p>即<code>此函数有 9 个参数，超过 7 个参数的授权。</code>应将参数抽取，可以修改为：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">data</span> <span class="keyword">class</span> <span class="title class_">NotificationImageConfig</span>(</span><br><span class="line">        <span class="keyword">val</span> context: Context,</span><br><span class="line">        <span class="keyword">val</span> imageUrl: String,</span><br><span class="line">        <span class="meta">@DrawableRes</span> <span class="keyword">val</span> placeholderId: <span class="built_in">Int</span>,</span><br><span class="line">        <span class="meta">@DrawableRes</span> <span class="keyword">val</span> errorDrawableId: <span class="built_in">Int</span> = placeholderId,</span><br><span class="line">        <span class="keyword">val</span> notyId: <span class="built_in">Int</span> = <span class="number">0</span>,</span><br><span class="line">        <span class="keyword">val</span> notyBuilder: NotificationCompat.Builder? = <span class="literal">null</span>,</span><br><span class="line">        <span class="keyword">val</span> roundingRadiusDp: <span class="built_in">Int</span> = <span class="number">10</span>,</span><br><span class="line">        <span class="keyword">val</span> failed: (() -&gt; <span class="built_in">Unit</span>)? = <span class="literal">null</span>,</span><br><span class="line">        <span class="keyword">val</span> bitmapBlock: (bitmap: Bitmap, nId: <span class="built_in">Int</span>, nBuilder: NotificationCompat.Builder?) -&gt; <span class="built_in">Unit</span> = &#123; _, _, _ -&gt; &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">loadNotificationImage</span><span class="params">(config: <span class="type">NotificationImageConfig</span>)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> (context, imageUrl, placeholderId, errorDrawableId, notyId, notyBuilder, roundingRadiusDp, failed, bitmapBlock) = config</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>修改方法签名一定要注意调用方</strong>。</p>
+<h2 id="Deprecated"><a href="#Deprecated" class="headerlink" title="Deprecated"></a>Deprecated</h2><p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Deprecated(<span class="string">&quot;已废弃，使用PostDelay轻量级框架替代&quot;</span>)</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">var</span> dismissPopupTimer = Timer(<span class="string">&quot;dismissPopupTimer_<span class="subst">$&#123;totalNotifyCount.get()&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Do</span> <span class="keyword">not</span> forget <span class="keyword">to</span> <span class="keyword">remove</span> this <span class="keyword">deprecated</span> code someday.</span><br></pre></td></tr></table></figure>
+<p>即<code>此代码已废弃，应在将来移除。</code>需要仔细检查，确认是否有其他地方使用了此代码。若最终确认没有使用，即可删除。<br>另还有一种场景：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">open</span> <span class="keyword">operator</span> <span class="function"><span class="keyword">fun</span> <span class="type">&lt;T : ShareViewModel?&gt;</span> <span class="title">get</span><span class="params">(key: <span class="type">String</span>, modelClass: <span class="type">Class</span>&lt;<span class="type">T</span>&gt;)</span></span>: T &#123;</span><br><span class="line">    <span class="keyword">var</span> viewModel: ShareViewModel? = childViewModelStore[key]</span><br><span class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">        <span class="keyword">return</span> viewModel <span class="keyword">as</span> T</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (viewModel != <span class="literal">null</span>) &#123;</span><br><span class="line">            Log.w(baseSimpleClassName(), <span class="string">&quot;viewModel not null&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//noinspection TryWithIdenticalCatches</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        viewModel = modelClass.newInstance()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: InstantiationException) &#123;</span><br><span class="line">        <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: IllegalAccessException) &#123;</span><br><span class="line">        <span class="keyword">throw</span> RuntimeException(<span class="string">&quot;Cannot create an instance of <span class="variable">$modelClass</span>&quot;</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">    childViewModelStore[key] = viewModel!!</span><br><span class="line">    addCloseable(viewModel)</span><br><span class="line">    <span class="keyword">return</span> viewModel</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>modelClass.newInstance() 会有提示：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Deprecated code <span class="keyword">should </span>not <span class="keyword">be </span>used.</span><br></pre></td></tr></table></figure>
+<p>此场景需要寻找替代方法进行调用，不再调用已经标记为废弃的方法。</p>
+<h2 id="重复代码"><a href="#重复代码" class="headerlink" title="重复代码"></a>重复代码</h2><p>示例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">when (info.downloadStatus) &#123;</span><br><span class="line">    download_status_running -&gt; &#123;</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvProgress</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.sbProgress</span><span class="selector-class">.setProgressColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.ivDownload</span><span class="selector-class">.visibility</span> = View<span class="selector-class">.INVISIBLE</span></span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.text</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    download_status_success -&gt; &#123;</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvProgress</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.sbProgress</span><span class="selector-class">.setProgressColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.ivDownload</span><span class="selector-class">.visibility</span> = View<span class="selector-class">.INVISIBLE</span></span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.text</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">This branch<span class="symbol">&#x27;s</span> code <span class="keyword">block</span> <span class="keyword">is</span> the same as the <span class="keyword">block</span> <span class="keyword">for</span> the branch <span class="keyword">on</span> <span class="literal">line</span> <span class="number">52</span>.</span><br></pre></td></tr></table></figure>
+<p>即<code>此分支的代码与第 52 行的代码相同。</code>应修改为：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">when (info.downloadStatus) &#123;</span><br><span class="line">    download_status_running,</span><br><span class="line">    download_status_success -&gt; &#123;</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvProgress</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.sbProgress</span><span class="selector-class">.setProgressColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.ivDownload</span><span class="selector-class">.visibility</span> = View<span class="selector-class">.INVISIBLE</span></span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.setTextColor</span>(context<span class="selector-class">.resources</span><span class="selector-class">.getColor</span>(R<span class="selector-class">.color</span>.download_color_item_text_selected))</span><br><span class="line">        holder<span class="selector-class">.binding</span><span class="selector-class">.tvDownloadDis</span><span class="selector-class">.text</span> = <span class="string">&quot;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="枚举类重复字符串"><a href="#枚举类重复字符串" class="headerlink" title="枚举类重复字符串"></a>枚举类重复字符串</h2><p>示例：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public enum CloudNetErrorCode &#123;</span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">    <span class="built_in">TD7077</span>(<span class="number">7077</span>, &quot;Exceeded the number of applications&quot;),<span class="comment">//一个月只能申请5次</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">TD7085</span>(<span class="number">7085</span>,&quot;The device does not exist&quot;),<span class="comment">//设备隔离校验,提示设备不存在</span></span><br><span class="line">    <span class="comment">//终端密码更改后被强制退出</span></span><br><span class="line">    <span class="built_in">TD7088</span>(<span class="number">7088</span>, &quot;Force to log out after the password changes&quot;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有终端ID的App 达到最大token最大数量后被强制退出最久未访问的会话</span></span><br><span class="line">    <span class="built_in">TD7089</span>(<span class="number">7089</span>, &quot;Exceeded the number of applications&quot;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//账后注销后被强制退出</span></span><br><span class="line">    <span class="built_in">TD7090</span>(<span class="number">7090</span>, &quot;The account has been logged out&quot;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要双因认证</span></span><br><span class="line">    <span class="built_in">TD7091</span>(<span class="number">7091</span>, &quot;Exceeded the number of applications&quot;),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SonarQube 提示：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Define a <span class="built_in">constant</span> <span class="keyword">instead of</span> duplicating this literal <span class="string">&quot;Exceeded the number of applications&quot;</span> <span class="number">3</span> <span class="keyword">times</span>.</span><br></pre></td></tr></table></figure>
+<p>即<code>字符串 &quot;Exceeded the number of applications&quot; 被重复写了 3 次，应定义一个常量来代替。</code>应修改为：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title class_"><span class="keyword">enum</span> <span class="title">CloudNetErrorCode</span> &#123;</span></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line">    TD7077(<span class="number">7077</span>, Const.MSG_EXCEEDED_APPLICATIONS),<span class="comment">//一个月只能申请5次</span></span><br><span class="line"></span><br><span class="line">    TD7085(<span class="number">7085</span>,<span class="string">&quot;The device does not exist&quot;</span>),<span class="comment">//设备隔离校验,提示设备不存在</span></span><br><span class="line">    <span class="comment">//终端密码更改后被强制退出</span></span><br><span class="line">    TD7088(<span class="number">7088</span>, <span class="string">&quot;Force to log out after the password changes&quot;</span>),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//有终端ID的App 达到最大token最大数量后被强制退出最久未访问的会话</span></span><br><span class="line">    TD7089(<span class="number">7089</span>, Const.MSG_EXCEEDED_APPLICATIONS),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//账后注销后被强制退出</span></span><br><span class="line">    TD7090(<span class="number">7090</span>, <span class="string">&quot;The account has been logged out&quot;</span>),</span><br><span class="line"></span><br><span class="line">    <span class="comment">//需要双因认证</span></span><br><span class="line">    TD7091(<span class="number">7091</span>, Const.MSG_EXCEEDED_APPLICATIONS),</span><br><span class="line"></span><br><span class="line">    <span class="comment">// code</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="title class_"><span class="keyword">class</span> <span class="title">Const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> MSG_EXCEEDED_APPLICATIONS = <span class="string">&quot;Exceeded the number of applications&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，枚举类比较特殊，若只是定义 public static final String 变量，也会报错：</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cannot <span class="built_in">read</span> <span class="built_in">value</span> <span class="keyword">of</span> field <span class="string">&#x27;MSG_EXCEEDED_APPLICATIONS&#x27;</span> <span class="keyword">before</span> <span class="keyword">the</span> field<span class="string">&#x27;s definition</span></span><br></pre></td></tr></table></figure>
+<p>所以需要提取到 Const 静态类中。</p>
+<p>（持续更新…）</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2026/04/16/code-clean/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2026/01/17/mobsf/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Windows 搭建 MobSF 平台</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="code-clean" data-title="SonarQube 静态代码清理" data-url="http://lijia92.github.io/2026/04/16/code-clean/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lastwarmth"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2026 最后的温存
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.gcssloop.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>GcsSloop</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://hukai.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>胡凯</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://stormzhang.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>stormzhang</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/lmj623565791" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Hongyang</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">小小程序猿一枚&lt;br&gt;&lt;br&gt;good good study&lt;br&gt;day day up!</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
