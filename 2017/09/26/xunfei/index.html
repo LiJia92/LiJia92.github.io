@@ -186,12 +186,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>项目开发需要用到<code>文字转语音</code>的功能，利用 Android 系统自带的<code>Text-to-Speech</code>可以实现<code>英文转语音</code>，但是对于中文就无能为力了。对于中文转语音需要特定引擎的支持，谷歌自带的<code>Pico TTS</code>是不支持的，我的小米手机是<code>度秘语音引擎</code>支持中文，显然我们没法去控制用户用什么手机，所以抛弃原生的<code>TTS</code>，考虑接入<code>讯飞语音SDK</code>。</p>
-<h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a target="_blank" rel="noopener" href="http://passport.xfyun.cn/login">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png"></p>
+<h2><span id="注册开发者账号">注册开发者账号</span></h2><p>进入<a target="_blank" rel="noopener" href="http://passport.xfyun.cn/login">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png"></p>
 <span id="more"></span>
 
-<h2 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h2><p>登录账号，进入<code>控制台</code>，选择<code>创建新应用</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png"></p>
-<h2 id="下载SDK"><a href="#下载SDK" class="headerlink" title="下载SDK"></a>下载SDK</h2><p>点击<code>SDK下载</code>。选择下载服务、平台、应用，然后点击下载。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png"><br>我这里只选择了在线语音合成，免费的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png"><br>然后得到SDK：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png"></p>
-<h2 id="集成SDK"><a href="#集成SDK" class="headerlink" title="集成SDK"></a>集成SDK</h2><p>首先将<code>对应手机CPU平台的 so 文件</code>导入到工程中，jar 包导入到 libs 中。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png"></p>
+<h2><span id="创建应用">创建应用</span></h2><p>登录账号，进入<code>控制台</code>，选择<code>创建新应用</code>。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_164.png"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_165.png"></p>
+<h2><span id="下载sdk">下载SDK</span></h2><p>点击<code>SDK下载</code>。选择下载服务、平台、应用，然后点击下载。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_168.png"><br>我这里只选择了在线语音合成，免费的。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_169.png"><br>然后得到SDK：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E9%80%89%E5%8C%BA_170.png"></p>
+<h2><span id="集成sdk">集成SDK</span></h2><p>首先将<code>对应手机CPU平台的 so 文件</code>导入到工程中，jar 包导入到 libs 中。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_167.png"></p>
 <p>在 Application 中初始化讯飞语音：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SpeechUtility.createUtility(<span class="keyword">this</span>, SpeechConstant.APPID +<span class="string">&quot;=xxxxxxxx&quot;</span>);</span><br></pre></td></tr></table></figure>
 <p>在调用的地方初始化语音对象：</p>

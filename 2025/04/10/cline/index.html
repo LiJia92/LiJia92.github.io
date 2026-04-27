@@ -215,16 +215,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自 ChatGpt 诞生以来，全世界每天都在承受 AI 的冲击。今年年初的 DeepSeek 更是让中国 AI 沸腾。作为安卓工程师还是很焦虑的。要如何面对这一波的 AI 浪潮？<strong>只能不断学习。</strong><br>起初使用 AI 也仅仅是在 Android Studio 中装一些插件，比如 Baidu Comate。但是这玩意感觉不太好用，通过对话框来回粘贴复制代码，着实费劲。后经同事介绍，了解到了 Cline，可以自动生成文件、修改代码，无需手动粘贴复制，下面便来介绍一下 Cline 的使用。</p>
+        <h2><span id="前言">前言</span></h2><p>自 ChatGpt 诞生以来，全世界每天都在承受 AI 的冲击。今年年初的 DeepSeek 更是让中国 AI 沸腾。作为安卓工程师还是很焦虑的。要如何面对这一波的 AI 浪潮？<strong>只能不断学习。</strong><br>起初使用 AI 也仅仅是在 Android Studio 中装一些插件，比如 Baidu Comate。但是这玩意感觉不太好用，通过对话框来回粘贴复制代码，着实费劲。后经同事介绍，了解到了 Cline，可以自动生成文件、修改代码，无需手动粘贴复制，下面便来介绍一下 Cline 的使用。</p>
 <span id="more"></span>
 
-<h2 id="Cline-介绍"><a href="#Cline-介绍" class="headerlink" title="Cline 介绍"></a>Cline 介绍</h2><p>Cline 是 VS Code 的一款插件。它可以自动生成代码，无需粘贴复制。集成价格优惠的 DeepSeek 也相当方便。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/1.pic.jpg"></p>
+<h2><span id="cline-介绍">Cline 介绍</span></h2><p>Cline 是 VS Code 的一款插件。它可以自动生成代码，无需粘贴复制。集成价格优惠的 DeepSeek 也相当方便。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/1.pic.jpg"></p>
 <p>输入提示词可能需要手动操作：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/2.pic.jpg"></p>
 <p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/3.pic.jpg"></p>
 <p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/4.pic.jpg"></p>
 <p>可以直接勾选 Auto-approve，大多数场景就可以吃瓜等着了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/5.pic.jpg"></p>
 <p>虽然它是个 VS Code 插件，但使用过程完全不需要操心 VS Code。本文的思路便是<strong>只用它来生成代码，然后在 Android Studio 中去运行</strong>。</p>
-<h2 id="生成-Hello-World-安卓代码"><a href="#生成-Hello-World-安卓代码" class="headerlink" title="生成 Hello World 安卓代码"></a>生成 Hello World 安卓代码</h2><p>首先输入提示词：</p>
+<h2><span id="生成-hello-world-安卓代码">生成 Hello World 安卓代码</span></h2><p>首先输入提示词：</p>
 <blockquote>
 <p>生成一个 Hello world 安卓程序代码，语言为 kotlin。将相应的目录结构和文件生成出来。</p>
 </blockquote>
@@ -284,7 +284,7 @@
 </blockquote>
 <p>结果运行一段时间来了个：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/21.pic.jpg"></p>
 <p>至此已经彻底放弃使用 Cline 通过提示词来生成一个可以运行的 Hello World 安卓程序了。</p>
-<h2 id="实现简易计算器"><a href="#实现简易计算器" class="headerlink" title="实现简易计算器"></a>实现简易计算器</h2><p>手动改造安卓程序环境，能正常运行 App 了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/22.pic.jpg"></p>
+<h2><span id="实现简易计算器">实现简易计算器</span></h2><p>手动改造安卓程序环境，能正常运行 App 了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/22.pic.jpg"></p>
 <p>回到 Cline 输入提示词：</p>
 <blockquote>
 <p>当前目录是一个安卓程序，运行后会展示一个 “hello world”的文案，给它添加一个点击事件，达到如下效果：<br>1.打开一个新页面，这个页面展示简易计算器的相关 UI，展示0～9的数字、加减符号等等;<br>2.可以执行简易计算器的加减乘除功能，并展示结果。<br>使用 java 语言开发。</p>
@@ -317,8 +317,8 @@
 </blockquote>
 <p>完成任务后运行：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/31.pic.jpg"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/32.pic.jpg"></p>
 <p>还有点小毛病，但基本完成了。全程没写一行代码，完成了一个简易计算器的界面。</p>
-<h2 id="其他错误"><a href="#其他错误" class="headerlink" title="其他错误"></a>其他错误</h2><p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/33.pic.jpg"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/34.pic.jpg"></p>
-<h2 id="题外-Tip"><a href="#题外-Tip" class="headerlink" title="题外 Tip"></a>题外 Tip</h2><p>使用 Cline 有访问本地文件的能力，那就可以做一些本地文件的处理了。<br>正好电脑提示磁盘不足，本地 gradle 版本太多，准备删掉一些，这个时候也可以用 AI 来进行排查筛选。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/35.pic.jpg"></p>
+<h2><span id="其他错误">其他错误</span></h2><p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/33.pic.jpg"><br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/34.pic.jpg"></p>
+<h2><span id="题外-tip">题外 Tip</span></h2><p>使用 Cline 有访问本地文件的能力，那就可以做一些本地文件的处理了。<br>正好电脑提示磁盘不足，本地 gradle 版本太多，准备删掉一些，这个时候也可以用 AI 来进行排查筛选。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/35.pic.jpg"></p>
 <p>输入提示词：</p>
 <blockquote>
 <p>遍历本地 mucang 文件夹，查找所有的 gradle-wrapper.properties 文件，查出 distributionUrl 字段的值。将其去重后，按项目个数进行倒序排序，且需要展示项目名称，以列表形式进行展示。</p>
@@ -328,7 +328,7 @@
 <p>将上述结果以一个 html 进行展示</p>
 </blockquote>
 <p>本地就会生成一个 html，打开后就能很直观看到了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/4/37.pic.jpg"></p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>整体使用下来，个人感觉 Cline 有以下几个优点：</p>
+<h2><span id="小结">小结</span></h2><p>整体使用下来，个人感觉 Cline 有以下几个优点：</p>
 <ol>
 <li>虽然它是个 VS Code 插件，但使用过程可以全程与 VS Code 无关，减少了学习成本；</li>
 <li>直接在对应目录下生成文件，无需自行粘贴复制；</li>

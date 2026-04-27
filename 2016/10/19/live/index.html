@@ -177,8 +177,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个<code>【Android音视频开发】</code>系列，此文便是开篇了！<br>PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可能根本就不适用，我通过实例验证，做下此总结。最近一直在看这一块的东西，今天抽空，趁着记忆的知识还比较新鲜记下来，好记性不如烂笔头，也希望能帮助到其他的人。</p>
-<h2 id="直播"><a href="#直播" class="headerlink" title="直播"></a>直播</h2><p>从技术层面上来，直播大致分为：音视频采集、美颜&#x2F;滤镜&#x2F;特效处理、编码、封包、推流、分发、解码&#x2F;渲染&#x2F;播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
+        <h2><span id="前言">前言</span></h2><p>2015 ~ 1016是直播大火的年代，最近公司也是在着手直播这块，作为Android开发，自然也要懂得一些知识，经过一段时间的调研，学习，作了一下自我总结，写了一个<code>【Android音视频开发】</code>系列，此文便是开篇了！<br>PS：关于这块的文章着实太少，点开10个链接，有7、8个链接的内容是一样的，各种转来转去，也是耗费了很大的功夫才了解到音视频的一点皮毛。而且很多文章都是12年、13年的，拿到现在可能根本就不适用，我通过实例验证，做下此总结。最近一直在看这一块的东西，今天抽空，趁着记忆的知识还比较新鲜记下来，好记性不如烂笔头，也希望能帮助到其他的人。</p>
+<h2><span id="直播">直播</span></h2><p>从技术层面上来，直播大致分为：音视频采集、美颜&#x2F;滤镜&#x2F;特效处理、编码、封包、推流、分发、解码&#x2F;渲染&#x2F;播放。<br>对应到具体的Android层面，便会有如下几个重要环节：</p>
 <ol>
 <li>视频实时采集：Camera预览&#x2F;MediaRecorder绑定LocalSocket</li>
 <li>音频实时采集：MediaRecorder&#x2F;AudioRecord&#x2F;OpenSL ES</li>
@@ -189,13 +189,13 @@
 </ol>
 <span id="more"></span>
 
-<h2 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h2><h3 id="编解码"><a href="#编解码" class="headerlink" title="编解码"></a>编解码</h3><p>采集到的原始音视频数据是非常大的，不利于传输，所以就需要对这些数据进行压缩，这个过程就是编码。解码则是编码的逆向过程。编码分为硬编码、软编码，解码也是如此。</p>
+<h2><span id="科普">科普</span></h2><h3><span id="编解码">编解码</span></h3><p>采集到的原始音视频数据是非常大的，不利于传输，所以就需要对这些数据进行压缩，这个过程就是编码。解码则是编码的逆向过程。编码分为硬编码、软编码，解码也是如此。</p>
 <ul>
 <li>硬编码：使用非CPU进行编码，如显卡GPU、专用的DSP、FPGA、ASIC芯片等。性能高，低码率下通常质量低于硬编码器，但部分产品在GPU硬件平台移植了优秀的软编码算法（如X264）的，质量基本等同于软编码。</li>
 <li>软编码：使用CPU进行编码。性能高，低码率下通常质量低于硬编码器，但部分产品在GPU硬件平台移植了优秀的软编码算法（如X264）的，质量基本等同于软编码。</li>
 </ul>
 <p>关于音视频压缩编码的基本原理可以参见雷神的<a target="_blank" rel="noopener" href="http://blog.csdn.net/leixiaohua1020/article/details/28114081">这篇文章</a>。</p>
-<h3 id="视频编码"><a href="#视频编码" class="headerlink" title="视频编码"></a>视频编码</h3><p>视频编码的主要作用是将视频像素数据（RGB，YUV等）压缩成为视频码流，从而降低视频的数据量。主要视频编码一览：</p>
+<h3><span id="视频编码">视频编码</span></h3><p>视频编码的主要作用是将视频像素数据（RGB，YUV等）压缩成为视频码流，从而降低视频的数据量。主要视频编码一览：</p>
 <table>
 <thead>
 <tr>
@@ -249,7 +249,7 @@
 </tr>
 </tbody></table>
 <p>不难看出，目前主流的视频编码便是H264了，我们项目中选取的也是此编码标准。</p>
-<h3 id="音频编码"><a href="#音频编码" class="headerlink" title="音频编码"></a>音频编码</h3><p>音频编码的主要作用是将音频采样数据（PCM等）压缩成为音频码流，从而降低音频的数据量。主要音频编码一览：</p>
+<h3><span id="音频编码">音频编码</span></h3><p>音频编码的主要作用是将音频采样数据（PCM等）压缩成为音频码流，从而降低音频的数据量。主要音频编码一览：</p>
 <table>
 <thead>
 <tr>
@@ -285,7 +285,7 @@
 </tr>
 </tbody></table>
 <p>那么主流的音频编码便是AAC了，项目选取的也是此编码标准。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/42162310">如何搭建一个完整的视频直播系统？</a><br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/8436c7353296">android音视频点&#x2F;直播模块开发</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/leixiaohua1020/article/details/18893769">视音频编解码技术零基础学习方法</a><br><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547042&idx=1&sn=26d8728548a6b5b657079eeab121e283&scene=1&srcid=0428msEitG9LJ3JaKGaRCEjg&from=groupmessage&isappinstalled=0#wechat_redirect">移动直播技术秒开优化经验</a><br><a target="_blank" rel="noopener" href="http://dev.qq.com/topic/5811d42e7fd6ec467453bf58">从0到1打造直播 App</a></p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/42162310">如何搭建一个完整的视频直播系统？</a><br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/8436c7353296">android音视频点&#x2F;直播模块开发</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/leixiaohua1020/article/details/18893769">视音频编解码技术零基础学习方法</a><br><a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547042&idx=1&sn=26d8728548a6b5b657079eeab121e283&scene=1&srcid=0428msEitG9LJ3JaKGaRCEjg&from=groupmessage&isappinstalled=0#wechat_redirect">移动直播技术秒开优化经验</a><br><a target="_blank" rel="noopener" href="http://dev.qq.com/topic/5811d42e7fd6ec467453bf58">从0到1打造直播 App</a></p>
 
       
 

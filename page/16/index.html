@@ -154,6 +154,138 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-enter-oc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/07/enter-oc/">Objective-C 基本语法</a>
+    </h1>
+  
+
+        
+        <a href="/2016/12/07/enter-oc/" class="archive-article-date">
+  	<time datetime="2016-12-07T03:05:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
+<ul>
+<li>任何C源程序，不经修改，即可通过Objective-C编译器成功编译。</li>
+<li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：</li>
+</ul>
+<ol>
+<li>OC中头文件后缀为.h，实现文件为.m，类似于c++中的.h于.cpp。</li>
+<li>在OC语言中混合使用C或者C++代码，包含有C语言或者C++语言时，文件的后缀使用.mm。同时一般如果是纯粹的C++文件，源代码文件后缀为.cpp，头文件使用.hpp为后缀。</li>
+<li>import和include的功能是一样的，都是将引入的文件原封不动拷贝到当前位置。import的优点：会自动防止重复拷贝，同时兼容C语言的引入。</li>
+<li>“ ”优先在当前文件路径查找， &lt; &gt;优先在系统环境查找。</li>
+</ol>
+        
+          <a class="article-more-a" href="/2016/12/07/enter-oc/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-multi-pc" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/29/multi-pc/">Hexo多台电脑同步博客</a>
+    </h1>
+  
+
+        
+        <a href="/2016/11/29/multi-pc/" class="archive-article-date">
+  	<time datetime="2016-11-29T11:06:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iMac到了之后，这2天一直在熟悉系统，准备记点东西写到博客里，发现需要解决Hexo多台电脑同步的问题，其实蛮早之前就打算弄的，方便自己在家里也能写写博客，但是考虑要带电脑到公司，而且这也确实是与工作无关的事情，只能周末来弄，但是周末是吧，大家懂的，压根不想来呀233333，所以便拖到今天了。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>先来想想多台电脑同步博客的原理。假设电脑A已经可以正常写博客发布了，这个时候B电脑也想发布博客该如何做呢？我们知道，发不到Github pages上的东西是静态内容，这些是Hexo生成的，这些东西其实不需要我们管，我们只要在<code>hexo d</code>的时候就会帮我们生成然后上传到github。所以我们需要同步的只是<code>源文件</code>。这里的源文件指的就是<code>md文件、theme相关文件、以及博客配置文件</code>等<code>一切跟Hexo无关的文件</code>。</p>
+        
+          <a class="article-more-a" href="/2016/11/29/multi-pc/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-OS-X" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -649,126 +781,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-system-ui" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/20/system-ui/">Android状态栏、虚拟按键小记</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/20/system-ui/" class="archive-article-date">
-  	<time datetime="2016-09-20T08:05:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-20</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前写过一篇<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/08/04/statusbar/">状态栏小记</a>，这里加入虚拟按键重新做一下总结。</p>
-        
-          <a class="article-more-a" href="/2016/09/20/system-ui/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-jcenter" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/12/jcenter/">Android Studio发布项目到JCenter</a>
-    </h1>
-  
-
-        
-        <a href="/2016/09/12/jcenter/" class="archive-article-date">
-  	<time datetime="2016-09-12T08:40:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-09-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在我的上一篇文章中，尝试将弧形seekbar抽成了一个三方库，这篇文章便以该库为例，将其上传至JCenter。</p>
-        
-          <a class="article-more-a" href="/2016/09/12/jcenter/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
         		</li>
       		
 		</ul>

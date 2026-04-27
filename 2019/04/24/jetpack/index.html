@@ -183,7 +183,7 @@
 <span id="more"></span>
 
 <p>突发奇想：ViewModel 可以在一个界面共享数据，感觉是做这个需求的不二选择呀，于是乎便开始使用了。</p>
-<h2 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">implementation</span> <span class="string">&quot;android.arch.lifecycle:extensions:1.1.1&quot;</span></span><br></pre></td></tr></table></figure>
+<h2><span id="添加依赖">添加依赖</span></h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">implementation</span> <span class="string">&quot;android.arch.lifecycle:extensions:1.1.1&quot;</span></span><br></pre></td></tr></table></figure>
 <p>sync 之后报错：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Android</span> dependency &#x27;android.arch.lifecycle:runtime&#x27; has different version for the compile (<span class="number">1</span>.<span class="number">0</span>.<span class="number">3</span>) and runtime (<span class="number">1</span>.<span class="number">1</span>.<span class="number">1</span>) classpath. You should manually set the same version via DependencyResolution</span><br></pre></td></tr></table></figure>
 <p>查看依赖，发现 support 库有依赖 runtime:1.0.3：</p>
@@ -198,7 +198,7 @@
 </blockquote>
 </li>
 </ol>
-<h2 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h2><p>注意到设计稿里，拆分一下页面结构：</p>
+<h2><span id="实践">实践</span></h2><p>注意到设计稿里，拆分一下页面结构：</p>
 <ol>
 <li>顶部状态栏，可以切换视频文件夹、照片文件夹</li>
 <li>ViewPager 切换视频或者照片</li>
@@ -225,7 +225,7 @@
 <p>在 MaterialFragment 监听上一个需要取消红色条的 LiveData：</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">viewModel.changePos.observe(this, Observer &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">it</span> != null &amp;&amp; <span class="keyword">it</span>.<span class="keyword">first</span> == isVideo &amp;&amp; <span class="keyword">it</span>.<span class="keyword">second</span> &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        materialRv.adapter?.notifyItemChanged(<span class="keyword">it</span>.<span class="keyword">second</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>ok，实践就说到这里，基本实现需求了。</p>
-<h2 id="ViewModel-原理"><a href="#ViewModel-原理" class="headerlink" title="ViewModel 原理"></a>ViewModel 原理</h2><p>ViewModel 不会随着 Activity 的屏幕旋转而销毁，减少了维护状态的代码成本。另外，它可以在多个 Fragment 维护相同的数据，极大的减少了组件之间数据传递的代码成本。那么它是如何实现的呢？<br>在说原理之前，需要了解一个知识点：</p>
+<h2><span id="viewmodel-原理">ViewModel 原理</span></h2><p>ViewModel 不会随着 Activity 的屏幕旋转而销毁，减少了维护状态的代码成本。另外，它可以在多个 Fragment 维护相同的数据，极大的减少了组件之间数据传递的代码成本。那么它是如何实现的呢？<br>在说原理之前，需要了解一个知识点：</p>
 <blockquote>
 <p>setRetainInstance(boolean) 是 Fragment 中的一个方法。将这个方法设置为 true 就可以使当前 Fragment 在 Activity 重建时存活下来。</p>
 </blockquote>
@@ -234,7 +234,7 @@
 <p>看到相应的代码，是不是一目了然？然后看到 ViewModel 只会有一个实例的代码：</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line"><span class="meta">@MainThread</span></span><br><span class="line"><span class="keyword">public</span> &lt;T extends ViewModel&gt; T <span class="keyword">get</span>(<span class="meta">@NonNull</span> String key, <span class="meta">@NonNull</span> Class&lt;T&gt; modelClass) &#123;</span><br><span class="line">    ViewModel viewModel = mViewModelStore.<span class="keyword">get</span>(key);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">        <span class="comment">//noinspection unchecked</span></span><br><span class="line">        <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//noinspection StatementWithEmptyBody</span></span><br><span class="line">        <span class="keyword">if</span> (viewModel != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    viewModel = mFactory.create(modelClass);</span><br><span class="line">    mViewModelStore.put(key, viewModel);</span><br><span class="line">    <span class="comment">//noinspection unchecked</span></span><br><span class="line">    <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果 mViewModelStore 里存有 ViewModel 实例则直接返回，没有则进行 create，然后 put 到 mViewModelStore 中，很直截了当了。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>篇幅所限，关于 LiveData 这里就不写了，核心原理是 LifeCycleOwner，这个网上的相关文章也挺多的。</p>
+<h2><span id="总结">总结</span></h2><p>篇幅所限，关于 LiveData 这里就不写了，核心原理是 LifeCycleOwner，这个网上的相关文章也挺多的。</p>
 <p>参考：</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://developer.android.com/topic/libraries/architecture/viewmodel">ViewModel OverView</a></li>

@@ -154,6 +154,135 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-kotlin-code" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/21/kotlin-code/">Kotlin - 代码篇</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/21/kotlin-code/" class="archive-article-date">
+  	<time datetime="2017-12-21T03:15:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>写过几个星期的 Kotlin 代码了，再也不用 findViewById 了，使用起来稍微简洁一点。今天小结一下，基础用法就不多说了，直接写几点我感触较深的。</p>
+<h2 id="空安全"><a href="#空安全" class="headerlink" title="空安全"></a>空安全</h2><p>当使用Java开发的时候，我们的代码大多是防御性的。如果我们不想遇到 NullPointerException，我们就需要在使用它之前不停地去判断它是否为 null。Kotlin，则是空安全的，我们可以通过一个安全调用操作符 (写做 ? )来明确地指定一个对象是否能为空。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里不能通过编译. Artist 不能是 null</span></span><br><span class="line"><span class="built_in">var</span> notNullArtist: Artist = <span class="literal">null</span></span><br><span class="line"><span class="comment">// Artist 可以是 null</span></span><br><span class="line"><span class="built_in">var</span> artist: Artist? = <span class="literal">null</span></span><br><span class="line"><span class="comment">// 无法编译, artist可能是 null,我们需要进行处理</span></span><br><span class="line">artist.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 只要在artist != null时才会打印</span></span><br><span class="line">artist?.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 智能转换. 如果我们在之前进行了空检查,则不需要使用安全调用操作符调用</span></span><br><span class="line"><span class="keyword">if</span> (artist != <span class="literal">null</span>) &#123;</span><br><span class="line">  artist.<span class="keyword">print</span>()</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 只有在确保 artist 不是 null 的情况下才能这么调用，否则它会抛出异常</span></span><br><span class="line">artist!!.<span class="keyword">print</span>()</span><br><span class="line"><span class="comment">// 使用 Elvis操作符 来给定一个在是 null 的情况下的替代值</span></span><br><span class="line">val name = artist?.name ?: <span class="string">&quot;empty&quot;</span></span><br></pre></td></tr></table></figure>
+<p>关于 Elvis操作符 其实是三目条件运算符的简略写法。可以这样理解：</p>
+<ol>
+<li>A ?: B 等价于 if(A &#x3D;&#x3D; null) B</li>
+<li>A?.B ?: C 等价于 if(A !&#x3D; null) A.B else C</li>
+</ol>
+        
+          <a class="article-more-a" href="/2017/12/21/kotlin-code/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-comparator" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/20/comparator/">Java 中的 Comparator</a>
+    </h1>
+  
+
+        
+        <a href="/2017/12/20/comparator/" class="archive-article-date">
+  	<time datetime="2017-12-20T08:04:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近写过一个界面，涉及到排序。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png"><br>用到了 Collections 中的 sort 方法：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Collections.sort(mData, <span class="keyword">new</span> Comparator&lt;BookMemberReport&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">compare</span><span class="params">(BookMemberReport lhs, BookMemberReport rhs)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sortFlag == SORT_FLAG_SALE_DESCENDING) &#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (rhs.saleAmount - lhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_SALE_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="keyword">int</span>) (lhs.saleAmount - rhs.saleAmount);</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_DESCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> rhs.orderCount - lhs.orderCount;</span><br><span class="line">        &#125; <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(sortFlag == SORT_FLAG_COUNT_ASCENDING)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> lhs.orderCount - rhs.orderCount;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Collections 根据传入的 Comparator 进行排序。刚开始写的时候通过不停的试，把正确的结果给试出来了。但是对于其原理却不是很清晰，今天便稍微扒一扒其源码。</p>
+        
+          <a class="article-more-a" href="/2017/12/20/comparator/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-support-version" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -612,131 +741,6 @@
 <h2 id="注册开发者账号"><a href="#注册开发者账号" class="headerlink" title="注册开发者账号"></a>注册开发者账号</h2><p>进入<a target="_blank" rel="noopener" href="http://passport.xfyun.cn/login">讯飞开放平台</a>注册账号。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/09/26/%E9%80%89%E5%8C%BA_163.png"></p>
         
           <a class="article-more-a" href="/2017/09/26/xunfei/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-presentation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/13/presentation/">Android 双屏异显</a>
-    </h1>
-  
-
-        
-        <a href="/2017/09/13/presentation/" class="archive-article-date">
-  	<time datetime="2017-09-13T10:42:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近在做收银机相关的开发，涉及到<code>双屏异显</code>的一些东西，之前也没有接触过，在查阅一番资料之后，把功能走通了，这里小记一下。</p>
-<h2 id="Presentation"><a href="#Presentation" class="headerlink" title="Presentation"></a>Presentation</h2><p>Presentation 是一种特殊的对话框，主要用于在另外一块屏幕上显示内容。默认为克隆模式，即副屏显示和正屏一样的内容。当需要显示不同内容时，需要自定义 Presentation，并为其指定一个 Display。这里随便定义一个 Presentation：</p>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyPresentation</span> <span class="keyword">extends</span> <span class="title">Presentation</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public <span class="type">MyPresentation</span>(<span class="type">Context</span> outerContext, <span class="type">Display</span> display) &#123;</span><br><span class="line">        <span class="keyword">super</span>(outerContext, display);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void onCreate(<span class="type">Bundle</span> savedInstanceState) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(<span class="type">R</span>.layout.presentation_second_screen);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2017/09/13/presentation/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-small-tips" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/29/small-tips/">Android 日常开发的一些小知识</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/29/small-tips/" class="archive-article-date">
-  	<time datetime="2017-08-29T09:06:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前段时间终于下定决心自己实践 RxJava，Retrofit 等当前十分流行的库，利用 Gank.io 的公共 API，做一个自己的 Gank 客户端。项目地址： <a target="_blank" rel="noopener" href="https://github.com/LiJia92/Gank">Gank</a>。只要有闲暇时间便会写写代码，慢慢完善。期间有一些小的知识点，但是却很实用，这里便列一下。关于 RxJava，Retrofit 目前学习还不是很深入，这里便不展开了。</p>
-<h2 id="SerializedName"><a href="#SerializedName" class="headerlink" title="@SerializedName"></a>@SerializedName</h2><p>现在与服务端通信通常都是Json，但是服务器返回的Json串的key是服务端自己的命名规则（可能是中文key，或者大写开头），我们直接通过Gson解析就必须一一对应，但是这样的命名在Java里很不友好。<br>那么就可以通过@SerializedName注解给Bean类进行“重命名”，这样在解析的时候便可以直接利用我们自己的命名规则命名变量了。<br>举个栗子：<a target="_blank" rel="noopener" href="http://gank.io/api/day/2017/08/03">http://gank.io/api/day/2017/08/03</a><br>返回的数据包含<code>Android</code>，<code>福利</code>等不符合Java规范的key，那么就可以这样：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DataResults</span> &#123;</span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;Android&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; androidList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;iOS&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; iOSList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;休息视频&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; restList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;前端&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; jsList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SerializedName(<span class="string">&quot;福利&quot;</span>)</span></span><br><span class="line">    List&lt;ItemData&gt; welfareList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如此便可以直接通过Gson解析，并且变量名是以我们自己的命名规则进行命令的了。</p>
-        
-          <a class="article-more-a" href="/2017/08/29/small-tips/#more">more >></a>
         
       
 

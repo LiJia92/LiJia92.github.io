@@ -154,6 +154,140 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-animation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/02/animation/">Android 动画序列的实现</a>
+    </h1>
+  
+
+        
+        <a href="/2019/02/02/animation/" class="archive-article-date">
+  	<time datetime="2019-02-02T06:19:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-02-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>老规矩，上需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/animation.gif"><br>这个 Gif 里有众多的动画效果，怎么实现呢？</p>
+<h3 id="拆分效果"><a href="#拆分效果" class="headerlink" title="拆分效果"></a>拆分效果</h3><p>整体的动画效果大致可以分为 3 个：</p>
+<ol>
+<li>右上角小车移动的动画</li>
+<li>图片缩放动画及文字展示的动画</li>
+<li>左侧 Logo 及底部文字的动画</li>
+</ol>
+<p>拆分完之后，依次来实现。</p>
+        
+          <a class="article-more-a" href="/2019/02/02/animation/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-china-map" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/01/25/china-map/">Android 绘制中国地图</a>
+    </h1>
+  
+
+        
+        <a href="/2019/01/25/china-map/" class="archive-article-date">
+  	<time datetime="2019-01-25T06:07:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的版本有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/TIM%E5%9B%BE%E7%89%8720190125141415.png"></p>
+<p>有 3 个要素：</p>
+<ol>
+<li>中国地图</li>
+<li>高亮省区</li>
+<li>中心显示数字</li>
+</ol>
+<p>面对这样一个需求，该如何实现呢？</p>
+        
+          <a class="article-more-a" href="/2019/01/25/china-map/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-fragment" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -619,127 +753,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-phone-adapt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/13/phone-adapt/">「小米MIX2」全面屏适配</a>
-    </h1>
-  
-
-        
-        <a href="/2018/09/13/phone-adapt/" class="archive-article-date">
-  	<time datetime="2018-09-13T02:53:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>有这样一个需求：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113729.png"><br>作为一个 Android 开发者，首先想到的就是用 PopupWindow 来实现。底部阴影的高度固定，剩余的高度全部填充到 PopupWindow，然后调用 PopupWindow 的 showAsDropDown 让它在应用标题栏下面显示就行了。</p>
-        
-          <a class="article-more-a" href="/2018/09/13/phone-adapt/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-kotlin-question3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/22/kotlin-question3/">关于使用 kotlin 碰到的一个坑（三）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/08/22/kotlin-question3/" class="archive-article-date">
-  	<time datetime="2018-08-22T03:30:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-08-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>近期整理代码，出现了一个空指针异常，其源头为 MapController 类的一个方法：</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addOnMarkerClickListener</span>(<span class="params">AMap.OnMarkerClickListener onMarkerClickListener</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (onMarkerClickListener == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">&quot;onMarkerClickListener can not null&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (onMarkerClickListeners == <span class="literal">null</span>) &#123;</span><br><span class="line">        onMarkerClickListeners = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    onMarkerClickListeners.<span class="keyword">add</span>(onMarkerClickListener);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/08/22/kotlin-question3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
         		</li>
       		
 		</ul>

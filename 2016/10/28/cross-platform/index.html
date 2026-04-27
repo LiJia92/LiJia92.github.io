@@ -180,14 +180,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h2><ol>
+        <h2><span id="现状">现状</span></h2><ol>
 <li>iOS：在iOS7中，引入了一个全新的框架——Multipeer Connectivity（多点连接）。利用Multipeer Connectivity框架，即使在没有连接到WiFi（WLAN）或移动网络（xG）的情况下，距离较近的Apple设备（iMac&#x2F;iPad&#x2F;iPhone）之间可基于蓝牙和WiFi（P2P WiFi）技术进行发现和连接实现近场通信。</li>
 <li>Android：Wi-Fi peer-to-peer（P2P，对等网络），它允许具备相应硬件的Android 4.0（API level 14）或者更高版本的设备可以直接通过wifi而不需要其它中间中转节点就能直接通信（Android的Wi-Fi P2P框架符合Wi-Fi联盟的Wi-Fi Direct™直连认证标志）。使用这些API，你可以搜索并连接其它同样支持Wi-Fi P2P的设备，然后再通过一个高速的连接进行互相通信，并且这个连接的有效距离要比蓝牙连接的有效距离要长的多。这对于需要在用户之间共享数据的应用程序非常有用，例如多玩家游戏或者照片分享之类应用。</li>
 </ol>
 <span id="more"></span>
 
 <p>但是iOS的MC框架与Android的Wifi Direct不兼容，通过苹果开发者论坛<a target="_blank" rel="noopener" href="https://forums.developer.apple.com/message/49337#49337">iOS and Wi-Fi Direct</a>了解：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video7.png"><br>关于不同技术在iOS、Android上的兼容性，如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video8.png"></p>
-<h2 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h2><ol>
+<h2><span id="蓝牙">蓝牙</span></h2><ol>
 <li>经典蓝牙阶段：在蓝牙4.0（Bluetooth Low Energy）之前，也就是所谓的经典蓝牙，苹果的蓝牙拒绝接入不信任的设备。也就是说，没得连。</li>
 <li>蓝牙4.0阶段：从ios6.0开始，iPhone支持BLe以后，问题得到了改善，因为在蓝牙4.0以后不再存在经典蓝牙的那个限制。ios7.0以后，BLe在 iOS 7 技术性提升里占到的重要位置。但是Android在这方面的脚步就慢很多了。</li>
 </ol>
@@ -196,7 +196,7 @@
 <li>Android L：也就是Android 5.0，从这个版本开始，谷歌正式支持主从机的建立。</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23246210">Android与IOS之间如何实现蓝牙通信数据传输？</a></p>
-<h2 id="现有产品"><a href="#现有产品" class="headerlink" title="现有产品"></a>现有产品</h2><ol>
+<h2><span id="现有产品">现有产品</span></h2><ol>
 <li><p><a target="_blank" rel="noopener" href="http://www.kuaiya.cn/">快牙</a></p>
 <blockquote>
 <p>快牙（ZAPYA），是一款全球首创、实现跨平台文件传输的应用，能帮助智能手机用户之间实现高速海量数据传输。支持安卓（Android）、苹果（iOS）、WP、PC等多种智能终端间的互联互通。通过快牙，可以和任何人分享应用、照片、视频、音乐及其他任意格式文件。目前快牙全球用户数量已超3亿，遍及海内外178个国家和地区，在同类型的传输应用中稳居第一。</p>
@@ -210,7 +210,7 @@
 </ol>
 <p>通过以上2款产品，可以实现跨平台数据传输。</p>
 <p>我利用2台Android手机测试，都是需要创建<code>热点</code>进行传输。Android与iOS测试，也是需要开启<code>热点</code>的，并且在iOS下需要手动链接到对应的热点。</p>
-<h2 id="第三方"><a href="#第三方" class="headerlink" title="第三方"></a>第三方</h2><ol>
+<h2><span id="第三方">第三方</span></h2><ol>
 <li><p><a target="_blank" rel="noopener" href="https://allseenalliance.org/">AllJoyn</a></p>
 <blockquote>
 <p>AllJoyn，由高通公司主导的高通创新中心（Qualcomm Innovation Center）所开发的开放源代码专案，主要用于近距离无线传输，透过Wifi或蓝牙技术，进行定位与点对点档案传输。</p>
@@ -228,8 +228,8 @@
 </li>
 </ol>
 <p>目前只是知道这些三方库，至于其内部的实现原理还不了解，但应该是结合Wi-Fi与蓝牙来实现的。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>通过目前已有的技术（不做多余的工作），应该是做不到跨平台传输的。但是如果自己通过开发Wi-Fi以及蓝牙，应该是可以实现跨平台传输的。至于开发的难点以及技术点，我也不清楚。</p>
-<h2 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h2><p><a target="_blank" rel="noopener" href="http://blog.moritzhaarmann.de/blog/2014/04/27/sorry-state-of-p2p/">The Sorry State of Peer to Peer iOS to Android connectivity</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/28906948/peer-to-peer-android-and-ios-with-wifi-direct-multipeer-connectivity">Peer to peer android and iOS with Wifi direct (multipeer connectivity?)</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/19067794/is-ios-7-multipeer-connectivity-compatible-with-android-wi-fi-direct">Is iOS 7 Multipeer Connectivity compatible with Android Wi-Fi Direct?</a><br><a target="_blank" rel="noopener" href="http://thenextweb.com/apps/2015/07/10/9-of-the-best-apps-for-sharing-files-between-devices-and-friends/">9 of the best apps for sharing files between devices and friends</a></p>
+<h2><span id="小结">小结</span></h2><p>通过目前已有的技术（不做多余的工作），应该是做不到跨平台传输的。但是如果自己通过开发Wi-Fi以及蓝牙，应该是可以实现跨平台传输的。至于开发的难点以及技术点，我也不清楚。</p>
+<h2><span id="其他参考">其他参考</span></h2><p><a target="_blank" rel="noopener" href="http://blog.moritzhaarmann.de/blog/2014/04/27/sorry-state-of-p2p/">The Sorry State of Peer to Peer iOS to Android connectivity</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/28906948/peer-to-peer-android-and-ios-with-wifi-direct-multipeer-connectivity">Peer to peer android and iOS with Wifi direct (multipeer connectivity?)</a><br><a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/19067794/is-ios-7-multipeer-connectivity-compatible-with-android-wi-fi-direct">Is iOS 7 Multipeer Connectivity compatible with Android Wi-Fi Direct?</a><br><a target="_blank" rel="noopener" href="http://thenextweb.com/apps/2015/07/10/9-of-the-best-apps-for-sharing-files-between-devices-and-friends/">9 of the best apps for sharing files between devices and friends</a></p>
 
       
 

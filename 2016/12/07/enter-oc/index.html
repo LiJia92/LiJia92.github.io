@@ -178,7 +178,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近的一段时间都是在学习OC语法，然后看代码，改项目中的bug。OC基本语法是比较固定的，网上的文章都大同小异，这里摘录一下方便后面回顾。</p>
-<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
+<h2><span id="基础">基础</span></h2><p>Objective-C扩展了ANSI C，是C的超集，也就是说：</p>
 <ul>
 <li>任何C源程序，不经修改，即可通过Objective-C编译器成功编译。</li>
 <li>Objective-C源程序中可以直接使用任何C语言代码。<br>注意以下几点：</li>
@@ -191,17 +191,17 @@
 </ol>
 <span id="more"></span>
 
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p>相比Java，OC的字符串需要在前面加上“@”符号，否则编译器会理解为c语言中的字符串，导致一些莫名错误。</p>
+<h2><span id="字符串">字符串</span></h2><p>相比Java，OC的字符串需要在前面加上“@”符号，否则编译器会理解为c语言中的字符串，导致一些莫名错误。</p>
 <figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NSString <span class="keyword">title</span> = @<span class="string">&quot;Hello&quot;</span><span class="comment">;</span></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">title</span> == @<span class="string">&quot;hello&quot;</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>不带参数：</p>
+<h2><span id="函数调用">函数调用</span></h2><p>不带参数：</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[obj <span class="keyword">method</span>];</span><br></pre></td></tr></table></figure>
 <p>带1个参数：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[counter increase:1]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <p>带多个参数：</p>
 <figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="type">void</span>) setColorToRed: (<span class="type">float</span>)red <span class="type">Green</span>: (<span class="type">float</span>)green <span class="type">Blue</span>:(<span class="type">float</span>)blue <span class="meta">&#123;...&#125;</span> //定义方法</span><br><span class="line">[myObj setColorToRed: <span class="number">1</span>.<span class="number">0</span> <span class="type">Green</span>: <span class="number">0</span>.<span class="number">8</span> <span class="type">Blue</span>: <span class="number">0</span>.<span class="number">2</span>]; //调用方法</span><br></pre></td></tr></table></figure>
 
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="接口和实现"><a href="#接口和实现" class="headerlink" title="接口和实现"></a>接口和实现</h3><p>Objective-C的类分为接口定义和实现两个部分。接口定义（Interface）放在头文件中，文件扩展名是.h，实现（implementation）放在实现文件中，文件扩展名是.m。</p>
+<h2><span id="类">类</span></h2><h3><span id="接口和实现">接口和实现</span></h3><p>Objective-C的类分为接口定义和实现两个部分。接口定义（Interface）放在头文件中，文件扩展名是.h，实现（implementation）放在实现文件中，文件扩展名是.m。</p>
 <blockquote>
 <p>接口定义也可以写在.m文件中，但最好不要这么干。</p>
 </blockquote>
@@ -215,7 +215,7 @@
 <p>实现：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@implementation</span> MyClass &#123;</span><br><span class="line">    <span class="selector-tag">int</span> <span class="selector-tag">memberVar3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">-</span>(return_type) <span class="selector-tag">instance_method1</span> &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">-</span>(return_type) <span class="attribute">instance_method2</span>: (int) p1 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">-</span>(return_type) <span class="attribute">instance_method3</span>: (int) p1 <span class="attribute">andPar</span>: (int) p2 &#123;</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">@end</span></span><br></pre></td></tr></table></figure>
 <p>接口和实现以@interface、@implementation开头，都以@end结束。“@”符号在Objective-C中是个很神奇的符号。</p>
-<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>写在.h头文件里的方法都是公开的，Objective-C里没有私有方法的概念。</p>
+<h3><span id="方法">方法</span></h3><p>写在.h头文件里的方法都是公开的，Objective-C里没有私有方法的概念。</p>
 <ol>
 <li><p>类方法：类似于Android的静态方法，是属于类的，不需要实例化对象就可以进行调用，用”+”来表示。<br>定义：</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@interface</span> MyClass</span><br><span class="line">    +(void) sayHello;</span><br><span class="line"><span class="variable">@end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable">@implementation</span> MyClass</span><br><span class="line"></span><br><span class="line">+(void) sayHello &#123;</span><br><span class="line">    <span class="selector-tag">NSLog</span>(@<span class="string">&quot;Hello, World&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">@<span class="selector-tag">end</span></span><br></pre></td></tr></table></figure>
@@ -227,7 +227,7 @@
 <p>使用：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mycls</span> = [MyClass new]<span class="comment">;</span></span><br><span class="line"><span class="section">[mycls sayHello]</span><span class="comment">;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>可以使用<code>@property</code>来声明属性。</p>
+<h3><span id="属性">属性</span></h3><p>可以使用<code>@property</code>来声明属性。</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#import <span class="string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">Car</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carName;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">strong</span>) <span class="built_in">NSString</span> *carType;</span><br><span class="line">- (<span class="built_in">NSString</span> *)carInfo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
 <p>它会自动生成getter、setter。当然你也可以复写getter、setter，添加一些额外的功能。<br>它也有一些关键字，具有特殊的作用。</p>
 <ol>

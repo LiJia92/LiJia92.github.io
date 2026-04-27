@@ -154,6 +154,128 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mvp" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/27/mvp/">从谷歌官方TODO-MVP看MVP模式</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/27/mvp/" class="archive-article-date">
+  	<time datetime="2016-06-27T07:47:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很早之前就听说过android MVP的模式，也看过许许多多的文章，但是众说纷纭，每个人有每个人的理解，如果光看，可能并不能很深刻的理解。但是作为android界的权威，Google出了一个MVP的官方例子。若是从这个例子来看MVP模式，或许会有不一样的感悟呢？多说无益，下面开始。</p>
+<h2 id="代码准备"><a href="#代码准备" class="headerlink" title="代码准备"></a>代码准备</h2><p>Github上打开<a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture">googlesamples&#x2F;android-architecture</a>，打开分支，选择<code>todo-mvp</code>（Basic Model-View-Presenter architecture），然后下载zip，解压后导入到AS中。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp3.png"></p>
+        
+          <a class="article-more-a" href="/2016/06/27/mvp/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-retrofit" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/23/retrofit/">Retrofit初识</a>
+    </h1>
+  
+
+        
+        <a href="/2016/06/23/retrofit/" class="archive-article-date">
+  	<time datetime="2016-06-23T07:33:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-06-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在这个技术日新月累的今天，各种新的轮子层出不穷。网络这块，从<code>HttpClient</code>到<code>android-async-http</code>，再到<code>Volley</code>。当下比较火的网络框架<code>Retrofit</code>也是受到了很多开发者的热爱。虽然项目中并没有使用到<code>Retrofit</code>，但抱着学习的态度，我还是打算接触一下，算是有个了解。说不定后面的开发中会用到呢？</p>
+<h2 id="Retrofit概述"><a href="#Retrofit概述" class="headerlink" title="Retrofit概述"></a>Retrofit概述</h2><p><code>Retrofit</code>是一个 RESTful 的 HTTP 网络请求框架的封装。注意这里并没有说它是网络请求框架，主要原因在于网络请求的工作并不是<code>Retrofit</code>来完成的。<code>Retrofit 2.0</code>开始内置<code>OkHttp</code>，前者专注于接口的封装，后者专注于网络请求的高效，二者分工协作。<br>我们的应用程序通过<code>Retrofit</code>请求网络，实际上是使用<code>Retrofit</code>接口层封装请求参数、Header、Url等信息，之后由<code>OkHttp</code>完成后续的请求操作，在服务端返回数据之后，<code>OkHttp</code>将原始的结果交给<code>Retrofit</code>，后者根据用户的需求对结果进行解析的过程。所谓<code>Retrofit</code>，其实就是<code>Retrofitting OkHttp</code>了。</p>
+        
+          <a class="article-more-a" href="/2016/06/23/retrofit/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-popupwindow" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -633,129 +755,6 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-refresh-listview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/18/refresh-listview/">Android仿美团下拉刷新</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/18/refresh-listview/" class="archive-article-date">
-  	<time datetime="2016-04-18T08:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在之前看过一篇文章<a target="_blank" rel="noopener" href="http://blog.csdn.net/nugongahou110/article/details/49557875">Android自定义控件之仿美团下拉刷新</a>，就是实现仿美团下拉刷新。一直对ListView等控件的下拉刷新的了解程度，可能也就停留在<code>用HeaderView来实现，然后重写onTouchEvent</code>，但是具体应该是怎样的呢？一直没有实际动手自己写过，于是抽空自己照着这篇博客自己写了一遍，以加深自己的理解。我对原博客进行摘录，重点写出一些对自己帮助大的内容。</p>
-<h2 id="刷新状态"><a href="#刷新状态" class="headerlink" title="刷新状态"></a>刷新状态</h2><p>一般下拉刷新应该都是会有三种状态：下拉刷新、松开刷新、正在刷新。</p>
-<h3 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h3><p>实现思路：自定义View，通过设置进度值进行缩放。<br>用SeekBar来模仿一下下拉距离的进度。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview3.gif"></p>
-        
-          <a class="article-more-a" href="/2016/04/18/refresh-listview/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/04/07/domain/">博客添加域名映射</a>
-    </h1>
-  
-
-        
-        <a href="/2016/04/07/domain/" class="archive-article-date">
-  	<time datetime="2016-04-07T06:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>利用Github搭建博客有一阵子了，每次访问都必须带上<code>github.io</code>，其实我的内心是拒绝的，于是今天打算买个自己的域名，然后映射到博客。</p>
-<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>首先第一步自然是买域名了。许多人都说是用<code>GoDaddy</code>，但是我去搜了一下，随便一个就是15刀，吓死宝宝了~<br>刚开始嘛，弄个便宜的尝尝鲜才是我的目的，于是我上<a target="_blank" rel="noopener" href="https://wanwang.aliyun.com/">阿里云</a>买了<code>lastwarmth.site</code>这个域名，首年才只收费4块钱哟~<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/domain9.png"></p>
-        
-          <a class="article-more-a" href="/2016/04/07/domain/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
         		</li>
       		
 		</ul>

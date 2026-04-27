@@ -186,7 +186,7 @@
 <p>将 LoginActivity 换成一个其他的简单 Activity，onDestroy 确实就很快的执行了。<br>显然不能通过改切换的页面来规避这个问题，只能把 job 手动 cancel 了：</p>
 <figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">viewBinding<span class="selector-class">.jumpTv</span><span class="selector-class">.setOnClickListener</span> &#123;</span><br><span class="line">    job?<span class="selector-class">.cancel</span>()</span><br><span class="line">    LoginActivity<span class="selector-class">.launch</span>(it.context)</span><br><span class="line">    <span class="built_in">finish</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以后碰到类似问题，一定要<strong>注意打开的页面是否有动画效果</strong>。<br>后面有时间还得重新看一波 Handler 的消息发送机制啊~</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7026950515560808462">Android 在执行完finish()方法后为什么没有立即执行onDestroy()</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7118901913793331207">Activity.onStop() 延迟10秒？检测、定位、修复它！</a></p>
+<h2><span id="参考">参考</span></h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7026950515560808462">Android 在执行完finish()方法后为什么没有立即执行onDestroy()</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7118901913793331207">Activity.onStop() 延迟10秒？检测、定位、修复它！</a></p>
 
       
 

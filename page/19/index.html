@@ -154,6 +154,129 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-refresh-listview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/18/refresh-listview/">Android仿美团下拉刷新</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/18/refresh-listview/" class="archive-article-date">
+  	<time datetime="2016-04-18T08:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前看过一篇文章<a target="_blank" rel="noopener" href="http://blog.csdn.net/nugongahou110/article/details/49557875">Android自定义控件之仿美团下拉刷新</a>，就是实现仿美团下拉刷新。一直对ListView等控件的下拉刷新的了解程度，可能也就停留在<code>用HeaderView来实现，然后重写onTouchEvent</code>，但是具体应该是怎样的呢？一直没有实际动手自己写过，于是抽空自己照着这篇博客自己写了一遍，以加深自己的理解。我对原博客进行摘录，重点写出一些对自己帮助大的内容。</p>
+<h2 id="刷新状态"><a href="#刷新状态" class="headerlink" title="刷新状态"></a>刷新状态</h2><p>一般下拉刷新应该都是会有三种状态：下拉刷新、松开刷新、正在刷新。</p>
+<h3 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h3><p>实现思路：自定义View，通过设置进度值进行缩放。<br>用SeekBar来模仿一下下拉距离的进度。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/refresh-listview3.gif"></p>
+        
+          <a class="article-more-a" href="/2016/04/18/refresh-listview/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-domain" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/04/07/domain/">博客添加域名映射</a>
+    </h1>
+  
+
+        
+        <a href="/2016/04/07/domain/" class="archive-article-date">
+  	<time datetime="2016-04-07T06:05:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-04-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>利用Github搭建博客有一阵子了，每次访问都必须带上<code>github.io</code>，其实我的内心是拒绝的，于是今天打算买个自己的域名，然后映射到博客。</p>
+<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>首先第一步自然是买域名了。许多人都说是用<code>GoDaddy</code>，但是我去搜了一下，随便一个就是15刀，吓死宝宝了~<br>刚开始嘛，弄个便宜的尝尝鲜才是我的目的，于是我上<a target="_blank" rel="noopener" href="https://wanwang.aliyun.com/">阿里云</a>买了<code>lastwarmth.site</code>这个域名，首年才只收费4块钱哟~<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/domain9.png"></p>
+        
+          <a class="article-more-a" href="/2016/04/07/domain/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">博客</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-jpush" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -671,134 +794,6 @@
 <p>其中${UMENG_CHANNEL_VALUE}中的值就是在gradle中自定义配置的值。</p>
         
           <a class="article-more-a" href="/2016/03/09/gradle-pack/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-change-title" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/02/change-title/">Android实现渐变title栏</a>
-    </h1>
-  
-
-        
-        <a href="/2016/03/02/change-title/" class="archive-article-date">
-  	<time datetime="2016-03-02T02:03:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近用美团外卖点餐看到这样一个效果：</p>
-<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/change-title1.png" alt="这里写图片描述"></p>
-<p>顶部的title栏伴随着滑动有这样的一个效果，看起来很不错。</p>
-<p>正好项目中可能需要用到，于是打算自己实现一波。</p>
-<p>后面在百度、谷歌之后，发现ToolBar+CoordinatorLayout可以很轻易的实现这种效果。</p>
-<p>但是在项目中，并没有采用Android新特性的一些东西，所以就得基于目前状况想办法了。</p>
-        
-          <a class="article-more-a" href="/2016/03/02/change-title/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-single-thread-queue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/02/23/single-thread-queue/">Android实现简易轻量下载器：单线程任务队列</a>
-    </h1>
-  
-
-        
-        <a href="/2016/02/23/single-thread-queue/" class="archive-article-date">
-  	<time datetime="2016-02-23T03:40:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-02-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近的项目是一个与音乐相关的App，其中有一个功能：收藏喜欢的歌曲，在wifi的环境下自动下载。</p>
-<p>考虑到音乐歌曲都是3、4Mb的小文件，断点下载的功能便不需要了。因此只需要实现一个特别轻量、简单的下载管理类，进行管理即可。</p>
-<p>最初的思路便是任务队列，单线程顺序执行，一个文件接着一个文件进行下载。</p>
-<p>之前看过AsyncTask的部分源码，其设计与我的想法类似，于是便借鉴着AsyncTask的源码，实现了一个特别简单、轻量的下载管理类。</p>
-        
-          <a class="article-more-a" href="/2016/02/23/single-thread-queue/#more">more >></a>
         
       
 
