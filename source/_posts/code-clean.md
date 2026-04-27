@@ -700,4 +700,129 @@ Cannot read value of field 'MSG_EXCEEDED_APPLICATIONS' before the field's defini
 ```
 所以需要提取到 Const 静态类中。
 
+## public 类变量
+示例：
+```
+public abstract class CheckedExpandableGroup extends ExpandableGroup {
+    public boolean[] selectedChildren;
+    // code
+}
+```
+SonarQube 提示：
+```
+Make selectedChildren a static final constant or non-public and provide accessors if needed.
+```
+即``selectedChildren 应该是一个静态最终常量，或者是一个非公共变量，提供访问器。``确认代码使用后，应把 public 修饰符修改为 private。
+公共可变字段会违反了面向对象的封装原则，外部代码可以直接修改数组内容而不通过类的控制逻辑，可能导致状态不一致或不可预测的行为。若有对外提供的场景，需要使用 getter、setter 方法来访问和修改数组内容。若调用处太多，则修改会比较繁杂，需谨慎修改。
+
+## 抽象类构造方法
+示例：
+```
+public abstract class CheckedExpandableGroup extends ExpandableGroup {
+
+    protected CheckedExpandableGroup(String title, List items) {
+        super(title, items);
+        // code
+    }
+}
+```
+SonarQube 提示：
+```
+Change the visibility of this constructor to "protected".
+```
+即``构造方法的可见性应为 protected。``确认代码使用后，应把 public 修饰符修改为 protected。
+抽象类的公共构造函数可能被直接调用，但抽象类本身不能被实例化。将构造函数设为 protected 可以强制子类继承，符合抽象类的设计意图。
+
+## 泛型命名
+示例：
+```
+public abstract class CheckableChildRecyclerViewAdapter<GVH extends GroupViewHolder, CCVH extends CheckableChildViewHolder>
+    extends ExpandableRecyclerViewAdapter<GVH, CCVH> {
+    // code
+}
+```
+SonarQube 提示：
+```
+Rename this generic name to match the regular expression '^[A-Z][0-9]?$'.
+```
+即``泛型参数的命名应符合大写字母开头，后面可以跟数字或空字符串。``可修改为：
+```
+public abstract class CheckableChildRecyclerViewAdapter<G extends GroupViewHolder, C extends CheckableChildViewHolder>
+    extends ExpandableRecyclerViewAdapter<G, C> {
+    // code
+}
+```
+
+## 指定泛型
+示例：
+```
+public void onSaveInstanceState(Bundle outState) {
+    outState.putParcelableArrayList(CHECKED_STATE_MAP, new ArrayList(expandableList.groups));
+    super.onSaveInstanceState(outState);
+}
+```
+SonarQube 提示：
+```
+Provide the parametrized type for this generic.
+
+```
+即``给这个泛型提供参数化类型（指定泛型类型）。``可修改为：
+```
+public void onSaveInstanceState(Bundle outState) {
+    outState.putParcelableArrayList(CHECKED_STATE_MAP, new ArrayList<>(expandableList.groups));
+    super.onSaveInstanceState(outState);
+}
+```
+
+## 异常
+示例：
+```
+public ExpandableListPosition getUnflattenedPosition(int flPos) {
+    // code
+    throw new RuntimeException("Unknown state");
+}
+```
+SonarQube 提示：
+```
+Define and throw a dedicated exception instead of using a generic one.
+```
+即``定义并抛专用异常而不是使用通用的异常。``可修改为：
+```
+throw new IllegalStateException("Unknown state");
+```
+## switch、if 语句
+示例：
+```
+public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    ExpandableListPosition listPos = expandableList.getUnflattenedPosition(position);
+    ExpandableGroup group = expandableList.getExpandableGroup(listPos);
+    switch (listPos.type) {
+        case ExpandableListPosition.GROUP:
+        onBindGroupViewHolder((G) holder, position, group);
+        break;
+        case ExpandableListPosition.CHILD:
+        onBindChildViewHolder((C) holder, position, group, listPos.childPos);
+        break;
+    }
+}
+```
+SonarQube 提示：
+```
+Replace this "switch" statement by "if" statements to increase readability.
+```
+即``把 switch 改成 if/else，让代码可读性更高。``可修改为：
+```
+public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    ExpandableListPosition listPos = expandableList.getUnflattenedPosition(position);
+    ExpandableGroup group = expandableList.getExpandableGroup(listPos);
+
+    // 把 switch 改成 if else
+    if (listPos.type == ExpandableListPosition.GROUP) {
+        onBindGroupViewHolder((G) holder, position, group);
+    } else if (listPos.type == ExpandableListPosition.CHILD) {
+        onBindChildViewHolder((C) holder, position, group, listPos.childPos);
+    }
+}
+```
+
 （持续更新...）

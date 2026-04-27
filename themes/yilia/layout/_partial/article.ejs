@@ -73,7 +73,41 @@
     </div>
   </div>
 </article>
-<% if (!index){ %>
+<% if (!index && post.toc){ %>
+  <%- partial('post/nav') %>
+<div id="article-toc" class="article-toc"></div>
+<script>
+(function(){
+  function genToc(){
+    var entry=document.querySelector('.article-entry');
+    var toc=document.getElementById('article-toc');
+    if(!entry||!toc)return;
+    var hs=entry.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    if(hs.length<2){toc.style.display='none';return;}
+    var ul=document.createElement('ul');
+    ul.className='toc';
+    var prevLevel=1;
+    hs.forEach(function(h,i){
+      var lv=parseInt(h.tagName.charAt(1));
+      h.id='toc-'+i;
+      var li=document.createElement('li');
+      li.className='toc-item toc-lv'+lv;
+      li.style.paddingLeft=((lv-1)*12)+'px';
+      var a=document.createElement('a');
+      a.href='#'+h.id;
+      a.className='toc-link';
+      a.textContent=h.textContent;
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    toc.appendChild(ul);
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',genToc);
+  }else{genToc();}
+})();
+</script>
+<% } else if (!index) { %>
   <%- partial('post/nav') %>
 <% } %>
 
