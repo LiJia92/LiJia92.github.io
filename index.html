@@ -154,6 +154,127 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-claude" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/13/claude/">国内网络环境下 Claude Code 配置 DeepSeek 模型完全指南</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/13/claude/" class="archive-article-date">
+  	<time datetime="2026-05-13T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a target="_blank" rel="noopener" href="https://docs.anthropic.com/en/docs/claude-code">Claude Code</a> 是 Anthropic 官方推出的命令行 AI 编程助手，支持在终端中直接进行代码生成、重构、调试等操作。但 Anthropic 官方 API 在国内无法直接访问，需要借助第三方兼容端点。</p>
+<p><a target="_blank" rel="noopener" href="https://platform.deepseek.com/">DeepSeek</a> 提供了兼容 Anthropic Messages API 格式的端点，国内可直接访问，使得我们可以在无需代理的环境下使用 Claude Code。</p>
+        
+          <a class="article-more-a" href="/2026/05/13/claude/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">AI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-16kb" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/09/16kb/">Android 15 16KB 内存页适配小记</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/09/16kb/" class="archive-article-date">
+  	<time datetime="2026-05-09T06:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近了解到一个比较重要的 Android 兼容性变化，需要在项目里提前关注一下：Android 15 开始原生支持 <strong>16KB 内存页面大小</strong>，未适配的应用将直接无法在新设备上安装运行，直接闪退。刚好团队有新项目在规划中，就花时间研究了一下，在此记录。</p>
+        
+          <a class="article-more-a" href="/2026/05/09/16kb/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-git-push" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -647,126 +768,6 @@
 
 
   
-    <article id="post-rom-update1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/07/11/rom-update1/">Android Launcher 升级 Rom - 续</a>
-    </h1>
-  
-
-        
-        <a href="/2025/07/11/rom-update1/" class="archive-article-date">
-  	<time datetime="2025-07-11T08:07:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a target="_blank" rel="noopener" href="https://lastwarmth.win/2025/06/27/rom-update/">上篇文章</a>记录了通过 Rom 自带的固件升级功能，结合无障碍服务进行自动点击，来实现了 Rom 的自动升级。OTA 包下载完成后，若要更新，需要重启一次设备。无障碍自动点击，也会出现弹窗一闪而过的异象。另外放置在存储卡根目录的 update.zip 不太好管理，比如有多个版本的 Rom 升级等等。于是研究了 Rom 的相关源码，终于有所收获，记录一下优化方案。</p>
-        
-          <a class="article-more-a" href="/2025/07/11/rom-update1/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-rom-update" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/06/27/rom-update/">Android Launcher 升级 Rom</a>
-    </h1>
-  
-
-        
-        <a href="/2025/06/27/rom-update/" class="archive-article-date">
-  	<time datetime="2025-06-27T09:21:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-06-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>近期接到一个需求：利用 Launcher 对系统 Rom 进行升级。OTA 包由其他同事提供，Launcher 与服务器通信判断是否有新的升级包，若有升级包则下载到本地，由 Launcher 进行 Rom 升级。过程不算顺利，写下此文记录一下。</p>
-        
-          <a class="article-more-a" href="/2025/06/27/rom-update/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -860,6 +861,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
@@ -873,10 +878,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">博客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">

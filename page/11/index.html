@@ -154,6 +154,127 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-start-for-result" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/10/start-for-result/">startActivityForResult 的封装使用</a>
+    </h1>
+  
+
+        
+        <a href="/2018/10/10/start-for-result/" class="archive-article-date">
+  	<time datetime="2018-10-10T08:59:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-10-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>startActivityForResult 相信大家都用过，调用和返回结果是分散开的，使用起来最好还是封装一下比较好。这里利用一个空的 Fragment 进行封装，代码比较简单。<br>封装的回调类 StartForResultListener：</p>
+<figure class="highlight leaf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public interface StartForResultListener &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * StartActivityForResult回调，同&#123;@link android.app.Activity<span class="punctuation">#</span><span class="keyword">onActivityResult</span><span class="params">(<span class="keyword">in</span><span class="variable">t</span>, <span class="keyword">in</span><span class="variable">t</span>, <span class="variable">Intent</span>)</span>&#125;</span><br><span class="line">     */</span><br><span class="line">    void onActivityResult(int requestCode, int resultCode, Intent data);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/10/10/start-for-result/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-shape" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/27/shape/">Android 开发减少 shape 文件</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/27/shape/" class="archive-article-date">
+  	<time datetime="2018-09-27T09:15:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>作为一名 Android 开发者，对于 shape 文件肯定不会陌生。但是，用时一时爽，到后面遇到缩包要求时，或者强迫症开发者不希望有重复的 shape 文件，便是有苦说不出了。<br>通常，我们定义 shape 文件可能会根据业务来，代表这个 shape 文件在哪里用到，举个栗子：<code>vyg__route_search_bg_selector.xml</code>，开发人员看到这个 shape 文件可以知道是在路线搜索页面用到的。可是这样命名，当开发人员各自独立开发时，可能会有一大堆业务相关的 shape 文件，可能会和其他开发人员相关业务重复了。所以后面我们干脆改成这样了：<code>vyg__shape_r2_f7f7f7.xml</code>，代表 2dp 的 radius，然后填充色是 #F7F7F7。如果项目设计师严格按照一套标准来设计所有的背景，这样命名一套 shape 文件可以做到复用了。可如果设计师经常换人，或者不够专业等等其他原因，这里一个颜色，那里又是另外一个颜色，或者把 2dp 的圆角变成 4dp，如此下来，shape 文件依然会很多。就像这样：</p>
+        
+          <a class="article-more-a" href="/2018/09/27/shape/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-phone-adapt" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -647,126 +768,6 @@
 
 
   
-    <article id="post-uml" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/08/uml/">快速画 UML 图</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/08/uml/" class="archive-article-date">
-  	<time datetime="2018-05-08T05:57:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的<a target="_blank" rel="noopener" href="https://www.processon.com/">ProcessOn</a>，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到<a target="_blank" rel="noopener" href="http://plantuml.com/">PlantUML</a>，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！</p>
-        
-          <a class="article-more-a" href="/2018/05/08/uml/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-refactor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/07/refactor/">关于重构的一些实践</a>
-    </h1>
-  
-
-        
-        <a href="/2018/05/07/refactor/" class="archive-article-date">
-  	<time datetime="2018-05-07T02:11:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png"><br>Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多<code>Deprecated</code>标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。</p>
-        
-          <a class="article-more-a" href="/2018/05/07/refactor/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/12/">Next &amp;raquo;</a>
@@ -860,6 +861,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
@@ -873,10 +878,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">博客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">

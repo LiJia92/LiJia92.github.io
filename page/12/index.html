@@ -154,6 +154,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-uml" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/08/uml/">快速画 UML 图</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/08/uml/" class="archive-article-date">
+  	<time datetime="2018-05-08T05:57:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这几天有个内部的技术分享，是公司要求的一个流程，需要针对某个功能模块进行讲解。在制作 PPT 的过程中，需要画 UML 图。起初使用的<a target="_blank" rel="noopener" href="https://www.processon.com/">ProcessOn</a>，画出来之后感觉没啥效果，类之间的关系不能明确表现出来，而且制作很麻烦，得自己一天天敲文字，调位置。后面接触到<a target="_blank" rel="noopener" href="http://plantuml.com/">PlantUML</a>，可以直接使用类似 Markdown 的模式进行编辑，然后直接渲染成一张图片，简直不要太舒服，所以很想分享给大家！</p>
+        
+          <a class="article-more-a" href="/2018/05/08/uml/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-refactor" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/07/refactor/">关于重构的一些实践</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/07/refactor/" class="archive-article-date">
+  	<time datetime="2018-05-07T02:11:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>关于本文即将阐述的一些东西，其实我也不知道算不算得上重构，姑且就算吧。重构，是软件开发者始终绕不过的一道坎，尤其当你接手一个“年迈”项目的时候。首先介绍下项目背景：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/5/7/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180507102549.png"><br>Android Core 是所有 Lib、App 都有依赖的。近期 Core 做了一次大版本升级，将许多<code>Deprecated</code>标记的方法、类都删掉了，同时内部代码做了重构，有些 Api、类名都有相应的修改。那么现在作为图中的 Saturn(Lib) 这个位置，在引用新版本的 Core 之后，如何重构代码，使之能够正常工作？下面针对我碰到的几个点，做一下说明。</p>
+        
+          <a class="article-more-a" href="/2018/05/07/refactor/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-charles" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -647,132 +767,6 @@
 
 
   
-    <article id="post-build-config" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/04/build-config/">Android 获取 BuildConfig 信息</a>
-    </h1>
-  
-
-        
-        <a href="/2018/01/04/build-config/" class="archive-article-date">
-  	<time datetime="2018-01-04T01:36:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-01-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目开发中，我们的 App 这个 Module 定义了3个 buildType：</p>
-<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">buildTypes</span> &#123;</span><br><span class="line">    <span class="keyword">release</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">debug</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">beta</span> &#123;</span><br><span class="line">        buildConfigField(<span class="string">&quot;Integer&quot;</span>, <span class="string">&quot;HOST_TYPE&quot;</span>, <span class="string">&#x27;2&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通过参数 HOST_TYPE 来指定数据的环境。debug 为内网测试版，beta 为外网测试版，release 为正式版本。<br>项目有3个产品线：手机、POS机、收银机，Module 的依赖是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/01/04/%E9%80%89%E5%8C%BA_322.png"><br>App 作为 Application，其他作为 Library。</p>
-        
-          <a class="article-more-a" href="/2018/01/04/build-config/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-mvp-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/22/mvp-2/">关于 MVP 模式的一点思考（续）</a>
-    </h1>
-  
-
-        
-        <a href="/2017/12/22/mvp-2/" class="archive-article-date">
-  	<time datetime="2017-12-22T02:04:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>之前有一个关于 MVP 的疑惑：<strong>1个 Presenter 能否对应多个 View？</strong>，在我的<a target="_blank" rel="noopener" href="http://lastwarmth.win/2017/04/25/mvp-1/">这篇文章</a>中有写过。现在回过头来仔细想想，感觉有点不对劲：1个 Presenter 为什么会有对应多个 View 的需求呢？那篇文章中的使用场景是：</p>
-<blockquote>
-<p>我有 A B C 三个页面，我有一个 Presenter，用来处理一个数据类型的增删改查，但是界面上，A界面只需要查询，B界面只需要删除，C界面只需要增和改。</p>
-</blockquote>
-<p>我们都知道，Presenter 是用来抽离 Activity 或 Fragment 中的业务代码的，何为业务代码？就是这个页面涉及到的业务逻辑。<strong>关于数据的增删改查，那是 M 应该做的事，而绝不是 Presenter 该去处理的。</strong> 所以，Presenter 应当只对应一个 View，如果有界面复用 Presenter 的情况，那我们得考虑为什么会有这种情况呢？复用 Presenter 代表着业务逻辑是一致的，不同的页面理当有着不同的业务逻辑。当然，这里说的业务是简单，最小颗粒化的业务，如果一个页面十分复杂，Presenter 中集合了大量业务代码，那么在某些小的页面是有可能复用 Presenter 中的部分业务代码的。所以这种情况下，Presenter 会对应多个 View，那么这个场景使用上篇文章中的做法是可以的：<strong>复用 Presenter，将 View 抽离，利用继承实现多个界面的定制需求</strong>，但不会是上篇文章中的那种使用场景。</p>
-        
-          <a class="article-more-a" href="/2017/12/22/mvp-2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/11/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/13/">Next &amp;raquo;</a>
@@ -866,6 +860,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
@@ -879,10 +877,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">博客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">

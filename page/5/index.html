@@ -154,6 +154,128 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-2021" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/01/28/2021/">2021 年度总结</a>
+    </h1>
+  
+
+        
+        <a href="/2022/01/28/2021/" class="archive-article-date">
+  	<time datetime="2022-01-28T11:01:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-01-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>还有两天就要过年了，今天是最后一天班，抓住时间的尾巴，还是记录一下吧。</p>
+<p>…</p>
+<p>回顾了一年，好像并没有什么特别的事情，工作、生活有条不紊的来回交替，但平凡即伟大，就算是流水账也还是可以记录一些的。</p>
+        
+          <a class="article-more-a" href="/2022/01/28/2021/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">生活杂谈</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-ping" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/31/ping/">使用 Ping 指令判断网络</a>
+    </h1>
+  
+
+        
+        <a href="/2021/12/31/ping/" class="archive-article-date">
+  	<time datetime="2021-12-31T06:34:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-31</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>有个需求，需要判断网络是否连接，如果是正常的移动网络或者 WiFi，是可以判断出来的，但是目标设备使用的是以太网，就像台式机插入的网线一样。假设拔掉机器这边的网线，很显然就是没有网络的，通过 Android 的 ConnectivityManager 的 getActiveNetworkInfo 也可以判断出来。但如果拔掉的是网线的另一端，通过 Android SDK 获取的网络会仍然是 CONNECTED。这显然是有问题的，因为此时此刻设备连访问百度的能力都没有了。所以打算使用 ping 指令，不断的去 ping 一个 host，如果能正常返回，则说明网络是没问题的。</p>
+        
+          <a class="article-more-a" href="/2021/12/31/ping/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-30" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -645,132 +767,6 @@
 
 
   
-    <article id="post-gps" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/08/gps/">科二考试系统</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/08/gps/" class="archive-article-date">
-  	<time datetime="2021-07-08T06:04:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这是一个系列文章的开篇，尝试理解项目中用到的知识与结构，许多代码都是上级编写，我只能以我的能力尽量把东西说清楚，讲明白。</p>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？<br>首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。<br>考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。<br>那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
-        
-          <a class="article-more-a" href="/2021/07/08/gps/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-engine" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/05/14/engine/">关于「引擎」设计的小结</a>
-    </h1>
-  
-
-        
-        <a href="/2021/05/14/engine/" class="archive-article-date">
-  	<time datetime="2021-05-14T09:05:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个业务场景：科二学员考试系统，当学员做了错误的操作之后，会扣分。那么如何实现这样的一个扣分引擎呢？</p>
-<ol>
-<li>检测时机：很显然的我们需要一个定时检测的时机，比如每隔 100 毫秒，或者 1 秒，执行一次检测。这样的话，可以理解为，有一个死循环，持续进行检测。</li>
-<li>检测事项：每一次检测需要检测哪些数据，当数据不符合条件，就扣这个分。</li>
-<li>引擎状态：当开始考试时，需要启动引擎，进行检测。结束考试时，就停止检测。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2021/05/14/engine/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
@@ -864,6 +860,10 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
               </li>
              
@@ -877,10 +877,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">博客</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
               </li>
              
               <li class="article-tag-list-item">
