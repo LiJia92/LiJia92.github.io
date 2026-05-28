@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lijia92.github.io">
+  <title>Flutter 入门之边改边学 | 听雪楼</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前负责的 Android 项目都是原生开发，公司有基于 Flutter 开发的项目，最近分了个问题单给我来改，准备基于实际问题一边修改问题，一边学习 Flutter 相关的知识。此文便记录下学习 Flutter 的过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter 入门之边改边学">
+<meta property="og:url" content="http://lijia92.github.io/2026/05/25/flutter/index.html">
+<meta property="og:site_name" content="听雪楼">
+<meta property="og:description" content="之前负责的 Android 项目都是原生开发，公司有基于 Flutter 开发的项目，最近分了个问题单给我来改，准备基于实际问题一边修改问题，一边学习 Flutter 相关的知识。此文便记录下学习 Flutter 的过程。">
+<meta property="og:locale">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/9.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/10.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/11.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/12.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/13.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/15.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/14.png">
+<meta property="og:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/16.png">
+<meta property="article:published_time" content="2026-05-25T08:16:07.000Z">
+<meta property="article:modified_time" content="2026-05-25T12:43:27.698Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/9.png">
+  
+    <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/"></a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/archives">存档</a></li>
+	        
+				<li><a href="/something">干货</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author"></h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">存档</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/something">干货</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-flutter" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flutter 入门之边改边学
+    </h1>
+  
+
+        
+        <a href="/2026/05/25/flutter/" class="archive-article-date">
+  	<time datetime="2026-05-25T08:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前负责的 Android 项目都是原生开发，公司有基于 Flutter 开发的项目，最近分了个问题单给我来改，准备基于实际问题一边修改问题，一边学习 Flutter 相关的知识。此文便记录下学习 Flutter 的过程。</p>
+<span id="more"></span>
+
+<h2><span id="环境准备">环境准备</span></h2><p>一般公司内部都会有相关的文档，如何准备相应的 Flutter 环境。Android 的话，基于 Android Studio 安卓 Flutter、Dart 插件就可以了。另外需要安装 Flutter 环境，主要就是涉及到几个指令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">flutter doctor  // 检查 Flutter 环境、Android SDK、证书是否齐全登</span><br><span class="line">flutter clean  // 清理 Flutter 缓存文件</span><br><span class="line">flutter pub get  // 安装项目依赖</span><br><span class="line">flutter pub upgrade  // 更新项目依赖</span><br></pre></td></tr></table></figure>
+<p><code>pub get</code>是根据 <code>pubspec.yaml</code> 下载所有第三方库的指令。pub 是 Flutter&#x2F;Dart 的 “包管理器”，相当于前端的 npm、Android 的 gradle、iOS 的 CocoaPods。<br>它大概长这样：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">demo</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">A</span> <span class="string">new</span> <span class="string">Flutter</span> <span class="string">project.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本号</span></span><br><span class="line"><span class="attr">version:</span> <span class="number">1.0</span><span class="number">.0</span><span class="string">+1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第三方依赖（你要加库都写这里）</span></span><br><span class="line"><span class="attr">dependencies:</span></span><br><span class="line">  <span class="attr">flutter:</span></span><br><span class="line">    <span class="attr">sdk:</span> <span class="string">flutter</span></span><br><span class="line">  <span class="attr">provider:</span> <span class="string">^6.1.1</span>  <span class="comment"># 状态管理</span></span><br><span class="line">  <span class="attr">dio:</span> <span class="string">^5.4.0</span>       <span class="comment"># 网络请求</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 开发依赖</span></span><br><span class="line"><span class="attr">dev_dependencies:</span></span><br><span class="line">  <span class="attr">flutter_test:</span></span><br><span class="line">    <span class="attr">sdk:</span> <span class="string">flutter</span></span><br></pre></td></tr></table></figure>
+<p>当各类环境准备好之后，就可以直接运行项目了。项目能正常跑起来了，就可以看问题单了。<br><strong>这里需要额外注意下下安装 Flutter 的版本，要和项目依赖的 Flutter 版本一致，最好不要自己随便下个版本就用了，否则可能会导致项目编译失败。</strong></p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Couldn<span class="symbol">&#x27;t</span> resolve the package <span class="symbol">&#x27;di</span>o<span class="string">&#x27; in &#x27;</span>package:dio/dio.dart<span class="string">&#x27;.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt; Task :flutter_boost:compileDebugJavaWithJavac FAILED</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">C:<span class="char escape_">\U</span>sers<span class="char escape_">\a</span>11770<span class="char escape_">\A</span>ppData<span class="char escape_">\L</span>ocal<span class="char escape_">\P</span>ub<span class="char escape_">\C</span>ache<span class="char escape_">\g</span>it<span class="char escape_">\f</span>lutter_boost-88b5ac273de51019891280030a38420ba3a84ea5<span class="char escape_">\a</span>ndroid<span class="char escape_">\s</span>rc<span class="char escape_">\m</span>ain<span class="char escape_">\j</span>ava<span class="char escape_">\c</span>om<span class="char escape_">\i</span>dlefish<span class="char escape_">\f</span>lutterboost<span class="char escape_">\F</span>lutterBoost.java:22: 错误: 找不到符号</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">import io.flutter.view.FlutterMain;</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="问题单">问题单</span></h2><p>问题单描述很简单：部分页面底部图标显示不全。<br>截图如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/9.png"></p>
+<p>很明显，弹出的底部按钮被截断了。考虑到这个问题是在 Android 16 的手机上出现的，在我自己的测试机（Android 14）上没有这个问题，初步怀疑是 Android 16 的 Edge-to-Edge 导致的。现在需要找到这个弹窗的代码，进行排查。<br>当前的 Flutter 项目不同于原生 Android 项目，它没有 Activity，没有 Fragment，没有 XML。<br>首先全局搜索<code>New Device discovered</code>找到这个字符串的引用。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/10.png"></p>
+<p>搜索的时候最好勾选<code>All Places</code>，这样可以找到所有引用，否则可能会漏掉一些引用（有些引用是通过相对路径引入，Project 则搜索不到）。<br>就比如拿到词条对应的 key 进行搜索：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/11.png"></p>
+<p><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/12.png"></p>
+<p>第一个图搜索之看到定义的地方，却没有调用的地方。第二个图则能搜到在 <code>local_net_can_active_alert_widget.dart</code> 中调用了这个字符串，这个文件是在本地相对路径依赖的 FlutterPackages SDK（公司多个项目，都会依赖 SDK）中的。<br>找到文件便可以查看对应的代码了：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">_LocalNetCanActiveAlertWidget</span> <span class="keyword">extends</span> <span class="title class_ inherited__">StatelessWidget</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">_LocalNetCanActiveAlertWidget</span>();</span><br><span class="line"></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">build</span>(<span class="params"><span class="title class_">BuildContext</span> context</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">_contentWidgetWrapper</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">_contentWidgetWrapper</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">BlocSelector</span>&lt;<span class="title class_">LocalNetSearchAlertCubit</span>, <span class="title class_">LocalNetSearchAlertState</span>, <span class="title class_">List</span>&lt;<span class="title class_">LocalNetDevice</span>&gt;&gt;(</span><br><span class="line">      <span class="attr">selector</span>: (state) &#123;</span><br><span class="line">        <span class="title class_">List</span>&lt;<span class="title class_">LocalNetDevice</span>&gt; inactiveList = state.<span class="property">deviceList</span>.<span class="title function_">where</span>(<span class="function">(<span class="params">element</span>) =&gt;</span> element.<span class="property">isActivated</span> != <span class="literal">true</span>).<span class="title function_">toList</span>();</span><br><span class="line">        <span class="title class_">List</span>&lt;<span class="title class_">String</span>&gt; deviceIds = <span class="title class_">LocalNetSearchAlertUtils</span>.<span class="property">showedInactiveList</span>.<span class="title function_">map</span>(<span class="function">(<span class="params">e</span>) =&gt;</span> e.<span class="property">deviceId</span>).<span class="title function_">toList</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">/// 没有显示过的可激活设备列表</span></span><br><span class="line">        <span class="keyword">return</span> inactiveList.<span class="title function_">where</span>(<span class="function">(<span class="params">element</span>) =&gt;</span> !deviceIds.<span class="title function_">contains</span>(element.<span class="property">deviceId</span>)).<span class="title function_">toList</span>();</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">builder</span>: (context, deviceList) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">ConnectivityDetector</span>(</span><br><span class="line">          <span class="attr">builder</span>: (context, isNetworkConnected, isWifiConnected) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isWifiConnected) &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="title function_">_contentWidget</span>(context, deviceList);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              <span class="keyword">return</span> <span class="title function_">_contentWidget</span>(context, []);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">        );</span><br><span class="line">      &#125;,</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Widget</span> <span class="title function_">_contentWidget</span>(<span class="params"><span class="title class_">BuildContext</span> context, <span class="title class_">List</span>&lt;<span class="title class_">LocalNetDevice</span>&gt; itemList</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Container</span>(</span><br><span class="line">      <span class="attr">constraints</span>: <span class="title class_">BoxConstraints</span>(<span class="attr">maxHeight</span>: <span class="title class_">MediaQuery</span>.<span class="title function_">of</span>(context).<span class="property">size</span>.<span class="property">height</span> * <span class="number">4</span> / <span class="number">5</span>),</span><br><span class="line">      <span class="attr">decoration</span>: <span class="title class_">BoxDecoration</span>(</span><br><span class="line">        <span class="attr">color</span>: itemList.<span class="property">isEmpty</span> ? kThemeBgColorWhite : kThemeWarningBgColorLightDisabled,</span><br><span class="line">        <span class="attr">borderRadius</span>: <span class="title class_">BorderRadius</span>.<span class="title function_">only</span>(<span class="attr">topLeft</span>: <span class="title class_">Radius</span>.<span class="title function_">circular</span>(kThemeRadius_12), <span class="attr">topRight</span>: <span class="title class_">Radius</span>.<span class="title function_">circular</span>(kThemeRadius_12)),</span><br><span class="line">      ),</span><br><span class="line">      <span class="attr">child</span>: <span class="title class_">Column</span>(</span><br><span class="line">        <span class="attr">mainAxisSize</span>: <span class="title class_">MainAxisSize</span>.<span class="property">min</span>,</span><br><span class="line">        <span class="attr">children</span>: [</span><br><span class="line">          <span class="title function_">_headWidget</span>(context),</span><br><span class="line">          <span class="title class_">Flexible</span>(<span class="attr">child</span>: <span class="title function_">_innerContentWidget</span>(context, itemList)),</span><br><span class="line">          <span class="title function_">_toolsWidget</span>(context, itemList),</span><br><span class="line">        ],</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dart</code>语言虽说没怎么系统学习过，但也写过这么久的代码了，稍加看一下也能看出来这个页面的内容，是顶部一个 _headWidget，中间一个 _innerContentWidget，底部一个 _toolsWidget。中间的 _innerContentWidget 是 Flexible 的 child，所以它可以自动调整高度，以适应内容。<br>那么为何这样的一个界面，底部按钮会被截断？以及要如何修改呢？<br>现在有了 AI，即使很多东西不懂，但也可以很快找到答案。</p>
+<blockquote>
+<p>Android 16 Edge-to-Edge 模式导致弹窗高度计算异常，可以使用 SafeArea 来解决。</p>
+</blockquote>
+<p>修改成这样就好了：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Widget</span> <span class="selector-tag">_contentWidget</span>(BuildContext context, List&lt;LocalNetDevice&gt; itemList) &#123;</span><br><span class="line">  <span class="selector-tag">return</span> <span class="selector-tag">Container</span>(</span><br><span class="line">      <span class="attribute">constraints</span>: <span class="built_in">BoxConstraints</span>(<span class="attribute">maxHeight</span>: MediaQuery</span><br><span class="line">          .<span class="built_in">of</span>(context)</span><br><span class="line">          .size</span><br><span class="line">          .<span class="attribute">height</span> * <span class="number">4</span> / <span class="number">5</span>),</span><br><span class="line">      <span class="attribute">decoration</span>: <span class="built_in">BoxDecoration</span>(</span><br><span class="line">        <span class="attribute">color</span>: itemList.isEmpty ? <span class="attribute">kThemeBgColorWhite </span>: kThemeWarningBgColorLightDisabled,</span><br><span class="line">        <span class="attribute">borderRadius</span>: BorderRadius.<span class="built_in">only</span>(<span class="attribute">topLeft</span>: Radius.<span class="built_in">circular</span>(kThemeRadius_12), <span class="attribute">topRight</span>: Radius.<span class="built_in">circular</span>(kThemeRadius_12)),</span><br><span class="line">      ),</span><br><span class="line">      <span class="attribute">child</span>: <span class="built_in">SafeArea</span>(</span><br><span class="line">          <span class="attribute">top</span>: false,</span><br><span class="line">          <span class="attribute">child</span>: <span class="built_in">Column</span>(</span><br><span class="line">            <span class="attribute">mainAxisSize</span>: MainAxisSize.min,</span><br><span class="line">            <span class="attribute">children</span>: [</span><br><span class="line">              <span class="built_in">_headWidget</span>(context),</span><br><span class="line">              <span class="built_in">Flexible</span>(<span class="attribute">child</span>: <span class="built_in">_innerContentWidget</span>(context, itemList)),</span><br><span class="line">              <span class="built_in">_toolsWidget</span>(context, itemList),</span><br><span class="line">            ],</span><br><span class="line">          )</span><br><span class="line">      )</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改是把 child 使用 SafeArea 包裹起来， top 为 false，可以看下 SafeArea 的内容：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> SafeArea(&#123;</span><br><span class="line">  <span class="keyword">super</span>.key,</span><br><span class="line">  <span class="keyword">this</span>.left = <span class="literal">true</span>,</span><br><span class="line">  <span class="keyword">this</span>.top = <span class="literal">true</span>,</span><br><span class="line">  <span class="keyword">this</span>.right = <span class="literal">true</span>,</span><br><span class="line">  <span class="keyword">this</span>.bottom = <span class="literal">true</span>,</span><br><span class="line">  <span class="keyword">this</span>.minimum = EdgeInsets.zero,</span><br><span class="line">  <span class="keyword">this</span>.maintainBottomViewPadding = <span class="literal">false</span>,</span><br><span class="line">  required <span class="keyword">this</span>.child,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>它可以支持四个方向的 padding，以及是否维护底部视图的 padding。默认是 true，所以会维护视图四个方向的 padding。问题中的这个弹窗是基于底部的，所以 top 可以设置成 false。<br>看，虽然咱不懂 Flutter，但经过一段时间的摸索，也可以把这个问题给解决了。</p>
+<h2><span id="assets-引用">assets 引用</span></h2><p>在排查问题时，也有个弹窗有类似的问题，就是底部图标显示不全。最终跟进到代码是这样的：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 操作栏</span></span><br><span class="line">Widget <span class="built_in">_operationWidget</span>(BuildContext context) &#123;</span><br><span class="line">  if (isSimpleStyle) &#123;</span><br><span class="line">    return const SizedBox<span class="selector-class">.shrink</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  if (!device.isActivated) &#123;</span><br><span class="line">    return const SizedBox<span class="selector-class">.shrink</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  if (device.bizInfo.devUpgradeState == <span class="number">2</span>) &#123;</span><br><span class="line">    return const SizedBox<span class="selector-class">.shrink</span>();</span><br><span class="line">  &#125;</span><br><span class="line">  return <span class="attribute">Padding</span>(</span><br><span class="line">    padding: EdgeInsets.only(top: kThemeSpacing_12, left: <span class="number">63</span>, right: <span class="number">63</span>),</span><br><span class="line">    child: <span class="built_in">Row</span>(</span><br><span class="line">      mainAxisAlignment: MainAxisAlignment.spaceBetween,</span><br><span class="line">      children: [</span><br><span class="line">        <span class="built_in">_operationItemWidget</span>(context, <span class="string">&#x27;assets/images/themes/default/localNetSearch/operation_live.png&#x27;</span>, () &#123;</span><br><span class="line">          context<span class="selector-class">.read</span>&lt;LocalNetSearchCubit&gt;()<span class="selector-class">.onGoLive</span>(device);</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="built_in">_operationItemWidget</span>(context, &#x27;assets/images/themes/default/localNetSearch/operation_playback.png&#x27;, () &#123;</span><br><span class="line">          context<span class="selector-class">.read</span>&lt;LocalNetSearchCubit&gt;()<span class="selector-class">.onGoPlayback</span>(device);</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="built_in">_dynamicItemWidget</span>(context),</span><br><span class="line">        <span class="built_in">_operationItemWidget</span>(context, &#x27;assets/images/themes/default/localNetSearch/operation_more.png&#x27;, () &#123;</span><br><span class="line">          context<span class="selector-class">.read</span>&lt;LocalNetSearchCubit&gt;()<span class="selector-class">.onOpenMoreDeviceOperation</span>(device);</span><br><span class="line">        &#125;),</span><br><span class="line">      ],</span><br><span class="line">    ),</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>截图是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/13.png"></p>
+<p>是在点击更多按钮后弹出来的弹窗。<br>这里发现关于图标的使用，是通过 assets 引用的。<code>assets/images/themes/default/localNetSearch/operation_more.png</code> 就是更多按钮的图标。而关于图标的引入，是在 <code>pubspec.yaml</code> 中添加的。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">assets:</span><br><span class="line">  - assets/</span><br><span class="line">  - assets<span class="regexp">/langs/</span></span><br><span class="line">  - assets<span class="regexp">/audio/</span></span><br><span class="line">  - assets<span class="regexp">/flavorFiles/</span></span><br><span class="line">  - assets<span class="regexp">/configs/</span></span><br><span class="line">  - assets<span class="regexp">/machine/</span></span><br><span class="line">  - assets<span class="regexp">/customize/</span></span><br><span class="line">  - assets<span class="regexp">/images/</span></span><br><span class="line">  - assets<span class="regexp">/images/</span>themes/</span><br><span class="line">  - assets<span class="regexp">/images/</span>themes<span class="regexp">/default/</span></span><br><span class="line">  - assets<span class="regexp">/images/</span>themes<span class="regexp">/default/</span>common/</span><br><span class="line">  - assets<span class="regexp">/images/</span>themes<span class="regexp">/default/</span>tabBar/</span><br></pre></td></tr></table></figure>
+<p>对应的文件地址在：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/15.png"></p>
+<p>只要是这样引入之后，就可以在代码中直接使用了。我问下了 AI，这类路径的重复问题，应该是可以去掉的，<code>assets/images/</code> 应该就可以覆盖到下面的几个文件夹路径了，这个后面有时间再验证下。除了 image，其他的资源文件（比如本地 html，json 文件，raw 文件等），也可以这样引入。</p>
+<h2><span id="状态传递">状态传递</span></h2><p>继续接上面的问题，关于状态传递，代码是通过 Cubit 来实现的。可以看到点击<code>更多按钮</code>后，执行的代码是<code>onOpenMoreDeviceOperation</code>：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 显示或收起操作弹窗</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_ invoke__">onShowOrHideOperationMenu</span>(<span class="keyword">bool</span> show, &#123;LocalNetDevice? device&#125;) &#123;</span><br><span class="line">  <span class="keyword">if</span> (show) &#123;</span><br><span class="line">    List&lt;OperationMenuItem&gt; itemList = [];</span><br><span class="line">    <span class="keyword">if</span> (device != <span class="literal">null</span>) &#123;</span><br><span class="line">      itemList = <span class="title function_ invoke__">_generateOperationItems</span>(device);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_ invoke__">emit</span>(state.<span class="title function_ invoke__">copyWith</span>(</span><br><span class="line">      <span class="attr">showOperationMenu</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">operationMenuItemList</span>: itemList,</span><br><span class="line">      <span class="attr">currentOperateDevice</span>: device,</span><br><span class="line">    ));</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">emit</span>(state.<span class="title function_ invoke__">copyWith</span>(<span class="attr">showOperationMenu</span>: <span class="literal">false</span>, <span class="attr">currentOperateDevice</span>: <span class="literal">null</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，最终是 <code>emit</code> 了一个新的状态，包含了操作弹窗的显示状态，操作项列表，当前操作的设备。这个有点像 Kotlin 的 flow，发送一个状态出去了。<br>那么这个 <code>emit</code> 出去的状态，是怎么样被处理的呢？<br>查看代码有这样的一个类：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@freezed</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LocalNetSearchState</span> <span class="keyword">with</span> <span class="title">_$LocalNetSearchState</span> </span>&#123;</span><br><span class="line">  const factory <span class="type">LocalNetSearchState</span>(&#123;</span><br><span class="line">    <span class="comment">/// 设备列表</span></span><br><span class="line">    <span class="meta">@Default</span>([]) <span class="type">List</span>&lt;<span class="type">LocalNetDevice</span>&gt; deviceList,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 是否显示更多菜单</span></span><br><span class="line">    <span class="meta">@Default</span>(<span class="literal">false</span>) bool showOperationMenu,</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// 当前弹窗操作对应的设备</span></span><br><span class="line">    <span class="type">LocalNetDevice</span>? currentOperateDevice,</span><br><span class="line">  &#125;) = _LocalNetSearchState;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个 state 类，可以理解为一个状态类，包含了当前页面的所有状态（及数据）。就有点像原生 Android 中的 ViewModel，它所持有的各类数据 LiveData，外部界面通过监听 LiveData 来处理数据。同样的，这里搜索 showOperationMenu 的使用，可以发现唯一一个使用的地方（freezed 文件是 flutter 自动生成，无需关注）：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/14.png"></p>
+<p>它的代码如下：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class OperationMenuWidget extends StatelessWidget &#123;</span><br><span class="line">  <span class="keyword">const</span> OperationMenuWidget(&#123;super.key&#125;);</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return BlocSelector<span class="variable">&lt;LocalNetSearchCubit, LocalNetSearchState, bool&gt;</span>(</span><br><span class="line">      selector: (<span class="keyword">state</span>) &#123;</span><br><span class="line">        return <span class="keyword">state</span>.showOperationMenu;</span><br><span class="line">      &#125;,</span><br><span class="line">      builder: (context, <span class="keyword">state</span>) &#123;</span><br><span class="line">        return CommonModalBottomSheetContainer(</span><br><span class="line">          show: <span class="keyword">state</span>,</span><br><span class="line">          <span class="keyword">on</span>Mask: () &#123;</span><br><span class="line">            context.read<span class="variable">&lt;LocalNetSearchCubit&gt;</span>().<span class="keyword">on</span>ShowOrHideOperationMenu(false);</span><br><span class="line">          &#125;,</span><br><span class="line">          child: _contentWidgetWrapper(),</span><br><span class="line">        );</span><br><span class="line">      &#125;,</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即 OperationMenuWidget 是一个监听 showOperationMenu 状态变化的组件，当 showOperationMenu 变化时，会根据状态值来显示或收起操作弹窗。这样一个状态传递机制，就实现了操作弹窗的显示和收起。</p>
+<h2><span id="flutter-cubit">Flutter Cubit</span></h2><blockquote>
+<p>Cubit 是 Flutter 官方主流状态管理库 <code>flutter_bloc</code> 中的轻量化状态管理方案，适用于绝大多数常规业务场景。其核心设计思想为UI 与业务逻辑分层解耦，通过统一管理页面数据、交互状态与业务逻辑，替代传统页面堆砌代码的开发方式，有效精简代码结构、提升项目可维护性与状态稳定性。Cubit 整体架构由三个核心概念构成，各司其职、单向联动：State 统一存储页面所有可变数据与交互状态，是唯一的数据源；Cubit 逻辑处理器集中封装所有业务逻辑、网络请求与状态更新行为，不依赖视图层；UI 视图层只负责监听状态变化并渲染界面，仅触发交互行为、不处理业务逻辑。所有状态更新均通过 emit 推送新 State 完成，以状态驱动界面自动刷新，实现逻辑、数据、视图完全分离，代码结构更规范、状态流转更可控。</p>
+</blockquote>
+<p>这个咱们做安卓开发的应该也很熟悉了，MVVM 模式嘛。基于上面的问题，代码中对应的文件是这样的：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/16.png"></p>
+<p>Cubit 就是处理逻辑（及数据）的地方，当数据处理完毕后，修改 State 再通过 emit 发送出去，而 Widget 作为 UI 层，监听数据的变化，来做界面的刷新。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Flutter</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2026/05/25/flutter/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2026/05/13/claude/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">国内网络环境下 Claude Code 配置 DeepSeek 模型完全指南</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="flutter" data-title="Flutter 入门之边改边学" data-url="http://lijia92.github.io/2026/05/25/flutter/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lastwarmth"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2026 最后的温存
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Flutter</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.gcssloop.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>GcsSloop</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://hukai.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>胡凯</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://stormzhang.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>stormzhang</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/lmj623565791" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Hongyang</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">小小程序猿一枚&lt;br&gt;&lt;br&gt;good good study&lt;br&gt;day day up!</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
