@@ -284,6 +284,124 @@
   
 </nav>
 
+<style>
+/* ── 文章悬浮目录 · 覆盖主题默认样式 ── */
+.article-toc{
+  position:fixed;
+  top:50%;
+  right:24px;
+  transform:translateY(-50%);
+  width:200px;
+  max-height:68vh;
+  overflow-y:auto;
+  background:rgba(255,255,255,.88);
+  border:none;
+  border-radius:10px;
+  padding:18px 16px 14px;
+  font-size:13px;
+  z-index:100;
+  box-shadow:0 4px 24px rgba(0,0,0,.10),0 1px 4px rgba(0,0,0,.06);
+  backdrop-filter:saturate(180%) blur(8px);
+  -webkit-backdrop-filter:saturate(180%) blur(8px);
+}
+.article-toc::before{
+  content:'目录';
+  display:block;
+  font-size:12px;
+  font-weight:600;
+  color:#aaa;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.article-toc .toc{margin:0;padding:0;list-style:none}
+.article-toc .toc-item{margin:2px 0}
+.article-toc .toc-link{
+  display:block;
+  padding:5px 8px 5px 12px;
+  color:#666;
+  text-decoration:none;
+  transition:all .2s ease;
+  border-left:2px solid transparent;
+  border-radius:0 4px 4px 0;
+  line-height:1.5;
+  font-size:13px;
+}
+.article-toc .toc-link:hover{
+  color:#333;
+  background:rgba(77,77,77,.06);
+  border-left-color:#999;
+}
+/* 层级区分 */
+.article-toc .toc-lv1{font-weight:600}
+.article-toc .toc-lv2{font-weight:500;padding-left:4px!important}
+.article-toc .toc-lv3{font-weight:400;font-size:12.5px;color:#888;padding-left:8px!important}
+/* 滚动条 */
+.article-toc::-webkit-scrollbar{width:3px}
+.article-toc::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+/* 移动端隐藏 */
+@media(max-width:1100px){.article-toc{display:none!important}}
+</style>
+<div id="article-toc" class="article-toc"></div>
+<script>
+(function(){
+  function genToc(){
+    var entry=document.querySelector('.article-entry');
+    var toc=document.getElementById('article-toc');
+    if(!entry||!toc)return;
+    var hs=entry.querySelectorAll('h1,h2,h3,h4,h5,h6');
+    // 标题数量较少时不展示（阈值可调整：小于该数量则不显示目录）
+    var THRESHOLD=3;
+    if(hs.length<THRESHOLD){toc.style.display='none';return;}
+    var ul=document.createElement('ul');
+    ul.className='toc';
+    var links=[];
+    hs.forEach(function(h,i){
+      var lv=parseInt(h.tagName.charAt(1));
+      if(!h.id) h.id='toc-'+i;
+      var li=document.createElement('li');
+      li.className='toc-item toc-lv'+lv;
+      li.style.paddingLeft=((lv-1)*12)+'px';
+      var a=document.createElement('a');
+      a.href='#'+h.id;
+      a.className='toc-link';
+      a.textContent=h.textContent;
+      li.appendChild(a);
+      ul.appendChild(li);
+      links.push(a);
+    });
+    toc.appendChild(ul);
+    toc.style.display='block';
+    // 点击平滑滚动到对应章节
+    toc.addEventListener('click',function(e){
+      var t=e.target.closest('.toc-link');
+      if(!t)return;
+      e.preventDefault();
+      var el=document.getElementById(t.getAttribute('href').slice(1));
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    // 滚动时高亮当前所在章节
+    function spy(){
+      var pos=window.scrollY+120, idx=-1;
+      for(var k=0;k<hs.length;k++){
+        if(hs[k].getBoundingClientRect().top+window.scrollY<=pos) idx=k;
+      }
+      links.forEach(function(l,i){
+        var on=i===idx;
+        l.style.borderLeftColor=on?'#4d4d4d':'transparent';
+        l.style.color=on?'#4d4d4d':'#555';
+      });
+    }
+    window.addEventListener('scroll',spy,{passive:true});
+    spy();
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',genToc);
+  }else{genToc();}
+})();
+</script>
 
 
 
@@ -412,11 +530,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
