@@ -154,6 +154,192 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-amap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/21/amap/">Android 高德地图 SDK 使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/21/amap/" class="archive-article-date">
+  	<time datetime="2018-12-21T05:47:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近的项目是基于高德地图 SDK 来实现的，使用中有一些值得记录的 Tip，便有了这篇博客。</p>
+<h2 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a>Logo</h2><p>使用高德地图 SDK，是不能去掉「高德地图」 Logo的，只能设置它显示的位置。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapView<span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoPosition</span>(<span class="attribute">position</span>);</span><br></pre></td></tr></table></figure>
+<p>position：位置参数。屏幕左下角：AMapOptions.LOGO_POSITION_BOTTOM_LEFT；底部居中：AMapOptions.LOGO_POSITION_BOTTOM_CENTER；右下：AMapOptions.LOGO_MARGIN_RIGHT。<br>如果想要隐藏 Logo，可以使用如下代码：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapView<span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoBottomMargin</span>(-<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+<p>设置负值可以让 Logo 显示在屏幕之外。</p>
+        
+          <a class="article-more-a" href="/2018/12/21/amap/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-recyclerview-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/12/recyclerview-scroll/">CoordinatorLayout + RecyclerView 处理滑动</a>
+    </h1>
+  
+
+        
+        <a href="/2018/12/12/recyclerview-scroll/" class="archive-article-date">
+  	<time datetime="2018-12-12T02:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先看一下设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png"><br>最底层是个地图，再上面有一些按钮，最上层是路线信息 UI，页面可以滑动，滑动时地图和按钮不动，自然而然想到的 RecyclerView 来实现。<br>早些时候只有 2 个按钮，使用了一种很笨拙的方式，与之前写过的一篇文章类似：<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/04/22/android-scroll/">一个关于Android滑动“因缺斯厅”的想法</a>。<br>这种方式，相当于有四层：地图-&gt;按钮-&gt;RecyclerView-&gt;与按钮相同位置的View，但是是透明的。界面布局就像这样：</p>
+        
+          <a class="article-more-a" href="/2018/12/12/recyclerview-scroll/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-media-mix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/23/media-mix/">无声视频合成音频</a>
+    </h1>
+  
+
+        
+        <a href="/2018/11/23/media-mix/" class="archive-article-date">
+  	<time datetime="2018-11-23T02:02:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上篇文章，通过 MediaProjectionManager 结合 MediaRecorder 进行录屏并生成视频文件。新版本需求产品提了个：视频增加背景音乐，音频文件内置在 Apk 中。那么，怎么生成带音频的视频呢？<br>通过调研发现，在用 MediaPlayer 进行录屏时，可以添加音频源，但是基本是使用麦克风录音，无法指定音频文件。代码如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化 MediaRecorder</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiresApi(Build.VERSION_CODES.LOLLIPOP)</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">initRecorder</span><span class="params">()</span></span> &#123;</span><br><span class="line">    mSaveFile = File(DirUtils.getPublicMediaPath(), <span class="string">&quot;<span class="variable">$saveName</span>.tmp&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> (mSaveFile!!.exists()) &#123;</span><br><span class="line">        mSaveFile!!.delete()</span><br><span class="line">    &#125;</span><br><span class="line">    mMediaRecorder = MediaRecorder()</span><br><span class="line">    mMediaRecorder?.setVideoSource(MediaRecorder.VideoSource.SURFACE)</span><br><span class="line">    <span class="comment">// 使用麦克风录音</span></span><br><span class="line">    mMediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)</span><br><span class="line">    mMediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)</span><br><span class="line">    mMediaRecorder?.setOutputFile(mSaveFile!!.absolutePath)</span><br><span class="line">    mMediaRecorder?.setVideoSize(mVideoWidth, mVideoHeight)</span><br><span class="line">    mMediaRecorder?.setVideoEncoder(MediaRecorder.VideoEncoder.H264)</span><br><span class="line">    mMediaRecorder?.setVideoEncodingBitRate(VIDEO_BIT_RATE)</span><br><span class="line">    mMediaRecorder?.setVideoFrameRate(VIDEO_FRAME_RATE)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        mMediaRecorder?.prepare()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">        LogUtils.e(TAG, e.toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+        
+          <a class="article-more-a" href="/2018/11/23/media-mix/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-screen-record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -577,196 +763,9 @@
 
 
   
-    <article id="post-kotlin-question2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/19/kotlin-question2/">关于使用 kotlin 碰到的一个坑（二）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/19/kotlin-question2/" class="archive-article-date">
-  	<time datetime="2018-07-19T07:01:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近新做的项目，有点性能问题，今天集中弄了下性能优化，又发现了一个 kotlin 中的坑。其实也不算是坑，只是使用不熟练而已。</p>
-<p>介绍下场景：项目有用到高德地图，高德地图的 MapView 需要在 Activity 或者 Fragment 的声明周期中进行调用，就像这样：</p>
-<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onCreate</span>(<span class="params"><span class="title class_">Bundle</span> savedInstanceState</span>) &#123;</span><br><span class="line">    mapView = contentView.<span class="title function_">findViewById</span>(R.<span class="property">id</span>.<span class="property">map_view</span>);</span><br><span class="line">    mapView.<span class="title function_">onCreate</span>(savedInstanceState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onResume</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onResume</span>();</span><br><span class="line">    mapView.<span class="title function_">onResume</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onPause</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onPause</span>();</span><br><span class="line">    mapView.<span class="title function_">onPause</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onSaveInstanceState</span>(<span class="params"><span class="title class_">Bundle</span> outState</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onSaveInstanceState</span>(outState);</span><br><span class="line">    mapView.<span class="title function_">onSaveInstanceState</span>(outState);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">void</span> <span class="title function_">onDestroy</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>.<span class="title function_">onDestroy</span>();</span><br><span class="line">    mapView.<span class="title function_">onDestroy</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/07/19/kotlin-question2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-kotlin-question" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/11/kotlin-question/">关于使用 kotlin 碰到的一个坑（一）</a>
-    </h1>
-  
-
-        
-        <a href="/2018/07/11/kotlin-question/" class="archive-article-date">
-  	<time datetime="2018-07-11T09:58:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天碰到个问题，起初看的时候一脸懵逼，后面追溯问题根源，发现是 kotlin 里的一个坑。看下代码：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">showRoadCondition</span><span class="params">(list: <span class="type">List</span>&lt;<span class="type">MyObject</span>&gt;)</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> size = Math.ceil(list.size / <span class="number">8.0</span>).toInt()</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> (<span class="number">0</span> until size)) &#123;</span><br><span class="line">        <span class="keyword">val</span> min = Math.min((i + <span class="number">1</span>) * <span class="number">8</span>, list.size)</span><br><span class="line">        <span class="keyword">val</span> subList = list.subList(i * <span class="number">8</span>, min).toList() <span class="keyword">as</span> ArrayList&lt;MyObject&gt;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 其他代码...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样一个方法，需要将列表的数据，根据 8 个一组进行划分。subList 生成的一个 List 不是我们平常使用的 List，所以后面加上了 kotlin 自带的 toList() 方法，来转化成真正的 List。<br>这段代码在大多数情况下都没有什么问题，但是当 list 的长度为 9、17、25等等时就会崩溃。所报异常为：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java<span class="selector-class">.util</span>.Collections<span class="variable">$SingletonList</span> cannot be cast to java<span class="selector-class">.util</span>.ArrayList</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/07/11/kotlin-question/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-git-quesition" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/06/22/git-quesition/">Git data stream error</a>
-    </h1>
-  
-
-        
-        <a href="/2018/06/22/git-quesition/" class="archive-article-date">
-  	<time datetime="2018-06-22T04:38:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天使用 Git 碰到个问题，在此小记一下。<br>场景：<code>git stash</code>当前工作区，然后<code>git pull --rebase</code>:<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/1.png"></p>
-<p>然后执行<code>git stash pop</code>时报错。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/2.png"></p>
-<p>执行<code>git status</code>也报错：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/6/22/3.png"></p>
-        
-          <a class="article-more-a" href="/2018/06/22/git-quesition/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开发工具</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/12/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/10/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -869,11 +868,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">

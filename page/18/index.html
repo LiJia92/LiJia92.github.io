@@ -154,6 +154,192 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-touchevent" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/05/touchevent/">Android开发事件分发小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/05/touchevent/" class="archive-article-date">
+  	<time datetime="2016-08-05T07:39:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目开发中，碰到这样一个情形：在点击页面空白处时会弹出状态栏，效果就如我<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/08/04/statusbar/">上一篇博客</a>一样。<br>那么何为空白处呢？<br>我的理解是：若是你这个点击事件没有其他View消费，那么便算是点击空白处了。<br>大致画一下页面布局：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/touchevent1.png"><br>那么在点击图中画框的其他地方，应该都能算上是空白处了，也就是在点击这些地方的时候，需要执行状态栏弹出的操作。</p>
+        
+          <a class="article-more-a" href="/2016/08/05/touchevent/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-statusbar" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/04/statusbar/">Android状态栏小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/08/04/statusbar/" class="archive-article-date">
+  	<time datetime="2016-08-04T06:29:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-08-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近做了一个需求：在全屏看视频的时候，点击空白处，显示状态栏。距离最后一次点击5秒后，自动收起状态栏。<br>最后做出的效果如下图：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/08/statusbar1.gif"></p>
+        
+          <a class="article-more-a" href="/2016/08/04/statusbar/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-textview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/26/textview/">TextView使用小记</a>
+    </h1>
+  
+
+        
+        <a href="/2016/07/26/textview/" class="archive-article-date">
+  	<time datetime="2016-07-26T02:46:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-07-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>相信TextView是Android最常见的控件了，在日常使用中也有一些“心得”，这里记录一下。</p>
+<h2 id="格式化"><a href="#格式化" class="headerlink" title="格式化"></a>格式化</h2><p>有些时候需要在一个TextView上显示不同字体格式的内容，比如说一段黑色，一段灰色的内容，又或者字体一大一小的内容，要实现这样的效果有2种方式：</p>
+<ol>
+<li>使用SpannableString<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SpannableString</span> <span class="variable">spanString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SpannableString</span>(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line"><span class="type">ForegroundColorSpan</span> <span class="variable">span</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ForegroundColorSpan</span>(getResources().getColor(R.color.black));</span><br><span class="line">spanString.setSpan(span, <span class="number">0</span>, <span class="number">5</span>, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</span><br></pre></td></tr></table></figure></li>
+<li>使用Html format<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> text = <span class="string">&quot;&lt;font color=&#x27;black&#x27;&gt;Hello:&lt;/font&gt;&quot;</span> + <span class="string">&quot;world!&quot;</span>;</span><br><span class="line">content.<span class="built_in">setText</span>(Html.<span class="built_in">fromHtml</span>(text), TextView.BufferType.SPANNABLE);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>两种方式都是可以的，但是第2种方式会导致TextView设置<code>maxLines=&quot;3&quot;、ellipsize=&quot;end&quot;</code>的情况下，文本超过3行的时候不显示<code>...</code>提示符了。所以在有<code>...</code>的需求的时候建议还是使用第一种。</p>
+        
+          <a class="article-more-a" href="/2016/07/26/textview/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-blur" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -585,196 +771,9 @@
 
 
   
-    <article id="post-alipay" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/18/alipay/">Android接入支付宝移动支付</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/18/alipay/" class="archive-article-date">
-  	<time datetime="2016-05-18T07:01:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>项目组支付宝商户审核通过，要准备接入支付宝移动支付的能力，本文主要讲述一下android接入支付宝移动支付SDK的步骤。</p>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://b.alipay.com/newIndex.htm">支付宝商户网站</a>注册支付宝商户账号。</li>
-<li>签约<code>移动支付</code>产品，等到审核通过。</li>
-<li>秘钥的生成与上传。<br>注册和签约没什么好说的，由公司相关部门或人员进行操作就好了。这里重点讲一下密钥。</li>
-</ol>
-        
-          <a class="article-more-a" href="/2016/05/18/alipay/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-dashboard" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/16/dashboard/">Android自定义View实现仪表盘效果</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/16/dashboard/" class="archive-article-date">
-  	<time datetime="2016-05-16T06:41:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于<a target="_blank" rel="noopener" href="http://www.maimairen.com/">买卖人</a>这个应用，3个室友有2个做安卓，而且都在<code>买卖人</code>，所以我也跟着实现了一波。<br>效果如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif"></p>
-        
-          <a class="article-more-a" href="/2016/05/16/dashboard/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-custom-attr" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/10/custom-attr/">Android自定义属性</a>
-    </h1>
-  
-
-        
-        <a href="/2016/05/10/custom-attr/" class="archive-article-date">
-  	<time datetime="2016-05-10T07:42:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-05-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目中对于图片的长宽比有很严格的需求，如果比例不一致，那么在App上显示会影响体验，于是要求长宽比一致。但是比例并不是固定的，有的图需要1:1比例，有的图需要14:9比例，有的图又需要9:16的比例。</p>
-<p>起初我的想法是，自定义View在onMeasure里利用比例，将计算后的宽高设置给View就好了。但是这么一想，比例不一致啊。现在需要3种比例，我要自定义3个View，那如果后面有其他的一些比例呢？我不是又得写啦~</p>
-<p>抱着偷懒的态度，我设想用自定义属性来解决这个问题，自己设置比例，这样只用自定义一个View，然后根据传入的比例再行计算即可。</p>
-        
-          <a class="article-more-a" href="/2016/05/10/custom-attr/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 基础</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/17/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/19/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/17/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/19/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -877,11 +876,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">

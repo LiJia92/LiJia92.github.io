@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://lijia92.github.io">
+  <title>Android 17 应用升级适配说明文档 | 听雪楼</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="适用对象：计划将应用升级 &#x2F; 适配到 Android 17（API 37）的 Android 开发团队文档目标：明确 所有应用 与 以 Android 17 为目标平台（targetSdk &#x3D; 37）的应用 各自需要完成的适配项。每个适配点按「背景 &#x2F; 适用范围 &#x2F; 变更内容 &#x2F; 适配步骤」展开，说明为什么要改以及具体怎么改。   0. 文档导读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 17 应用升级适配说明文档">
+<meta property="og:url" content="http://lijia92.github.io/2026/07/29/Android17/index.html">
+<meta property="og:site_name" content="听雪楼">
+<meta property="og:description" content="适用对象：计划将应用升级 &#x2F; 适配到 Android 17（API 37）的 Android 开发团队文档目标：明确 所有应用 与 以 Android 17 为目标平台（targetSdk &#x3D; 37）的应用 各自需要完成的适配项。每个适配点按「背景 &#x2F; 适用范围 &#x2F; 变更内容 &#x2F; 适配步骤」展开，说明为什么要改以及具体怎么改。   0. 文档导读">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-07-29T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-29T13:43:23.947Z">
+<meta property="article:author" content="最后的温存">
+<meta property="article:tag" content="Android 进阶">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="听雪楼" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" type="text/css" href="/./main.2d7529.css">
+  <style type="text/css">
+  
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+<div class="overlay" style="background: #4d4d4d"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/avatar.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+		  <h1 class="header-author"><a href="/"></a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/archives">存档</a></li>
+	        
+				<li><a href="/something">干货</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+    		
+    			
+    			<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+            
+    			
+    			<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author"></h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/LiJia92" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="weibo" target="_blank" href="http://weibo.com/u/2950244271" title="weibo"><i class="icon-weibo"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/li-jia-38-30" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/archives">存档</a></li>
+		        
+					<li style="width: 33.333333333333336%"><a href="/something">干货</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-Android17" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 17 应用升级适配说明文档
+    </h1>
+  
+
+        
+        <a href="/2026/07/29/Android17/" class="archive-article-date">
+  	<time datetime="2026-07-29T10:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>适用对象：计划将应用升级 &#x2F; 适配到 Android 17（API 37）的 Android 开发团队<br>文档目标：明确 <strong>所有应用</strong> 与 <strong>以 Android 17 为目标平台（targetSdk &#x3D; 37）的应用</strong> 各自需要完成的适配项。每个适配点按「背景 &#x2F; 适用范围 &#x2F; 变更内容 &#x2F; 适配步骤」展开，说明<strong>为什么要改</strong>以及<strong>具体怎么改</strong>。</p>
+</blockquote>
+<hr>
+<h2><span id="0-文档导读">0. 文档导读</span></h2><p>Android 17 的适配变更可分为两类，团队需按自身升级目标分别处理：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>触发条件</th>
+<th>关键动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>全局行为变更</strong></td>
+<td>在 Android 17 设备上<strong>运行</strong>（不论 targetSdk 是多少）</td>
+<td>明文流量弃用预告、隐式 URI 授权限制、Keystore 上限、后台音频强化、Parcel 校验、配置变更不重启等</td>
+</tr>
+<tr>
+<td><strong>目标平台行为变更</strong></td>
+<td><strong>targetSdk 升级到 37（Android 17）</strong> 时生效</td>
+<td>MessageQueue 无锁实现、static final 不可改、本地网络权限、BAL 强化、CT 透明度、可写原生库限制等</td>
+</tr>
+</tbody></table>
+<p><strong>建议升级路径</strong>：先确保应用能在 Android 17 设备上正常安装运行（全局变更），再将 <code>compileSdkVersion</code> &#x2F; <code>targetSdkVersion</code> 提升到 <strong>37</strong> 并验证目标平台变更。可利用系统提供的兼容性切换开关（通过 adb 管理）分阶段验证。</p>
+<blockquote>
+<p>注：部分全局变更当前由 Aconfig Flag 控制、或属于「弃用预告 &#x2F; 限制预告」，在 Android 17 中可能尚未完全强制生效，但建议<strong>现在即着手迁移</strong>，避免 Android 18 正式生效时被动改动。</p>
+</blockquote>
+<span id="more"></span>
+
+<hr>
+<h2><span id="一-影响所有应用的行为变更必做">一、影响所有应用的行为变更（必做）</span></h2><p>以下变更在 <strong>Android 17 设备上运行即生效</strong>，无论 <code>targetSdkVersion</code> 为多少。</p>
+<h3><span id="11-usescleartexttraffic-弃用预告">1.1 usesCleartextTraffic 弃用预告</span></h3><ul>
+<li><strong>背景</strong>：<code>android:usesCleartextTraffic</code> 用于控制应用是否允许明文（HTTP）流量。平台计划在未来版本（预计 Android 18）弃用该属性，届时系统将<strong>完全忽略</strong>其值，明文流量被平台网络栈<strong>默认拒绝</strong>。官方推荐改用<strong>网络安全配置文件（Network Security Config）</strong>，支持域名级精细控制。</li>
+<li><strong>适用范围</strong>：<ul>
+<li>正式生效版本：预计 Android 18（以官方文档为准）</li>
+<li>受影响应用：依赖 <code>usesCleartextTraffic=&quot;true&quot;</code> 允许 HTTP、且未配置 Network Security Config 的应用</li>
+<li>暂不受影响：<code>targetSdk &lt;= 37</code> 的应用、已使用 Network Security Config 的应用</li>
+</ul>
+</li>
+<li><strong>变更内容</strong>：Android 17 中 <code>R.attr.usesCleartextTraffic</code> 已标注 <code>@Deprecated @FlaggedApi</code>，并新增 CompatChange <code>DEPRECATE_USES_CLEARTEXT_TRAFFIC</code>（当前 <code>@Disabled</code>）；两者同时启用时才强制忽略该属性。建议现在迁移，避免 Android 18 被动修改。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>检查是否受影响</strong>：在 <code>AndroidManifest.xml</code> 中搜索 <code>android:usesCleartextTraffic=&quot;true&quot;</code>，若存在且未配置 <code>android:networkSecurityConfig</code>，则需要迁移。</li>
+<li><strong>按 <code>minSdkVersion</code> 选择迁移方案</strong>：<ul>
+<li>**情况一：<code>minSdkVersion &lt; 24</code>**（需兼容 Android 7 以下），同时保留两者：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- AndroidManifest.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:usesCleartextTraffic</span>=<span class="string">&quot;true&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span> &gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- res/xml/network_security_config.xml --&gt;</span></span><br><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domain-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">&quot;true&quot;</span>&gt;</span>api.example.com<span class="tag">&lt;/<span class="name">domain</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">domain-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>**情况二：<code>minSdkVersion &gt;= 24</code>**，直接使用 Network Security Config，去掉 <code>usesCleartextTraffic</code>：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:networkSecurityConfig</span>=<span class="string">&quot;@xml/network_security_config&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">...</span> &gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- res/xml/network_security_config.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">network-security-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">domain-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">domain</span> <span class="attr">includeSubdomains</span>=<span class="string">&quot;true&quot;</span>&gt;</span>api.example.com<span class="tag">&lt;/<span class="name">domain</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">domain-config</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">base-config</span> <span class="attr">cleartextTrafficPermitted</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">network-security-config</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>验证</strong>：在低版本（&lt; 24）设备上确认「同时保留」方案生效；在高版本上确认明文仅对声明域名放行。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="12-限制隐式-uri-授权">1.2 限制隐式 URI 授权</span></h3><ul>
+<li><strong>背景</strong>：系统此前对 <code>ACTION_SEND</code>、<code>ACTION_SEND_MULTIPLE</code>、<code>ACTION_IMAGE_CAPTURE</code> 等含 URI 的 Intent <strong>自动授予</strong>读写权限（隐式 URI 授权），存在越权隐患。Android 17 引入限制框架与 StrictMode 检测，<strong>Android 18（API 38）将正式废止</strong>隐式授权。</li>
+<li><strong>适用范围</strong>：<ul>
+<li>平台版本：Android 17（API 37）</li>
+<li>StrictMode 自动检测：<code>targetSdk &gt; 36</code></li>
+<li>限制本身：所有应用（由 Aconfig 标志控制）</li>
+<li>当前状态：限制标志默认关闭，隐式授权仍发生；Android 18 预计正式废止</li>
+</ul>
+</li>
+<li><strong>变更内容</strong>：在 <code>Intent.migrateExtraStreamToClipData()</code> 中对三类 Action 添加条件分支；StrictMode 新增 CompatChange <code>DETECT_IMPLICIT_URI_PERMISSION_GRANT</code>（ID: 460838111），对 <code>targetSdk &gt; 36</code> 自动启用。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>发送方显式添加授权标志</strong>（所有分享 &#x2F; 拍照场景）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ACTION_SEND 修复</span></span><br><span class="line"><span class="type">Intent</span> <span class="variable">shareIntent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(Intent.ACTION_SEND);</span><br><span class="line">shareIntent.setType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);</span><br><span class="line">shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);</span><br><span class="line">startActivity(Intent.createChooser(shareIntent, <span class="string">&quot;分享&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// ACTION_IMAGE_CAPTURE 修复</span></span><br><span class="line"><span class="type">Intent</span> <span class="variable">cameraIntent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(MediaStore.ACTION_IMAGE_CAPTURE);</span><br><span class="line">cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);</span><br><span class="line">cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION</span><br><span class="line">        | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);</span><br><span class="line">startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);</span><br></pre></td></tr></table></figure></li>
+<li><strong>开发期开启 StrictMode 检测</strong>（<code>targetSdk &gt; 36</code> 自动启用，建议显式打开便于发现）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (BuildConfig.DEBUG) &#123;</span><br><span class="line">    StrictMode.setVmPolicy(<span class="keyword">new</span> <span class="title class_">StrictMode</span>.VmPolicy.Builder()</span><br><span class="line">            .detectImplicitUriPermissionGrant()</span><br><span class="line">            .penaltyLog()</span><br><span class="line">            .build());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>接收方适配</strong>：若接收方依赖隐式授权读取 URI，需改为在自身 <code>ContentProvider</code> 中校验调用方，或要求发送方显式授权。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="13-keystore-密钥数量限制">1.3 Keystore 密钥数量限制</span></h3><ul>
+<li><p><strong>背景</strong>：Android 17 在 keystore2 守护进程中引入<strong>按 UID 的密钥数量上限</strong>，防止单个应用无限制创建密钥耗尽系统资源。</p>
+</li>
+<li><p><strong>适用范围</strong>：</p>
+<ul>
+<li>平台版本：Android 17（API 37）</li>
+<li>当前状态：已生效</li>
+<li><code>targetSdk &gt;= 37</code> 的非系统应用上限更低（50,000）且获得专属错误码</li>
+</ul>
+</li>
+<li><p><strong>变更内容</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>应用类型</th>
+<th>targetSdk</th>
+<th>上限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非系统应用</td>
+<td>&gt;&#x3D; 37</td>
+<td>50,000 个</td>
+</tr>
+<tr>
+<td>非系统应用</td>
+<td>&lt; 37</td>
+<td>200,000 个</td>
+</tr>
+<tr>
+<td>系统应用</td>
+<td>任意</td>
+<td>200,000 个</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>适配步骤</strong>：</p>
+<ol>
+<li><strong>识别密钥膨胀点</strong>：检查是否每次操作都创建独立密钥（如每次会话生成新密钥），改为复用或带有效期。</li>
+<li><strong>设置有效期并定期清理</strong>：为密钥设置 <code>setKeyValidityEnd</code> 等有效期，并在过期后主动删除无用密钥（<code>KeyStore.deleteEntry</code>）。</li>
+<li><strong>捕获超限异常</strong>：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">KeyGenerator</span> <span class="variable">keyGen</span> <span class="operator">=</span> KeyGenerator.getInstance(<span class="string">&quot;AES&quot;</span>, <span class="string">&quot;AndroidKeyStore&quot;</span>);</span><br><span class="line">    keyGen.init(spec);</span><br><span class="line">    <span class="type">SecretKey</span> <span class="variable">key</span> <span class="operator">=</span> keyGen.generateKey();</span><br><span class="line">&#125; <span class="keyword">catch</span> (ProviderException e) &#123;</span><br><span class="line">    <span class="type">Throwable</span> <span class="variable">cause</span> <span class="operator">=</span> e.getCause();</span><br><span class="line">    <span class="keyword">if</span> (cause <span class="keyword">instanceof</span> KeyStoreException) &#123;</span><br><span class="line">        <span class="type">KeyStoreException</span> <span class="variable">kse</span> <span class="operator">=</span> (KeyStoreException) cause;</span><br><span class="line">        <span class="keyword">if</span> (kse.getNumericErrorCode() == KeyStoreException.ERROR_TOO_MANY_KEYS</span><br><span class="line">                || kse.getNumericErrorCode() == KeyStoreException.ERROR_INCORRECT_USAGE) &#123;</span><br><span class="line">            cleanupUnusedKeys(); <span class="comment">// 清理后重试</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>升级前评估</strong>：计划将 <code>targetSdk</code> 升到 37 前，确认现网密钥数不超过 50,000。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="14-旋转后恢复-ime-可见性">1.4 旋转后恢复 IME 可见性</span></h3><ul>
+<li><strong>背景</strong>：Android 17 改变旋转后 IME（输入法）恢复逻辑：不再依据旧状态 <code>mLastImeShown</code> 自动恢复，改为读取新窗口的 <code>requestedVisibleTypes</code>（默认不含 IME）。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37），由 Aconfig Flag <code>disable_ime_restore_on_activity_create</code> 控制。</li>
+<li><strong>变更内容</strong>：Flag 关闭（旧行为）自动恢复；Flag 开启（新行为）后，<strong>旋转后 IME 不再自动出现</strong>，需应用显式请求。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>声明窗口属性</strong>（让 Activity 创建即显示输入法）：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyActivity&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:windowSoftInputMode</span>=<span class="string">&quot;stateAlwaysVisible|adjustResize&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>代码中显式请求</strong>（适用于动态场景）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    editText.post(() -&gt; &#123;</span><br><span class="line">        editText.requestFocus();</span><br><span class="line">        <span class="type">InputMethodManager</span> <span class="variable">imm</span> <span class="operator">=</span> getSystemService(InputMethodManager.class);</span><br><span class="line">        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>自行处理旋转配置</strong>（若不想重启 Activity）：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyActivity&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:configChanges</span>=<span class="string">&quot;orientation|screenSize|screenLayout|keyboardHidden&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+并在 <code>onConfigurationChanged</code> 中重新请求 IME。</li>
+<li><strong>回归</strong>：测试「输入中旋转屏幕」「旋转后重新进入页面」两类场景，确认输入法行为与预期一致。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="15-触控板指针捕获默认传递相对事件">1.5 触控板指针捕获默认传递相对事件</span></h3><ul>
+<li><strong>背景</strong>：Android 17 将触控板在指针捕获期间的默认行为从 <code>ABSOLUTE</code> 改为 <code>RELATIVE</code>，通过两个 Aconfig Flag 控制，不受 <code>targetSdkVersion</code> 影响。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37）；双 Flag：<code>pointer_capture_modes</code> + <code>relative_capture_mode_by_default</code>。</li>
+<li><strong>变更内容</strong>：新增常量 <code>POINTER_CAPTURE_MODE_UNCAPTURED(0)</code> &#x2F; <code>ABSOLUTE(1)</code> &#x2F; <code>RELATIVE(2)</code>，以及 <code>requestPointerCapture(int mode)</code> 重载。默认进入 RELATIVE 模式。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>评估依赖</strong>：若应用依赖多触点绝对坐标（如绘图、精确指针定位），需显式指定 <code>ABSOLUTE</code>。</li>
+<li><strong>显式指定模式</strong>：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.CINNAMON_BUN</span><br><span class="line">        &amp;&amp; com.android.hardware.input.Flags.pointerCaptureModes()) &#123;</span><br><span class="line">    view.requestPointerCapture(View.POINTER_CAPTURE_MODE_ABSOLUTE);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    view.requestPointerCapture();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>测试</strong>：在触控板设备上验证指针捕获行为符合交互预期（默认 RELATIVE 下无需改动的应用应确认无回归）。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="16-后台音频操作强化background-audio-hardening">1.6 后台音频操作强化（Background Audio Hardening）</span></h3><ul>
+<li><strong>背景</strong>：Android 17 正式开启强制阻断模式，限制后台应用操作音频，防止不可见应用干扰音频输出。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37）；Flag：<code>hardening_strict</code>、<code>hardening_partial_volume</code>、<code>ro_foreground_audio_control</code>。</li>
+<li><strong>变更内容</strong>：后台调用音量 API <strong>静默失败</strong>（no-op）；后台请求焦点返回 <code>AUDIOFOCUS_REQUEST_FAILED</code>；后台 <code>AudioTrack.write()</code> 等被静默。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>识别后台音频调用</strong>：检索所有在非前台（无可见 Activity、无前台服务）时调用音频 API 的代码。</li>
+<li><strong>迁移到前台执行</strong>：<ul>
+<li>在<strong>可见 Activity</strong> 中调用音量 &#x2F; 焦点 API；</li>
+<li>或在<strong>可见时启动的非 <code>SHORT_SERVICE</code> 前台服务</strong>中执行播放 &#x2F; 录制。</li>
+</ul>
+</li>
+<li><strong>检查返回值</strong>：请求焦点后判断 <code>AUDIOFOCUS_REQUEST_FAILED</code>，做降级处理。</li>
+<li><strong>本地验证</strong>：<code>adb shell cmd audio set-enable-hardening 1</code> 开启强化，回归测试后台场景是否被静默。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="17-蓝牙绑定丢失的自主重新配对">1.7 蓝牙绑定丢失的自主重新配对</span></h3><ul>
+<li><strong>背景</strong>：Android 17 引入自主重新配对机制，<code>ACTION_KEY_MISSING</code> 升级为<strong>受保护广播</strong>，防止伪造。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37）；Flag：<code>autonomous_repairing_initiation</code> + <code>bluetooth_pairing_hardening</code>。</li>
+<li><strong>变更内容</strong>：系统静默恢复 bond key；<code>ACTION_KEY_MISSING</code> 变为受保护广播，第三方应用无法伪造 &#x2F; 单独可靠接收。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li>**不要单独依赖 <code>ACTION_KEY_MISSING</code>**：该广播现在受保护且可能不再可靠送达。</li>
+<li>**同时监听 <code>ACTION_BOND_STATE_CHANGED</code>**：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">IntentFilter</span> <span class="variable">filter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IntentFilter</span>();</span><br><span class="line">filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED);</span><br><span class="line">filter.addAction(BluetoothDevice.ACTION_KEY_MISSING);</span><br><span class="line">registerReceiver(receiver, filter);</span><br></pre></td></tr></table></figure></li>
+<li><strong>基于绑定状态决策</strong>：以 <code>ACTION_BOND_STATE_CHANGED</code> 的 <code>EXTRA_BOND_STATE</code> 为主判断连接 &#x2F; 重连，而非仅依赖 key missing 事件。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="18-已回收-parcel-对象的访问限制">1.8 已回收 Parcel 对象的访问限制</span></h3><ul>
+<li><strong>背景</strong>：Android 17 新增 <code>assertNotRecycled()</code>，检测 use-after-recycle（回收后继续访问）并直接抛 <code>BadParcelableException</code>。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37），已生效；当前仅 <code>readParcelable()</code> 路径触发。</li>
+<li><strong>变更内容</strong>：在 <code>recycle()</code> 之后继续读取 Parcel 会抛异常，暴露原有潜在 bug。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>调整读取顺序</strong>：确保所有读取在 <code>recycle()</code> <strong>之前</strong>完成：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Parcel</span> <span class="variable">parcel</span> <span class="operator">=</span> Parcel.obtain();</span><br><span class="line">parcel.setDataPosition(<span class="number">0</span>);</span><br><span class="line"><span class="type">SomeData</span> <span class="variable">data</span> <span class="operator">=</span> parcel.readParcelable(SomeData.class.getClassLoader());</span><br><span class="line"><span class="type">SomeData</span> <span class="variable">data2</span> <span class="operator">=</span> parcel.readParcelable(SomeData.class.getClassLoader());</span><br><span class="line">parcel.recycle(); <span class="comment">// 全部读取完成后再回收</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>排查复用场景</strong>：检查将同一 Parcel 在 recycle 后再次传入的自定义逻辑，改为重新 <code>obtain()</code>。</li>
+<li><strong>回归</strong>：在低版本正常、Android 17 抛异常的路径上验证修复。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="19-parcel-序列化大小校验failonparcelsizemismatch">1.9 Parcel 序列化大小校验（failOnParcelSizeMismatch）</span></h3><ul>
+<li><strong>背景</strong>：Android 17 通过 Aconfig Flag <code>fail_on_parcel_size_mismatch</code> 控制，对 <code>writeValue</code> &#x2F; <code>readValue</code> 字节数不一致的情况做严格校验。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37）；Flag 默认 <strong>ENABLED</strong>。</li>
+<li><strong>变更内容</strong>：<code>writeToParcel</code> 写入的字节数与 <code>createFromParcel</code> 读取的不一致时，直接抛 <code>BadParcelableException</code>。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>保证对称</strong>：自定义 <code>Parcelable</code> 的 <code>writeToParcel()</code> 与 <code>createFromParcel()</code> 必须严格一一对应（写入顺序、类型、数量完全一致）。</li>
+<li><strong>排查历史不对称</strong>：检查旧代码中「多写少读 &#x2F; 少写多读」的 <code>Parcelable</code> 实现，补齐对齐。</li>
+<li><strong>回归</strong>：构造边界数据（空列表、null、超大对象）验证读写一致，无 <code>BadParcelableException</code>。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="110-相关配置变更不再重启-activity">1.10 相关配置变更不再重启 Activity</span></h3><ul>
+<li><strong>背景</strong>：Android 17 引入 <code>SKIP_ACTIVITY_RECREATION_ON_CONFIG_CHANGE</code>，低优先级配置变更默认不再重启 Activity，减少无谓重建。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37），对所有应用生效。</li>
+<li><strong>变更内容</strong>：受影响配置：<code>keyboard</code>、<code>keyboardHidden</code>、<code>navigation</code>、<code>touchscreen</code>、<code>colorMode</code>、<code>UI_MODE</code>（仅离开 &#x2F; 进入 Desk 模式）。新增 <code>android:recreateOnConfigChanges</code> 属性可恢复旧行为。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li>**实现 <code>onConfigurationChanged()</code>**：对受影响的配置变化做资源 &#x2F; 布局更新，而非依赖 Activity 重建。</li>
+<li><strong>或显式恢复重建</strong>：若现有逻辑依赖重建，声明：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activity</span> <span class="attr">android:name</span>=<span class="string">&quot;.MyActivity&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:recreateOnConfigChanges</span>=<span class="string">&quot;keyboard|keyboardHidden|navigation|touchscreen|colorMode&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>回归</strong>：连接 &#x2F; 断开键盘、切换导航方式等场景下，确认 UI 与状态正确。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="111-文件操作模式严格校验">1.11 文件操作模式严格校验</span></h3><ul>
+<li><strong>背景</strong>：Android 17 改为显式枚举合法文件模式，不在白名单中的模式直接抛 <code>IllegalArgumentException</code>。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37），已无条件生效。</li>
+<li><strong>变更内容</strong>：合法模式白名单：<code>r</code>、<code>w</code>、<code>wt</code>、<code>wa</code>、<code>rw</code>、<code>rwt</code> 等组合；如 <code>&quot;rwa&quot;</code> 这类非法组合会抛异常。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>定位非法模式</strong>：全局搜索 <code>openFile</code> &#x2F; <code>ParcelFileDescriptor</code> &#x2F; <code>open</code> 等调用中的模式字符串，找出白名单外的组合（如 <code>&quot;rwa&quot;</code>）。</li>
+<li><strong>替换为合法组合</strong>：<ul>
+<li>需读写 → <code>&quot;rw&quot;</code></li>
+<li>需写并追加 → <code>&quot;wa&quot;</code></li>
+<li>需读写截断 → <code>&quot;rwt&quot;</code></li>
+</ul>
+</li>
+<li><strong>回归</strong>：覆盖所有文件打开路径，确认不再抛 <code>IllegalArgumentException</code>。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="112-线程优先级越界强制校验">1.12 线程优先级越界强制校验</span></h3><ul>
+<li><strong>背景</strong>：Android 17 改为 Java 层校验线程优先级，传入越界值直接抛 <code>IllegalArgumentException</code>。</li>
+<li><strong>适用范围</strong>：平台版本 Android 17（API 37），已生效。</li>
+<li><strong>变更内容</strong>：合法范围 **[-20, 19]**；越界值（如 &gt; 19 或 &lt; -20）直接抛异常。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>定位越界调用</strong>：搜索 <code>Process.setThreadPriority(...)</code> &#x2F; <code>Thread.setPriority(...)</code>，检查传入值来源。</li>
+<li><strong>钳制到合法范围</strong>：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">safePriority</span> <span class="operator">=</span> Math.max(-<span class="number">20</span>, Math.min(Process.THREAD_PRIORITY_LOWEST, priority));</span><br><span class="line">Process.setThreadPriority(safePriority);</span><br></pre></td></tr></table></figure></li>
+<li><strong>回归</strong>：对来自配置 &#x2F; 网络的动态优先级值做边界测试，确认不再崩溃。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2><span id="二-以-android-17-为目标平台的行为变更targetsdk-x3d-37-时生效">二、以 Android 17 为目标平台的行为变更（targetSdk &#x3D; 37 时生效）</span></h2><p>当 <code>targetSdkVersion</code> 升级到 <strong>37</strong> 后，下列变更才会生效，需重点验证。</p>
+<h3><span id="21-messagequeue-新无锁实现">2.1 MessageQueue 新无锁实现</span></h3><ul>
+<li><strong>背景</strong>：Android 17 引入 DeliQueue 无锁 MessageQueue 实现，提升消息调度性能。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>（自动激活）。</li>
+<li><strong>变更内容</strong>：新实现下 <code>MessageQueue.mMessages</code> <strong>恒为 null</strong>，原有反射该字段的逻辑失效；部分测试框架需升级。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>移除对 <code>mMessages</code> 的反射</strong>：搜索并删除通过反射读取 <code>MessageQueue.mMessages</code> 的代码。</li>
+<li><strong>升级测试框架</strong>：<ul>
+<li>Espresso 升至 <strong>3.7.0+</strong></li>
+<li>Robolectric 升至 <strong>4.17+</strong></li>
+</ul>
+</li>
+<li><strong>回归</strong>：运行 UI 测试与单元测试，确认消息调度相关逻辑正常。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="22-static-final-字段不可修改">2.2 static final 字段不可修改</span></h3><ul>
+<li><strong>背景</strong>：Android 17 的 ART 禁止运行时修改 <code>static final</code> 字段，消除对常量语义的破坏。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>。</li>
+<li><strong>变更内容</strong>：通过反射修改 <code>static final</code> 会抛异常，JNI 层修改直接崩溃。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>移除修改逻辑</strong>：删除所有通过反射（或 JNI）修改 <code>static final</code> 字段的代码（常见于某些 mock &#x2F; 缓存 hack）。</li>
+<li><strong>升级 Mockito</strong>：使用与 Android 17 兼容的 Mockito 版本（其已适配不可修改 final）。</li>
+<li><strong>避免 PowerMock</strong>：PowerMock 依赖修改 final &#x2F; 静态，建议迁移到 Mockito + <code>mockito-inline</code> 或真实测试替身。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="23-通知自定义视图大小限制">2.3 通知自定义视图大小限制</span></h3><ul>
+<li><strong>背景</strong>：Android 17 在 SystemUI 层对超限的通知自定义视图做降级，避免畸形通知占用过多空间。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 使用自定义通知视图（<code>RemoteViews</code>）的应用。</li>
+<li><strong>变更内容</strong>：自定义视图超过尺寸阈值时，SystemUI 将其降级为标准通知模板。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>图片降采样</strong>：通知内图片压缩到合理尺寸（如 ≤ 256dp 宽），避免过大。</li>
+<li><strong>使用 DecoratedCustomViewStyle</strong>：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NotificationCompat.<span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NotificationCompat</span>.Builder(context, channelId)</span><br><span class="line">    .setSmallIcon(R.drawable.ic_notify)</span><br><span class="line">    .setCustomContentView(collapsedView)</span><br><span class="line">    .setCustomBigContentView(expandedView)</span><br><span class="line">    .setStyle(<span class="keyword">new</span> <span class="title class_">NotificationCompat</span>.DecoratedCustomViewStyle());</span><br></pre></td></tr></table></figure></li>
+<li><strong>简化层级</strong>：减少自定义视图嵌套层级与高度，控制在系统阈值内。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="24-npu-直接访问需声明硬件功能">2.4 NPU 直接访问需声明硬件功能</span></h3><ul>
+<li><strong>背景</strong>：Android 17 要求显式声明 NPU（神经网络处理单元）硬件功能，未声明者直接访问被拒绝。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 且直接访问 NPU 的应用（如自研推理引擎）。</li>
+<li><strong>变更内容</strong>：未在 Manifest 声明 <code>android.hardware.npu</code> 的 NPU 直接访问被拒绝。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>声明硬件功能</strong>（设为非必须，避免过滤设备）：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-feature</span> <span class="attr">android:name</span>=<span class="string">&quot;android.hardware.npu&quot;</span> <span class="attr">android:required</span>=<span class="string">&quot;false&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>运行时检测</strong>：用 <code>PackageManager.hasSystemFeature(FEATURE_NPU)</code> 判断可用性，不可用时回退 CPU &#x2F; GPU 推理。</li>
+<li><strong>回归</strong>：在具备 &#x2F; 不具备 NPU 的设备上验证推理路径正确回退。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="25-复杂-ime-实体键盘输入的无障碍支持">2.5 复杂 IME 实体键盘输入的无障碍支持</span></h3><ul>
+<li><strong>背景</strong>：Android 17 新增文本变更类型 API，便于实体键盘输入法（如 CJK IME）向无障碍服务传递候选词等状态。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>（可选增强）。</li>
+<li><strong>变更内容</strong>：新增文本变更类型 API，IME 可上报候选词 &#x2F; 组合串状态。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>（输入法开发者）上报状态</strong>：在 IME 中调用新 API 传递候选词 &#x2F; 组合串变化。</li>
+<li><strong>（普通应用）按需接入</strong>：若应用需读取输入法候选状态做无障碍增强，注册对应监听器。</li>
+<li><strong>验证</strong>：确认屏幕阅读器能正确播报复杂输入过程（中文 &#x2F; 日文等）。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="26-机会性启用-ech加密客户端-hello">2.6 机会性启用 ECH（加密客户端 Hello）</span></h3><ul>
+<li><strong>背景</strong>：Android 17 对 <code>targetSdk &gt;= 37</code> 默认以 OPPORTUNISTIC 模式启用 ECH（Encrypted Client Hello），增强 TLS 握手隐私。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>。</li>
+<li><strong>变更内容</strong>：默认 OPPORTUNISTIC（服务器支持则启用，不支持则回退），应用通常无需修改。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>默认无需改动</strong>：确认网络请求在 ECH 启用 &#x2F; 回退下均正常工作。</li>
+<li><strong>企业网络例外</strong>：若企业网络需禁用 ECH，通过 Network Security Config 配置（按需）。</li>
+<li><strong>回归</strong>：在支持 &#x2F; 不支持 ECH 的服务器上测试 HTTPS 连通性。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="27-访问本地网络需要权限">2.7 访问本地网络需要权限</span></h3><ul>
+<li><strong>背景</strong>：Android 17 引入危险权限 <code>ACCESS_LOCAL_NETWORK</code>，访问本地网络（如局域网设备发现、本地服务调用）需显式授权。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 访问本地网络地址的应用（如 IoT 控制、局域网投屏）。</li>
+<li><strong>变更内容</strong>：未声明 &#x2F; 未授予该权限时，访问本地网络地址会被拒绝。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>声明权限</strong>：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.ACCESS_LOCAL_NETWORK&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>运行时请求</strong>：在需要访问本地网络前，向用户请求该危险权限，并解释用途。</li>
+<li><strong>优雅降级</strong>：未授予时提示用户开启，或提供云端替代方案。</li>
+<li><strong>回归</strong>：在授予 &#x2F; 拒绝两种状态下测试局域网功能。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="28-实体设备隐藏密码">2.8 实体设备隐藏密码</span></h3><ul>
+<li><strong>背景</strong>：Android 17 将 <code>TEXT_SHOW_PASSWORD_PHYSICAL</code> 默认值改为 0，实体键盘输入默认隐藏密码。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>。</li>
+<li><strong>变更内容</strong>：实体键盘输入密码时默认不打码（显示掩码），由系统统一处理。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>通常无需改动</strong>：系统自动处理密码隐藏，确认密码输入框在无 <code>textVisiblePassword</code> 时行为符合预期。</li>
+<li><strong>回归</strong>：在实体键盘设备上验证密码字段默认隐藏。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="29-短信-otp-保护">2.9 短信 OTP 保护</span></h3><ul>
+<li><strong>背景</strong>：Android 17 强化短信 OTP 保护，OTP 短信仅受信任应用可接收，防止其他应用窃取值守码。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 读取短信验证码的应用。</li>
+<li><strong>变更内容</strong>：非受信任应用无法通过 <code>RECEIVE_SMS</code> 等读取 OTP 短信。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>迁移到 SMS Retriever API</strong>（推荐，无需短信权限）：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SmsRetriever.getClient(context).startSmsRetriever();</span><br><span class="line"><span class="comment">// 注册广播监听 SMS_RETRIEVED_ACTION，从 Intent 提取 11 位以内的 OTP</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>或 SMS User Consent API</strong>（需用户确认）：用于非本应用发起的验证短信。</li>
+<li><strong>移除 <code>RECEIVE_SMS</code> 依赖</strong>：不再依赖裸短信接收读取 OTP，避免被拦截。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="210-活动安全性增强bal-强化">2.10 活动安全性增强（BAL 强化）</span></h3><ul>
+<li><strong>背景</strong>：Android 17 强化后台启动限制（Background Activity Launch），防止应用从后台弹出 Activity。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code>。</li>
+<li><strong>变更内容</strong>：旧 BAL 常量废弃；<code>IntentSender</code> 不再豁免后台启动限制；StrictMode 自动检测违规。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>替换废弃常量</strong>：将代码中引用的旧 BAL 常量替换为当前官方常量。</li>
+<li><strong>显式指定 BAL 模式</strong>：在需要后台启动时，按场景显式声明允许的 BAL 模式，而非依赖 <code>IntentSender</code> 豁免。</li>
+<li><strong>迁移到通知 &#x2F; 前台引导</strong>：后台需用户操作的场景改为发通知，由用户点击进入。</li>
+<li><strong>StrictMode 检测</strong>：开启相关 VmPolicy 检测，发现并修复违规启动。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="211-ct-证书透明度默认启用">2.11 CT 证书透明度默认启用</span></h3><ul>
+<li><strong>背景</strong>：Android 17 对 <code>targetSdk &gt;= 37</code> 默认开启证书透明度（Certificate Transparency），提升 TLS 证书可信度。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 发起 HTTPS 请求的应用。</li>
+<li><strong>变更内容</strong>：默认开启 CT 校验；所用证书未提交到 CT 日志时，连接可能被拒。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>确认证书合规</strong>：确保服务端证书已提交到公开 CT 日志（主流 CA 通常已默认提交）。</li>
+<li><strong>自签名 &#x2F; 私有 CA 场景</strong>：在 Network Security Config 中按需关闭 CT 或添加例外。</li>
+<li><strong>回归</strong>：在生产环境验证 HTTPS 连接正常，无 CT 相关证书错误。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="212-加载可写原生库抛-unsatisfiedlinkerror">2.12 加载可写原生库抛 UnsatisfiedLinkError</span></h3><ul>
+<li><strong>背景</strong>：Android 17 禁止加载<strong>可写</strong>的 <code>.so</code> 原生库，防止恶意篡改的动态库被执行。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 通过代码动态加载 <code>.so</code>（如 <code>System.load</code> 指定路径）的应用。</li>
+<li><strong>变更内容</strong>：加载可写权限的 <code>.so</code> 会抛 <code>UnsatisfiedLinkError</code>。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>加载前设为不可写</strong>：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nativeLibFile.setWritable(<span class="literal">false</span>);</span><br><span class="line">System.load(nativeLibFile.getAbsolutePath());</span><br></pre></td></tr></table></figure></li>
+<li><strong>优先使用系统加载</strong>：尽量将 <code>.so</code> 放入 <code>lib/</code> 由系统按 ABI 加载，避免手动 <code>System.load</code>。</li>
+<li><strong>回归</strong>：在 Android 17 上验证动态加载的原生库可正常加载，无 <code>UnsatisfiedLinkError</code>。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="213-大屏设备忽略屏幕方向和尺寸调整限制">2.13 大屏设备忽略屏幕方向和尺寸调整限制</span></h3><ul>
+<li><strong>背景</strong>：Android 17 对 <code>targetSdk &gt;= 37</code> 封堵方向 &#x2F; 尺寸限制的 opt-out，推动大屏全场景适配。</li>
+<li><strong>适用范围</strong>：<code>targetSdk &gt;= 37</code> 的大屏 &#x2F; 折叠屏设备。</li>
+<li><strong>变更内容</strong>：<code>PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY</code> 等 opt-out 失效，应用需支持横竖屏自由切换与多窗口。</li>
+<li><strong>适配步骤</strong>：<ol>
+<li><strong>放宽方向限制</strong>：移除固定的 <code>screenOrientation</code>，让应用支持自由旋转。</li>
+<li><strong>游戏豁免</strong>：确为游戏且需固定方向的，声明 <code>appCategory=&quot;game&quot;</code>。</li>
+<li><strong>响应式布局</strong>：用 <code>WindowSizeClass</code> &#x2F; <code>ConstraintLayout</code> 适配不同窗口尺寸。</li>
+<li><strong>回归</strong>：在大屏 &#x2F; 折叠屏的展开 &#x2F; 折叠、横竖切换下测试布局与状态保存。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2><span id="三-适配检查清单checklist">三、适配检查清单（Checklist）</span></h2><h3><span id="a-全局变更所有应用必做">A. 全局变更（所有应用，必做）</span></h3><ul>
+<li><input disabled type="checkbox"> 迁移明文流量到 Network Security Config（弃用 <code>usesCleartextTraffic</code>）</li>
+<li><input disabled type="checkbox"> 分享 &#x2F; 拍照 Intent 显式添加 <code>FLAG_GRANT_READ/WRITE_URI_PERMISSION</code></li>
+<li><input disabled type="checkbox"> Keystore 密钥设置有效期并定期清理，确认不超过 50,000（targetSdk 37）</li>
+<li><input disabled type="checkbox"> 旋转场景显式请求 IME 显示</li>
+<li><input disabled type="checkbox"> 触控板指针捕获按需求指定 <code>POINTER_CAPTURE_MODE_ABSOLUTE</code></li>
+<li><input disabled type="checkbox"> 后台音频在可见 &#x2F; 前台服务中调用并校验返回值</li>
+<li><input disabled type="checkbox"> 蓝牙同时监听 <code>ACTION_BOND_STATE_CHANGED</code> 与 <code>ACTION_KEY_MISSING</code></li>
+<li><input disabled type="checkbox"> 在 <code>recycle()</code> 前完成 Parcel 全部读取</li>
+<li><input disabled type="checkbox"> 自定义 Parcelable 的 write &#x2F; read 严格对称</li>
+<li><input disabled type="checkbox"> 实现 <code>onConfigurationChanged</code> 或声明 <code>recreateOnConfigChanges</code></li>
+<li><input disabled type="checkbox"> 文件模式使用白名单组合（移除 <code>&quot;rwa&quot;</code> 等）</li>
+<li><input disabled type="checkbox"> 线程优先级钳制到 [-20, 19]</li>
+</ul>
+<h3><span id="b-目标平台变更targetsdk-x3d-37必做">B. 目标平台变更（targetSdk &#x3D; 37，必做）</span></h3><ul>
+<li><input disabled type="checkbox"> 移除对 <code>MessageQueue.mMessages</code> 的反射；升级 Espresso 3.7.0+ &#x2F; Robolectric 4.17+</li>
+<li><input disabled type="checkbox"> 移除运行时修改 <code>static final</code> 字段；升级 Mockito，弃用 PowerMock</li>
+<li><input disabled type="checkbox"> 通知自定义视图降采样 &#x2F; 使用 <code>DecoratedCustomViewStyle</code></li>
+<li><input disabled type="checkbox"> NPU 访问声明 <code>android.hardware.npu</code></li>
+<li><input disabled type="checkbox"> 访问本地网络声明并请求 <code>ACCESS_LOCAL_NETWORK</code></li>
+<li><input disabled type="checkbox"> OTP 短信迁移到 SMS Retriever &#x2F; User Consent API</li>
+<li><input disabled type="checkbox"> 替换废弃 BAL 常量，显式指定 BAL 模式</li>
+<li><input disabled type="checkbox"> 确认证书已提交 CT 日志（或 NSC 关闭）</li>
+<li><input disabled type="checkbox"> 加载原生库前 <code>setWritable(false)</code></li>
+<li><input disabled type="checkbox"> 大屏 &#x2F; 多窗口放宽方向限制（游戏用 <code>appCategory=&quot;game&quot;</code> 豁免）</li>
+</ul>
+<h3><span id="c-测试与发布">C. 测试与发布</span></h3><ul>
+<li><input disabled type="checkbox"> 在 Android 17 真机 &#x2F; 模拟器验证</li>
+<li><input disabled type="checkbox"> 验证后台音频、Keystore 上限、Parcel 校验等边界场景</li>
+<li><input disabled type="checkbox"> 灰度发布并监控 crash &#x2F; ANR 指标</li>
+</ul>
+<hr>
+<p><em>本文档基于 Android 17 行为变更整理，部分变更为「弃用 &#x2F; 限制预告」，预计在 Android 18 正式生效。适配细节以 Android 17 正式版实际发布为准，建议在正式发布前于真机 &#x2F; 模拟器完成回归验证。</em></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://lijia92.github.io/2026/07/29/Android17/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2026/07/29/Android16/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Android 16 应用升级适配说明文档</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Android17" data-title="Android 17 应用升级适配说明文档" data-url="http://lijia92.github.io/2026/07/29/Android17/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"lastwarmth"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+  
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2026 最后的温存
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+<script>!function(t){function n(r){if(e[r])return e[r].exports;var o=e[r]={exports:{},id:r,loaded:!1};return t[r].call(o.exports,o,o.exports,n),o.loaded=!0,o.exports}var e={};return n.m=t,n.c=e,n.p="./",n(0)}([function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}function o(t,n){var e=/\/|index.html/g;return t.replace(e,"")===n.replace(e,"")}function i(){for(var t=document.querySelectorAll(".js-header-menu li a"),n=window.location.pathname,e=0,r=t.length;e<r;e++){var i=t[e];o(n,i.getAttribute("href"))&&(0,d.default)(i,"active")}}function u(t){for(var n=t.offsetLeft,e=t.offsetParent;null!==e;)n+=e.offsetLeft,e=e.offsetParent;return n}function f(t){for(var n=t.offsetTop,e=t.offsetParent;null!==e;)n+=e.offsetTop,e=e.offsetParent;return n}function c(t,n,e,r,o){var i=u(t),c=f(t)-n;if(c-e<=o){var a=t.$newDom;a||(a=t.cloneNode(!0),(0,h.default)(t,a),t.$newDom=a,a.style.position="fixed",a.style.top=(e||c)+"px",a.style.left=i+"px",a.style.zIndex=r||2,a.style.width="100%",a.style.color="#fff"),a.style.visibility="visible",t.style.visibility="hidden"}else{t.style.visibility="visible";var s=t.$newDom;s&&(s.style.visibility="hidden")}}function a(){var t=document.querySelector(".js-overlay"),n=document.querySelector(".js-header-menu");c(t,document.body.scrollTop,-63,2,0),c(n,document.body.scrollTop,1,3,0)}function s(){document.querySelector("#container").addEventListener("scroll",function(t){a()}),window.addEventListener("scroll",function(t){a()}),a()}function l(){x.default.versions.mobile&&window.screen.width<800&&(i(),s())}var p=e(71),d=r(p),v=e(72),y=(r(v),e(84)),h=r(y),b=e(69),x=r(b),m=e(75),g=r(m),w=e(70);l(),(0,w.addLoadEvent)(function(){g.default.init()}),t.exports={}},function(t,n){var e=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=e)},function(t,n){var e={}.hasOwnProperty;t.exports=function(t,n){return e.call(t,n)}},function(t,n,e){var r=e(49),o=e(15);t.exports=function(t){return r(o(t))}},function(t,n,e){t.exports=!e(8)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,n,e){var r=e(6),o=e(12);t.exports=e(4)?function(t,n,e){return r.f(t,n,o(1,e))}:function(t,n,e){return t[n]=e,t}},function(t,n,e){var r=e(10),o=e(30),i=e(24),u=Object.defineProperty;n.f=e(4)?Object.defineProperty:function(t,n,e){if(r(t),n=i(n,!0),r(e),o)try{return u(t,n,e)}catch(t){}if("get"in e||"set"in e)throw TypeError("Accessors not supported!");return"value"in e&&(t[n]=e.value),t}},function(t,n,e){var r=e(22)("wks"),o=e(13),i=e(1).Symbol,u="function"==typeof i,f=t.exports=function(t){return r[t]||(r[t]=u&&i[t]||(u?i:o)("Symbol."+t))};f.store=r},function(t,n){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,n,e){var r=e(35),o=e(16);t.exports=Object.keys||function(t){return r(t,o)}},function(t,n,e){var r=e(11);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,n){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,n){t.exports=function(t,n){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:n}}},function(t,n){var e=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++e+r).toString(36))}},function(t,n){var e=t.exports={version:"2.4.0"};"number"==typeof __e&&(__e=e)},function(t,n){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,n){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,n){t.exports={}},function(t,n){t.exports=!0},function(t,n){n.f={}.propertyIsEnumerable},function(t,n,e){var r=e(6).f,o=e(2),i=e(7)("toStringTag");t.exports=function(t,n,e){t&&!o(t=e?t:t.prototype,i)&&r(t,i,{configurable:!0,value:n})}},function(t,n,e){var r=e(22)("keys"),o=e(13);t.exports=function(t){return r[t]||(r[t]=o(t))}},function(t,n,e){var r=e(1),o="__core-js_shared__",i=r[o]||(r[o]={});t.exports=function(t){return i[t]||(i[t]={})}},function(t,n){var e=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:e)(t)}},function(t,n,e){var r=e(11);t.exports=function(t,n){if(!r(t))return t;var e,o;if(n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;if("function"==typeof(e=t.valueOf)&&!r(o=e.call(t)))return o;if(!n&&"function"==typeof(e=t.toString)&&!r(o=e.call(t)))return o;throw TypeError("Can't convert object to primitive value")}},function(t,n,e){var r=e(1),o=e(14),i=e(18),u=e(26),f=e(6).f;t.exports=function(t){var n=o.Symbol||(o.Symbol=i?{}:r.Symbol||{});"_"==t.charAt(0)||t in n||f(n,t,{value:u.f(t)})}},function(t,n,e){n.f=e(7)},function(t,n,e){var r=e(1),o=e(14),i=e(46),u=e(5),f="prototype",c=function(t,n,e){var a,s,l,p=t&c.F,d=t&c.G,v=t&c.S,y=t&c.P,h=t&c.B,b=t&c.W,x=d?o:o[n]||(o[n]={}),m=x[f],g=d?r:v?r[n]:(r[n]||{})[f];d&&(e=n);for(a in e)s=!p&&g&&void 0!==g[a],s&&a in x||(l=s?g[a]:e[a],x[a]=d&&"function"!=typeof g[a]?e[a]:h&&s?i(l,r):b&&g[a]==l?function(t){var n=function(n,e,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(n);case 2:return new t(n,e)}return new t(n,e,r)}return t.apply(this,arguments)};return n[f]=t[f],n}(l):y&&"function"==typeof l?i(Function.call,l):l,y&&((x.virtual||(x.virtual={}))[a]=l,t&c.R&&m&&!m[a]&&u(m,a,l)))};c.F=1,c.G=2,c.S=4,c.P=8,c.B=16,c.W=32,c.U=64,c.R=128,t.exports=c},function(t,n){var e={}.toString;t.exports=function(t){return e.call(t).slice(8,-1)}},function(t,n,e){var r=e(11),o=e(1).document,i=r(o)&&r(o.createElement);t.exports=function(t){return i?o.createElement(t):{}}},function(t,n,e){t.exports=!e(4)&&!e(8)(function(){return 7!=Object.defineProperty(e(29)("div"),"a",{get:function(){return 7}}).a})},function(t,n,e){"use strict";var r=e(18),o=e(27),i=e(36),u=e(5),f=e(2),c=e(17),a=e(51),s=e(20),l=e(58),p=e(7)("iterator"),d=!([].keys&&"next"in[].keys()),v="@@iterator",y="keys",h="values",b=function(){return this};t.exports=function(t,n,e,x,m,g,w){a(e,n,x);var O,S,_,j=function(t){if(!d&&t in A)return A[t];switch(t){case y:return function(){return new e(this,t)};case h:return function(){return new e(this,t)}}return function(){return new e(this,t)}},P=n+" Iterator",E=m==h,M=!1,A=t.prototype,T=A[p]||A[v]||m&&A[m],L=T||j(m),N=m?E?j("entries"):L:void 0,C="Array"==n?A.entries||T:T;if(C&&(_=l(C.call(new t)),_!==Object.prototype&&(s(_,P,!0),r||f(_,p)||u(_,p,b))),E&&T&&T.name!==h&&(M=!0,L=function(){return T.call(this)}),r&&!w||!d&&!M&&A[p]||u(A,p,L),c[n]=L,c[P]=b,m)if(O={values:E?L:j(h),keys:g?L:j(y),entries:N},w)for(S in O)S in A||i(A,S,O[S]);else o(o.P+o.F*(d||M),n,O);return O}},function(t,n,e){var r=e(10),o=e(55),i=e(16),u=e(21)("IE_PROTO"),f=function(){},c="prototype",a=function(){var t,n=e(29)("iframe"),r=i.length,o="<",u=">";for(n.style.display="none",e(48).appendChild(n),n.src="javascript:",t=n.contentWindow.document,t.open(),t.write(o+"script"+u+"document.F=Object"+o+"/script"+u),t.close(),a=t.F;r--;)delete a[c][i[r]];return a()};t.exports=Object.create||function(t,n){var e;return null!==t?(f[c]=r(t),e=new f,f[c]=null,e[u]=t):e=a(),void 0===n?e:o(e,n)}},function(t,n,e){var r=e(35),o=e(16).concat("length","prototype");n.f=Object.getOwnPropertyNames||function(t){return r(t,o)}},function(t,n){n.f=Object.getOwnPropertySymbols},function(t,n,e){var r=e(2),o=e(3),i=e(45)(!1),u=e(21)("IE_PROTO");t.exports=function(t,n){var e,f=o(t),c=0,a=[];for(e in f)e!=u&&r(f,e)&&a.push(e);for(;n.length>c;)r(f,e=n[c++])&&(~i(a,e)||a.push(e));return a}},function(t,n,e){t.exports=e(5)},function(t,n,e){var r=e(15);t.exports=function(t){return Object(r(t))}},function(t,n,e){t.exports={default:e(41),__esModule:!0}},function(t,n,e){t.exports={default:e(42),__esModule:!0}},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}n.__esModule=!0;var o=e(39),i=r(o),u=e(38),f=r(u),c="function"==typeof f.default&&"symbol"==typeof i.default?function(t){return typeof t}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":typeof t};n.default="function"==typeof f.default&&"symbol"===c(i.default)?function(t){return"undefined"==typeof t?"undefined":c(t)}:function(t){return t&&"function"==typeof f.default&&t.constructor===f.default&&t!==f.default.prototype?"symbol":"undefined"==typeof t?"undefined":c(t)}},function(t,n,e){e(65),e(63),e(66),e(67),t.exports=e(14).Symbol},function(t,n,e){e(64),e(68),t.exports=e(26).f("iterator")},function(t,n){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,n){t.exports=function(){}},function(t,n,e){var r=e(3),o=e(61),i=e(60);t.exports=function(t){return function(n,e,u){var f,c=r(n),a=o(c.length),s=i(u,a);if(t&&e!=e){for(;a>s;)if(f=c[s++],f!=f)return!0}else for(;a>s;s++)if((t||s in c)&&c[s]===e)return t||s||0;return!t&&-1}}},function(t,n,e){var r=e(43);t.exports=function(t,n,e){if(r(t),void 0===n)return t;switch(e){case 1:return function(e){return t.call(n,e)};case 2:return function(e,r){return t.call(n,e,r)};case 3:return function(e,r,o){return t.call(n,e,r,o)}}return function(){return t.apply(n,arguments)}}},function(t,n,e){var r=e(9),o=e(34),i=e(19);t.exports=function(t){var n=r(t),e=o.f;if(e)for(var u,f=e(t),c=i.f,a=0;f.length>a;)c.call(t,u=f[a++])&&n.push(u);return n}},function(t,n,e){t.exports=e(1).document&&document.documentElement},function(t,n,e){var r=e(28);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,n,e){var r=e(28);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,n,e){"use strict";var r=e(32),o=e(12),i=e(20),u={};e(5)(u,e(7)("iterator"),function(){return this}),t.exports=function(t,n,e){t.prototype=r(u,{next:o(1,e)}),i(t,n+" Iterator")}},function(t,n){t.exports=function(t,n){return{value:n,done:!!t}}},function(t,n,e){var r=e(9),o=e(3);t.exports=function(t,n){for(var e,i=o(t),u=r(i),f=u.length,c=0;f>c;)if(i[e=u[c++]]===n)return e}},function(t,n,e){var r=e(13)("meta"),o=e(11),i=e(2),u=e(6).f,f=0,c=Object.isExtensible||function(){return!0},a=!e(8)(function(){return c(Object.preventExtensions({}))}),s=function(t){u(t,r,{value:{i:"O"+ ++f,w:{}}})},l=function(t,n){if(!o(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!i(t,r)){if(!c(t))return"F";if(!n)return"E";s(t)}return t[r].i},p=function(t,n){if(!i(t,r)){if(!c(t))return!0;if(!n)return!1;s(t)}return t[r].w},d=function(t){return a&&v.NEED&&c(t)&&!i(t,r)&&s(t),t},v=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,n,e){var r=e(6),o=e(10),i=e(9);t.exports=e(4)?Object.defineProperties:function(t,n){o(t);for(var e,u=i(n),f=u.length,c=0;f>c;)r.f(t,e=u[c++],n[e]);return t}},function(t,n,e){var r=e(19),o=e(12),i=e(3),u=e(24),f=e(2),c=e(30),a=Object.getOwnPropertyDescriptor;n.f=e(4)?a:function(t,n){if(t=i(t),n=u(n,!0),c)try{return a(t,n)}catch(t){}if(f(t,n))return o(!r.f.call(t,n),t[n])}},function(t,n,e){var r=e(3),o=e(33).f,i={}.toString,u="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],f=function(t){try{return o(t)}catch(t){return u.slice()}};t.exports.f=function(t){return u&&"[object Window]"==i.call(t)?f(t):o(r(t))}},function(t,n,e){var r=e(2),o=e(37),i=e(21)("IE_PROTO"),u=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=o(t),r(t,i)?t[i]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?u:null}},function(t,n,e){var r=e(23),o=e(15);t.exports=function(t){return function(n,e){var i,u,f=String(o(n)),c=r(e),a=f.length;return c<0||c>=a?t?"":void 0:(i=f.charCodeAt(c),i<55296||i>56319||c+1===a||(u=f.charCodeAt(c+1))<56320||u>57343?t?f.charAt(c):i:t?f.slice(c,c+2):(i-55296<<10)+(u-56320)+65536)}}},function(t,n,e){var r=e(23),o=Math.max,i=Math.min;t.exports=function(t,n){return t=r(t),t<0?o(t+n,0):i(t,n)}},function(t,n,e){var r=e(23),o=Math.min;t.exports=function(t){return t>0?o(r(t),9007199254740991):0}},function(t,n,e){"use strict";var r=e(44),o=e(52),i=e(17),u=e(3);t.exports=e(31)(Array,"Array",function(t,n){this._t=u(t),this._i=0,this._k=n},function(){var t=this._t,n=this._k,e=this._i++;return!t||e>=t.length?(this._t=void 0,o(1)):"keys"==n?o(0,e):"values"==n?o(0,t[e]):o(0,[e,t[e]])},"values"),i.Arguments=i.Array,r("keys"),r("values"),r("entries")},function(t,n){},function(t,n,e){"use strict";var r=e(59)(!0);e(31)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,n=this._t,e=this._i;return e>=n.length?{value:void 0,done:!0}:(t=r(n,e),this._i+=t.length,{value:t,done:!1})})},function(t,n,e){"use strict";var r=e(1),o=e(2),i=e(4),u=e(27),f=e(36),c=e(54).KEY,a=e(8),s=e(22),l=e(20),p=e(13),d=e(7),v=e(26),y=e(25),h=e(53),b=e(47),x=e(50),m=e(10),g=e(3),w=e(24),O=e(12),S=e(32),_=e(57),j=e(56),P=e(6),E=e(9),M=j.f,A=P.f,T=_.f,L=r.Symbol,N=r.JSON,C=N&&N.stringify,k="prototype",F=d("_hidden"),q=d("toPrimitive"),I={}.propertyIsEnumerable,B=s("symbol-registry"),D=s("symbols"),W=s("op-symbols"),H=Object[k],K="function"==typeof L,R=r.QObject,J=!R||!R[k]||!R[k].findChild,U=i&&a(function(){return 7!=S(A({},"a",{get:function(){return A(this,"a",{value:7}).a}})).a})?function(t,n,e){var r=M(H,n);r&&delete H[n],A(t,n,e),r&&t!==H&&A(H,n,r)}:A,G=function(t){var n=D[t]=S(L[k]);return n._k=t,n},$=K&&"symbol"==typeof L.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof L},z=function(t,n,e){return t===H&&z(W,n,e),m(t),n=w(n,!0),m(e),o(D,n)?(e.enumerable?(o(t,F)&&t[F][n]&&(t[F][n]=!1),e=S(e,{enumerable:O(0,!1)})):(o(t,F)||A(t,F,O(1,{})),t[F][n]=!0),U(t,n,e)):A(t,n,e)},Y=function(t,n){m(t);for(var e,r=b(n=g(n)),o=0,i=r.length;i>o;)z(t,e=r[o++],n[e]);return t},Q=function(t,n){return void 0===n?S(t):Y(S(t),n)},X=function(t){var n=I.call(this,t=w(t,!0));return!(this===H&&o(D,t)&&!o(W,t))&&(!(n||!o(this,t)||!o(D,t)||o(this,F)&&this[F][t])||n)},V=function(t,n){if(t=g(t),n=w(n,!0),t!==H||!o(D,n)||o(W,n)){var e=M(t,n);return!e||!o(D,n)||o(t,F)&&t[F][n]||(e.enumerable=!0),e}},Z=function(t){for(var n,e=T(g(t)),r=[],i=0;e.length>i;)o(D,n=e[i++])||n==F||n==c||r.push(n);return r},tt=function(t){for(var n,e=t===H,r=T(e?W:g(t)),i=[],u=0;r.length>u;)!o(D,n=r[u++])||e&&!o(H,n)||i.push(D[n]);return i};K||(L=function(){if(this instanceof L)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),n=function(e){this===H&&n.call(W,e),o(this,F)&&o(this[F],t)&&(this[F][t]=!1),U(this,t,O(1,e))};return i&&J&&U(H,t,{configurable:!0,set:n}),G(t)},f(L[k],"toString",function(){return this._k}),j.f=V,P.f=z,e(33).f=_.f=Z,e(19).f=X,e(34).f=tt,i&&!e(18)&&f(H,"propertyIsEnumerable",X,!0),v.f=function(t){return G(d(t))}),u(u.G+u.W+u.F*!K,{Symbol:L});for(var nt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),et=0;nt.length>et;)d(nt[et++]);for(var nt=E(d.store),et=0;nt.length>et;)y(nt[et++]);u(u.S+u.F*!K,"Symbol",{for:function(t){return o(B,t+="")?B[t]:B[t]=L(t)},keyFor:function(t){if($(t))return h(B,t);throw TypeError(t+" is not a symbol!")},useSetter:function(){J=!0},useSimple:function(){J=!1}}),u(u.S+u.F*!K,"Object",{create:Q,defineProperty:z,defineProperties:Y,getOwnPropertyDescriptor:V,getOwnPropertyNames:Z,getOwnPropertySymbols:tt}),N&&u(u.S+u.F*(!K||a(function(){var t=L();return"[null]"!=C([t])||"{}"!=C({a:t})||"{}"!=C(Object(t))})),"JSON",{stringify:function(t){if(void 0!==t&&!$(t)){for(var n,e,r=[t],o=1;arguments.length>o;)r.push(arguments[o++]);return n=r[1],"function"==typeof n&&(e=n),!e&&x(n)||(n=function(t,n){if(e&&(n=e.call(this,t,n)),!$(n))return n}),r[1]=n,C.apply(N,r)}}}),L[k][q]||e(5)(L[k],q,L[k].valueOf),l(L,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,n,e){e(25)("asyncIterator")},function(t,n,e){e(25)("observable")},function(t,n,e){e(62);for(var r=e(1),o=e(5),i=e(17),u=e(7)("toStringTag"),f=["NodeList","DOMTokenList","MediaList","StyleSheetList","CSSRuleList"],c=0;c<5;c++){var a=f[c],s=r[a],l=s&&s.prototype;l&&!l[u]&&o(l,u,a),i[a]=i.Array}},function(t,n){"use strict";var e={versions:function(){var t=window.navigator.userAgent;return{trident:t.indexOf("Trident")>-1,presto:t.indexOf("Presto")>-1,webKit:t.indexOf("AppleWebKit")>-1,gecko:t.indexOf("Gecko")>-1&&t.indexOf("KHTML")==-1,mobile:!!t.match(/AppleWebKit.*Mobile.*/),ios:!!t.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:t.indexOf("Android")>-1||t.indexOf("Linux")>-1,iPhone:t.indexOf("iPhone")>-1||t.indexOf("Mac")>-1,iPad:t.indexOf("iPad")>-1,webApp:t.indexOf("Safari")==-1,weixin:t.indexOf("MicroMessenger")==-1}}()};t.exports=e},function(t,n,e){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}var o=e(40),i=r(o),u=function(){function t(t,n,e){return n||e?String.fromCharCode(n||e):o[t]||t}function n(t){return l[t]}var e=/&quot;|&lt;|&gt;|&amp;|&nbsp;|&apos;|&#(\d+);|&#(\d+)/g,r=/['<> "&]/g,o={"&quot;":'"',"&lt;":"<","&gt;":">","&amp;":"&","&nbsp;":" "},f=/\u00a0/g,c=/<br\s*\/?>/gi,a=/\r?\n/g,s=/\s/g,l={};for(var p in o)l[o[p]]=p;return o["&apos;"]="'",l["'"]="&#39;",{encode:function(t){return t?(""+t).replace(r,n).replace(a,"<br/>").replace(s,"&nbsp;"):""},decode:function(n){return n?(""+n).replace(c,"\n").replace(e,t).replace(f," "):""},encodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},encodeBase16forJSON:function(t){if(!t)return t;t=t.replace(/[\u4E00-\u9FBF]/gi,function(t){return escape(t).replace("%u","\\u")});for(var n=[],e=0,r=t.length;r>e;e++)n.push(t.charCodeAt(e).toString(16).toUpperCase());return n.join("")},decodeBase16:function(t){if(!t)return t;t+="";for(var n=[],e=0,r=t.length;r>e;e+=2)n.push(String.fromCharCode("0x"+t.slice(e,e+2)));return n.join("")},encodeObject:function(t){if(t instanceof Array)for(var n=0,e=t.length;e>n;n++)t[n]=u.encodeObject(t[n]);else if("object"==("undefined"==typeof t?"undefined":(0,i.default)(t)))for(var r in t)t[r]=u.encodeObject(t[r]);else if("string"==typeof t)return u.encode(t);return t},loadScript:function(t){var n=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(n),n.setAttribute("src",t)},addLoadEvent:function(t){var n=window.onload;"function"!=typeof window.onload?window.onload=t:window.onload=function(){n(),t()}}}}();t.exports=u},function(t,n){function e(t,n){t.classList?t.classList.add(n):t.className+=" "+n}t.exports=e},function(t,n){function e(t,n){if(t.classList)t.classList.remove(n);else{var e=new RegExp("(^|\\b)"+n.split(" ").join("|")+"(\\b|$)","gi");t.className=t.className.replace(e," ")}}t.exports=e},,,function(t,n){"use strict";function e(){var t=document.querySelector("#page-nav");if(t&&!document.querySelector("#page-nav .extend.prev")&&(t.innerHTML='<a class="extend prev disabled" rel="prev">&laquo; Prev</a>'+t.innerHTML),t&&!document.querySelector("#page-nav .extend.next")&&(t.innerHTML=t.innerHTML+'<a class="extend next disabled" rel="next">Next &raquo;</a>'),yiliaConfig&&yiliaConfig.open_in_new){var n=document.querySelectorAll(".article-entry a:not(.article-more-a)");n.forEach(function(t){t.setAttribute("target","_blank")})}var e=document.querySelector("#js-aboutme");e&&0!==e.length&&(e.innerHTML=e.innerText)}t.exports={init:e}},,,,,,,,,function(t,n){function e(t,n){if("string"==typeof n)return t.insertAdjacentHTML("afterend",n);var e=t.nextSibling;return e?t.parentNode.insertBefore(n,e):t.parentNode.appendChild(n)}t.exports=e}])</script><script src="/./main.2d7529.js"></script><script>!function(){var e=function(e){var t=document.createElement("script");document.getElementsByTagName("body")[0].appendChild(t),t.setAttribute("src",e)};e("/slider.885efe.js")}()</script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'friends')"><a href="javascript:void(0)" q-class="active:friends">友链</a></li>
+      
+        
+      
+      <li style="width: 33.333333333333336%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 进阶</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">生活杂谈</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">日常开发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">开发工具</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">技术思路</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Flutter</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="https://jakewharton.com/blog/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Jake Wharton</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>郭神</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.yinwang.org/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>王垠</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://www.gcssloop.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>GcsSloop</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://hukai.me/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>胡凯</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://stormzhang.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>stormzhang</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://droidyue.com/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>技术小黑屋</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://blog.csdn.net/lmj623565791" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>Hongyang</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">小小程序猿一枚&lt;br&gt;&lt;br&gt;good good study&lt;br&gt;day day up!</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

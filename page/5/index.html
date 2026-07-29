@@ -154,6 +154,186 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-camera" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/04/12/camera/">Usb 摄像头绑定</a>
+    </h1>
+  
+
+        
+        <a href="/2022/04/12/camera/" class="archive-article-date">
+  	<time datetime="2022-04-12T08:44:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-04-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在之前的文章中，写了一个 CameraIntent 的类，代表用到摄像头的业务。App 允许连接多个 Usb 摄像头，然后将业务绑定到一个确定的 Usb 端口。如果这个端口插入了摄像头，则可以直接使用摄像头产生的数据进行业务处理，如果没插入摄像头，则相应的业务不做处理或中断。<br>通过 UsbManager.ACTION_USB_DEVICE_ATTACHED、UsbManager.ACTION_USB_DEVICE_DETACHED 广播可以知道 Usb 设备插入、拔出的时机。通过 intent 获取到的是一个 UsbDevice 对象。如何通过这样的一个 UsbDevice 确定物理实际的 Usb 端口呢？</p>
+        
+          <a class="article-more-a" href="/2022/04/12/camera/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-enum" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/07/enum/">关于枚举类初始化的一个“耳光”</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/07/enum/" class="archive-article-date">
+  	<time datetime="2022-03-07T06:00:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>项目中需要使用 Usb 摄像头，摄像头产生数据，然后业务方拿到数据后做自己的事情：推流、人脸登录、AI 检测等等。于是写了一个枚举类 CameraIntent 用来标识摄像头的意图。在 CameraIntent 每个枚举项初始化的时候，设置一个 key，然后根据这个 key 拿到 SharedPreferences 中绑定 UsbDevice 的名称，以此找到对应 UsbDevice 的摄像头，从而获取数据。</p>
+        
+          <a class="article-more-a" href="/2022/03/07/enum/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-ali" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/02/18/ali/">记一次阿里云推流问题排查的辛酸历史</a>
+    </h1>
+  
+
+        
+        <a href="/2022/02/18/ali/" class="archive-article-date">
+  	<time datetime="2022-02-18T07:16:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说下问题背景：App 接入摄像头，摄像头产生的每一帧数据（byte 数组），经由阿里云推流的 api 推到监控中心。<br>摄像头的管理用 HandlerThread 实现，当摄像头打开之后，拿到每一帧的数据回调出去。</p>
+        
+          <a class="article-more-a" href="/2022/02/18/ali/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-robot-anim" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -580,196 +760,9 @@
 
 
   
-    <article id="post-corutines" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/15/corutines/">Kotlin 协程小实践</a>
-    </h1>
-  
-
-        
-        <a href="/2021/10/15/corutines/" class="archive-article-date">
-  	<time datetime="2021-10-15T06:34:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV164411C7FK">Kotlin 的协程「用力瞥一眼」</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KJ41137E9">Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1JE411R7hp">到底什么是「非阻塞式」挂起？协程真的比线程更轻量级吗？</a></p>
-<p>站在凯哥的肩膀上，我大概建立了以下几个概念：</p>
-<ol>
-<li>协程就是一个线程框架，它可以很方便地进行线程切换；</li>
-<li>非阻塞式挂起，也就是协程内部切线程了，所以当前调用协程的线程不会被阻塞，它可以继续做其他的事情。假设协程内部不切线程，那么其实也是阻塞（同步）的；</li>
-<li>使用协程可以将异步代码平铺，看起来就像同步代码一样，避免线程切换的各种回调和缩进。</li>
-</ol>
-<p>所以当有切线程这样的场景时，就可以使用协程了。</p>
-        
-          <a class="article-more-a" href="/2021/10/15/corutines/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-gps-4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/14/gps-4/">科二考试系统-评判</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/14/gps-4/" class="archive-article-date">
-  	<time datetime="2021-07-14T08:10:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>继<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/07/09/gps-3/#more">上篇文章</a>，通过高精度数据可以知道当前车辆的位置，结合考试地图建立好坐标系。那么车辆在这个地图中的一切行为轨迹都将是可以计算的，可以想象成一张蜘蛛网中蜘蛛的移动。那么接下来就是要利用这些数据来做评判了：判断当前车辆是否压线，以及打灯的时长是否足够等等。</p>
-        
-          <a class="article-more-a" href="/2021/07/14/gps-4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-gps-3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/13/gps-3/">科二考试系统-矩阵</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/13/gps-3/" class="archive-article-date">
-  	<time datetime="2021-07-13T06:15:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<a target="_blank" rel="noopener" href="http://lastwarmth.win/2021/07/09/gps-2/#more">上篇文章</a>中，遗留一个问题：世界坐标系里的坐标，假设 Pos(1000,1000) 这个点即是相对原点往北 10 米，往东 10 米的一个点，而安卓原点在左上角，如何将这个点绘制在安卓屏幕上呢？<br>其实很简单：<strong>直接画</strong>。<br>假设屏幕像素为1920*1080，简单一点让地图 MapView 的宽高也是这个，那么这个点就会在屏幕 (1000,1000) 的位置被绘制出来。世界坐标系中的其他所有的点，也都可以这样直接绘制。只是这样绘制之后，某些点可能在 MapView 上看不到而已，但是所有点的相对位置都是对的。接下来就要祭出大杀器「Matrix」了。</p>
-        
-          <a class="article-more-a" href="/2021/07/13/gps-3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">技术思路</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/6/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -872,11 +865,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">

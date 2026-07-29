@@ -154,6 +154,186 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-media" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/09/media/">Android 获取手机媒体数据那些事</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/09/media/" class="archive-article-date">
+  	<time datetime="2019-05-09T11:06:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在上一篇文章 <a target="_blank" rel="noopener" href="http://lastwarmth.win/2019/04/24/jetpack/">ViewModel + LiveData 初探</a> 中的场景中，有获取手机媒体数据的操作，界面上也要展示横竖屏，展示规则很简单：宽度不小于高度则定义为横屏，否则未竖屏。在我的小米 MIX2 上，不论手机如何拍照，返回的分辨率都是 4000:3000（根据相机设置中的画幅比例），不论你是横着拍还是竖着拍。所以当拿到 4000:3000 后就全部定义成横屏了，与实际不符。所以着手解决了一下，顺便整理下获取手机媒体数据的相关代码，方便日后使用。整体代码如下：</p>
+        
+          <a class="article-more-a" href="/2019/05/09/media/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-jetpack" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/24/jetpack/">ViewModel + LiveData 初探</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/24/jetpack/" class="archive-article-date">
+  	<time datetime="2019-04-24T09:29:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Google 已经推出 Lifecycle、ViewModel、LiveData 等一系列架构组件已经很久了，但是自己一直没尝试使用，仅仅就是了解一点点，没有紧跟技术潮流持续学习，说来十分羞愧了。最近接到一个需求，界面如下：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/video.png"></p>
+        
+          <a class="article-more-a" href="/2019/04/24/jetpack/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-coordinator-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/16/coordinator-1/">CoordinatorLayout 滑动再探</a>
+    </h1>
+  
+
+        
+        <a href="/2019/04/16/coordinator-1/" class="archive-article-date">
+  	<time datetime="2019-04-16T06:11:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>嗯，还是之前的路线详情的页面，新增了需求，导致界面结构又发生变化了。<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/coordinator.png"><br>添加了一个途经点的列表，与打点列表并列，可以和横向滑动切换 Tab。<br>之前写过一篇文章<a target="_blank" rel="noopener" href="http://lastwarmth.win/2018/12/12/recyclerview-scroll/">CoordinatorLayout + RecyclerView 处理滑动</a>说的也是这个页面，这里再贴一下当前的 xml 布局：</p>
+        
+          <a class="article-more-a" href="/2019/04/16/coordinator-1/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -593,195 +773,9 @@
 
 
   
-    <article id="post-amap" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/21/amap/">Android 高德地图 SDK 使用小记</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/21/amap/" class="archive-article-date">
-  	<time datetime="2018-12-21T05:47:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近的项目是基于高德地图 SDK 来实现的，使用中有一些值得记录的 Tip，便有了这篇博客。</p>
-<h2 id="Logo"><a href="#Logo" class="headerlink" title="Logo"></a>Logo</h2><p>使用高德地图 SDK，是不能去掉「高德地图」 Logo的，只能设置它显示的位置。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapView<span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoPosition</span>(<span class="attribute">position</span>);</span><br></pre></td></tr></table></figure>
-<p>position：位置参数。屏幕左下角：AMapOptions.LOGO_POSITION_BOTTOM_LEFT；底部居中：AMapOptions.LOGO_POSITION_BOTTOM_CENTER；右下：AMapOptions.LOGO_MARGIN_RIGHT。<br>如果想要隐藏 Logo，可以使用如下代码：</p>
-<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapView<span class="selector-class">.getMap</span>()<span class="selector-class">.getUiSettings</span>()<span class="selector-class">.setLogoBottomMargin</span>(-<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
-<p>设置负值可以让 Logo 显示在屏幕之外。</p>
-        
-          <a class="article-more-a" href="/2018/12/21/amap/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">日常开发</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-recyclerview-scroll" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/recyclerview-scroll/">CoordinatorLayout + RecyclerView 处理滑动</a>
-    </h1>
-  
-
-        
-        <a href="/2018/12/12/recyclerview-scroll/" class="archive-article-date">
-  	<time datetime="2018-12-12T02:25:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>先看一下设计稿：<br><img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E6%88%AA%E5%9B%BE.png"><br>最底层是个地图，再上面有一些按钮，最上层是路线信息 UI，页面可以滑动，滑动时地图和按钮不动，自然而然想到的 RecyclerView 来实现。<br>早些时候只有 2 个按钮，使用了一种很笨拙的方式，与之前写过的一篇文章类似：<a target="_blank" rel="noopener" href="http://lastwarmth.win/2016/04/22/android-scroll/">一个关于Android滑动“因缺斯厅”的想法</a>。<br>这种方式，相当于有四层：地图-&gt;按钮-&gt;RecyclerView-&gt;与按钮相同位置的View，但是是透明的。界面布局就像这样：</p>
-        
-          <a class="article-more-a" href="/2018/12/12/recyclerview-scroll/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-media-mix" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/23/media-mix/">无声视频合成音频</a>
-    </h1>
-  
-
-        
-        <a href="/2018/11/23/media-mix/" class="archive-article-date">
-  	<time datetime="2018-11-23T02:02:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-11-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上篇文章，通过 MediaProjectionManager 结合 MediaRecorder 进行录屏并生成视频文件。新版本需求产品提了个：视频增加背景音乐，音频文件内置在 Apk 中。那么，怎么生成带音频的视频呢？<br>通过调研发现，在用 MediaPlayer 进行录屏时，可以添加音频源，但是基本是使用麦克风录音，无法指定音频文件。代码如下：</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化 MediaRecorder</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequiresApi(Build.VERSION_CODES.LOLLIPOP)</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">initRecorder</span><span class="params">()</span></span> &#123;</span><br><span class="line">    mSaveFile = File(DirUtils.getPublicMediaPath(), <span class="string">&quot;<span class="variable">$saveName</span>.tmp&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> (mSaveFile!!.exists()) &#123;</span><br><span class="line">        mSaveFile!!.delete()</span><br><span class="line">    &#125;</span><br><span class="line">    mMediaRecorder = MediaRecorder()</span><br><span class="line">    mMediaRecorder?.setVideoSource(MediaRecorder.VideoSource.SURFACE)</span><br><span class="line">    <span class="comment">// 使用麦克风录音</span></span><br><span class="line">    mMediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)</span><br><span class="line">    mMediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)</span><br><span class="line">    mMediaRecorder?.setOutputFile(mSaveFile!!.absolutePath)</span><br><span class="line">    mMediaRecorder?.setVideoSize(mVideoWidth, mVideoHeight)</span><br><span class="line">    mMediaRecorder?.setVideoEncoder(MediaRecorder.VideoEncoder.H264)</span><br><span class="line">    mMediaRecorder?.setVideoEncodingBitRate(VIDEO_BIT_RATE)</span><br><span class="line">    mMediaRecorder?.setVideoFrameRate(VIDEO_FRAME_RATE)</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        mMediaRecorder?.prepare()</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">        LogUtils.e(TAG, e.toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2018/11/23/media-mix/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Android 进阶</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/9/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/11/">Next &amp;raquo;</a>
+      <a class="extend prev" rel="prev" href="/page/9/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/11/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -884,11 +878,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
+                <a href="javascript:void(0)" class="js-tag color3">博客</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">博客</a>
+                <a href="javascript:void(0)" class="js-tag color1">Android 基础</a>
               </li>
              
               <li class="article-tag-list-item">
