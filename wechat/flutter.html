@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Flutter 入门之边改边学 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2026-05-25 · 约 8402 字</div>
+  <h1>Flutter 入门之边改边学</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前负责的 Android 项目都是原生开发，公司有基于 Flutter 开发的项目，最近分了个问题单给我来改，准备基于实际问题一边修改问题，一边学习 Flutter 相关的知识。此文便记录下学习 Flutter 的过程。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">环境准备</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">一般公司内部都会有相关的文档，如何准备相应的 Flutter 环境。Android 的话，基于 Android Studio 安卓 Flutter、Dart 插件就可以了。另外需要安装 Flutter 环境，主要就是涉及到几个指令：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">flutter doctor  // 检查 Flutter 环境、Android SDK、证书是否齐全登
+flutter clean  // 清理 Flutter 缓存文件
+flutter pub get  // 安装项目依赖
+flutter pub upgrade  // 更新项目依赖
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">pub get</code>是根据 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">pubspec.yaml</code> 下载所有第三方库的指令。pub 是 Flutter/Dart 的 “包管理器”，相当于前端的 npm、Android 的 gradle、iOS 的 CocoaPods。
+它大概长这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">name: demo
+description: A new Flutter project.
+
+# 版本号
+version: 1.0.0+1
+
+# 第三方依赖（你要加库都写这里）
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1  # 状态管理
+  dio: ^5.4.0       # 网络请求
+
+# 开发依赖
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当各类环境准备好之后，就可以直接运行项目了。项目能正常跑起来了，就可以看问题单了。
+<strong style="font-weight:bold;color:#111111;">这里需要额外注意下下安装 Flutter 的版本，要和项目依赖的 Flutter 版本一致，最好不要自己随便下个版本就用了，否则可能会导致项目编译失败。</strong></p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Couldn&#39;t resolve the package &#39;dio&#39; in &#39;package:dio/dio.dart&#39;.
+
+&gt; Task :flutter_boost:compileDebugJavaWithJavac FAILED
+
+C:\Users\a11770\AppData\Local\Pub\Cache\git\flutter_boost-88b5ac273de51019891280030a38420ba3a84ea5\android\src\main\java\com\idlefish\flutterboost\FlutterBoost.java:22: 错误: 找不到符号
+
+import io.flutter.view.FlutterMain;
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">问题单</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">问题单描述很简单：部分页面底部图标显示不全。
+截图如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/9.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">很明显，弹出的底部按钮被截断了。考虑到这个问题是在 Android 16 的手机上出现的，在我自己的测试机（Android 14）上没有这个问题，初步怀疑是 Android 16 的 Edge-to-Edge 导致的。现在需要找到这个弹窗的代码，进行排查。
+当前的 Flutter 项目不同于原生 Android 项目，它没有 Activity，没有 Fragment，没有 XML。
+首先全局搜索<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">New Device discovered</code>找到这个字符串的引用。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/10.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">搜索的时候最好勾选<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">All Places</code>，这样可以找到所有引用，否则可能会漏掉一些引用（有些引用是通过相对路径引入，Project 则搜索不到）。
+就比如拿到词条对应的 key 进行搜索：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/11.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/12.png" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">第一个图搜索之看到定义的地方，却没有调用的地方。第二个图则能搜到在 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">local_net_can_active_alert_widget.dart</code> 中调用了这个字符串，这个文件是在本地相对路径依赖的 FlutterPackages SDK（公司多个项目，都会依赖 SDK）中的。
+找到文件便可以查看对应的代码了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class _LocalNetCanActiveAlertWidget extends StatelessWidget {
+  const _LocalNetCanActiveAlertWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return _contentWidgetWrapper();
+  }
+
+  Widget _contentWidgetWrapper() {
+    return BlocSelector&lt;LocalNetSearchAlertCubit, LocalNetSearchAlertState, List&lt;LocalNetDevice&gt;&gt;(
+      selector: (state) {
+        List&lt;LocalNetDevice&gt; inactiveList = state.deviceList.where((element) =&gt; element.isActivated != true).toList();
+        List&lt;String&gt; deviceIds = LocalNetSearchAlertUtils.showedInactiveList.map((e) =&gt; e.deviceId).toList();
+
+        /// 没有显示过的可激活设备列表
+        return inactiveList.where((element) =&gt; !deviceIds.contains(element.deviceId)).toList();
+      },
+      builder: (context, deviceList) {
+        return ConnectivityDetector(
+          builder: (context, isNetworkConnected, isWifiConnected) {
+            if (isWifiConnected) {
+              return _contentWidget(context, deviceList);
+            } else {
+              return _contentWidget(context, []);
+            }
+          },
+        );
+      },
+    );
+  }
+
+  Widget _contentWidget(BuildContext context, List&lt;LocalNetDevice&gt; itemList) {
+    return Container(
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 4 / 5),
+      decoration: BoxDecoration(
+        color: itemList.isEmpty ? kThemeBgColorWhite : kThemeWarningBgColorLightDisabled,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(kThemeRadius_12), topRight: Radius.circular(kThemeRadius_12)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _headWidget(context),
+          Flexible(child: _innerContentWidget(context, itemList)),
+          _toolsWidget(context, itemList),
+        ],
+      ),
+    );
+  }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">dart</code>语言虽说没怎么系统学习过，但也写过这么久的代码了，稍加看一下也能看出来这个页面的内容，是顶部一个 _headWidget，中间一个 _innerContentWidget，底部一个 _toolsWidget。中间的 _innerContentWidget 是 Flexible 的 child，所以它可以自动调整高度，以适应内容。
+那么为何这样的一个界面，底部按钮会被截断？以及要如何修改呢？
+现在有了 AI，即使很多东西不懂，但也可以很快找到答案。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">Android 16 Edge-to-Edge 模式导致弹窗高度计算异常，可以使用 SafeArea 来解决。</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">修改成这样就好了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">  Widget _contentWidget(BuildContext context, List&lt;LocalNetDevice&gt; itemList) {
+    return Container(
+        constraints: BoxConstraints(maxHeight: MediaQuery
+            .of(context)
+            .size
+            .height * 4 / 5),
+        decoration: BoxDecoration(
+          color: itemList.isEmpty ? kThemeBgColorWhite : kThemeWarningBgColorLightDisabled,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(kThemeRadius_12), topRight: Radius.circular(kThemeRadius_12)),
+        ),
+        child: SafeArea(
+            top: false,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _headWidget(context),
+                Flexible(child: _innerContentWidget(context, itemList)),
+                _toolsWidget(context, itemList),
+              ],
+            )
+        )
+    );
+  }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">修改是把 child 使用 SafeArea 包裹起来， top 为 false，可以看下 SafeArea 的内容：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">const SafeArea({
+  super.key,
+  this.left = true,
+  this.top = true,
+  this.right = true,
+  this.bottom = true,
+  this.minimum = EdgeInsets.zero,
+  this.maintainBottomViewPadding = false,
+  required this.child,
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">它可以支持四个方向的 padding，以及是否维护底部视图的 padding。默认是 true，所以会维护视图四个方向的 padding。问题中的这个弹窗是基于底部的，所以 top 可以设置成 false。
+看，虽然咱不懂 Flutter，但经过一段时间的摸索，也可以把这个问题给解决了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">assets 引用</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在排查问题时，也有个弹窗有类似的问题，就是底部图标显示不全。最终跟进到代码是这样的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">  /// 操作栏
+  Widget _operationWidget(BuildContext context) {
+    if (isSimpleStyle) {
+      return const SizedBox.shrink();
+    }
+    if (!device.isActivated) {
+      return const SizedBox.shrink();
+    }
+    if (device.bizInfo.devUpgradeState == 2) {
+      return const SizedBox.shrink();
+    }
+    return Padding(
+      padding: EdgeInsets.only(top: kThemeSpacing_12, left: 63, right: 63),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _operationItemWidget(context, &#39;assets/images/themes/default/localNetSearch/operation_live.png&#39;, () {
+            context.read&lt;LocalNetSearchCubit&gt;().onGoLive(device);
+          }),
+          _operationItemWidget(context, &#39;assets/images/themes/default/localNetSearch/operation_playback.png&#39;, () {
+            context.read&lt;LocalNetSearchCubit&gt;().onGoPlayback(device);
+          }),
+          _dynamicItemWidget(context),
+          _operationItemWidget(context, &#39;assets/images/themes/default/localNetSearch/operation_more.png&#39;, () {
+            context.read&lt;LocalNetSearchCubit&gt;().onOpenMoreDeviceOperation(device);
+          }),
+        ],
+      ),
+    );
+  }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">截图是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/13.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">是在点击更多按钮后弹出来的弹窗。
+这里发现关于图标的使用，是通过 assets 引用的。<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">assets/images/themes/default/localNetSearch/operation_more.png</code> 就是更多按钮的图标。而关于图标的引入，是在 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">pubspec.yaml</code> 中添加的。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">  assets:
+    - assets/
+    - assets/langs/
+    - assets/audio/
+    - assets/flavorFiles/
+    - assets/configs/
+    - assets/machine/
+    - assets/customize/
+    - assets/images/
+    - assets/images/themes/
+    - assets/images/themes/default/
+    - assets/images/themes/default/common/
+    - assets/images/themes/default/tabBar/
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">对应的文件地址在：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/15.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">只要是这样引入之后，就可以在代码中直接使用了。我问下了 AI，这类路径的重复问题，应该是可以去掉的，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">assets/images/</code> 应该就可以覆盖到下面的几个文件夹路径了，这个后面有时间再验证下。除了 image，其他的资源文件（比如本地 html，json 文件，raw 文件等），也可以这样引入。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">状态传递</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">继续接上面的问题，关于状态传递，代码是通过 Cubit 来实现的。可以看到点击<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">更多按钮</code>后，执行的代码是<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">onOpenMoreDeviceOperation</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">  /// 显示或收起操作弹窗
+  void onShowOrHideOperationMenu(bool show, {LocalNetDevice? device}) {
+    if (show) {
+      List&lt;OperationMenuItem&gt; itemList = [];
+      if (device != null) {
+        itemList = _generateOperationItems(device);
+      }
+      emit(state.copyWith(
+        showOperationMenu: true,
+        operationMenuItemList: itemList,
+        currentOperateDevice: device,
+      ));
+    } else {
+      emit(state.copyWith(showOperationMenu: false, currentOperateDevice: null));
+    }
+  }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，最终是 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">emit</code> 了一个新的状态，包含了操作弹窗的显示状态，操作项列表，当前操作的设备。这个有点像 Kotlin 的 flow，发送一个状态出去了。
+那么这个 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">emit</code> 出去的状态，是怎么样被处理的呢？
+查看代码有这样的一个类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">@freezed
+class LocalNetSearchState with _$LocalNetSearchState {
+  const factory LocalNetSearchState({
+    /// 设备列表
+    @Default([]) List&lt;LocalNetDevice&gt; deviceList,
+
+    /// 是否显示更多菜单
+    @Default(false) bool showOperationMenu,
+
+    /// 当前弹窗操作对应的设备
+    LocalNetDevice? currentOperateDevice,
+  }) = _LocalNetSearchState;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个 state 类，可以理解为一个状态类，包含了当前页面的所有状态（及数据）。就有点像原生 Android 中的 ViewModel，它所持有的各类数据 LiveData，外部界面通过监听 LiveData 来处理数据。同样的，这里搜索 showOperationMenu 的使用，可以发现唯一一个使用的地方（freezed 文件是 flutter 自动生成，无需关注）：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/14.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">它的代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class OperationMenuWidget extends StatelessWidget {
+  const OperationMenuWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector&lt;LocalNetSearchCubit, LocalNetSearchState, bool&gt;(
+      selector: (state) {
+        return state.showOperationMenu;
+      },
+      builder: (context, state) {
+        return CommonModalBottomSheetContainer(
+          show: state,
+          onMask: () {
+            context.read&lt;LocalNetSearchCubit&gt;().onShowOrHideOperationMenu(false);
+          },
+          child: _contentWidgetWrapper(),
+        );
+      },
+    );
+  }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">即 OperationMenuWidget 是一个监听 showOperationMenu 状态变化的组件，当 showOperationMenu 变化时，会根据状态值来显示或收起操作弹窗。这样一个状态传递机制，就实现了操作弹窗的显示和收起。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Flutter Cubit</h2>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">Cubit 是 Flutter 官方主流状态管理库 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">flutter_bloc</code> 中的轻量化状态管理方案，适用于绝大多数常规业务场景。其核心设计思想为UI 与业务逻辑分层解耦，通过统一管理页面数据、交互状态与业务逻辑，替代传统页面堆砌代码的开发方式，有效精简代码结构、提升项目可维护性与状态稳定性。Cubit 整体架构由三个核心概念构成，各司其职、单向联动：State 统一存储页面所有可变数据与交互状态，是唯一的数据源；Cubit 逻辑处理器集中封装所有业务逻辑、网络请求与状态更新行为，不依赖视图层；UI 视图层只负责监听状态变化并渲染界面，仅触发交互行为、不处理业务逻辑。所有状态更新均通过 emit 推送新 State 完成，以状态驱动界面自动刷新，实现逻辑、数据、视图完全分离，代码结构更规范、状态流转更可控。</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个咱们做安卓开发的应该也很熟悉了，MVVM 模式嘛。基于上面的问题，代码中对应的文件是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2026/16.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Cubit 就是处理逻辑（及数据）的地方，当数据处理完毕后，修改 State 再通过 emit 发送出去，而 Widget 作为 UI 层，监听数据的变化，来做界面的刷新。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Flutter 入门之边改边学">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>国内网络环境下 Claude Code 配置 DeepSeek 模型完全指南 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2026-05-13 · 约 4205 字</div>
+  <h1>国内网络环境下 Claude Code 配置 DeepSeek 模型完全指南</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">背景</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://docs.anthropic.com/en/docs/claude-code" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Claude Code</a> 是 Anthropic 官方推出的命令行 AI 编程助手，支持在终端中直接进行代码生成、重构、调试等操作。但 Anthropic 官方 API 在国内无法直接访问，需要借助第三方兼容端点。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://platform.deepseek.com/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">DeepSeek</a> 提供了兼容 Anthropic Messages API 格式的端点，国内可直接访问，使得我们可以在无需代理的环境下使用 Claude Code。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">重要提示：</strong> 此配置方式属于非官方、未文档化的用法，Anthropic 官方不提供技术支持。部分高级功能（扩展思考、Prompt Caching、视觉识别等）可能不可用。</p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前置条件</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">安装 Node.js</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Claude Code 基于 Node.js 运行，需要 Node.js 18 及以上版本。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># 检查是否已安装
+node --version
+
+# 如未安装，前往 https://nodejs.org 下载 LTS 版本
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">配置 npm 国内镜像（可选）</strong></p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">npm config set registry https://registry.npmmirror.com
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">获取 DeepSeek API Key</strong></p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">访问 <a href="https://platform.deepseek.com" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">platform.deepseek.com</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">注册或登录账号</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">在「API Keys」页面创建新的 API Key</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制保存（格式为 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">sk-xxxxxxxx</code>）</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">安装 Claude Code</h2>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">npm install -g @anthropic-ai/claude-code
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">安装完成后验证：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">claude --version
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">配置 DeepSeek 端点</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Claude Code 通过 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">settings.json</code> 管理配置，支持全局和项目级两种方式。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">配置文件位置</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">配置文件按优先级从高到低排列：</p>
+<table style="width:100%;margin:0 0 22px;border-collapse:collapse;font-size:14px;">
+<thead>
+<tr>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">优先级</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">路径</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">1</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">~/.claude/settings.local.json</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">全局本地配置，推荐存放密钥</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">2</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">~/.claude/settings.json</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">全局配置</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">3</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">.claude/settings.local.json</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">项目本地配置</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">4</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">.claude/settings.json</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">项目级配置</td>
+</tr>
+</tbody></table>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">settings.local.json</code> 文件会被自动 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">.gitignore</code>，适合存放 API Key 等敏感信息。</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">核心环境变量</strong></p>
+<table style="width:100%;margin:0 0 22px;border-collapse:collapse;font-size:14px;">
+<thead>
+<tr>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">变量名</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">作用</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">示例值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_BASE_URL</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">API 端点地址</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">https://api.deepseek.com/anthropic</code></td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_AUTH_TOKEN</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">API 认证密钥</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">sk-xxxxxxxxxxxxxxxx</code></td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_MODEL</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">使用的模型名称</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">deepseek-chat</code></td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">禁用非必要网络请求</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">1</code></td>
+</tr>
+</tbody></table>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">推荐配置方式</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">编辑 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">~/.claude/settings.local.json</code>，全局生效：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">{
+  &quot;env&quot;: {
+    &quot;ANTHROPIC_BASE_URL&quot;: &quot;https://api.deepseek.com/anthropic&quot;,
+    &quot;ANTHROPIC_AUTH_TOKEN&quot;: &quot;sk-你的DeepSeek密钥&quot;,
+    &quot;ANTHROPIC_MODEL&quot;: &quot;deepseek-chat&quot;,
+    &quot;CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC&quot;: &quot;1&quot;
+  }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">按项目配置</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在项目根目录创建 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">.claude/settings.local.json</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">mkdir -p .claude
+</code></pre>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">{
+  &quot;env&quot;: {
+    &quot;ANTHROPIC_BASE_URL&quot;: &quot;https://api.deepseek.com/anthropic&quot;,
+    &quot;ANTHROPIC_AUTH_TOKEN&quot;: &quot;sk-你的DeepSeek密钥&quot;,
+    &quot;ANTHROPIC_MODEL&quot;: &quot;deepseek-chat&quot;,
+    &quot;CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC&quot;: &quot;1&quot;
+  }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">可用模型</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">DeepSeek 兼容端点支持以下模型：</p>
+<table style="width:100%;margin:0 0 22px;border-collapse:collapse;font-size:14px;">
+<thead>
+<tr>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">模型</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">deepseek-chat</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">DeepSeek-V3，通用对话模型</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">deepseek-reasoner</code></td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">DeepSeek-R1，推理增强模型</td>
+</tr>
+</tbody></table>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">修改 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_MODEL</code> 的值即可切换。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC</code> 的作用</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">设置为 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">&quot;1&quot;</code> 后会禁用以下非必要网络请求，避免访问不可达的 Anthropic 服务器：</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">遥测数据上报</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">使用统计上报</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">版本更新检查</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">其他非核心 API 调用</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">建议在国内网络环境下开启此选项。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">使用 Claude Code</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">基本命令</strong></p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># 启动交互式对话
+claude
+
+# 单次询问
+claude -p &quot;这段代码有什么问题？&quot;
+
+# 指定文件上下文提问
+claude -p &quot;解释 index.js 的主要逻辑&quot;
+
+# 使用管道输入
+cat error.log | claude -p &quot;分析这些错误日志&quot;
+
+# 继续上次对话
+claude --continue
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">交互模式常用操作</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">进入 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">claude</code> 交互模式后：</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">直接输入问题，按 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Enter</code> 发送</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Shift + Enter</code> 换行</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">输入 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">/help</code> 查看内置命令</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">/clear</code> 清空当前对话上下文</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">/compact</code> 压缩上下文，用于对话过长时</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">/memory</code> 查看或管理持久化记忆</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Ctrl + C</code> 中断当前生成</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Ctrl + D</code> 或输入 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">exit</code> 退出</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">日常使用场景</strong></p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># 代码审查
+claude -p &quot;review 这段代码，找出潜在问题&quot; &lt; src/utils.js
+
+# 生成单元测试
+claude -p &quot;为以下函数生成 Jest 测试用例&quot;
+
+# 重构代码
+claude -p &quot;将这个函数从回调风格改为 async/await&quot;
+
+# 解释代码
+claude -p &quot;解释这个正则表达式的含义&quot; -- -- &quot;/\d{3}-\d{4}-\d{4}/&quot;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">项目级配置进阶</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在项目的 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">.claude/settings.json</code> 中可以添加权限配置：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">{
+  &quot;env&quot;: {
+    &quot;ANTHROPIC_BASE_URL&quot;: &quot;https://api.deepseek.com/anthropic&quot;,
+    &quot;ANTHROPIC_AUTH_TOKEN&quot;: &quot;sk-你的DeepSeek密钥&quot;,
+    &quot;ANTHROPIC_MODEL&quot;: &quot;deepseek-chat&quot;,
+    &quot;CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC&quot;: &quot;1&quot;
+  },
+  &quot;permissions&quot;: {
+    &quot;allow&quot;: [
+      &quot;Bash(git:*)&quot;,
+      &quot;Bash(npm:*)&quot;,
+      &quot;Bash(node:*)&quot;
+    ]
+  }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">预先授权常用命令，可以减少交互中的权限确认提示。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">功能限制说明</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用 DeepSeek 端点时，以下 Claude 原生功能不可用或受限：</p>
+<table style="width:100%;margin:0 0 22px;border-collapse:collapse;font-size:14px;">
+<thead>
+<tr>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">功能</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">状态</th>
+<th style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;background:#f6f8fa;font-weight:bold;color:#111111;text-align:left;line-height:1.6;">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">基础对话/代码生成</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">核心功能正常</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Tool Use（工具调用）</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">取决于端点</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">DeepSeek 端点已支持</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">流式输出（SSE）</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">取决于端点</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">DeepSeek 端点已支持</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">扩展思考（Extended Thinking）</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">不可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Anthropic 专有格式</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Prompt Caching</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">不可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">依赖 Anthropic 专有 Header</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">图片/PDF 分析</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">不可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Anthropic 专有格式</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Computer Use</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">不可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Anthropic 专有工具</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">联网搜索</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">不可用</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">Anthropic 专有工具</td>
+</tr>
+<tr>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">官方技术支持</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">无</td>
+<td style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding:9px 10px;border:1px solid #e5e9ef;color:#333333;line-height:1.6;">非官方配置路径</td>
+</tr>
+</tbody></table>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">日常编程场景（代码生成、代码审查、重构、调试等）的核心功能基本不受影响。</p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">常见问题</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">提示 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">401 Unauthorized</code></strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">检查 DeepSeek API Key 是否正确，确认账户有余额。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">提示连接错误</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">确认 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_BASE_URL</code> 设置为 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">https://api.deepseek.com/anthropic</code>，注意路径中的 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">/anthropic</code> 后缀。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">响应速度慢</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">DeepSeek 低价接口在高峰期可能限速。建议在 DeepSeek 平台充值以获得更好的并发体验。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">工具调用（读写文件等）失败</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">确认 DeepSeek 端点完整支持 Anthropic 的 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">tool_use</code> / <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">tool_result</code> 消息格式。如不支持，工具类功能将无法使用。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">如何切换回官方 Anthropic API</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">删除或注释 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">settings.local.json</code> 中的 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_BASE_URL</code> 和 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_MODEL</code>，改为设置标准的 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ANTHROPIC_API_KEY</code>。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">如何升级 Claude Code</strong></p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">npm update -g @anthropic-ai/claude-code
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">总结</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过将 Claude Code 的 API 端点指向 DeepSeek 的 Anthropic 兼容接口，国内开发者可以在无需代理的环境下使用 CLI AI 编程助手。虽然部分高级功能受限，但日常编码场景的核心体验基本完整。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">推荐配置清单：</strong></p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">安装 Node.js 18+</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">npm install -g @anthropic-ai/claude-code</code></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">获取 DeepSeek API Key</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">编辑 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">~/.claude/settings.local.json</code> 填入上述 JSON 配置</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">运行 <code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">claude</code> 开始使用</li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="国内网络环境下 Claude Code 配置 DeepSeek 模型完全指南">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

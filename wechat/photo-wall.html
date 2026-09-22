@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android实现照片墙背景 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-02-17 · 约 3221 字</div>
+  <h1>Android实现照片墙背景</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目开发中，有一个这样的需求：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/02/photo-wall1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+在个人主页里会有12张图片的背景墙。这12张图片由服务器返回，会不定时刷新。</p>
+<hr style="margin:34px 0;border:0;border-top:1px solid #e8e8e8;">
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">第一种方案</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">起初，自己的实现思路是：xml直接定义12个ImageView，然后在接收到图片路径后，再进行异步加载。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">显然，这种方法是肯定可以的，但是却显得不“优雅”。而且后续可能会对这整个背景墙有个缩放的动画之类的，那么再实现起来便会比较复杂了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">第二种方案</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之后，我想到了GridView，显然也是可以的，在得到图片路径后传入到Adapter中即可。比起方案一稍微“优雅”些，但是也是很难将这个背景墙当成一个整体，进行将来可能会添加的动画特效需求。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">第三种方案</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最后，我想到，既然要当成一整个整体，那么自定义View或许是个不错的办法。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">思路</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">思路是这样的：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">首先ImageView展示初始图片；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">下载图片；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">所有图片下载完成后刷新View，显示下载的图片墙。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面上代码。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">代码</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">自定义ImageView：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class JointImageView extends ImageView {
+
+    private Paint mPaint;// 画笔
+    private List&lt;Bitmap&gt; bitmaps;// 位图
+    private List&lt;Rect&gt; rectList; // 正方形画bitmap
+    private int width; // 边长
+    private static int pictureInRow = 4; // 每一行显示4张图片
+
+    public JointImageView(Context context) {
+        super(context);
+    }
+
+    public JointImageView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    }
+
+    /**
+     * 设置Bitmap数据
+     *
+     * @param bitmaps
+     */
+    public void setBitmaps(List&lt;Bitmap&gt; bitmaps) {
+        this.bitmaps = bitmaps;
+        width = getMeasuredWidth() / pictureInRow;
+        createRect();
+        postInvalidate(); // 在设置Bitmaps之后重绘
+    }
+
+    private void createRect() { // 计算12个矩形的坐标
+        rectList = new ArrayList&lt;&gt;(AppConfigs.PROFILE_PICTURE_NUM);
+        for (int i = 0; i &lt; AppConfigs.PROFILE_PICTURE_NUM; i++) {
+            Rect rect = new Rect((i % pictureInRow) * width, (i / pictureInRow) * width,
+                    (i % pictureInRow + 1) * width, (i / pictureInRow + 1) * width);
+            rectList.add(rect);
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (bitmaps == null) {
+            super.onDraw(canvas);
+        } else {
+            for (int i = 0; i &lt; bitmaps.size(); i++) {
+                if (bitmaps.get(i) != null) {
+                    canvas.drawBitmap(bitmaps.get(i), null, rectList.get(i), mPaint); // 画图
+                }
+            }
+        }
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">布局文件中使用：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;com.android.widget.JointImageView
+    android:id=&quot;@+id/my_profile_background&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:scaleType=&quot;centerCrop&quot;
+    android:src=&quot;@drawable/background&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目中使用的Universal-Image-Loader三方库进行图片的加载。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下载图片的异步任务代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private class BitmapLoaderTask extends AsyncTask&lt;String[], Integer, List&lt;Bitmap&gt;&gt; {
+
+    private List&lt;Bitmap&gt; bitmaps;
+
+    public BitmapLoaderTask() {
+        bitmaps = new ArrayList&lt;&gt;(AppConfigs.PROFILE_PICTURE_NUM);
+    }
+
+    @Override
+    protected List&lt;Bitmap&gt; doInBackground(String[]... params) {
+        ImageSize imageSize = new ImageSize(80, 80); // 图片压缩到80*80的大小
+        for (int i = 0; i &lt; params[0].length &amp;&amp; i &lt; AppConfigs.PROFILE_PICTURE_NUM; i++) {
+            // 使用UIL同步下载图片的方法下载图片，存到bitmap数组
+            Bitmap bitmap = ImageLoader.getInstance().loadImageSync(params[0][i], imageSize);
+            bitmaps.add(bitmap);
+        }
+        return bitmaps;
+    }
+
+    @Override
+    protected void onPostExecute(List&lt;Bitmap&gt; bitmaps) {
+        // 全部下载完毕，通知View进行重绘
+        if (bitmaps != null &amp;&amp; bitmaps.size() == AppConfigs.PROFILE_PICTURE_NUM) {
+            profileBackground.setBitmaps(bitmaps);
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过方案三，在实现当下需求的同时，也可以作为一个单独的View，在将来拓展可能的缩放等特效动画。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是也有一个缺点：必须所有的图片下载完毕才进行刷新。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当然，也可以将刷新策略调整成下载一张刷新一次，这个就得看具体的需求了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">题外话</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">对于图片中的阴影效果，我们可以采用alpha背景来实现。也可以通过色彩矩阵在绘制的时候进行调整。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过alpha背景实现很简单，在FrameLayout上遮罩一个View，alpha设置成相应的值即可。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;View
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:alpha=&quot;0.7&quot;
+    android:background=&quot;#000000&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过色彩矩阵就得不停的调整了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">// 生成色彩矩阵  
+ColorMatrix colorMatrix = new ColorMatrix(new float[]{  
+        0.5F, 0, 0, 0, 0,  
+        0, 0.5F, 0, 0, 0,  
+        0, 0, 0.5F, 0, 0,  
+        0, 0, 0, 1, 0,  
+});  
+mPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));  // 画笔设置色彩矩阵，这样再绘制的时候就会有效果了
+</code></pre></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android实现照片墙背景">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

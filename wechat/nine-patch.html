@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android Studio中使用.9（Nine Patch）图 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2015-11-23 · 约 2043 字</div>
+  <h1>Android Studio中使用.9（Nine Patch）图</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">本文主要结合Android Studio讲述一下.9图片的原理与使用。</p>
+<hr style="margin:34px 0;border:0;border-top:1px solid #e8e8e8;">
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">原理</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在Android的设计过程中，为了适配不同的手机分辨率，图片大多需要拉伸或者压缩，这样就出现了可以任意调整大小的一种图片格式“.9.png”。这种图片是用于Android开发的一种特殊的图片格式，它的好处在于可以用简单的方式把一张图片中哪些区域可以拉伸，哪些区域不可以拉伸设定好，同时可以把显示内容区域的位置标示清楚。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">.9图片相比普通图片，在四条边会多出1px的空隙，我们在这1px的空隙中画上黑线，即可控制图片怎么拉伸，内容区域的位置。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+讲解一下四条边的作用：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Top，图中1所示，是控制图片可横向拉伸的区域。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Left，图中2所示，是控制图片可纵向拉伸的区域。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Right&amp;Botton，图中的3与4，结合起来控制内容显示的区域。</li>
+</ol>
+<hr style="margin:34px 0;border:0;border-top:1px solid #e8e8e8;">
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">使用</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们在Android Studio中新建一个项目，选择一张普通图片，置于drawable目录下。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch2.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面我们将它改为.9图片。在Android Studio中使用.9图很简单：<font color=red>直接将图片名称以&quot;.9.png&quot;结束。
+使用.9图必须注意一点：文件的后缀名必须是.9.png，不能是.png或者是.9.png.png，这样的命名都会导致编译失败。</font>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch3.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">将名称改好之后，重新打开图片，可以看到图片下面会有2个Tab，切换到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">9-Patch</code>即可配置.9图片了。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch4.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面做如下配置：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch5.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在右边的效果图中，纵向只拉伸了Left所画黑线对应的区域，横向只拉伸了Top所画黑线对应的区域。至于Right与Bottom，我们可以通过勾选下方的Show content让其显示内容区域。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch6.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，这里上下左右四条黑边的作用确实如原理中所说。
+图中效果很难看，改成这样：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch7.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+看起来效果还不错，这样我们可以尽情的配置图片该如何拉伸，针对不同分辨率，以达到一个更好的效果。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">解惑</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">起初对Right与Bottom这2条边限定的内容区域不太了解，便做了个小测试。
+将2条边改成如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch8.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+然后布局文件里引入一个TextView，将background设置为此.9图片。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;TextView
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_centerInParent=&quot;true&quot;
+        android:background=&quot;@drawable/ninepatch&quot;
+        android:text=&quot;Hello World!&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">运行后的效果：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/nine-patch9.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+可以看到“Hello World！”显示在了图片的右下方。
+Right与Bottom这2条边限定的内容区域所起的作用便一目了然了。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android Studio中使用.9（Nine Patch）图">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

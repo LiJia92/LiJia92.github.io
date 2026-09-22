@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android接入支付宝移动支付 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-05-18 · 约 7032 字</div>
+  <h1>Android接入支付宝移动支付</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目组支付宝商户审核通过，要准备接入支付宝移动支付的能力，本文主要讲述一下android接入支付宝移动支付SDK的步骤。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前期准备</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://b.alipay.com/newIndex.htm" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">支付宝商户网站</a>注册支付宝商户账号。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">签约<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">移动支付</code>产品，等到审核通过。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">秘钥的生成与上传。
+注册和签约没什么好说的，由公司相关部门或人员进行操作就好了。这里重点讲一下密钥。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">秘钥的生成：
+下载SDK资源压缩包，解压后，里面会有openssl的文件夹，里面有个<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">openssl.exe</code>，双击运行。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay1.png" style="max-width:100%;height:auto;border-radius:4px;">
+输入如下指令生成私钥:</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">genrsa -out rsa_private_key.pem 1024
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">java开发者</code>（否则跳过此步骤）需要转换成PKCS8格式，再输入如下指令进行转换：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">pkcs8 -topk8 -inform PEM -in rsa_private_key.pem -outform PEM -nocrypt
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到下面的界面：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay2.png" style="max-width:100%;height:auto;border-radius:4px;">
+<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">右键点击openssl窗口上边边缘，选择“编辑→标记”，选中要复制的文字</code>，将PKCS8格式私钥复制下来，保存到一个文本中，后面会用到。
+继续执行指令：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">会得到公钥文本。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">秘钥的上传：
+登录支付宝商户账户，进入到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">我的商家服务</code>。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay3.png" style="max-width:100%;height:auto;border-radius:4px;">
+点击<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">查询PID、KEY</code>，输入支付密码，进入到下面的页面：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/alipay4.png" style="max-width:100%;height:auto;border-radius:4px;">
+记录下<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">PID</code>。
+点击RSA加密后面的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">添加密码</code>，这里我已经添加过，所以显示的查看秘钥。将生成步骤中生成的公钥文本粘贴进编辑框，点击保存，若显示<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">上传成功</code>则代表成功。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">接入SDK</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">将<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">alipaySDK-20160223.jar</code>jar包添加至项目中。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">修改AndroidManifest.xml：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;!-- 权限 --&gt;
+&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;
+
+&lt;!-- 当用户手机没有安装支付宝App时，会调用H5的页面进行支付，若不进行声明，则直接返回支付失败 --&gt;
+&lt;activity
+            android:name=&quot;com.alipay.sdk.app.H5PayActivity&quot;
+            android:configChanges=&quot;orientation|keyboardHidden|navigation&quot;
+            android:exported=&quot;false&quot;
+            android:screenOrientation=&quot;behind&quot; &gt;
+&lt;/activity&gt;
+&lt;activity
+            android:name=&quot;com.alipay.sdk.auth.AuthActivity&quot;
+            android:configChanges=&quot;orientation|keyboardHidden|navigation&quot;
+            android:exported=&quot;false&quot;
+            android:screenOrientation=&quot;behind&quot; &gt;
+ &lt;/activity&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此，SDK接入已完成。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">调用支付</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在支付宝Demo中，已经有了很详细的说明了。我们只需要填入3个字段：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">PARTNER</code>、<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SELLER</code>、<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">RSA_PRIVATE</code>。
+<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">PARTNER</code>就是上面步骤记录的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">PID</code>，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SELLER</code>即是支付宝账号，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">RSA_PRIVATE</code>就是记录的PKCS8格式私钥。
+这里贴一下Demo代码吧：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class PayDemoActivity extends FragmentActivity {
+
+    // 商户PID
+    public static final String PARTNER = &quot;&quot;;
+    // 商户收款账号
+    public static final String SELLER = &quot;&quot;;
+    // 商户私钥，pkcs8格式
+    public static final String RSA_PRIVATE = &quot;&quot;;
+    // 支付宝公钥
+    public static final String RSA_PUBLIC = &quot;&quot;;
+    private static final int SDK_PAY_FLAG = 1;
+
+    @SuppressLint(&quot;HandlerLeak&quot;)
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings(&quot;unused&quot;)
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    PayResult payResult = new PayResult((String) msg.obj);
+                    /**
+                     * 同步返回的结果必须放置到服务端进行验证（验证的规则请看https://doc.open.alipay.com/doc2/
+                     * detail.htm?spm=0.0.0.0.xdvAU6&amp;treeId=59&amp;articleId=103665&amp;
+                     * docType=1) 建议商户依赖异步通知
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
+                    if (TextUtils.equals(resultStatus, &quot;9000&quot;)) {
+                        Toast.makeText(PayDemoActivity.this, &quot;支付成功&quot;, Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 判断resultStatus 为非&quot;9000&quot;则代表可能支付失败
+                        // &quot;8000&quot;代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
+                        if (TextUtils.equals(resultStatus, &quot;8000&quot;)) {
+                            Toast.makeText(PayDemoActivity.this, &quot;支付结果确认中&quot;, Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
+                            Toast.makeText(PayDemoActivity.this, &quot;支付失败&quot;, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.pay_main);
+    }
+
+    /**
+     * call alipay sdk pay. 调用SDK支付
+     */
+    public void pay(View v) {
+        if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
+            new AlertDialog.Builder(this).setTitle(&quot;警告&quot;).setMessage(&quot;需要配置PARTNER | RSA_PRIVATE| SELLER&quot;)
+                    .setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                            //
+                            finish();
+                        }
+                    }).show();
+            return;
+        }
+        String orderInfo = getOrderInfo(&quot;测试的商品&quot;, &quot;该测试商品的详细描述&quot;, &quot;0.01&quot;);
+
+        /**
+         * 特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！
+         */
+        String sign = sign(orderInfo);
+        try {
+            /**
+             * 仅需对sign 做URL编码
+             */
+            sign = URLEncoder.encode(sign, &quot;UTF-8&quot;);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        /**
+         * 完整的符合支付宝参数规范的订单信息
+         */
+        final String payInfo = orderInfo + &quot;&amp;sign=\&quot;&quot; + sign + &quot;\&quot;&amp;&quot; + getSignType();
+
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造PayTask 对象
+                PayTask alipay = new PayTask(PayDemoActivity.this);
+                // 调用支付接口，获取支付结果
+                String result = alipay.pay(payInfo, true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    /**
+     * get the sdk version. 获取SDK版本号
+     */
+    public void getSDKVersion() {
+        PayTask payTask = new PayTask(this);
+        String version = payTask.getVersion();
+        Toast.makeText(this, version, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 原生的H5（手机网页版支付切natvie支付） 【对应页面网页支付按钮】
+     *
+     * @param v
+     */
+    public void h5Pay(View v) {
+        Intent intent = new Intent(this, H5PayDemoActivity.class);
+        Bundle extras = new Bundle();
+        /**
+         * url是测试的网站，在app内部打开页面是基于webview打开的，demo中的webview是H5PayDemoActivity，
+         * demo中拦截url进行支付的逻辑是在H5PayDemoActivity中shouldOverrideUrlLoading方法实现，
+         * 商户可以根据自己的需求来实现
+         */
+        String url = &quot;http://m.meituan.com&quot;;
+        // url可以是一号店或者美团等第三方的购物wap站点，在该网站的支付过程中，支付宝sdk完成拦截支付
+        extras.putString(&quot;url&quot;, url);
+        intent.putExtras(extras);
+        startActivity(intent);
+
+    }
+
+    /**
+     * create the order info. 创建订单信息
+     */
+    private String getOrderInfo(String subject, String body, String price) {
+
+        // 签约合作者身份ID
+        String orderInfo = &quot;partner=&quot; + &quot;\&quot;&quot; + PARTNER + &quot;\&quot;&quot;;
+
+        // 签约卖家支付宝账号
+        orderInfo += &quot;&amp;seller_id=&quot; + &quot;\&quot;&quot; + SELLER + &quot;\&quot;&quot;;
+
+        // 商户网站唯一订单号
+        orderInfo += &quot;&amp;out_trade_no=&quot; + &quot;\&quot;&quot; + getOutTradeNo() + &quot;\&quot;&quot;;
+
+        // 商品名称
+        orderInfo += &quot;&amp;subject=&quot; + &quot;\&quot;&quot; + subject + &quot;\&quot;&quot;;
+
+        // 商品详情
+        orderInfo += &quot;&amp;body=&quot; + &quot;\&quot;&quot; + body + &quot;\&quot;&quot;;
+
+        // 商品金额
+        orderInfo += &quot;&amp;total_fee=&quot; + &quot;\&quot;&quot; + price + &quot;\&quot;&quot;;
+
+        // 服务器异步通知页面路径
+        orderInfo += &quot;&amp;notify_url=&quot; + &quot;\&quot;&quot; + &quot;http://notify.msp.hk/notify.htm&quot; + &quot;\&quot;&quot;;
+
+        // 服务接口名称， 固定值
+        orderInfo += &quot;&amp;service=\&quot;mobile.securitypay.pay\&quot;&quot;;
+
+        // 支付类型， 固定值
+        orderInfo += &quot;&amp;payment_type=\&quot;1\&quot;&quot;;
+
+        // 参数编码， 固定值
+        orderInfo += &quot;&amp;_input_charset=\&quot;utf-8\&quot;&quot;;
+
+        // 设置未付款交易的超时时间
+        // 默认30分钟，一旦超时，该笔交易就会自动被关闭。
+        // 取值范围：1m～15d。
+        // m-分钟，h-小时，d-天，1c-当天（无论交易何时创建，都在0点关闭）。
+        // 该参数数值不接受小数点，如1.5h，可转换为90m。
+        orderInfo += &quot;&amp;it_b_pay=\&quot;30m\&quot;&quot;;
+
+        // extern_token为经过快登授权获取到的alipay_open_id,带上此参数用户将使用授权的账户进行支付
+        // orderInfo += &quot;&amp;extern_token=&quot; + &quot;\&quot;&quot; + extern_token + &quot;\&quot;&quot;;
+
+        // 支付宝处理完请求后，当前页面跳转到商户指定页面的路径，可空
+        orderInfo += &quot;&amp;return_url=\&quot;m.alipay.com\&quot;&quot;;
+
+        // 调用银行卡支付，需配置此参数，参与签名， 固定值 （需要签约《无线银行卡快捷支付》才能使用）
+        // orderInfo += &quot;&amp;paymethod=\&quot;expressGateway\&quot;&quot;;
+
+        return orderInfo;
+    }
+
+    /**
+     * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
+     */
+    private String getOutTradeNo() {
+        SimpleDateFormat format = new SimpleDateFormat(&quot;MMddHHmmss&quot;, Locale.getDefault());
+        Date date = new Date();
+        String key = format.format(date);
+
+        Random r = new Random();
+        key = key + r.nextInt();
+        key = key.substring(0, 15);
+        return key;
+    }
+
+    /**
+     * sign the order info. 对订单信息进行签名
+     *
+     * @param content 待签名订单信息
+     */
+    private String sign(String content) {
+        return SignUtils.sign(content, RSA_PRIVATE);
+    }
+
+    /**
+     * get the sign type we use. 获取签名方式
+     */
+    private String getSignType() {
+        return &quot;sign_type=\&quot;RSA\&quot;&quot;;
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">代码中有个注释需要特别注意：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">特别注意，这里的签名逻辑需要放在服务端，切勿将私钥泄露在代码中！</code></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此，整个集成就已经结束了，不得不说，支付宝的官方文档比微信好多了，哈哈~</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">补充</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">正式项目中需要将签名逻辑放在服务端，在我与服务端进行联调时，出现了很多问题，这里说几点：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">服务端若是使用的是java，则使用PKCS8格式的秘钥，否则使用非PKCS8格式的秘钥。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">请求参数可以无序，但是必须保证请求的参数与待签名参数的顺序一致。（非常坑，花了半天时间跟服务端联调才找到这个问题）</li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android接入支付宝移动支付">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

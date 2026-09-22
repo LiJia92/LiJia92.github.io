@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android Launcher 升级 Rom · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2025-06-27 · 约 20264 字</div>
+  <h1>Android Launcher 升级 Rom</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">近期接到一个需求：利用 Launcher 对系统 Rom 进行升级。OTA 包由其他同事提供，Launcher 与服务器通信判断是否有新的升级包，若有升级包则下载到本地，由 Launcher 进行 Rom 升级。过程不算顺利，写下此文记录一下。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">RecoverySystem</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">RecoverySystem 有一个 installPackage 方法，可以直接进行 Rom 升级，只需要声明 REBOOT 权限即可。通过 AI 很快得到如下代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object RomUpdater {
+    private const val TAG = &quot;RomUpdater&quot;
+
+    /**
+     * 应用 ROM 更新
+     * @param context 上下文对象
+     * @param updateFile 更新包文件（需确保路径可被 Recovery 访问）
+     */
+    @SuppressLint(&quot;MissingPermission&quot;)
+    fun applyUpdate(context: Context, updateFile: File) {
+        // 1. 校验更新包签名
+        if (!verifySignature(updateFile)) {
+            LogUtils.e(TAG, &quot;更新包签名校验失败&quot;)
+            return
+        }
+
+        // 2. 使用 RecoverySystem API 触发更新
+        try {
+            RecoverySystem.installPackage(context, updateFile)
+            LogUtils.i(TAG, &quot;已成功触发系统更新&quot;)
+        } catch (e: IOException) {
+            LogUtils.e(TAG, &quot;写入 Recovery 指令失败&quot;, e)
+        } catch (e: SecurityException) {
+            LogUtils.e(TAG, &quot;权限不足，需要系统签名&quot;, e)
+        }
+    }
+
+    /**
+     * 校验更新包签名（简化版）
+     * 实际开发中应使用设备厂商的公钥验证
+     */
+    private fun verifySignature(file: File): Boolean {
+        return try {
+            // 实际应替换为厂商公钥验证
+            RecoverySystem.verifyPackage(file, null, null)
+            true
+        } catch (e: GeneralSecurityException) {
+            false
+        } catch (e: IOException) {
+            false
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">代码流程非常简单，先验证文件签名，然后进行安装。可一阵尝试下来后，每次进入系统更新界面，就会弹出来一个错误，也没有写明具体的原因。通过修改 update.zip 的文件地址，比如放到 /cache 目录，或者放到 /sdcard 根目录，都无法升级成功。更有甚者，刷机失败导致系统无限自动重启，只能断电重新刷机。无奈之下最终放弃。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">UpdateEngine</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 AI 又打开了 UpdateEngine 的思路。于是查看 UpdateEngine 代码。它位于<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">android.os</code>包下，同时被标记为<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">@SystemApi</code>，项目代码无法引用到。也是通过 AI 找到了三种方式。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">compile only</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 compileOnly android.jar 文件，给项目提供编译环境，使项目中可以引用到 UpdateEngine。可当我如此做了之后，发现依然引用不到。最后查看 android.jar，发现这个 jar 本身就不会包含 UpdateEngine 类，应该是 android 在打包的时候，将这些不对外的 api 全部剔除掉了。于是只能使用下一种方式了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">反射</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">结合 AI 很快得到了如下反射代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">import android.content.Context;
+import android.util.Log;
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
+public class UpdateEngineReflector {
+
+    private static final String TAG = &quot;UpdateEngineReflector&quot;;
+
+    public static void startOtaUpdateReflected(Context context, String otaPackageFilePath) {
+        try {
+            // 1. 获取 UpdateEngine 类
+            Class&lt;?&gt; updateEngineClass = Class.forName(&quot;android.os.UpdateEngine&quot;);
+
+            // 2. 获取 UpdateEngineCallback 接口及其方法
+            Class&lt;?&gt; updateEngineCallbackClass = Class.forName(&quot;android.os.UpdateEngineCallback&quot;);
+            // 查找 onStatusUpdate 方法
+            Method onStatusUpdateMethod = updateEngineCallbackClass.getMethod(&quot;onStatusUpdate&quot;, int.class, float.class);
+            // 查找 onPayloadApplicationComplete 方法
+            Method onPayloadApplicationCompleteMethod = updateEngineCallbackClass.getMethod(&quot;onPayloadApplicationComplete&quot;, int.class);
+
+            // 3. 创建 UpdateEngineCallback 的代理实例
+            // Android 中的动态代理
+            Object updateEngineCallbackInstance = java.lang.reflect.Proxy.newProxyInstance(
+                    updateEngineCallbackClass.getClassLoader(),
+                    new Class&lt;?&gt;[]{updateEngineCallbackClass},
+                    (proxy, method, args) -&gt; {
+                        if (method.getName().equals(&quot;onStatusUpdate&quot;)) {
+                            int status = (int) args[0];
+                            float percent = (float) args[1];
+                            Log.d(TAG, &quot;Reflected Update Status: &quot; + status + &quot;, percent: &quot; + (percent * 100) + &quot;%&quot;);
+                            // TODO: 根据 status 处理逻辑，例如触发重启
+                            if (status == 5 /* UpdateEngine.UpdateStatusConstants.UPDATED_NEED_REBOOT */) {
+                                // 在这里调用你的重启逻辑，同样可能需要反射或系统权限
+                                // PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+                                // pm.reboot(&quot;system_update&quot;);
+                            }
+                        } else if (method.getName().equals(&quot;onPayloadApplicationComplete&quot;)) {
+                            int errorCode = (int) args[0];
+                            Log.d(TAG, &quot;Reflected Update Complete with error code: &quot; + errorCode);
+                            // TODO: 处理完成或错误
+                        }
+                        return null;
+                    }
+            );
+
+            // 4. 获取 UpdateEngine 构造函数
+            // 某些Android版本UpdateEngine构造函数是无参的，某些可能带Context
+            Constructor&lt;?&gt; constructor;
+            try {
+                constructor = updateEngineClass.getConstructor(); // 尝试无参构造
+            } catch (NoSuchMethodException e) {
+                constructor = updateEngineClass.getConstructor(Context.class); // 尝试带Context构造
+            }
+
+            // 5. 创建 UpdateEngine 实例
+            Object updateEngineInstance;
+            if (constructor.getParameterCount() == 0) {
+                updateEngineInstance = constructor.newInstance();
+            } else {
+                updateEngineInstance = constructor.newInstance(context);
+            }
+
+            // 6. 获取 bind 方法并调用
+            Method bindMethod = updateEngineClass.getMethod(&quot;bind&quot;, updateEngineCallbackClass);
+            bindMethod.invoke(updateEngineInstance, updateEngineCallbackInstance);
+
+            // 7. 获取 applyPayload 方法并调用
+            Method applyPayloadMethod = updateEngineClass.getMethod(&quot;applyPayload&quot;,
+                    String.class, long.class, long.class, String[].class);
+
+            File otaFile = new File(otaPackageFilePath);
+            if (!otaFile.exists() || !otaFile.isFile()) {
+                Log.e(TAG, &quot;Reflected OTA package file not found or is not a file: &quot; + otaPackageFilePath);
+                return;
+            }
+
+            // 8. 调用 applyPayload
+            applyPayloadMethod.invoke(updateEngineInstance,
+                    &quot;file://&quot; + otaPackageFilePath,
+                    0L, // offset for full package
+                    otaFile.length(), // length for full package
+                    new String[]{} // headers for full package
+            );
+            Log.i(TAG, &quot;Reflected OTA update started for: &quot; + otaPackageFilePath);
+
+        } catch (ClassNotFoundException e) {
+            Log.e(TAG, &quot;Class not found (UpdateEngine or Callback): &quot; + e.getMessage());
+        } catch (NoSuchMethodException e) {
+            Log.e(TAG, &quot;Method not found: &quot; + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, &quot;Error using reflection for UpdateEngine: &quot; + e.getMessage(), e);
+        }
+    }
+
+    // 可以在 onDestroy 中添加 unbind 方法的反射调用
+    public static void unbindUpdateEngineReflected(Object updateEngineInstance) {
+        if (updateEngineInstance != null) {
+            try {
+                Class&lt;?&gt; updateEngineClass = Class.forName(&quot;android.os.UpdateEngine&quot;);
+                Method unbindMethod = updateEngineClass.getMethod(&quot;unbind&quot;);
+                unbindMethod.invoke(updateEngineInstance);
+                Log.i(TAG, &quot;Reflected UpdateEngine unbound.&quot;);
+            } catch (Exception e) {
+                Log.e(TAG, &quot;Failed to unbind UpdateEngine via reflection: &quot; + e.getMessage());
+            }
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">不出意外的话很快就会有意外了，在 newProxyInstance 执行时报错：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">java.lang.IllegalArgumentException: android.os.UpdateEnginecallback is not an interface</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">确实，UpdateEnginecallback 这个类是一个抽象类，而不是接口，newProxyInstance 是用不了的。于是想了很多其他方案，比如自建 android.os 包，提供 UpdateEngine 类的空壳，将其抽到一个单独的 lib 中，项目 module compileOnly 这个 lib。然后通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">new UpdateEngine()</code>获取到 UpdateEngine 的实例，代码编译是没问题了，可是运行代码进行<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mUpdateEngine.bind(mUpdateEngineCallback)</code>的时候仍然报错：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">java.lang.nullPointerException: Attempt to invoke interface method &quot;boolean android.os.IupdateEngine.bind(androidos,IupdateEngineCaltback)</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">查看代码 new UpdateEngine() 时，内部会创建一个 mUpdateEngine：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public UpdateEngine() {
+    mUpdateEngine = IUpdateEngine.Stub.asInterface(
+            ServiceManager.getService(UPDATE_ENGINE_SERVICE));
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过此种方式 new 出来的，这个 mUpdateEngine 对象是 null。折腾了好久还是无法成功调用，无奈只能放弃了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">AOSP 源码构建环境</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个方案应该是流程最简单、逻辑最清晰的，都直接改源码编译了。但可执行性不高，也非常复杂，不到最后不会花费大力气做这个事情。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">系统原生升级</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 AI 获取的 RecoverySystem、UpdateEngine 方式全部失败后，我对 AI 丧失了一些信心。在验证 update.zip 是否能正常对系统更新时，发现了一个当前系统原生升级的逻辑：<strong style="font-weight:bold;color:#111111;">当把 update.zip 放到 /sdcard 根目录时，设备重启后，会自动弹窗发现一个升级文件，询问是否需要进行升级。</strong> 点击安装按钮后，系统会进入更新，且能更新成功。
+就像这样：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/1.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">于是有了一个新思路：<strong style="font-weight:bold;color:#111111;">将 OTA 包下载后放到 /sdcard 根目录，然后重启设备，这个时候系统会弹窗是否进行升级，然后结合 Launcher 的系统能力，做自动点击，就可以走系统原生的升级了。</strong>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/2.png" style="max-width:100%;height:auto;border-radius:4px;">
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/3.png" style="max-width:100%;height:auto;border-radius:4px;">
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/4.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">系统升级成功后，会有一个弹窗提醒删掉 OTA 文件，这个时候自动点击确认删除，即可完成系统升级。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/5.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">若此 OTA 文件不删除，设备重启时会继续提示升级，但是点击按钮会报错，影响体验，所以还是需要删掉。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/6.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过这个方案，就只剩下<strong style="font-weight:bold;color:#111111;">自动点击</strong>需要额外代码实现了，结合 AI 加不断的调试，最终得到如下代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class SystemUpdateService : AccessibilityService() {
+
+    private val TAG = &quot;SystemUpdateService&quot;
+    private val updatePkg = &quot;android.rockchip.update.service&quot;
+
+    //------- 安装固件，一个标题，一个按钮，升级系统---------
+    private val updateTitle = &quot;固件升级&quot;
+    private val installText = &quot;安装&quot;
+    private val cancelText = &quot;放弃&quot;
+
+    //------- 安装成功后，一个标题，一个按钮，删除文件---------
+    private val successTitle = &quot;系统升级&quot;
+    private val yesText = &quot;是&quot;
+
+    // 服务配置参数
+    override fun onServiceConnected() {
+        LogUtils.e(TAG, &quot;onServiceConnected&quot;)
+        val info = AccessibilityServiceInfo().apply {
+            eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED or
+                    AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
+            feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+            notificationTimeout = 100
+        }
+        serviceInfo = info
+    }
+
+    // 事件处理核心逻辑
+    override fun onAccessibilityEvent(event: AccessibilityEvent) {
+        when (event.eventType) {
+            AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED -&gt; handleWindowChange(event)
+            AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED -&gt; handleContentChange(event)
+        }
+    }
+
+    override fun onInterrupt() {
+
+    }
+
+    private fun handleWindowChange(event: AccessibilityEvent) {
+        handleEvent(event)
+    }
+
+    private fun handleContentChange(event: AccessibilityEvent) {
+        handleEvent(event)
+    }
+
+    private fun handleEvent(event: AccessibilityEvent) {
+        kotlin.runCatching {
+            event.source?.let { source -&gt;
+                if (source.packageName == updatePkg) {
+                    findAndClickInstallButton(source)
+                }
+            }
+        }.onFailure {
+            LogUtils.e(TAG, it.message)
+        }
+    }
+
+    // 核心点击逻辑
+    private fun findAndClickInstallButton(rootNode: AccessibilityNodeInfo) {
+        try {
+            val startTime = System.currentTimeMillis()
+            val upgradeTitle = rootNode.findAccessibilityNodeInfosByText(updateTitle)
+            if (upgradeTitle.isNotEmpty()) {
+                val installButtons = rootNode.findAccessibilityNodeInfosByText(installText)
+                if (installButtons.isNotEmpty()) {
+                    val localVersion = AppUtil.getRomVersion()
+                    ThreadConfig.execute {
+                        val updateVersion = AppUtil.parseOtaPackage(RomUpdater.getUpdateZipPath())
+                        MainThreadUtils.post {
+                            if (localVersion != null &amp;&amp; updateVersion != null &amp;&amp; localVersion &lt; updateVersion) {
+                                performClick(installButtons)
+                            } else {
+                                val cancelButtons = rootNode.findAccessibilityNodeInfosByText(cancelText)
+                                if (cancelButtons.isNotEmpty()) {
+                                    performClick(cancelButtons)
+                                    RomUpdater.deleteZipFile()
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                val successTitle = rootNode.findAccessibilityNodeInfosByText(successTitle)
+                if (successTitle.isNotEmpty()) {
+                    val yesButtons = rootNode.findAccessibilityNodeInfosByText(yesText)
+                    if (yesButtons.isNotEmpty()) {
+                        performClick(yesButtons)
+                    }
+                }
+            }
+        } finally {
+            rootNode.recycle()
+        }
+    }
+
+    private fun performClick(nodes: List&lt;AccessibilityNodeInfo&gt;) {
+        nodes.forEach { node -&gt;
+            if (node.isClickable) {
+                node.performAction(AccessibilityNodeInfo.ACTION_CLICK)
+                node.recycle()
+            }
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在点击安装时，先判断一下版本。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">fun getRomVersion(): Int? {
+    LogUtils.e(TAG, &quot;display:&quot; + Build.DISPLAY + &quot;,fingerprint:&quot; + Build.FINGERPRINT)
+    val input = Build.DISPLAY
+    val regex = Regex(&quot;${ROM_PREFIX}(.*?)A1&quot;)
+    val matchedPart = regex.find(input)?.groupValues?.get(1) ?: return null
+    val digitsOnly = matchedPart.filter { it.isDigit() }
+    return digitsOnly.toIntOrNull()
+}
+
+fun parseOtaPackage(otaPath: String): Int? {
+    var result: Int? = null
+    try {
+        val zipInputStream = ZipInputStream(FileInputStream(otaPath))
+        var entry: ZipEntry?
+        while (zipInputStream.nextEntry.also { entry = it } != null) {
+            if (entry?.name == &quot;META-INF/com/android/metadata&quot;) {
+                val reader = BufferedReader(InputStreamReader(zipInputStream))
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    if (line?.startsWith(POST_BUILD) == true &amp;&amp; line?.contains(ROM_PREFIX) == true) {
+                        LogUtils.e(TAG, line)
+                        val input = line ?: &quot;&quot;
+                        val regex = Regex(&quot;${ROM_PREFIX}(.*?)A1&quot;)
+                        val matchedPart = regex.find(input)?.groupValues?.get(1)
+                        val digitsOnly = matchedPart?.filter { it.isDigit() }
+                        result = digitsOnly?.toIntOrNull()
+                        if (result != null) {
+                            break
+                        }
+                    }
+                }
+                reader.close()
+                if (result != null) {
+                    break
+                }
+            }
+        }
+        zipInputStream.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return result
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们系统的版本号是这样的格式：ROM_PREFIX.250627.001.A1 这样的格式。只需要解析出 250627001 作为版本号即可。OTA 包中，通过解析 zip 包获取 ZipEntry，通过** META-INF/com/android/metadata** 的 entry name 拿到** post_build** 字段，来分析出对应的版本号，然后进行对比，本地版本低才进行升级。
+在 AndroidManifest.xml 中如下声明：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;service
+    android:name=&quot;cn.packageName.launcher.ui.SystemUpdateService&quot;
+    android:exported=&quot;true&quot;
+    android:permission=&quot;android.permission.BIND_ACCESSIBILITY_SERVICE&quot;&gt;
+    &lt;intent-filter&gt;
+        &lt;action android:name=&quot;android.accessibilityservice.AccessibilityService&quot; /&gt;
+    &lt;/intent-filter&gt;
+    &lt;meta-data
+        android:name=&quot;android.accessibilityservice&quot;
+        android:resource=&quot;@xml/accessibility_service_config&quot; /&gt;
+&lt;/service&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在 res 目录下创建 xml 文件夹，accessibility_service_config 如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;accessibility-service xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:accessibilityEventTypes=&quot;typeWindowStateChanged|typeWindowContentChanged&quot;
+    android:accessibilityFeedbackType=&quot;feedbackGeneric&quot;
+    android:canRequestFilterKeyEvents=&quot;true&quot;
+    android:canRequestTouchExplorationMode=&quot;true&quot;
+    android:canRetrieveWindowContent=&quot;true&quot;
+    android:description=&quot;@string/system_update&quot;
+    android:notificationTimeout=&quot;100&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在 Application 启动时，默认启动无障碍服务：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">// 获取当前已启用的服务列表
+val originalServices = Settings.Secure.getString(
+    contentResolver,
+    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+) ?: &quot;&quot;
+
+// 构造新的服务列表（避免重复添加）
+val newService = &quot;cn.mucang.android.launcher/cn.mucang.android.launcher.ui.SystemUpdateService&quot;
+val updatedServices = if (originalServices.isEmpty()) {
+    newService
+} else {
+    if (!originalServices.contains(newService)) {
+        &quot;$originalServices:$newService&quot;  // 使用冒号分隔（Android标准格式）
+    } else {
+        originalServices
+    }
+}
+// 更新设置
+Settings.Secure.putString(
+    contentResolver,
+    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES,
+    updatedServices
+)
+Settings.Secure.putInt(
+    contentResolver,
+    Settings.Secure.ACCESSIBILITY_ENABLED,
+    1
+)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">这个代码需要系统级 App 才行，不然得到设置页专门打开无障碍服务。</strong>这里会先获取系统的无障碍服务，然后将当前的添加进去，然后启动，不然的话可能会将其他应用的无障碍服务设置成关闭了。
+至此，基本代码全部完成，运行后也符合预期，系统能升级成功。升级成功后，也能自动点击，删掉 OTA 文件。只是设备会多重启一次，体验略差，后续为了优化体验，准备研究刷机 Rom 的源码了。
+在调试最终方案的过程中，也有一些小插曲。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">升级弹窗</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在系统升级弹窗出现时，准备通过关键词研究一下相关代码，看能否直接将刷机的 Rom 的 Api 拿过来直接使用，当时使用如下指令，拿到了弹窗的层级信息：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">adb shell uiautomator dump /sdcard/window_dump.xml
+adb pull /sdcard/window_dump.xml
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">得到的文件如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;yes&#39; ?&gt;
+&lt;hierarchy rotation=&quot;0&quot;&gt;
+    &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.FrameLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[525,357][1395,669]&quot;&gt;
+        &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.LinearLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,369][1383,657]&quot;&gt;
+            &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;android:id/title_container&quot; class=&quot;android.widget.LinearLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,369][1383,465]&quot;&gt;
+                &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;android:id/left_icon&quot; class=&quot;android.widget.ImageView&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[561,393][609,441]&quot; /&gt;
+                &lt;node index=&quot;1&quot; text=&quot;固件升级&quot; resource-id=&quot;android:id/title&quot; class=&quot;android.widget.TextView&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[621,395][753,439]&quot; /&gt;
+                &lt;node index=&quot;2&quot; text=&quot;&quot; resource-id=&quot;android:id/right_icon&quot; class=&quot;android.widget.ImageView&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[765,393][813,441]&quot; /&gt;&lt;/node&gt;
+            &lt;node index=&quot;1&quot; text=&quot;&quot; resource-id=&quot;android:id/titleDivider&quot; class=&quot;android.view.View&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,465][1383,467]&quot; /&gt;
+            &lt;node index=&quot;2&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.FrameLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,467][1383,657]&quot;&gt;
+                &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;android:id/content&quot; class=&quot;android.widget.FrameLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,467][1383,657]&quot;&gt;
+                    &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.LinearLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[537,467][1383,657]&quot;&gt;
+                        &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.ScrollView&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;true&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[543,473][1377,579]&quot;&gt;
+                            &lt;node index=&quot;0&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.LinearLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[543,473][1377,579]&quot;&gt;
+                                &lt;node index=&quot;0&quot; text=&quot;发现一个升级包 : &#39;/storage/emulated/0/update.zip&#39;. 是否要安装升级包?&quot; resource-id=&quot;android.rockchip.update.service:id/notify&quot; class=&quot;android.widget.TextView&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;true&quot; enabled=&quot;true&quot; focusable=&quot;true&quot; focused=&quot;true&quot; scrollable=&quot;false&quot; long-clickable=&quot;true&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[543,473][1377,542]&quot; /&gt;&lt;/node&gt;
+                        &lt;/node&gt;
+                        &lt;node index=&quot;1&quot; text=&quot;&quot; resource-id=&quot;&quot; class=&quot;android.widget.LinearLayout&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;false&quot; enabled=&quot;true&quot; focusable=&quot;false&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[543,579][1377,651]&quot;&gt;
+                            &lt;node index=&quot;0&quot; text=&quot;放弃&quot; resource-id=&quot;android.rockchip.update.service:id/button_cancel&quot; class=&quot;android.widget.Button&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;true&quot; enabled=&quot;true&quot; focusable=&quot;true&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[543,579][959,651]&quot; /&gt;
+                            &lt;node index=&quot;1&quot; text=&quot;安装&quot; resource-id=&quot;android.rockchip.update.service:id/button_ok&quot; class=&quot;android.widget.Button&quot; package=&quot;android.rockchip.update.service&quot; content-desc=&quot;&quot; checkable=&quot;false&quot; checked=&quot;false&quot; clickable=&quot;true&quot; enabled=&quot;true&quot; focusable=&quot;true&quot; focused=&quot;false&quot; scrollable=&quot;false&quot; long-clickable=&quot;false&quot; password=&quot;false&quot; selected=&quot;false&quot; bounds=&quot;[961,579][1377,651]&quot; /&gt;&lt;/node&gt;
+                    &lt;/node&gt;
+                &lt;/node&gt;
+            &lt;/node&gt;
+        &lt;/node&gt;
+    &lt;/node&gt;
+&lt;/hierarchy&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到包名是<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">android.rockchip.update.service</code>，后续就可以往这个方向研究源码了。这也是代码里会加上包名过滤的原因，避免影响其他的弹窗。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">getRootInActiveWindow</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前是使用 getRootInActiveWindow 方法来获取想要的 AccessibilityNodeInfo。结果发现有时候能拿到当前弹窗的 Node，通过 findAccessibilityNodeInfosByText 可以找到想要的按钮，可是有时候又找不到。后面还发现升级成功后的删除弹窗， 竟然不是一个 Dialog，而是一个 Activity。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">adb shell dumpsys window | grep -A 5 &quot;Window #&quot;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">得到的结果如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2025/6/7.jpg" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当前的弹窗它竟然是一个 Activity ！！！</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">android.rockchip.update.service/android.rockchip.update.service.NotifyDeleteActivity</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可能是因为 Activity，getRootInActiveWindow 就无法获取到弹窗的 Node 了。实在搞不懂为什么 Rom 会这样区分对待。
+getRootInActiveWindow 不好使，最后发现 onAccessibilityEvent 回调方法里的参数 <strong style="font-weight:bold;color:#111111;">event: AccessibilityEvent</strong>，它有个 source 属性，直接就可以返回 AccessibilityNodeInfo，那这个 Node 能不能找到对应的按钮呢？
+试了一下，果然可以。所以直接用回调里的 event 即可了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">Service 无响应</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在调试过程中，Service 一启动就会无响应，因为也是通过 AI 拿到的代码，不是所有代码都清楚作用，于是一行一行代码注释，终于找到罪魁祸首：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">override fun onServiceConnected() {
+    LogUtils.e(TAG, &quot;onServiceConnected&quot;)
+    val info = AccessibilityServiceInfo().apply {
+        eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED or
+                AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED
+        feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+        notificationTimeout = 100
+        flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS or
+                AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {
+            flags = flags or AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE
+        }
+    }
+    serviceInfo = info
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在 onServiceConnected 方法里，给 info 设置的 flags 会导致 Service 无响应。当把 flags 设置代码去掉之后，Service 就恢复正常了。这几个 flag 简单了解了一下，去掉也不影响当前业务。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">Service 崩溃</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">为了测试自动点击，我写了个测试代码，</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">debug.setOnClickListener {
+    try {
+        // 1. 构造Intent并设置ComponentName
+        val intent = Intent()
+        val component = ComponentName(
+            &quot;android.rockchip.update.service&quot;,  // 包名
+            &quot;android.rockchip.update.service.NotifyDeleteActivity&quot; // 完整类名
+        )
+        intent.setComponent(component)
+
+        // 2. 添加系统级Flags（可选）
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+        // 3. 验证并启动Activity
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Log.e(&quot;Launch&quot;, &quot;Activity不存在或无权访问&quot;)
+        }
+    } catch (e: SecurityException) {
+        Log.e(&quot;Launch&quot;, &quot;权限不足: &quot; + e.message)
+        // 尝试通过系统签名或Root权限提升
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">代码会打开一个升级后删除 OTA 的弹窗，我进行模拟点击。测试时，发现只要进行第二次模拟点击时，Service 就会崩溃。最终找到原因，是 Node 执行完必须进行 recycle，不然就会崩溃。这通过 AI 写代码，我也挺崩溃的- -。
+最后加上 finally 块：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">finally {
+    rootNode.recycle()
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此所有流程全部结束，等待后续源码阅读，看是否可以优化。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">总结</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">因为有 Launcher，具备一定的系统权限，我们能做的事情就比较多，这次升级 Rom 也算是顺利完成。
+本文通过 AI 给出了很多代码，但是能用的非常少，而且它不会告诉你它做不到，这也是我之前就说过的 AI 的缺点，它一定会给你一个答案，然后你尝试之后发现根本不能用，浪费很多时间，所以针对 AI 的学习还是要辩证着看，取其精华，去其糟粕。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android Launcher 升级 Rom">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

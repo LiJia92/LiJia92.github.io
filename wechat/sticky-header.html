@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 列表 Header 吸顶效果 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2018-07-23 · 约 3164 字</div>
+  <h1>Android 列表 Header 吸顶效果</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">现在 Android 开发中列表 Header 吸顶效果比较常见了，针对 ListView、RecyclerView 都有多种实现方式。之前开发也碰到过，都是用的三方库或者框架。今天主要写下直接利用 Android 原生来进行实现。
+页面大致如下：</p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/07/231.png" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">针对本文的场景，相当于一个 HEADER 对应一组 Image。所以，最好是有个 Map 结构，然后每个 Image item 都能清楚的知道自己所属哪个 HEADER。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class MatchedImageAdapter(val map: LinkedHashMap&lt;HEADER, List&lt;Image&gt;&gt;)
+    : RecyclerView.Adapter&lt;RecyclerView.ViewHolder&gt;() {
+
+    private val dataList = ArrayList&lt;Any&gt;()
+    private var currentKey: HEADER? = null
+
+    init {
+        map.forEach {
+            dataList.add(it.key)
+            dataList.addAll(it.value)
+        }
+    }
+}
+
+/**
+ * path         图片地址
+ * key          对应的 HEADER
+ * date         时间
+ * selected     是否选中
+ */
+class Image(val path: String?, var key: HEADER?, var date: Long = 0, var lat: Double = 0.0,
+              var lng: Double = 0.0, var selected: Boolean = false) : Serializable
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后按照这个结构，利用泛型，来实现列表多 Type 效果。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private val dataList = ArrayList&lt;Any&gt;()
+
+override fun getItemViewType(position: Int): Int {
+    return if (dataList[position] is Header) {
+        TYPE_HEADER
+    } else {
+        TYPE_IMAGE_ITEM
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">另外，针对图片 Item 的网格布局，直接使用 GridLayoutManager 的 spanSize 就能达到效果。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val layoutManager = GridLayoutManager(context, MAX_COUNT)
+layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+    override fun getSpanSize(position: Int): Int {
+        return if (adapter!!.getItemViewType(position) == HEADER) {
+            1
+        } else {
+            3
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到 Header 有个“选择”按钮是可以点击的，所以就有了本文。不用支持点击的话，可以直接使用 ItemDecoration 来达到吸顶效果了。
+如果要支持点击效果，我采取的方案是：<strong style="font-weight:bold;color:#111111;">在 RecyclerView 上面盖一层 Header，然后用过滑动监听来设置 Header 的偏移，从而达到吸顶效果。</strong>
+那么核心便是滑动的监听了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">matchedImageRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+    override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+        if (CollectionUtils.isEmpty(adapter!!.getDataList())) {
+            return
+        }
+
+        // 获取到视图中第一个可见的item的position
+        val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+
+        if (firstVisiblePosition &lt; 0 || firstVisiblePosition &gt;= adapter!!.getDataList().size) {
+            return
+        }
+
+        // 获取第一个 item 的 VH
+        val viewHolder = matchedImageRv.findViewHolderForLayoutPosition(firstVisiblePosition) ?: return
+
+        // 记录当前位置的数据
+        currentHeader = adapter!!.getDataList()[firstVisiblePosition]
+
+        // 是否应该平移 HEADER
+        val shouldTranslationY = shouldTranslationY(firstVisiblePosition)
+
+        // 根据高度及 top 值判断是否需要设置 translationY
+        val height = autoMatchHeader.height
+        if (shouldTranslationY &amp;&amp; viewHolder.itemView.height + viewHolder.itemView.top &lt; height) {
+            val translationY = viewHolder.itemView.height + viewHolder.itemView.top - height
+            autoMatchHeader.translationY = translationY.toFloat()
+        } else {
+            autoMatchHeader.translationY = 0f
+        }
+
+           // 更新悬浮 Header 信息
+        refreshHeader()
+    }
+})
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看下 shouldTranslationY 的代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 只有下一行数据是 Header，才应该进行平移
+ */
+fun shouldTranslationY(position: Int): Boolean {
+    if (adapter!!.getDataList()[position] is HEADER) {
+        return false
+    }
+
+    for (i in 0 until 3) {
+        if (position + 1 + i &lt; adapter!!.getDataList().size) {
+            val data = adapter!!.getDataList()[position + 1 + i]
+            if (data is HEADER) {
+                return true
+            }
+        }
+    }
+    return false
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">position 是当前位置，如果当前位置是 HEADER，那么下一行数据肯定不是 HEADER，直接返回 false。如果当前位置是图片 item，那么往下数 3 个，一定能得到下一行数据的类型。中途有可能被 HEADER 类型截断，从而直接返回。然后结合高度，top 值，来判断是否需要设置 translationY，从而达到吸顶效果。
+然后看下覆盖 HEADER 的点击事件设置：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">autoMatchHeader.selectAllTv.setOnClickListener {
+    val header = if (currentHeader is Image) {
+        (currentHeader as Image).key
+    } else {
+        currentHeader
+    } as HEADER
+
+    adapter!!.onAllClick(header, adapter!!.getDataList().indexOf(header))
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过滑动获取当前位置的数据 currentHeader，然后改变这个 currentHeader 对应数据中的具体分组的数据。
+写的有点乱，但是要点都写出了，over~</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 列表 Header 吸顶效果">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

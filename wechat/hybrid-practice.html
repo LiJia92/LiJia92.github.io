@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android Hybrid开发实战之图片的交互 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-01-14 · 约 13484 字</div>
+  <h1>Android Hybrid开发实战之图片的交互</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前言</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近一直在学习Hybrid开发，如何在H5页面调用Android原生接口，并返回值，以及回调。学习了一段时间，总算是有点收获，效果也做出来了。于是写下这篇博客，记录一下。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">本文中我以2个接口示例，来进行讲解。第1个示例很简单，就是调用接口，返回登录Token；第2个示例是H5调用接口，弹出Android原生界面进行图片选择，选择完之后返回选择图片的Base64格式的字符串。然后H5页面接收返回的字符串，回调进行图片显示。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Base64</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先，讲解一下Base64。图片也是一个文件，可以通过Base64返回这个文件的Base64字符串，这个字符串可以直接放到H5的img标签进行显示。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面做个示例，方便大家了解。
+新建一个Html文件，编写代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;html&gt;
+&lt;head&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;img src=&quot;data:image/jpg;base64,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&quot; /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到img标签的src属性跟一串字符。”data:image/jpg;base64“表示数据的类型，之后的一大长串就是Base64串。直接浏览器打开，显示如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+可以看到图片正常显示了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">有了这个基础之后，后面的思路就很清楚了：Android层选择好图片后，返回图片的Base64格式的String对象到H5，H5回调拿来显示即可。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">实践</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">本次例子采用三方库<a href="https://github.com/pedant/safe-java-js-webview-bridge" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">safe-java-js-webview-bridge</a>进行Android、JS互调，<a href="https://github.com/liuling07/PhotoPicker" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">PhotoPicker</a>进行图片选择。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">AS新建项目，添加gradle依赖。PhotoPicker不支持gradle依赖，直接将代码下载下来后导入library Module。
+添加asserts目录，将H5页面，js、css文件添加进去。这里我直接将项目中的联调页面扔进去了，以求简便。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">根据safe-java-js-webview-bridge三方库的使用说明，新建MyBridge类。这个类就是定义Android、JS互调接口的类。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyBridge {
+
+    private static WebViewActivity activity;
+
+    public static void init(WebViewActivity activity) {
+        MyBridge.activity = activity;
+    }
+
+    public static void send(WebView webView, JSONObject jsonObject, JsCallback jsCallback) {
+        try {
+            String method = jsonObject.getString(&quot;cmd&quot;);
+            switch (method) {
+                case &quot;getToken&quot;:
+                    String token = activity.getToken();
+                    if (jsCallback != null) {
+                        jsCallback.apply(token);
+                    }
+                    break;
+                case &quot;getPictures&quot;:
+                    activity.getPictures(jsCallback);
+                    break;
+                default:
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (JsCallback.JsCallbackException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个类需要根据H5页面那边调用接口的格式来进行编写，示例中的接口调用是这样子的。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">function connectWebViewJavascriptBridge(callback) {
+    if (window.WebViewJavascriptBridge) {
+        callback(WebViewJavascriptBridge);
+    } else {
+        document.addEventListener(&#39;WebViewJavascriptBridgeReady&#39;, function() {
+            callback(WebViewJavascriptBridge)
+        }, false);
+    }
+};
+
+$(document).ready(function() {
+    connectWebViewJavascriptBridge(function(bridge) {
+
+        $(&quot;#getTokenBtn&quot;).click(function() {
+            bridge.send({
+                &quot;cmd&quot;: &quot;getToken&quot;,
+                &quot;data&quot;:{}
+            }, function responseCallback(responseData) {
+                $(&quot;#logger&quot;)[0].innerHTML += responseData + &quot;&lt;br&gt;&quot;;
+            });
+        });
+
+        $(&quot;#addPicBtn&quot;).click(function() {
+            bridge.send({
+                &quot;cmd&quot;: &quot;getPictures&quot;,
+                &quot;data&quot;: {
+                    &quot;count&quot;: 9
+                }
+            }, function responseCallback(responseData) {
+                var imgs = JSON.parse(responseData).data.imgs;
+                for (var i = 0; i &lt; imgs.length; i++) {
+                    $(&#39;#picList&#39;).append(&#39;&lt;li&gt;&lt;img src=&quot;data:image/jpeg;base64,&#39; + imgs[i] + &#39;&quot; alt=&quot;image&quot; width=&quot;50&quot; height=&quot;50&quot;&gt;&lt;/li&gt;&#39;);
+                }
+            });
+        });
+    });
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以我的MyBridge类只定义了一个send方法，在其内部接收Json数据，根据cmd参数判断到底要执行哪个方法。我把方法写在引用WebView的Activity中了，所以添加了一个init方法，进行初始化，保持WebViewActivity对象，以便调用。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面编写WebViewActivity类。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class WebViewActivity extends Activity {
+
+    private WebView webView;
+
+    public static JsCallback onceCallback; // 单次回调
+
+    private static final int PICK_PHOTO_REQUEST = 1; // 选择图片请求码
+    private static final int MAX_PHOTO_NUM = 9; // 最大选择数量
+    private static boolean showCamera = true; // 是否打开相机
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyBridge.init(this);
+        webView = new WebView(this);
+        // 切换到内容视图
+        setContentView(webView);
+        // 获取WebView配置
+        WebSettings ws = webView.getSettings();
+        // 启用JavaScript
+        ws.setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new InjectedChromeClient(&quot;WebViewJavascriptBridge&quot;, MyBridge.class));
+        // 载入assets目录下的一个页面
+        webView.loadUrl(&quot;file:///android_asset/native-api.html&quot;);
+    }
+
+    public String getToken() {
+        return &quot;hello world&quot;;
+    }
+
+    public void getPictures(JsCallback jsCallback) {
+        onceCallback = jsCallback;
+        Intent intent = new Intent(this, PhotoPickerActivity.class);
+        intent.putExtra(PhotoPickerActivity.EXTRA_SHOW_CAMERA, showCamera);
+        intent.putExtra(PhotoPickerActivity.EXTRA_SELECT_MODE, PhotoPickerActivity.MODE_MULTI);
+        intent.putExtra(PhotoPickerActivity.EXTRA_MAX_MUN, MAX_PHOTO_NUM);
+        startActivityForResult(intent, PICK_PHOTO_REQUEST);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_PHOTO_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                // 拼接返回Json
+                ArrayList&lt;String&gt; result = data.getStringArrayListExtra(PhotoPickerActivity.KEY_RESULT);
+                JSONObject dataJson = new JSONObject();
+                JSONObject images = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
+                for (int i = 0; i &lt; result.size(); i++) {
+                    File file = new File(result.get(i));
+                    try {
+                        FileInputStream fis = new FileInputStream(file);
+                        byte[] dataInByte = steamToByte(fis);
+                        String msg = Base64.encodeToString(dataInByte, Base64.DEFAULT);
+                        // 通过Base64方式返回的String会包含许多\n，需去除掉
+                        msg = msg.replaceAll(&quot;\n&quot;, &quot;&quot;);
+                        jsonArray.put(msg);
+                        fis.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    images.put(&quot;imgs&quot;, jsonArray);
+                    dataJson.put(&quot;data&quot;, images);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // 回调
+                try {
+                    if (onceCallback != null) {
+                        onceCallback.apply(dataJson.toString());
+                    }
+                } catch (JsCallback.JsCallbackException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public static byte[] steamToByte(InputStream input) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int len;
+        byte[] b = new byte[1024];
+        while ((len = input.read(b, 0, b.length)) != -1) {
+            baos.write(b, 0, len);
+        }
+        byte[] buffer = baos.toByteArray();
+        return buffer;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到MyBridge中的send方法最终会调用到WebViewActivity中的getToken方法与getPictures方法。
+getToken方法很简单，仅仅是返回一个”Hello world“。getPictures方法则是打开PhotoPicker三方库中的Activity。在选完图片之后，利用onActivityResult接收返回的图片路径。然后利用Base64进行处理，得到我们需要的String对象，返回给JsCallback进行回调。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在JS中处理回调参数的代码是<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">var imgs = JSON.parse(responseData).data.imgs;</code>，所以我们返回的String对象也需要时JSON格式，并且包含data、imgs属性。类似这样：{&quot;data&quot;:{&quot;imgs&quot;:[&quot;string1&quot;, &quot;string2&quot;]}}。所以我在onActivityResult中进行了拼接处理。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最后运行程序，得到的效果大致是这样的。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice2.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+可以看到，在我们的H5页面确实显示了图片。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">题外话</h2>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">话题1</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在引入PhotoPicker的时候，若在选择图片碰到很长的图片，例如微博长图，400*8000px这样的图，会导致在时容易出现OOM。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/hybrid-practice3.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+在原来库中进行压缩的inSampleSize是这样计算的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    // 源图片的宽度
+    int width = options.outWidth;
+    int height = options.outHeight;
+    int inSampleSize = 1;
+    int min = Math.min(width, height);
+    int maxReq = Math.max(reqWidth, reqHeight);
+    if(min &gt; maxReq) {
+        inSampleSize = Math.round((float) min / (float) maxReq);
+    }
+    return inSampleSize;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用这种方式，计算得到的inSampleSize值，在压缩这种长图后得到的Bitmap仍然会很大，导致OOM。
+改成如下则不会OOM了，但是图片会变得模糊一些（不可避免的，总要舍弃一些东西，微信也是这样）。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    // 源图片的宽度
+    int width = options.outWidth;
+    int height = options.outHeight;
+    int inSampleSize = 1;
+
+    if (width &gt; reqWidth || height &gt; reqHeight) {
+        int widthRadio = Math.round(width * 1.0f / reqWidth);
+        int heightRadio = Math.round(height * 1.0f / reqHeight);
+        inSampleSize = Math.max(widthRadio, heightRadio);
+    }
+    return inSampleSize;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个问题我已经跟作者反应，并且已经改正了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">话题2</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">拼接好String字符串，准备返回给JsCallback进行回调时会出错。Log信息：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Log：I/chromium: [INFO:CONSOLE(1)] &quot;Uncaught SyntaxError: Unexpected identifier&quot;, source: (1)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">后面我看到JsCallback里的apply函数：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public void apply (Object... args) throws JsCallbackException {
+    if (mWebViewRef.get() == null) {
+        throw new JsCallbackException(&quot;the WebView related to the JsCallback has been recycled&quot;);
+    }
+    if (!mCouldGoOn) {
+        throw new JsCallbackException(&quot;the JsCallback isn&#39;t permanent,cannot be called more than once&quot;);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (Object arg : args){
+        sb.append(&quot;,&quot;);
+        boolean isStrArg = arg instanceof String;
+        if (isStrArg) {
+            sb.append(&quot;\&quot;&quot;);
+        }
+        sb.append(String.valueOf(arg));
+        if (isStrArg) {
+            sb.append(&quot;\&quot;&quot;);
+        }
+    }
+    String execJs = String.format(CALLBACK_JS_FORMAT, mInjectedName, mIndex, mIsPermanent, sb.toString());
+    Log.d(&quot;JsCallBack&quot;, execJs);
+    mWebViewRef.get().loadUrl(execJs);
+    mCouldGoOn = mIsPermanent &gt; 0;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">他会在参数的前后加上双引号。因为返回的String对象是类似Json格式，里面也会包含双引号，这就会导致传递出错。
+这个问题我也已经提了issue给作者，但目前还没有什么回应。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">碰到问题需要解决，在作者回应之前只能自己改咯。
+将代码下载下来，丢到工程中，不采用gradle依赖的方式了。也就三个类：InjectedChromeClient、JsCallback、JsCallJava。手动将apply中的代码改成如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public void apply (Object... args) throws JsCallbackException {
+    if (mWebViewRef.get() == null) {
+        throw new JsCallbackException(&quot;the WebView related to the JsCallback has been recycled&quot;);
+    }
+    if (!mCouldGoOn) {
+        throw new JsCallbackException(&quot;the JsCallback isn&#39;t permanent,cannot be called more than once&quot;);
+    }
+    StringBuilder sb = new StringBuilder();
+    for (Object arg : args){
+        sb.append(&quot;,&quot;);
+        boolean isStrArg = arg instanceof String;
+        if (isStrArg) {
+            sb.append(&quot;&#39;&quot;);
+        }
+        sb.append(String.valueOf(arg));
+        if (isStrArg) {
+            sb.append(&quot;&#39;&quot;);
+        }
+    }
+    String execJs = String.format(CALLBACK_JS_FORMAT, mInjectedName, mIndex, mIsPermanent, sb.toString());
+    Log.d(&quot;JsCallBack&quot;, execJs);
+    mWebViewRef.get().loadUrl(execJs);
+    mCouldGoOn = mIsPermanent &gt; 0;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">双引号改成单引号就行了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是只有又会引发新的问题：返回的String不能包含单引号。这确实比较蛋疼了，只能根据需求来吧，能解决当前问题的就行。延伸到既包含双引号又包含单引号的String对象又该如何传递呢？这里抛个疑问，大家可以共同探讨。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">补充一点：通过Base64返回的String串来显示图片只适合小图片，太大的图片需要压缩后再返回，不然也会OOM。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">最后</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://github.com/LiJia92/HybridPhotoPicker" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">源码下载</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android Hybrid开发实战之图片的交互">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

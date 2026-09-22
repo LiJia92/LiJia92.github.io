@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 串口通信小记 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2020-07-15 · 约 7135 字</div>
+  <h1>Android 串口通信小记</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近项目有需要用到串口通信，硬件同事通过串口给应用层发送数据，稍微记录一下。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">串口</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">串口通信（Serial Communications）是指外设和计算机间，通过数据信号线 、地线、控制线等，按位进行传输数据的一种通讯方式。串口通信是计算机中非常常见的通信方式，比如一些有线鼠标、键盘、打印机等都是通过串口进行通信的。串口的通信一般使用3根线完成，分别是地线、发送线（tx）、接收线（rx）。
+串口中有五个重要的参数：串口设备名、波特率、奇偶校验位、数据位、停止位。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">设备名称：串口的名称。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">波特率：传输速率的参数，波特率和传输距离成反比。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">校验位：在串口通信中一种简单的检错方式，有四种检错方式：偶、奇、高和低，允许无校验位。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">数据位：通信中实际数据位的参数</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">停止位：用于表示单个包的最后一位。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">接入</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Google 官方有基于<a href="https://github.com/cepr/android-serialport-api" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">串口通信的 demo</a>，部分代码可以用以借鉴。在 github 上有几个三方库，封装了串口通信，项目决定采用的是<a href="https://github.com/licheedev/Android-SerialPort-API" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android-SerialPort-API</a>。
+打开串口：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private synchronized void doOpenSerial() throws OpenSerialPortException {
+    if (mSerialPort != null) {
+        close();
+    }
+    try {
+        mSerialPort = SerialPort.newBuilder(&quot;/dev/ttyMT1&quot;, 115200).build();
+
+        mInputStream = new BufferedInputStream(mSerialPort.getInputStream());
+        mOutputStream = new BufferedOutputStream(mSerialPort.getOutputStream());
+
+        startReadThread();
+
+    } catch (Exception e) {
+        // 清理数据
+        close();
+        // 抛出异常
+        throw new OpenSerialPortException(e);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在打开串口后，开启一个线程循环读取数据。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">读取与解析</h2>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 默认读线程
+ */
+private class DefaultReadThread extends Thread {
+
+    private final byte[] mReceiveBuffer;
+    private boolean mRunning = true;
+    private final byte[] buffer;
+
+    private int index;
+
+    DefaultReadThread() {
+        // 接收收据缓存
+        mReceiveBuffer = new byte[16];
+        //多缓存一点，以防万一
+        buffer = new byte[256];
+        index = 0;
+    }
+
+    @Override
+    public void run() {
+
+        while (mRunning) {
+            try {
+                if (mInputStream.available() &gt; 0) {
+                    int len = mInputStream.read(mReceiveBuffer);
+                    if (len &gt; 0) {
+                        System.arraycopy(mReceiveBuffer, 0, buffer, index, len);
+                        index += len;
+                        Arrays.fill(mReceiveBuffer, (byte) 0);
+                        while (true) {
+                            //查找数据头和数据尾
+                            int start = -1;
+                            int end = -1;
+                            for (int i = 0; i &lt; index; i++) {
+                                if (buffer[i] == SerialProtocol.HEAD1 &amp;&amp; i + 1 &lt; index &amp;&amp; buffer[i + 1] == SerialProtocol.HEAD2) {
+                                    start = i;
+                                }
+                                if (start != -1 &amp;&amp; buffer[i] == SerialProtocol.END &amp;&amp; i + 1 &lt; index &amp;&amp; buffer[i + 1] == SerialProtocol.END){
+                                    end = i + 1;
+                                }
+                                if (end != -1) {
+                                    break;
+                                }
+                            }
+                            //说明前面有脏数据，把数据前移start位
+                            if (start &gt; 0) {
+                                for (int i = 0; i &lt; buffer.length &amp;&amp; i + start &lt; buffer.length; i++) {
+                                    buffer[i] = buffer[i + start];
+                                }
+                                start = 0;
+                                end = end - start;
+                                index -= start;
+                            }
+                            //如果找到了
+                            if (start == 0 &amp;&amp; end &gt; start) {
+                                //先把数据写入真实数据区域
+                                byte[] data = new byte[end - start + 1];
+                                System.arraycopy(buffer, start, data, 0, data.length);
+                                //然后向左移动数据
+                                for (int i = start; i &lt; buffer.length; i++) {
+                                    if (i + data.length &lt; buffer.length) {
+                                        buffer[i] = buffer[i + data.length];
+                                    } else {
+                                        buffer[i] = 0;
+                                    }
+                                }
+                                //把index前移
+                                index -= data.length;
+                                //这个其实应该不会发生
+                                index = Math.max(0, index);
+                                ReadBytes readBytes = new ReadBytes(data, bigEndian());
+                                //将数据交给处理器来处理
+                                SerialProtocol protocol = new SerialProtocol(readBytes);
+                                if (protocol.isValid()) {
+                                    // 解析协议数据
+                                    parseData(new ReadBytes(protocol.data, bigEndian()));
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    // 暂停一点时间，免得一直循环造成CPU占用率过高
+                    Thread.sleep(10);
+                }
+
+            } catch (Exception e) {
+                LogUtils.e(TAG, &quot;DefaultReadThread exception: &quot;, e);
+            }
+        }
+    }
+
+    /**
+     * 关闭读线程
+     */
+    void close() {
+        mRunning = false;
+        try {
+            this.interrupt();
+        } catch (Exception e) {
+            LogUtils.e(TAG, &quot;DefaultReadThread close: &quot;, e);
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">一般会制定通讯协议，一个有效包需要完整包含起始、终止、以及校验位等，通过 InputStream 读取到字节数组后按照协议进行解析数据。读取有几个注意点：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">数据包可能有多个类型，有的包 x 个字节，有的包 y 个字节，如果底层硬件都是往一个串口发送数据，那么就要做好解析的流程。<strong style="font-weight:bold;color:#111111;">每次读取应该是 x、y 的最大公约数</strong>，这样不管是 x 包还是 y 包发过来，我读取 n 次之后都能组装成一个完整的包，进行解析。例如：x = 30，y = 40，那么最好就是每次读取 10 个字节，这样读3次能组装成一个 x 的包，读 4 次组装成一个 y 的包。当然也可以直接一口气读取最大的值，40。但是这样就会导致一个问题：如果我发的是 x 包，只有 30 个字节，mInputStream.read(mReceiveBuffer) 会一直读满 40 个字节才返回，那么就会出现前 30 个字节是 x 包，后 10 个字节是 y 包的一部分，这样在解析的时候反而增加了成本。所以，目前项目中采用的就是 16 作为最大公约数，依此定义最小的包 16 个字节，其他的包必须是 16 的倍数，例如 32、64、128 等等。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">所有的数据会先读取到一个 buffer 中，通过解析起始、结束标记位，来取出一个完整的包，再将 buffer 的剩余位左移此包的长度。例如我读取一个 64 字节的包，在读取多次后，buffer 长度正好为 70（可能有脏数据导致 buffer 长度不为 16 的倍数），假设解析到 start = 2,end = 66，start 之前的 2 个字节应该作为脏数据被抛弃掉，先将 2-&gt;66 位置的字节组装成 byte 数组抛到上层去解析。同时 buffer 左移 66 位，buffer 中就会只剩下 3 个字节了。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">如何从 buffer 里解析出一个完整的包呢？通过协议，找到起始的 start index，找到终止的 end index，然后就可以确定一个完成的包了。但是如果内容是不确定的，那么就有可能导致找到的 end index 会提前。例如，结束字节为固定的 OxFF，但是内容很有可能就包含了 OxFF 这个字节，所以 end index 就会小于实际值，那么取出来的包就不完整，如此便会导致后面的包持续错位，一直解析错误。现在我采取的做法很“古板”，制定的结束字节为 2 个 OxFF，那么我便会一直找连续的 OxFF，代码可以简单一点，找连续的 3 个、4 个、5 个，然后取最后一个 OxFF 的 index 作为 end index。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">byte 数组作为通用结构，硬件层一般是 c、c++，写入的字节一般是小端序，而 Java 一般是大端序，所以需要进行转换。</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class ReadBytes {
+
+    // 是否需要高低位转换
+    private final boolean needHighLowCovert;
+    private final byte[] data;
+    private final int len;
+    private int position = 0;
+
+    public ReadBytes(byte[] data) {
+        this(data, false);
+    }
+
+    public ReadBytes(byte[] data, boolean needHighLowCovert) {
+        this.data = data;
+        this.len = data.length;
+        this.needHighLowCovert = needHighLowCovert;
+    }
+
+    public final byte read() throws IndexOutOfBoundsException {
+        return data[position++];
+    }
+
+    public void reset() {
+        position = 0;
+    }
+
+    /**
+     * 读取无符号byte
+     *
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
+    public final int readUnsignedByte() throws IndexOutOfBoundsException {
+        return read() &amp; 0xff;
+    }
+
+    public final byte[] readBytes(int len) throws IndexOutOfBoundsException {
+        byte[] value = Arrays.copyOfRange(data, position, position + len);
+        position += len;
+        return value;
+    }
+
+    public final boolean readBoolean() throws IndexOutOfBoundsException {
+        byte value = read();
+        return value == 1;
+    }
+
+    public final int readShort() throws IndexOutOfBoundsException {
+        int value;
+        if (needHighLowCovert) {
+            value = (data[position++] &amp; 0xff)
+                    | ((data[position++] &amp; 0xff) &lt;&lt; 8);
+        } else {
+            value = ((data[position++] &amp; 0xff) &lt;&lt; 8)
+                    | data[position++];
+        }
+        return value;
+    }
+
+    public final int readInt() throws IndexOutOfBoundsException {
+        int value;
+        if (needHighLowCovert) {
+            value = ((data[position++] &amp; 0xFF)
+                    | ((data[position++] &amp; 0xFF) &lt;&lt; 8)
+                    | ((data[position++] &amp; 0xFF) &lt;&lt; 16)
+                    | ((data[position++] &amp; 0xFF) &lt;&lt; 24));
+
+        } else {
+            value = ((data[position++] &amp; 0xFF) &lt;&lt; 24)
+                    | ((data[position++] &amp; 0xFF) &lt;&lt; 16)
+                    | ((data[position++] &amp; 0xFF) &lt;&lt; 8)
+                    | (data[position++] &amp; 0xFF);
+        }
+        return value;
+    }
+
+    public final long readLong() throws IndexOutOfBoundsException {
+        if (needHighLowCovert) {
+            return (((long) (data[position++]) &amp; 0xFF)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 8)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 16)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 24)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 32)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 40)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 48)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 56)
+            );
+        } else {
+            return (((long) (data[position++] &amp; 0xFF) &lt;&lt; 56)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 48)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 40)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 32)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 24)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 16)
+                    | ((long) (data[position++] &amp; 0xFF) &lt;&lt; 8)
+                    | ((long) (data[position++] &amp; 0xFF)));
+        }
+    }
+
+    public final float readFloat() throws IndexOutOfBoundsException {
+        return Float.intBitsToFloat(readInt());
+    }
+
+    public final double readDouble() throws IndexOutOfBoundsException {
+        return Double.longBitsToDouble(readLong());
+    }
+}
+</code></pre>
+<ol start="5" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">串口在进行调试时不太方便，需要设备连接硬件，有时候在项目初始阶段，硬件采买十分有限。串口无非是不停写入数据然后应用层解析，所以为了方便调试，可以采用 Socket 方式（例如蓝牙）连接另一个客户端（手机人人都有），进行模拟写入数据。Java 在写入数据时，可以使用<strong style="font-weight:bold;color:#111111;">buffer.order(ByteOrder.LITTLE_ENDIAN)</strong> 来模拟底层硬件的小端序写入，这样解析端无需进行修改。</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private BluetoothSocket createSocket() throws IOException {
+    BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(macAddress);
+    BluetoothSocket socket = device.createRfcommSocketToServiceRecord(uuid);
+    socket.connect();
+    return socket;
+}
+
+public OutputStream connect() throws IOException {
+    socket = createSocket();
+    os = socket.getOutputStream();
+    return os;
+}
+
+@Override
+public void encode(OutputStream os) throws IOException {
+    byte[] bytes = toBytes();
+    os.write(bytes);
+}
+
+/**
+ * 按照协议组装模拟数据
+ */
+public byte[] toBytes() {
+    byte[] data = toData();
+    ByteBuffer buffer = ByteBuffer.allocate(data.length + 9);
+    buffer.order(ByteOrder.LITTLE_ENDIAN);
+    // 帧头，两字节 0xA5 0x5A
+    buffer.put((byte) 0xA5);
+    buffer.put((byte) 0x5A);
+    int length = data.length + 5;
+    // 帧长 帧长不包括帧（起始+EOF）
+    // len=1（帧长）+数据长度+4（校验）
+    // 所以=1 + 43 + 4
+    buffer.put((byte) length);
+    buffer.put(data);
+    // 校验4 CRC-32数据域校验结果，CRC参数见*
+    buffer.putInt(0xFFFFFFFF);
+    // EOF2 0xC3 0xC3
+    buffer.put((byte) 0xC3);
+    buffer.put((byte) 0xC3);
+    return buffer.array();
+}
+</code></pre></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 串口通信小记">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

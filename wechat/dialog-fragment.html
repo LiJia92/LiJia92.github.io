@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>记一次 DialogFragment 的错误使用 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2023-05-22 · 约 6879 字</div>
+  <h1>记一次 DialogFragment 的错误使用</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近测试同学反馈一个问题：一个弹窗展示出来之后，点击按钮消失了。然后回到登录页再切回来时，这个弹窗又展示出来了。看到具体的代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class HintDialog extends DialogFragment {
+
+    private String content;
+    private View.OnClickListener positiveClickListener;
+    private String positive;
+
+    public static HintDialog show(FragmentManager fm, String content, String positive,
+                                  View.OnClickListener positiveClickListener) {
+        HintDialog hintDialog = new HintDialog();
+        hintDialog.content = content;
+        hintDialog.positive = positive;
+        hintDialog.positiveClickListener = positiveClickListener;
+        hintDialog.show(fm, &quot;HintDialog&quot;);
+        return hintDialog;
+    }
+
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        return JCommonDialog.createDialog(getActivity(), content, positive, positiveClickListener);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后看到 JCommonDialog createDialog 方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">fun createDialog(context: Context, title: String, btnText: String, listener: View.OnClickListener): Dialog {
+    return if (isRobot()) {
+        JCommonDialog(
+            context,
+            DialogParams(title, &quot;&quot;, null, null, btnText, listener, false)
+        )
+    } else {
+        AlertDialog.Builder(context)
+            .setMessage(title)
+            .setCancelable(false)
+            .setPositiveButton(btnText) { _: DialogInterface?, _: Int -&gt;
+                listener.onClick(null)
+            }
+            .create()
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">isRobot 为 true 时，便会出现那个问题，如果是 false，使用 AlterDialog 便不会有那个问题。JCommonDialog 只是使用了一个自定义的布局，包含通用的标题、描述、左边按钮、右边按钮等元素，支持设置各种参数：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class JCommonDialog(context: Context, private val params: DialogParams) : Dialog(context, R.style.dialog){
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setData()
+    }
+
+    private fun setData() {
+        viewBinding.titleTv.isGone = TextUtils.isEmpty(params.title)
+        viewBinding.titleTv.text = params.title
+        viewBinding.descTv.isGone = !TextUtils.isEmpty(params.title) &amp;&amp; TextUtils.isEmpty(params.desc)
+        viewBinding.descTv.text = params.desc
+        params.rightText?.let {
+            viewBinding.rightTv.visibility = View.VISIBLE
+            viewBinding.rightTv.text = params.rightText
+            viewBinding.rightTv.setOnClickListener {
+                if (params.autoDismiss) {
+                    dismiss()
+                }
+                params.rightClickListener?.onClick(it)
+            }
+        } ?: kotlin.run {
+            viewBinding.rightTv.visibility = View.GONE
+        }
+
+        params.leftText?.let {
+            if (viewBinding.rightTv.visibility == View.GONE) {
+                viewBinding.leftTv.visibility = View.GONE
+                viewBinding.rightTv.visibility = View.VISIBLE
+                viewBinding.rightTv.text = params.leftText
+                viewBinding.rightTv.setOnClickListener {
+                    if (params.autoDismiss) {
+                        dismiss()
+                    }
+                    params.leftClickListener?.onClick(it)
+                }
+            } else {
+                viewBinding.leftTv.visibility = View.VISIBLE
+                viewBinding.leftTv.text = params.leftText
+                viewBinding.leftTv.setOnClickListener {
+                    dismiss()
+                    params.leftClickListener?.onClick(it)
+                }
+            }
+        } ?: kotlin.run {
+            viewBinding.leftTv.visibility = View.GONE
+        }
+        viewBinding.btnLl.isVisible = viewBinding.leftTv.isVisible || viewBinding.rightTv.isVisible
+        viewBinding.leftTv.isSelected = params.selectedLeft
+        viewBinding.rightTv.isSelected = !params.selectedLeft
+        setOnDismissListener {
+            params.closeClickListener?.onClick(viewBinding.closeIv)
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">场景中，autoDismiss 为 true，所以点击按钮后会调 dismiss 方法。从实际情况来看，也确实消失了。只不过在 Activity 重新 onResume 的时候，它又展示出来了。因为是继承自 DialogFragment，怀疑是虽然调了 dialog dismiss 方法，但是这个 fragment 还在。通过如下代码打印相关日志：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val fragment = supportFragmentManager.findFragmentByTag(&quot;HintDialog&quot;)
+LogUtils.e(&quot;TAG&quot;,&quot;fragment:${fragment?.isAdded},${fragment?.isDetached},${fragment?.isInLayout}&quot;)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">得到的结果是：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">true,false,false</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">而如果使用的是 AlertDialog，结果是：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">null,null,null</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过日志印证了猜测，因为场景中并没有用到 DialogFragment 的任何特性，于是直接改成了正常的 Dialog。修改之后问题便没有再出现了。但仍然有个问题困扰着我：都是使用 DialogFragment 的方式，<strong style="font-weight:bold;color:#111111;">为什么 JCommonDialog 会有问题，而系统的 AlertDialog 则不会有问题呢</strong>？
+起初怀疑 AlterDialog dismiss 有自己的逻辑，但是看到的源码中并没有覆写 dismiss 方法，最终调用的都是 Dialog 的 dismiss 方法，将 JCommonDialog 改成继承自 AlertDialog 问题依然存在。有没有可能是 style 引起的？可惜去掉 style 问题依然存在。然后看到 AlertDialog 的其他源码，使用的都是  AlertController 类，看到源码也没啥特别的逻辑：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private final View.OnClickListener mButtonHandler = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        final Message m;
+        if (v == mButtonPositive &amp;&amp; mButtonPositiveMessage != null) {
+            m = Message.obtain(mButtonPositiveMessage);
+        } else if (v == mButtonNegative &amp;&amp; mButtonNegativeMessage != null) {
+            m = Message.obtain(mButtonNegativeMessage);
+        } else if (v == mButtonNeutral &amp;&amp; mButtonNeutralMessage != null) {
+            m = Message.obtain(mButtonNeutralMessage);
+        } else {
+            m = null;
+        }
+
+        if (m != null) {
+            m.sendToTarget();
+        }
+
+        // Post a message so we dismiss after the above handlers are executed
+        mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG, mDialogInterface)
+                .sendToTarget();
+    }
+};
+
+private static final class ButtonHandler extends Handler {
+    // Button clicks have Message.what as the BUTTON{1,2,3} constant
+    private static final int MSG_DISMISS_DIALOG = 1;
+
+    private WeakReference&lt;DialogInterface&gt; mDialog;
+
+    public ButtonHandler(DialogInterface dialog) {
+        mDialog = new WeakReference&lt;&gt;(dialog);
+    }
+
+    @Override
+    public void handleMessage(Message msg) {
+        switch (msg.what) {
+
+            case DialogInterface.BUTTON_POSITIVE:
+            case DialogInterface.BUTTON_NEGATIVE:
+            case DialogInterface.BUTTON_NEUTRAL:
+                ((DialogInterface.OnClickListener) msg.obj).onClick(mDialog.get(), msg.what);
+                break;
+
+            case MSG_DISMISS_DIALOG:
+                ((DialogInterface) msg.obj).dismiss();
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">点击一个按钮后，会执行相应的逻辑，然后立马就发一个 dismiss 的 message，执行的也是 Dialog 自身的 dismiss 方法，问题应该不在 AlterDialog。于是尝试屏蔽 JCommonDialog 的代码，不停尝试。最终发现：<strong style="font-weight:bold;color:#111111;">去掉 setOnDismissListener 之后问题便不出现了</strong>。于是怀疑是这个代码导致的，给 AlterDialog 也设置了 setOnDismissListener 对比测试一下，结果弹窗消失了，但压根没回调 onDismiss。突然转念一想，这不是用的 DialogFragment 嘛，为什么一直停留在 AlertDialog 上去寻找问题呢？于是看了看 DialogFragment 代码，一下子就清晰了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private void prepareDialog(@Nullable Bundle savedInstanceState) {
+    if (!mShowsDialog) {
+        return;
+    }
+
+    if (!mDialogCreated) {
+        try {
+            mCreatingDialog = true;
+            mDialog = onCreateDialog(savedInstanceState);
+            // mShowsDialog might have changed in onCreateDialog, so we should only proceed
+            // with setting up the dialog if mShowsDialog is still true
+            if (mShowsDialog) {
+                setupDialog(mDialog, mStyle);
+                final Context context = getContext();
+                if (context instanceof Activity) {
+                    mDialog.setOwnerActivity((Activity) context);
+                }
+                mDialog.setCancelable(mCancelable);
+                mDialog.setOnCancelListener(mOnCancelListener);
+                mDialog.setOnDismissListener(mOnDismissListener);
+                mDialogCreated = true;
+            } else {
+                // Ensure that when mShowsDialog is set to false in onCreateDialog
+                // that getDialog() returns null
+                mDialog = null;
+            }
+        } finally {
+            mCreatingDialog = false;
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">DialogFragment 中的 prepareDialog 方法，会将创建出来的 Dialog 的 setCancelable、setOnCancelListener、setOnDismissListener 改成 DialogFragment 自己的 listener：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private DialogInterface.OnCancelListener mOnCancelListener =
+        new DialogInterface.OnCancelListener() {
+    @SuppressLint(&quot;SyntheticAccessor&quot;)
+    @Override
+    public void onCancel(@Nullable DialogInterface dialog) {
+        if (mDialog != null) {
+            DialogFragment.this.onCancel(mDialog);
+        }
+    }
+};
+
+private DialogInterface.OnDismissListener mOnDismissListener =
+        new DialogInterface.OnDismissListener() {
+    @SuppressLint(&quot;SyntheticAccessor&quot;)
+    @Override
+    public void onDismiss(@Nullable DialogInterface dialog) {
+        if (mDialog != null) {
+            DialogFragment.this.onDismiss(mDialog);
+        }
+    }
+};
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用 AlertDialog 的方式，因为是在 Builder 里调用 setOnDismissListener，这个监听在 DialogFragment 创建出 Dialog 之后，马上就进行覆盖了。而使用 JCommonDialog 的方式，是在 Dialog 的 onCreate 方法进行设置的，而这个方法很显然是在 DialogFragment 设置监听之后。<strong style="font-weight:bold;color:#111111;">也就是 DialogFragment 设置的监听，后面被 Dialog onCreate 方法里自己设置的监听给覆盖掉了，导致<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DialogFragment.this.onDismiss(mDialog)</code>压根没有得到调用，那么 Fragment 相关的逻辑自然就丢失了。</strong>这也印证了前面去掉 setOnDismissListener 问题便不再出现了。
+因为解决问题的思路没搞对，所以排查起来浪费了不少时间，值得记录一下。<strong style="font-weight:bold;color:#111111;">后续使用 DialogFragment 时，一定要注意 setCancelable、setOnCancelListener、setOnDismissListener 几个方法的使用！</strong></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="记一次 DialogFragment 的错误使用">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

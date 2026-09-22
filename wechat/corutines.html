@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Kotlin 协程小实践 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2021-10-15 · 约 4709 字</div>
+  <h1>Kotlin 协程小实践</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">太久没有注重 Android 开发知识了，打算学习下协程，算是未来的趋势吧。二话不多说，凯哥视频三连~
+<a href="https://www.bilibili.com/video/BV164411C7FK" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Kotlin 的协程「用力瞥一眼」</a>
+<a href="https://www.bilibili.com/video/BV1KJ41137E9" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了</a>
+<a href="https://www.bilibili.com/video/BV1JE411R7hp" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">到底什么是「非阻塞式」挂起？协程真的比线程更轻量级吗？</a></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">站在凯哥的肩膀上，我大概建立了以下几个概念：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">协程就是一个线程框架，它可以很方便地进行线程切换；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">非阻塞式挂起，也就是协程内部切线程了，所以当前调用协程的线程不会被阻塞，它可以继续做其他的事情。假设协程内部不切线程，那么其实也是阻塞（同步）的；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">使用协程可以将异步代码平铺，看起来就像同步代码一样，避免线程切换的各种回调和缩进。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以当有切线程这样的场景时，就可以使用协程了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">举个栗子</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">一个方案「启用」按钮，点击之后需要告诉服务器：我现在要启用这个方案了，服务器返回成功了之后，需要更新 UI，当前这个方案被启用。同时，这个方案启用了之后，有一些后续的事情需要做：加载这个方案的资源数据，是一个耗时任务。
+现在看看代码是怎么写的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">holder.viewBinding.enableTv.setOnClickListener {
+    lifecycleScope.launch {
+        val dialog = JLoadingDialog(this@PlanActivity)
+        dialog.showLoading(&quot;正在启用&quot;)
+        val result = enablePlan(item)
+        // 启用成功了才走后面的逻辑
+        if (result) {
+            PlanUtil.savePlanId(item.id)
+            adapter.notifyDataSetChanged()
+            syncRes()
+            MainThreadUtils.toast(&quot;启用成功&quot;)
+        } else {
+            MainThreadUtils.toast(&quot;启用失败&quot;)
+        }
+        dialog.safeDismiss()
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后 2 个 suspend 方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 启用方案
+ */
+suspend fun enablePlan(item: PlanItemModel): Boolean {
+    var result = false
+    withContext(Dispatchers.IO) {
+        try {
+            result = PlanApi().enablePlan(item.id)
+        } catch (e: Exception) {
+            LogUtils.e(&quot;TAG&quot;, e.toString())
+        }
+    }
+    return result
+}
+
+/**
+ * 同步资源
+ */
+suspend fun syncRes() {
+    withContext(Dispatchers.IO) {
+        ResourceManager.syncData(null, mutableListOf(ResourceManager.Resource.Plan))
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">简单看一下，使用 lifecycleScope.launch 开启一个协程，这个协程是在主线程里调用的，那么这个协程的 context 就是 Dispatchers.Main。然后展示一个 loading 弹窗，当前也在主线程，没问题。然后调用 suspend 方法：enablePlan。内部用了 withContext 切换到 IO 线程了，也就是从这个时候开始，线程从主线程切到子线程去了，主线程就是正常的挂起，同时可以处理其他的 UI 消息，并不会阻塞。然后子线程就会去执行网络请求，当网络请求执行完了，就会走到 return result 返回结果。因为用的是协程，所以当协程代码执行完了之后，会自动切回调用协程的那个线程，在这个场景里，也就是主线程了。所以 result 后面的代码就是在主线程了，网络请求成功之后，本地更新数据，并且调用 adapter.notifyDataSetChanged() 更新 UI。这个并不会报错，因为协程自动切回了主线程。随后再切到子线程执行 syncRes() 方法，当这个方法执行完之后，又自动切回主线程然后 Toast 启用成功。
+可以看到，我们用同步代码块的方式，实现了 2 次主线程、子线程切换的效果，代码平铺，没有任何切换回调和缩进。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">日志</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">上面的一顿分析猛如虎，那么实际情况是不是这样呢？打个日志验证一下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">holder.viewBinding.enablePlan.setOnClickListener {
+    lifecycleScope.launch {
+        LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread1:&quot; + MainThreadUtils.isMainThread())
+        val dialog = JLoadingDialog(this@PlanrActivity)
+        dialog.showLoading(&quot;正在启用&quot;)
+        val result = enablePlan(item)
+        LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread5:&quot; + MainThreadUtils.isMainThread())
+        // 启用成功了才走后面的逻辑
+        if (result) {
+            PlanUtil.savePlanId(item.id)
+            adapter.notifyDataSetChanged()
+            syncRes()
+            LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread7:&quot; + MainThreadUtils.isMainThread())
+            MainThreadUtils.toast(&quot;启用成功&quot;)
+        } else {
+            MainThreadUtils.toast(&quot;启用失败&quot;)
+        }
+        dialog.safeDismiss()
+    }
+}
+</code></pre>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 启用方案
+ */
+suspend fun enablePlan(item: TeachPlanItemModel): Boolean {
+    LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread2:&quot; + MainThreadUtils.isMainThread())
+    var result = false
+    withContext(Dispatchers.IO) {
+        try {
+            LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread3:&quot; + MainThreadUtils.isMainThread())
+            result = PlanApi().enablePlan(item.id)
+        } catch (e: Exception) {
+            LogUtils.e(&quot;TAG&quot;, e.toString())
+        }
+    }
+    LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread4:&quot; + MainThreadUtils.isMainThread())
+    return result
+}
+
+/**
+ * 同步资源
+ */
+suspend fun syncRes() {
+    withContext(Dispatchers.IO) {
+        LogUtils.e(&quot;coroutines&quot;, &quot;isMainThread6:&quot; + MainThreadUtils.isMainThread())
+        ResourceManager.syncData(null, mutableListOf(ResourceManager.Resource.Plan))
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看下打的日志：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">isMainThread1:true
+isMainThread2:true
+isMainThread3:false
+isMainThread4:true
+isMainThread5:true
+isMainThread6:false
+isMainThread7:true
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，完全符合分析，<strong style="font-weight:bold;color:#111111;">只有被 withContext(Dispatchers.IO) 包裹的代码是运行在子线程的</strong>。
+enablePlan 这个方法，就可以理解为：起一个子线程做耗时任务，任务执行完之后返回结果。就有点像带返回值的线程，也就是 Java 里的 Callable + FutureTask 的组合。后续可以研究一下内部实现。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">小结</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">协程切换线程之后，会自动切回调用的线程，假设我们用正常的代码写这样的功能，大概会是这样：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">holder.viewBinding.enablePlan.setOnClickListener {
+    val dialog = JLoadingDialog(this@PlanActivity)
+    dialog.showLoading(&quot;正在启用&quot;)
+    // 切线程
+    ThreadUtils.execute {
+        try {
+            val result = PlanApi().enablePlan(item.id)
+            if (result) {
+                // 我再切
+                MainThreadUtils.post {
+                    PlanUtil.savePlanId(item.id)
+                    adapter.notifyDataSetChanged()
+
+                    // 我还切
+                    ThreadUtils.execute {
+                        ResourceManager.syncData(null, mutableListOf(ResourceManager.Resource.Plan))
+
+                        // 我切切切
+                        MainThreadUtils.post {
+                            MainThreadUtils.toast(&quot;启用成功&quot;)
+                        }
+                    }
+                }
+            } else {
+                MainThreadUtils.post {
+                    dialog.safeDismiss()
+                }
+                MainThreadUtils.toast(&quot;启用失败&quot;)
+            }
+        } catch (e: Exception) {
+            MainThreadUtils.post {
+                dialog.safeDismiss()
+            }
+            MainThreadUtils.toast(&quot;启用失败&quot;)
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这线程切得也太累了，这个场景还非常简单，假设场景再复杂一点，写起来就更麻烦了。
+可能有人会说，协程的方式单独写了 2 个方法，所以看起来简洁一点，如果把正常的代码也封装下方法，其实也差不多了。我只能说：too young too simple，naive!
+<strong style="font-weight:bold;color:#111111;">不使用协程，手动切换线程所带来的回调和缩进，是很难避免的。</strong>
+2. suspend 方法只是一个标记，标记这个方法是协程方法，需要在协程里进行调用。假设 suspend 方法体内部没有用到任何协程的代码，那么这个标记是可以去掉的，不要把它想得太玄乎。
+3. 挂起其实就是切线程切走了，所以当前线程不会被阻塞，可以继续做其他的事情。但是一个网络请求，总是会有一个线程去等待请求返回结果的，结果返回之前，这个线程就会一直等待，也就是阻塞了，没有任何方法或者途径，可以减去这个线程的开销。
+4. 使用带生命周期感知功能的 scope，比如 lifecycleScope，可以当生命周期不可见的时候，自行取消线程回调。假设 enablePlan 接口执行 10 秒钟超时了，而 activity 在第 3 秒的时候就关闭了，那么当接口执行完之后就不切回到主线程了，也就是 return result（包括更后面的代码）压根就不执行了，这样可以避免一些问题，就和 Handler postDelay 需要做保护一样的道理。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">总得来说，协程用起来相当的方便，后续我应该会持续学习并使用协程，最近出的 Flow 听说也很不错。
+路漫漫其修远兮啊~~~</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Kotlin 协程小实践">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

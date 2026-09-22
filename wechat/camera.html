@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Usb 摄像头绑定 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2022-04-12 · 约 2085 字</div>
+  <h1>Usb 摄像头绑定</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在之前的文章中，写了一个 CameraIntent 的类，代表用到摄像头的业务。App 允许连接多个 Usb 摄像头，然后将业务绑定到一个确定的 Usb 端口。如果这个端口插入了摄像头，则可以直接使用摄像头产生的数据进行业务处理，如果没插入摄像头，则相应的业务不做处理或中断。
+通过 UsbManager.ACTION_USB_DEVICE_ATTACHED、UsbManager.ACTION_USB_DEVICE_DETACHED 广播可以知道 Usb 设备插入、拔出的时机。通过 intent 获取到的是一个 UsbDevice 对象。如何通过这样的一个 UsbDevice 确定物理实际的 Usb 端口呢？</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">通过 deviceName</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">先打印一下 UsbDevice 的内容：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">UsbDevice[mName=/dev/bus/usb/007/007,mVendorId=3141,mProductId=25771,mClass=239,mSubclass=2,
+mProtocol=1,mManufacturerName=CLSJ-H63-210317,mProductName=Integrated Camera,mVersion=2.1,mSerialNumber=null ...]</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">mVendorId、mProductId、mProductName 都是这个 Usb 设备自身的属性，无法和实际的 Usb 端口对应上。通过查阅 UsbDevice 相关文档，初步觉得可以使用 mName 这个属性来进行绑定。
+进行测试，来回插拔多个不同 Usb 设备到同一个物理端口，发现 mName 是固定的一个字符串 <strong style="font-weight:bold;color:#111111;">/dev/bus/usb/007/00X</strong>。每插拔一次，后面的 X 会自增一次。那是不是可以使用前面的 <strong style="font-weight:bold;color:#111111;">/dev/bus/usb/007</strong> 来确定这个物理端口呢？
+先试一把再说，于是就有了 CameraIntent 的 saveDevice、getDevice 方法，匹配的都是 String 类型的参数和返回值，对应的就是 <strong style="font-weight:bold;color:#111111;">/dev/bus/usb/007</strong> 这样的串。来回插拔多次，使用不同硬件设备也试过，好像没什么问题，都可以对应上。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">意外</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">起初以为没什么问题了，结果后面测试同学过来报 bug：Usb 摄像头对应关系错了。于是问相关操作，包含了一系列的插拔、绑定等等，还有 <strong style="font-weight:bold;color:#111111;">设备重启</strong> 。单纯插拔、App 进行绑定已经经过自己的充分测试了，唯独 <strong style="font-weight:bold;color:#111111;">设备重启</strong> 当时没有考虑到。
+针对重启测试一轮，重启多次后发现，确实是出现了同一个物理端口，但 deviceName 从 <strong style="font-weight:bold;color:#111111;">/dev/bus/usb/007</strong> 变成 <strong style="font-weight:bold;color:#111111;">/dev/bus/usb/005</strong> 的情况。
+！@#！@￥@#%￥%……*&amp;……（*&amp;））（*——（）+）——+——@#！
+shit，感觉没什么思路了...</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">index</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">后面上级提了个思路：<strong style="font-weight:bold;color:#111111;">可不可以利用 index 来做绑定关系？</strong>
+做了相关了解后，/dev/bus/usb 这个路径其实就是对应到文件系统里的文件路径。经过多次重启，查看文件路径如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG275.png" style="max-width:100%;height:auto;border-radius:4px;">
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2022/WechatIMG276.png" style="max-width:100%;height:auto;border-radius:4px;">
+确实发现 005、007 会来回变，但是在文件系统中顺序没变。
+于是尝试用 index 来做绑定关系。将之前的 String 改成 Int。
+如何确定 index 呢？直接遍历文件系统：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 获取设备 Usb 的端口路径
+ */
+private fun initUsbPorts() {
+    ports.clear()
+    val file = File(&quot;/dev/bus/usb&quot;)
+    if (file.isDirectory) {
+        file.listFiles()?.forEach {
+            ports.add(it.absolutePath)
+        }
+    }
+    ports.sortBy { it }
+    JLog.normal(&quot;initUsbPorts : ${JSON.toJSONString(ports)}&quot;)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">按道理这种操作在正常手机系统里是不行的，需要系统权限。但是我们的设备都是自己生产的，也不存在设备适配的情况，所以暂时先忽略这个问题。
+拿到 Path 列表后，通过 UsbDevice 的 deviceName 去对比是第几个，就可以拿到 index 进行业务绑定了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">再来个意外</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">经过一段时间的测试，测试同学后面又来报 bug 了。
+wtf...
+后面跟进排查，发现同一个物理端口，重启后在文件系统的 index 确实不一样了，但是这个设备是之前生产的样机，不是最终外发的设备。
+于是用最终的设备重新进行测试，暂时没发现这个情况。如果最终外发的设备后面还是出现了这个情况，就得再想别的方法了。
+so，就先这样吧...</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Usb 摄像头绑定">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

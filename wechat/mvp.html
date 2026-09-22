@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>从谷歌官方TODO-MVP看MVP模式 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-06-27 · 约 10269 字</div>
+  <h1>从谷歌官方TODO-MVP看MVP模式</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前言</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">很早之前就听说过android MVP的模式，也看过许许多多的文章，但是众说纷纭，每个人有每个人的理解，如果光看，可能并不能很深刻的理解。但是作为android界的权威，Google出了一个MVP的官方例子。若是从这个例子来看MVP模式，或许会有不一样的感悟呢？多说无益，下面开始。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">代码准备</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Github上打开<a href="https://github.com/googlesamples/android-architecture" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">googlesamples/android-architecture</a>，打开分支，选择<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">todo-mvp</code>（Basic Model-View-Presenter architecture），然后下载zip，解压后导入到AS中。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp3.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">代码分析</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先贴一张官方的MVP示意图：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp1.png" style="max-width:100%;height:auto;border-radius:4px;">
+在分析代码之前，我们先简单的运行一下App，大致有一个感觉，App里有哪些功能。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvpeffect.gif" style="max-width:100%;height:auto;border-radius:4px;">
+ok，下面进入到代码里，先上一下代码结构图：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp2.png" style="max-width:100%;height:auto;border-radius:4px;">
+可以看到分包是根据模块进行的分包，通过gif图大概可以知道分为添加（编辑）、统计、详情、主页List。
+本文只为了分析mvp的使用，所以我选取最简单的AddEditTask来进行分析。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">M</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">M主要是位于data包下面的类，Task是基本的bean，涉及到数据的相关操作由接口<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">TasksDataSource</code>体现。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface TasksDataSource {
+
+    interface LoadTasksCallback {
+
+        void onTasksLoaded(List&lt;Task&gt; tasks);
+
+        void onDataNotAvailable();
+    }
+
+    interface GetTaskCallback {
+
+        void onTaskLoaded(Task task);
+
+        void onDataNotAvailable();
+    }
+
+    void getTasks(@NonNull LoadTasksCallback callback);
+
+    void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback);
+
+    void saveTask(@NonNull Task task);
+
+    void completeTask(@NonNull Task task);
+
+    void completeTask(@NonNull String taskId);
+
+    void activateTask(@NonNull Task task);
+
+    void activateTask(@NonNull String taskId);
+
+    void clearCompletedTasks();
+
+    void refreshTasks();
+
+    void deleteAllTasks();
+
+    void deleteTask(@NonNull String taskId);
+}
+</code></pre>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">V</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先是V的基类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface BaseView&lt;T&gt; {
+
+    void setPresenter(T presenter);
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AddEditTaskContract</code>:</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface AddEditTaskContract {
+
+    interface View extends BaseView&lt;Presenter&gt; {
+
+        void showEmptyTaskError();
+
+        void showTasksList();
+
+        void setTitle(String title);
+
+        void setDescription(String description);
+
+        boolean isActive();
+    }
+
+    interface Presenter extends BasePresenter {
+
+        void saveTask(String title, String description);
+
+        void populateTask();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个类将V、P整合在了一起，这样做的好处是可以很方便的看到V、P都有哪些方法，方便后面修改。其中的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">View</code>则是BaseView的下一层接口，它定义了View相关的一些方法。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">P</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">P的基类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface BasePresenter {
+
+    void start();
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AddEditTaskContract</code>中我们也可以看到P的具体声明。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">MVP综合分析</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">MVP大致的代码便是如此了，下面来看具体的实现。
+在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AddEditTaskActivity</code>的onCreate()方法中，我们重点看到这一句代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">new AddEditTaskPresenter(
+    taskId,
+    Injection.provideTasksRepository(getApplicationContext()),
+    addEditTaskFragment);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以知道，这句代码便是创建具体的P了。
+来看下一下<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AddEditTaskPresenter</code>的代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Listens to user actions from the UI ({@link AddEditTaskFragment}), retrieves the data and updates
+ * the UI as required.
+ */
+public class AddEditTaskPresenter implements AddEditTaskContract.Presenter,
+        TasksDataSource.GetTaskCallback {
+
+    @NonNull
+    private final TasksDataSource mTasksRepository;
+
+    @NonNull
+    private final AddEditTaskContract.View mAddTaskView;
+
+    @Nullable
+    private String mTaskId;
+
+    /**
+     * Creates a presenter for the add/edit view.
+     *
+     * @param taskId ID of the task to edit or null for a new task
+     * @param tasksRepository a repository of data for tasks
+     * @param addTaskView the add/edit view
+     */
+    public AddEditTaskPresenter(@Nullable String taskId, @NonNull TasksDataSource tasksRepository,
+            @NonNull AddEditTaskContract.View addTaskView) {
+        mTaskId = taskId;
+        mTasksRepository = checkNotNull(tasksRepository);
+        mAddTaskView = checkNotNull(addTaskView);
+
+        mAddTaskView.setPresenter(this);
+    }
+
+    @Override
+    public void start() {
+        if (!isNewTask()) {
+            populateTask();
+        }
+    }
+
+    @Override
+    public void saveTask(String title, String description) {
+        if (isNewTask()) {
+            createTask(title, description);
+        } else {
+            updateTask(title, description);
+        }
+    }
+
+    @Override
+    public void populateTask() {
+        if (isNewTask()) {
+            throw new RuntimeException(&quot;populateTask() was called but task is new.&quot;);
+        }
+        mTasksRepository.getTask(mTaskId, this);
+    }
+
+    @Override
+    public void onTaskLoaded(Task task) {
+        // The view may not be able to handle UI updates anymore
+        if (mAddTaskView.isActive()) {
+            mAddTaskView.setTitle(task.getTitle());
+            mAddTaskView.setDescription(task.getDescription());
+        }
+    }
+
+    @Override
+    public void onDataNotAvailable() {
+        // The view may not be able to handle UI updates anymore
+        if (mAddTaskView.isActive()) {
+            mAddTaskView.showEmptyTaskError();
+        }
+    }
+
+    private boolean isNewTask() {
+        return mTaskId == null;
+    }
+
+    private void createTask(String title, String description) {
+        Task newTask = new Task(title, description);
+        if (newTask.isEmpty()) {
+            mAddTaskView.showEmptyTaskError();
+        } else {
+            mTasksRepository.saveTask(newTask);
+            mAddTaskView.showTasksList();
+        }
+    }
+
+    private void updateTask(String title, String description) {
+        if (isNewTask()) {
+            throw new RuntimeException(&quot;updateTask() was called but task is new.&quot;);
+        }
+        mTasksRepository.saveTask(new Task(title, description, mTaskId));
+        mAddTaskView.showTasksList(); // After an edit, go back to the list.
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们通过其构造函数，传入了一个addEditTaskFragment对象，通过其构造函数的方法，我们可以猜测：AddEditTaskFragment便是具体的V了。
+并且注意<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mAddTaskView.setPresenter(this);</code>这句代码，即是在P创建的时候，V、P便实现了绑定。
+看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AddEditTaskFragment</code>代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class AddEditTaskFragment extends Fragment implements AddEditTaskContract.View {
+
+    public static final String ARGUMENT_EDIT_TASK_ID = &quot;EDIT_TASK_ID&quot;;
+
+    private AddEditTaskContract.Presenter mPresenter;
+
+    private TextView mTitle;
+
+    private TextView mDescription;
+
+    public static AddEditTaskFragment newInstance() {
+        return new AddEditTaskFragment();
+    }
+
+    public AddEditTaskFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start();
+    }
+
+    @Override
+    public void setPresenter(@NonNull AddEditTaskContract.Presenter presenter) {
+        mPresenter = checkNotNull(presenter);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        FloatingActionButton fab =
+                (FloatingActionButton) getActivity().findViewById(R.id.fab_edit_task_done);
+        fab.setImageResource(R.drawable.ic_done);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.saveTask(mTitle.getText().toString(), mDescription.getText().toString());
+            }
+        });
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.addtask_frag, container, false);
+        mTitle = (TextView) root.findViewById(R.id.add_task_title);
+        mDescription = (TextView) root.findViewById(R.id.add_task_description);
+
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
+        return root;
+    }
+
+    @Override
+    public void showEmptyTaskError() {
+        Snackbar.make(mTitle, getString(R.string.empty_task_message), Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showTasksList() {
+        getActivity().setResult(Activity.RESULT_OK);
+        getActivity().finish();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        mTitle.setText(title);
+    }
+
+    @Override
+    public void setDescription(String description) {
+        mDescription.setText(description);
+    }
+
+    @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过前面的gif图，可以猜测P中必定是有一个保存Task的方法，即<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">saveTask</code>方法，在我们点击悬浮按钮的时候会触发。即我们的操作（业务逻辑相关）会由P来执行。
+看到P中<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">saveTask</code>的具体实现，他会判断当前是否是一个新任务，若是则调用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">createTask</code>创建新的Task，若标题与内容都为空，则会回调V的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">showEmptyTaskError</code>方法来显示相关的UI，若不为空，则执行M的操作：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mTasksRepository.saveTask(newTask);</code>保存相应的数据，然后回调V的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">showTasksList</code>方法来显示相关UI。若不是一个新的Task（编辑），则调用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">updateTask</code>，执行M操作<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mTasksRepository.saveTask</code>来操作数据。
+至此，一个完整的业务操作（新建或编辑一个新的Task）分析完毕。可以看到在V中，我们只调用P的相关的接口，然后实现上层V的接口就可以了。由P来调用M中的方法，来操作数据，然后通过回调来使V展示相应的界面。V与M完全分离，整套业务都由P来执行。
+最后上一张分析图：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp5.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">MVP的优缺点</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">优点：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">解耦。实现了Model和View真正的完全分离，再也不是Activity中一大坨代码了。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">清晰。模块职责划分明显，层次清晰。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">测试。在使用MVP的项目中Presenter对View是通过接口进行，在对Presenter进行不依赖UI环境的单元测试的时候。可以通过模拟一个View对象，这个对象只需要实现了View的接口即可。然后注入到Presenter中，单元测试的时候就可以完整的测试Presenter应用逻辑的正确性。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">组件化。在MVP当中，View不依赖Model，这样就可以让View从特定的业务场景中脱离出来，可以说View可以做到对业务完全无知，它只需要提供一系列接口提供给上层操作，这样就可以做到高度可复用的View组件。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">缺点：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">新增很多接口类，额外的代码复杂度及学习成本。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Presenter中除了业务逻辑以外，可能还有大量的与业务无关的数据操作逻辑，会导致Presenter比较臃肿。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">测试</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在代码中，Google已经写好了测试代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class AddEditTaskPresenterTest {
+
+    @Mock
+    private TasksRepository mTasksRepository;
+
+    @Mock
+    private AddEditTaskContract.View mAddEditTaskView;
+
+    /**
+     * {@link ArgumentCaptor} is a powerful Mockito API to capture argument values and use them to
+     * perform further actions or assertions on them.
+     */
+    @Captor
+    private ArgumentCaptor&lt;TasksDataSource.GetTaskCallback&gt; mGetTaskCallbackCaptor;
+
+    private AddEditTaskPresenter mAddEditTaskPresenter;
+
+    @Before
+    public void setupMocksAndView() {
+        // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
+        // inject the mocks in the test the initMocks method needs to be called.
+        MockitoAnnotations.initMocks(this);
+
+        // The presenter wont&#39;t update the view unless it&#39;s active.
+        when(mAddEditTaskView.isActive()).thenReturn(true);
+    }
+
+    @Test
+    public void saveNewTaskToRepository_showsSuccessMessageUi() {
+        // Get a reference to the class under test
+        mAddEditTaskPresenter = new AddEditTaskPresenter(&quot;1&quot;, mTasksRepository, mAddEditTaskView);
+
+        // When the presenter is asked to save a task
+        mAddEditTaskPresenter.saveTask(&quot;New Task Title&quot;, &quot;Some Task Description&quot;);
+
+        // Then a task is saved in the repository and the view updated
+        verify(mTasksRepository).saveTask(any(Task.class)); // saved to the model
+        verify(mAddEditTaskView).showTasksList(); // shown in the UI
+    }
+
+    @Test
+    public void saveTask_emptyTaskShowsErrorUi() {
+        // Get a reference to the class under test
+        mAddEditTaskPresenter = new AddEditTaskPresenter(null, mTasksRepository, mAddEditTaskView);
+
+        // When the presenter is asked to save an empty task
+        mAddEditTaskPresenter.saveTask(&quot;&quot;, &quot;&quot;);
+
+        // Then an empty not error is shown in the UI
+        verify(mAddEditTaskView).showEmptyTaskError();
+    }
+
+    @Test
+    public void saveExistingTaskToRepository_showsSuccessMessageUi() {
+        // Get a reference to the class under test
+        mAddEditTaskPresenter = new AddEditTaskPresenter(&quot;1&quot;, mTasksRepository, mAddEditTaskView);
+
+        // When the presenter is asked to save an existing task
+        mAddEditTaskPresenter.saveTask(&quot;New Task Title&quot;, &quot;Some Task Description&quot;);
+
+        // Then a task is saved in the repository and the view updated
+        verify(mTasksRepository).saveTask(any(Task.class)); // saved to the model
+        verify(mAddEditTaskView).showTasksList(); // shown in the UI
+    }
+
+    @Test
+    public void populateTask_callsRepoAndUpdatesView() {
+        Task testTask = new Task(&quot;TITLE&quot;, &quot;DESCRIPTION&quot;);
+        // Get a reference to the class under test
+        mAddEditTaskPresenter = new AddEditTaskPresenter(testTask.getId(),
+                mTasksRepository, mAddEditTaskView);
+
+        // When the presenter is asked to populate an existing task
+        mAddEditTaskPresenter.populateTask();
+
+        // Then the task repository is queried and the view updated
+        verify(mTasksRepository).getTask(eq(testTask.getId()), mGetTaskCallbackCaptor.capture());
+
+        // Simulate callback
+        mGetTaskCallbackCaptor.getValue().onTaskLoaded(testTask);
+
+        verify(mAddEditTaskView).setTitle(testTask.getTitle());
+        verify(mAddEditTaskView).setDescription(testTask.getDescription());
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">来执行一下吧：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/06/mvp4.png" style="max-width:100%;height:auto;border-radius:4px;">
+可以看到测试成功。
+那么假设我们采用传统的开发模式，代码全在Activity里，要怎么样测试呢？噢，想想就觉得头大了，是吗？</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">总结</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过此次Google官方例子的学习分析，让我对MVP模式有了更清晰的认识，并且我认为MVP模式的实用性很高。虽然它增加了额外的代码，但是它带来的好处是不言而喻的。在今后的开发中，我想我会尝试着使用它。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="从谷歌官方TODO-MVP看MVP模式">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

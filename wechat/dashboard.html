@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android自定义View实现仪表盘效果 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-05-16 · 约 3919 字</div>
+  <h1>Android自定义View实现仪表盘效果</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">本篇博客主要介绍如何实现一个仪表盘动态显示的效果，此效果来源于<a href="http://www.maimairen.com/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">买卖人</a>这个应用，3个室友有2个做安卓，而且都在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">买卖人</code>，所以我也跟着实现了一波。
+效果如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.gif" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">实现思路</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">涉及到动画效果，首先将其拆分成<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">变化的部分</code>，和<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">不变的部分</code>。变化的部分有：颜色渐变的进度条、以及数字。不变的部分：指针刻度、灰色圆弧背景。拆分开来后，再来单独实现就非常简单了。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">渐变的进度条：通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">shader</code>，设置起点和终点的颜色，便能达到颜色渐变的一个效果了。</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">mShader = new RadialGradient(0, 0, (1080 - 300) / 2, 0xffde5669, 0xffe79950, Shader.TileMode.MIRROR);
+</code></pre>
+<ol start="2" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">数字：直接调用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">drawText</code>即可。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">指针刻度：先选取最好画的一个刻度，然后通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">旋转画布</code>重新绘制，就能画出所有的刻度了。（记得在画完之后要把画布归位）</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">灰色圆弧背景：设置好参数，调用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">drawArc</code>即可。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">动画效果：通过handler发送消息，改变变量值然后重绘就能实现了。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">完整代码</h2>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class DashboardView extends View {
+
+    private Paint mPaint;
+    private RectF rectF;
+    private Shader mShader;
+
+    private int targetDegree; // 目标角度
+    private int currentDegree; // 当前角度
+    private int currentNum; // 当前数值
+    private int targetNum; // 目标数值
+
+    public DashboardView(Context context) {
+        super(context);
+        init();
+    }
+
+    public DashboardView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public DashboardView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    private void init() {
+        mPaint = new Paint();
+        rectF = new RectF();
+        // 颜色渐变的shader
+        mShader = new RadialGradient(0, 0, (1080 - 300) / 2, 0xffde5669, 0xffe79950, Shader.TileMode.MIRROR);
+    }
+
+    /**
+     * 通过Handler发送消息，改变变量，重绘View
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            currentDegree += 5;
+            currentNum += currentDegree / 1000f * 259;
+            if (currentDegree &lt; targetDegree) {
+                handler.sendEmptyMessageDelayed(0, 5);
+            } else {
+                currentDegree = targetDegree;
+                currentNum = targetNum;
+            }
+            invalidate();
+        }
+    };
+
+    public void setNum(int num) {
+        targetNum = num;
+        targetDegree = (int) (targetNum / 1000f * 259);
+        handler.sendEmptyMessageDelayed(0, 400);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        // 画大圆弧灰色背景
+        mPaint.reset();
+        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.GRAY);
+        mPaint.setStrokeWidth(40);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        rectF.top = getMeasuredHeight() / 2 - getMeasuredWidth() / 4;
+        rectF.left = getMeasuredWidth() / 4;
+        rectF.right = getWidth() / 4 * 3;
+        rectF.bottom = getMeasuredHeight() / 2 + getMeasuredWidth() / 4;
+        canvas.drawArc(rectF, 140, 260, false, mPaint);
+
+        // 通过旋转画布画指针刻度
+        mPaint.reset();
+        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.GRAY);
+        mPaint.setStrokeWidth(3);
+        canvas.drawLine(getMeasuredWidth() / 2, rectF.top + 40, getMeasuredWidth() / 2, rectF.top + 60, mPaint);
+        for (int i = 0; i &lt; 26; i++) {
+            int degrees = (int) (10 * (i + 1) * Math.pow(-1, i));
+            canvas.rotate(degrees, getWidth() / 2, getHeight() / 2);
+            canvas.drawLine(getMeasuredWidth() / 2, rectF.top + 40, getMeasuredWidth() / 2, rectF.top + 60, mPaint);
+        }
+        canvas.rotate(130, getWidth() / 2, getHeight() / 2);
+
+        // 画中间的小圆
+        mPaint.reset();
+        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.DKGRAY);
+        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredHeight() / 2, 80, mPaint);
+
+        // 画带颜色的进度条
+        mPaint.reset();
+        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setShader(mShader);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(40);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
+        canvas.drawArc(rectF, 140, currentDegree, false, mPaint);
+
+        // 画Text
+        mPaint.reset();
+        mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setColor(Color.parseColor(&quot;#ffde5669&quot;));
+        mPaint.setTextSize(70);
+        canvas.drawText(String.valueOf(currentNum), getMeasuredWidth() / 2 - 55, getMeasuredHeight() / 2 + 25, mPaint);
+    }
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">画笔相关</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Style有三种。
+STROKE：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard1.png" style="max-width:100%;height:auto;border-radius:4px;">
+FILL：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard2.png" style="max-width:100%;height:auto;border-radius:4px;">
+FILL_AND_STROKE：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard3.png" style="max-width:100%;height:auto;border-radius:4px;">
+StrokeCap也有三种。
+BUTT：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard4.png" style="max-width:100%;height:auto;border-radius:4px;">
+SQUARE:
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard5.png" style="max-width:100%;height:auto;border-radius:4px;">
+ROUND：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/05/dashboard6.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">最后</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">代码比较简单，在实现带动画的View时，最好先进行拆分，找出变化的部分和不变的部分，然后各自实现，将大问题拆分成若干个小问题，逐个击破。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android自定义View实现仪表盘效果">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

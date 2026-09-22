@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>TextView 自定义“ellipsize” · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-12-24 · 约 10506 字</div>
+  <h1>TextView 自定义“ellipsize”</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">日常开发中，经常有 TextView 最多显示 3 行，超出了就显示“...查看更多”，在网上找到一个十分方便使用的类，原理也很简单，摘录一下，以后开发类似需求再也不愁了~</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private const val logTag = &quot;TextViewLayout&quot;
+
+private val enableDebugLog = BuildConfig.DEBUG
+
+private fun log(any: Any?) {
+    if (enableDebugLog) {
+        LogUtils.d(logTag, any.toString())
+    }
+}
+
+/**
+ * TextViewBuilder
+ * ellipsize textView with custom suffix.
+ * link: https://juejin.im/post/5d4a5fb66fb9a06b0517d7eb
+ */
+class TextViewSuffixWrapper(val textView: TextView) {
+    private data class SuffixColor(val fromIndex: Int, val toIndex: Int, val color: Int?, val listener: View.OnClickListener? = null)
+
+    var mainContent: CharSequence = textView.text
+        set(value) {
+            collapseCache = null
+            field = value
+        }
+    var suffix: CharSequence? = null
+        set(value) {
+            collapseCache = null
+            field = value
+        }
+
+    private var collapseCache: CharSequence? = null
+    private var collapseLayoutCache: Layout? = null
+
+    var isCollapsed: Boolean = false
+        private set
+
+    var enableCache = false
+    var enableMaxLinesCheck = true
+
+    var targetLineCount: Int = 2
+    var transition: Transition? = AutoTransition()
+    var sceneRoot: ViewGroup = textView.parent as ViewGroup
+
+    private val textWrapper: (text: String, suffix: CharSequence, suffixIndex: Int) -&gt; CharSequence =
+            { text, suffix, suffixIndex -&gt;
+                SpannableStringBuilder(text).apply {
+                    suffixColorList.forEach {
+                        val start = suffixIndex + it.fromIndex
+                        val end = suffixIndex + it.toIndex
+                        it.listener?.also { listener -&gt;
+                            setSpan(object : ClickableSpan() {
+                                override fun onClick(widget: View) {
+                                    listener.onClick(widget)
+                                }
+                            }, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            textView.movementMethod = LinkMovementMethod.getInstance()
+                        }
+                        it.color?.also { color -&gt;
+                            setSpan(ForegroundColorSpan(color), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        }
+                    }
+                }
+            }
+
+    private val suffixColorList by lazy {
+        mutableListOf&lt;SuffixColor&gt;()
+    }
+
+    init {
+        if (textView.layoutParams.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            throw RuntimeException(&quot;textView&#39;s width can&#39;t be wrap_content. Only support match_parent or specified size&quot;)
+        }
+    }
+
+    fun suffixColor(fromIndex: Int, toIndex: Int, @ColorRes colorRes: Int) {
+        val color = ResourcesCompat.getColor(textView.resources, colorRes, textView.context.theme)
+        suffixColorList.add(SuffixColor(fromIndex, toIndex, color, null))
+    }
+
+    fun suffixColor(fromIndex: Int, toIndex: Int, listener: View.OnClickListener) {
+        suffixColorList.add(SuffixColor(fromIndex, toIndex, null, listener))
+    }
+
+    fun suffixColor(fromIndex: Int, toIndex: Int, @ColorRes colorRes: Int, listener: View.OnClickListener) {
+        val color = ResourcesCompat.getColor(textView.resources, colorRes, textView.context.theme)
+        suffixColorList.add(SuffixColor(fromIndex, toIndex, color, listener))
+    }
+
+    @JvmOverloads
+    fun collapse(animation: Boolean = true) {
+        performCollapse(
+                if (animation) {
+                    transition
+                } else {
+                    null
+                }
+        )
+    }
+
+    @JvmOverloads
+    fun toggle(animation: Boolean = true) {
+        if (isCollapsed) {
+            expand(animation)
+        } else {
+            collapse(animation)
+        }
+    }
+
+    @JvmOverloads
+    fun expand(animation: Boolean = true) {
+        performExpand(
+                if (animation) {
+                    this.transition
+                } else {
+                    null
+                }
+        )
+    }
+
+    private fun performExpand(transition: Transition?) {
+        isCollapsed = false
+        textView.expand(mainContent = mainContent, transition = transition, sceneRoot = sceneRoot)
+    }
+
+    private fun performCollapse(transition: Transition?) {
+        require(!(enableMaxLinesCheck &amp;&amp; textView.maxLines &lt; targetLineCount)) {
+            &quot;textView.maxLines(${textView.maxLines}) &lt; targetLineCount($targetLineCount)&quot;
+        }
+        isCollapsed = true
+        fun defaultCollapse() {
+            textView.maxLines = targetLineCount
+            textView.ellipsize = TextUtils.TruncateAt.END
+            val originText = textView.text
+            textView.text = mainContent
+            if (transition != null) {
+                textView.apply {
+                    val layout = this.layout
+                    if (layout != null) {
+                        val targetHeight = layout.height + paddingTop + paddingBottom
+                        text = originText
+                        maxLines = Int.MAX_VALUE
+
+                        layoutParams.height = targetHeight
+                        layoutParams = layoutParams
+                        transition.addListener(object : TransitionListenerAdapter() {
+                            override fun onTransitionEnd(transition: Transition) {
+                                transition.removeListener(this)
+                                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                                layoutParams = layoutParams
+                                maxLines = targetLineCount
+                                text = mainContent
+                            }
+
+                            override fun onTransitionCancel(transition: Transition) {
+                                transition.removeListener(this)
+                            }
+
+                        })
+                    }
+                    TransitionManager.beginDelayedTransition(sceneRoot, transition)
+                }
+            }
+        }
+
+        if (suffix == null) {
+            defaultCollapse()
+        } else {
+            if (enableCache &amp;&amp; collapseCache != null &amp;&amp; collapseLayoutCache == textView.layout) {
+                if (collapseCache == mainContent) {
+                    return
+                }
+                if (transition != null) {
+                    textView.setTextWithAnimator(content = collapseCache!!, transition = transition, sceneRoot = sceneRoot)
+                } else {
+                    textView.maxLines = targetLineCount
+                    textView.ellipsize = TextUtils.TruncateAt.END
+                    textView.text = collapseCache
+                }
+            } else {
+                textView.collapse(
+                        mainContent = mainContent,
+                        suffix = suffix!!,
+                        targetLineCount = targetLineCount,
+                        transition = transition,
+                        sceneRoot = sceneRoot,
+                        onSuccess = { text -&gt;
+                            collapseCache = text
+                            collapseLayoutCache = textView.layout
+                        },
+                        onFailed = {
+                            defaultCollapse()
+                        },
+                        textWrapper = textWrapper
+                )
+            }
+        }
+    }
+}
+
+@JvmOverloads
+fun TextView.setTextWithAnimator(
+        content: CharSequence,
+        transition: Transition = AutoTransition(),
+        sceneRoot: ViewGroup = this.parent as ViewGroup
+) {
+    val originText = this.text
+    this.text = content
+    val layout = this.layout
+    if (layout != null) {
+        val targetHeight = layout.height + paddingTop + paddingBottom
+        text = originText
+
+        layoutParams.height = targetHeight
+        layoutParams = layoutParams
+        transition.addListener(object : TransitionListenerAdapter() {
+            override fun onTransitionEnd(transition: Transition) {
+                transition.removeListener(this)
+                layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                layoutParams = layoutParams
+                text = content
+            }
+
+            override fun onTransitionCancel(transition: Transition) {
+                transition.removeListener(this)
+            }
+
+        })
+    }
+    TransitionManager.beginDelayedTransition(sceneRoot, transition)
+}
+
+/**
+ * collapse TextView
+ * @param mainContent text
+ * @param suffix suffix
+ * @param targetLineCount targetLineCount
+ * @param transition for animation. If is null, there will be no animation and it will take effect immediately.
+ * @param onSuccess There may be asynchronous operations here, You can listen to the end event via onSuccess.
+ * @param textWrapper You can wrap the text, such as changing the color through a SpannableString.
+ */
+fun TextView.collapse(
+        mainContent: CharSequence,
+        suffix: CharSequence,
+        targetLineCount: Int,
+        transition: Transition? = AutoTransition(),
+        sceneRoot: ViewGroup = this.parent as ViewGroup,
+        onSuccess: ((text: CharSequence) -&gt; Unit)? = null,
+        onFailed: ((text: CharSequence) -&gt; Unit)? = null,
+        textWrapper: ((text: String, suffix: CharSequence, suffixIndex: Int) -&gt; CharSequence)?
+) {
+    val originText = text
+    setTextWithSuffix(
+            mainContent = mainContent, suffix = suffix, targetLineCount = targetLineCount,
+            onSuccess = { result -&gt;
+                if (transition == null) {
+                    onSuccess?.invoke(result)
+                } else {
+                    val targetText = text
+                    val targetHeight = layout.height + paddingTop + paddingBottom
+                    text = originText
+
+                    layoutParams.height = targetHeight
+                    layoutParams = layoutParams
+                    transition.addListener(object : TransitionListenerAdapter() {
+                        override fun onTransitionEnd(transition: Transition) {
+                            transition.removeListener(this)
+                            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                            layoutParams = layoutParams
+                            text = targetText
+                            onSuccess?.invoke(result)
+                        }
+
+                        override fun onTransitionCancel(transition: Transition) {
+                            transition.removeListener(this)
+                        }
+
+                    })
+                    TransitionManager.beginDelayedTransition(sceneRoot, transition)
+                }
+            },
+            onFailed = {
+                this.text = mainContent
+                this.maxLines = targetLineCount
+                onFailed?.invoke(mainContent)
+            },
+            textWrapper = textWrapper
+    )
+
+}
+
+/**
+ * expand TextView
+ * @param mainContent text
+ * @param transition for animation. If is null, there will be no animation and it will take effect immediately.
+ */
+fun TextView.expand(
+        mainContent: CharSequence, transition: Transition? = AutoTransition(),
+        sceneRoot: ViewGroup = this.parent as ViewGroup
+) {
+    this.maxLines = Int.MAX_VALUE
+    this.text = mainContent
+    transition?.also {
+        TransitionManager.beginDelayedTransition(sceneRoot, it)
+    }
+}
+
+fun TextView.setTextWithSuffix(
+        mainContent: CharSequence,
+        suffix: CharSequence,
+        targetLineCount: Int,
+        onSuccess: (text: CharSequence) -&gt; Unit = {},
+        onFailed: (text: CharSequence) -&gt; Unit = { text -&gt;
+            this.text = text
+            maxLines = targetLineCount
+            ellipsize = TextUtils.TruncateAt.END
+        },
+        textWrapper: ((text: String, suffix: CharSequence, suffixIndex: Int) -&gt; CharSequence)?
+) {
+
+    val originText = text
+
+    fun autoSet(index: Int) {
+        if (index &lt; 0) {
+            onFailed(originText)
+        } else {
+            text = if (index &gt;= mainContent.length) {
+                mainContent
+            } else {
+                val msg = &quot;${mainContent.substring(0, index)}$suffix&quot;
+                textWrapper?.invoke(msg, suffix, index) ?: msg
+            }
+            onSuccess(text)
+        }
+    }
+
+    if (layout == null) {
+        val listener = object : View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                    v: View?,
+                    left: Int, top: Int, right: Int, bottom: Int,
+                    oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
+            ) {
+                removeOnLayoutChangeListener(this)
+                if (layout == null) {
+                    onFailed(text)
+                } else {
+                    post {
+                        val start = System.currentTimeMillis()
+                        autoSet(binarySearch(mainContent, suffix, targetLineCount, textWrapper))
+                        val end = System.currentTimeMillis()
+                        log(&quot;&gt;&gt;&gt;&gt;&gt;performance: ${end - start}ms&quot;)
+                    }
+                }
+            }
+        }
+        addOnLayoutChangeListener(listener)
+        requestLayout()
+    } else {
+        val start = System.currentTimeMillis()
+        autoSet(binarySearch(mainContent, suffix, targetLineCount, textWrapper))
+        val end = System.currentTimeMillis()
+        log(&quot;&gt;&gt;&gt;&gt;&gt;performance: ${end - start}ms&quot;)
+    }
+}
+
+/**
+ * Note: binary search will change the text, so be sure to remember the case where the search failed.
+ */
+private fun TextView.binarySearch(
+        mainContent: CharSequence,
+        suffix: CharSequence,
+        targetLineCount: Int,
+        textWrapper: ((text: String, suffix: CharSequence, suffixIndex: Int) -&gt; CharSequence)?
+): Int {
+    var verifyCount = 0
+
+    val verifyCache = mutableMapOf&lt;Int, Int&gt;()
+
+    fun verify(start: Int, end: Int): Int {
+        val key = (start shl 16) or end
+        val hit = verifyCache[key]
+        if (hit != null) {
+            log(&quot;verify: $end cached&quot;)
+            return hit
+        }
+        verifyCount++
+        val tmp = mainContent.substring(start, end)
+        val context = &quot;$tmp$suffix&quot;
+        text = textWrapper?.invoke(context, suffix, end) ?: context
+        val lineCount = this.lineCount
+        log(&quot;verify: $end, lineCount = $lineCount&quot;)
+        verifyCache[key] = lineCount
+        return lineCount
+    }
+    if (layout == null) {
+        log(&quot;layout is null&quot;)
+        return -1
+    }
+    val verify = verify(0, mainContent.length)
+    if (verify &lt;= targetLineCount) {
+        log(&quot;verify &lt;= targetLineCount, verify = $verify, targetLineCount = $targetLineCount&quot;)
+        text = mainContent
+        return mainContent.length
+    }
+
+    // Remove optimization. Some special characters will cause bug.
+    // var left = this.layout.getLineEnd(targetLineCount - 2)
+    // var right = this.layout.getLineEnd(targetLineCount - 1)
+
+    var left = 0
+    var right = mainContent.length
+
+    log(&quot;left = $left, right = $right&quot;)
+    while (left &lt;= right) {
+        val mid = (left + right) / 2
+
+        val pLineCount = verify(0, mid)
+        var s = &quot;binarySearch: ($left, $mid, $right), pLineCount = $pLineCount&quot;
+        if (pLineCount &lt; targetLineCount) {
+            s += &quot;, targetLineCount = $targetLineCount, pLineCount &lt; targetLineCount&quot;
+            left = mid + 1
+        } else if (pLineCount == targetLineCount) {
+            val nLineCount = verify(0, mid + 1)
+            s += &quot;, nLineCount = $nLineCount&quot;
+            if (nLineCount &lt; targetLineCount + 1) {
+                left = mid + 1
+            } else if (nLineCount == targetLineCount + 1) {
+                log(&quot;success = $mid, verifyCount = $verifyCount&quot;)
+                return mid
+            } else {
+                // error impossible
+                log(&quot;impossible&quot;)
+                break
+            }
+        } else {
+            right = mid - 1
+        }
+
+        log(&quot;$s, text = ${mainContent.substring(0, mid) + suffix}&quot;)
+    }
+    log(&quot;failed, verifyCount = $verifyCount&quot;)
+    return -1
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">TextViewSuffixWrapper(topicView.descTv).apply {
+    targetLineCount = 3
+    suffix = &quot;...查看全部&quot;
+    suffix?.apply {
+        suffixColor(&quot;...&quot;.length, length, R.color.main_title_text_color_checked)
+    }
+    collapse(false)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">还可以添加点击事件，点击后撑开，着实方便~</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参考：<a href="https://juejin.im/post/5d4a5fb66fb9a06b0517d7eb" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android TextView用&quot;查看更多&quot;替代自带ellipsize</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="TextView 自定义“ellipsize”">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

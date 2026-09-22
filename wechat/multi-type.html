@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>针对ListView多Type的优化 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-05-09 · 约 7591 字</div>
+  <h1>针对ListView多Type的优化</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在之前写过一篇多 Type 的错误使用<a href="http://lastwarmth.win/2017/04/18/wrong/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">使用ListView多Type的错误姿势</a>，下面写一下针对这种使用场景的优化。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到之前的代码很繁杂，根据各种 Type 有各种 position 的判断，在 getView 的时候代码一坨一坨的看着很不舒服，那么有没有什么优化策略呢？
+可以知道多 Type 的使用原因是界面多种展示风格，本质的原因则是数据类型的不一致，即数据源中有多种数据类型，那么就可以直接 <strong style="font-weight:bold;color:#111111;">利用泛型来实现数据的区分，整合一个 List<Object> mDataList 里面包含所有的数据，在根据 getItem 来获取单个的 item，根据其数据类型来判断属于哪种 Type。</strong></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">根据策略，将头部的布局抽成<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">String</code>类型，将打印机的布局抽成<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">PrinterInfo</code>类型，后面获取<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">item</code>后根据类型来判断是头布局，还是打印机布局。
+优化后的代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class PrinterManagerAdapter extends BaseAdapter {
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_PRINTER = 1;
+
+    private static final String TITLE_BLUETOOTH_PRINTER = &quot;蓝牙打印机&quot;;
+    private static final String TITLE_NET_PRINTER = &quot;网络打印机&quot;;
+    private static final String TITLE_CLOUD_PRINTER = &quot;云打印机&quot;;
+
+    private Context mContext;
+    private LayoutInflater mInflater;
+    private OnItemFunctionClickListener listener;
+
+    private List&lt;Object&gt; mDataList = new ArrayList&lt;&gt;();
+
+    public PrinterManagerAdapter(Context context, ArrayList&lt;PrinterInfo&gt; printers, SwipePartMenuListView listView) {
+        mContext = context;
+        mInflater = LayoutInflater.from(context);
+
+        initDataList(printers);
+        setNotSwipeItems(listView);
+    }
+
+    private void initDataList(List&lt;PrinterInfo&gt; printerList) {
+        mDataList.clear();
+        List&lt;PrinterInfo&gt; bluetoothPrinterList = new ArrayList&lt;&gt;();
+        List&lt;PrinterInfo&gt; netPrinterList = new ArrayList&lt;&gt;();
+        List&lt;PrinterInfo&gt; cloudPrinterList = new ArrayList&lt;&gt;();
+        for (PrinterInfo info : printerList) {
+            if (info.printerType == PrinterInfo.TYPE_BLUETOOTH) {
+                bluetoothPrinterList.add(info);
+            } else if (info.printerType == PrinterInfo.TYPE_NETWORK) {
+                netPrinterList.add(info);
+            } else if (info.printerType == PrinterInfo.TYPE_CLOUD) {
+                cloudPrinterList.add(info);
+            }
+        }
+
+        mDataList.add(TITLE_BLUETOOTH_PRINTER);
+        mDataList.addAll(bluetoothPrinterList);
+        mDataList.add(TITLE_NET_PRINTER);
+        mDataList.addAll(netPrinterList);
+        mDataList.add(TITLE_CLOUD_PRINTER);
+        mDataList.addAll(cloudPrinterList);
+    }
+
+    private void setNotSwipeItems(SwipePartMenuListView listView) {
+        List&lt;Integer&gt; titleList = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; mDataList.size(); i++) {
+            if (mDataList.get(i) instanceof String) {
+                titleList.add(i);
+            }
+        }
+        listView.setCannotSwipePositionList(titleList);
+    }
+
+    public void setPrinters(ArrayList&lt;PrinterInfo&gt; printers, SwipePartMenuListView listView) {
+        initDataList(printers);
+        setNotSwipeItems(listView);
+    }
+
+    public void setListener(OnItemFunctionClickListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        int viewType = getItemViewType(position);
+        if (viewType == TYPE_HEADER) {
+            return getTitleView(position, convertView, parent);
+        } else {
+            return getPrinterView(position, convertView, parent);
+        }
+    }
+
+    private View getPrinterView(int position, View convertView, ViewGroup parent) {
+        PrinterViewHolder printerHolder;
+        if (convertView == null) {
+            printerHolder = new PrinterViewHolder();
+            convertView = mInflater.inflate(R.layout.item_printer_devices, parent, false);
+            printerHolder.connect = (TextView) convertView.findViewById(R.id.printer_connect_tv);
+            printerHolder.divider = convertView.findViewById(R.id.printer_last_divider);
+            printerHolder.setting = (TextView) convertView.findViewById(R.id.printer_setting_tv);
+            printerHolder.title = (TextView) convertView.findViewById(R.id.printer_title_tv);
+            printerHolder.connectIcon = (ImageView) convertView.findViewById(R.id.printer_connect_iv);
+            convertView.setTag(printerHolder);
+        } else {
+            printerHolder = (PrinterViewHolder) convertView.getTag();
+        }
+
+        PrinterInfo printer = (PrinterInfo) mDataList.get(position);
+
+        initPrinter(printerHolder, printer);
+
+        if (position == getCount() - 1) {
+            printerHolder.divider.setVisibility(View.VISIBLE);
+        } else {
+            printerHolder.divider.setVisibility(View.GONE);
+        }
+
+        return convertView;
+    }
+
+    private View getTitleView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder headerHolder;
+        if (convertView == null) {
+            headerHolder = new HeaderViewHolder();
+            convertView = mInflater.inflate(R.layout.item_printer_title, parent, false);
+            headerHolder.headerTitle = (TextView) convertView.findViewById(R.id.printer_category_tv);
+            headerHolder.headerIcon = (ImageView) convertView.findViewById(R.id.printer_icon_iv);
+            headerHolder.headerAdd = (ImageView) convertView.findViewById(R.id.printer_add_device_iv);
+            headerHolder.headerDivider = convertView.findViewById(R.id.printer_title_divider);
+            convertView.setTag(headerHolder);
+        } else {
+            headerHolder = (HeaderViewHolder) convertView.getTag();
+        }
+
+        String title = (String) mDataList.get(position);
+        headerHolder.headerTitle.setText(title);
+        headerHolder.headerAdd.setOnTouchListener(new OnTouchEffectedListener());
+
+        if (TITLE_BLUETOOTH_PRINTER.equals(title)) {
+            headerHolder.headerIcon.setImageResource(R.drawable.ic_printer_bluetooth);
+            headerHolder.headerAdd.setImageResource(R.drawable.btn_setting_goods_add);
+            headerHolder.headerAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onRightClick(PrinterInfo.TYPE_BLUETOOTH);
+                    }
+                }
+            });
+        } else if (TITLE_NET_PRINTER.equals(title)) {
+            headerHolder.headerIcon.setImageResource(R.drawable.ic_printer_wifi);
+            headerHolder.headerAdd.setImageResource(R.drawable.btn_setting_goods_add);
+            headerHolder.headerAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onRightClick(PrinterInfo.TYPE_NETWORK);
+                    }
+                }
+            });
+        } else if (TITLE_CLOUD_PRINTER.equals(title)) {
+            headerHolder.headerIcon.setImageResource(R.drawable.ic_printer_cloud);
+            headerHolder.headerAdd.setImageResource(R.drawable.btn_setting_goods_scan);
+            headerHolder.headerAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onRightClick(PrinterInfo.TYPE_CLOUD);
+                    }
+                }
+            });
+        }
+
+        if (position == getCount() - 1) {
+            headerHolder.headerDivider.setVisibility(View.VISIBLE);
+        } else {
+            headerHolder.headerDivider.setVisibility(View.GONE);
+        }
+
+        return convertView;
+    }
+
+    private void initPrinter(PrinterViewHolder holder, final PrinterInfo printerInfo) {
+        if (holder != null) {
+            boolean connected = false;
+            holder.title.setText(printerInfo.name);
+
+            List&lt;IPrinter&gt; printers = PrinterManager.getInstance().getPrinterList();
+            for (IPrinter printer : printers) {
+                if (printer.getPrinterId().equals(printerInfo.mac)) {
+                    connected = true;
+                    holder.connect.setText(&quot;断开&quot;);
+                    holder.connectIcon.setImageResource(R.drawable.ic_connect);
+                    break;
+                }
+            }
+            if (!connected) {
+                holder.connect.setText(&quot;连接&quot;);
+                holder.connectIcon.setImageResource(R.drawable.ic_break);
+            }
+
+            holder.setting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PrinterSettingActivity.navigateTo(mContext, printerInfo);
+                }
+            });
+            final boolean finalConnected = connected;
+            holder.connect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onConnectClick(printerInfo, finalConnected);
+                    }
+                }
+            });
+        }
+    }
+
+    @Nullable
+    public PrinterInfo getPrinterInfo(int position) {
+        Object o = mDataList.get(position);
+        if (o instanceof PrinterInfo) {
+            return (PrinterInfo) o;
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Object o = mDataList.get(position);
+        if (o instanceof PrinterInfo) {
+            return TYPE_PRINTER;
+        } else {
+            return TYPE_HEADER;
+        }
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
+    public int getCount() {
+        return mDataList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mDataList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    private class HeaderViewHolder {
+        private TextView headerTitle;
+        private ImageView headerIcon;
+        private ImageView headerAdd;
+        private View headerDivider;
+    }
+
+    private class PrinterViewHolder {
+        private TextView connect;
+        private TextView title;
+        private View divider;
+        private TextView setting;
+        private ImageView connectIcon;
+    }
+
+    public interface OnItemFunctionClickListener {
+        void onConnectClick(PrinterInfo printer, boolean connected);
+
+        /**
+         * 点击标题右侧按钮
+         * @param printerType 打印机类型。例如 {@link PrinterInfo#TYPE_BLUETOOTH}
+         */
+        void onRightClick(int printerType);
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">核心代码便在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">initDataList</code>中，所有的对象都是继承自 Object 的，利用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">instanceof</code>可以判断放入的是哪种数据类型，一种数据类型对应一种 Type。对比之前的代码，可以看到调整后的代码可读性更高，也更简洁了。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="针对ListView多Type的优化">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

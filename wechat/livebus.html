@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>LiveBus 之思考 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2021-01-28 · 约 4261 字</div>
+  <h1>LiveBus 之思考</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在项目中使用到 <a href="http://lastwarmth.win/2019/09/02/livedata/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">LiveBus</a> 时，还是挺好用的，各方面的需求也都能满足。碰到的问题也能一一解决，这篇文章就稍微总结一下：</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">observeForever</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当调用 observeForever 时，发现 remove 会失效，这个是代码问题导致的，在那篇文章中已经修复，这里再啰嗦一下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private val wrappers = mutableMapOf&lt;Observer&lt;in T&gt;, BusWrapper&gt;()
+
+override fun observeForever(observer: Observer&lt;in T&gt;) {
+    val wrapper = DefaultWrapper(observer)
+    wrappers[observer] = wrapper
+    super.observeForever(wrapper)
+}
+
+override fun removeObserver(observer: Observer&lt;in T&gt;) {
+    val wrapper = wrappers[observer]
+    if (wrapper != null) {
+        super.removeObserver(wrapper)
+        wrappers.remove(observer)
+    } else {
+        super.removeObserver(observer)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后就会出现另外一个问题：<strong style="font-weight:bold;color:#111111;">假设我现在有一个 observer，在 observe 之后，当收到回调时，想手动 remove 掉，发现也 remove 不掉</strong>。因为在 observe 时没有把外面传入的 observer 给保存起来，那么在手动 remove 的时候就会发现 remove 不掉了，解决方案也简单：再加入到 wrappers 里。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">open class BusLiveData&lt;T&gt; : MutableLiveData&lt;T&gt;() {
+
+    private val wrappers = mutableMapOf&lt;Observer&lt;in T&gt;, BusWrapper&gt;()
+
+    override fun observe(owner: LifecycleOwner, observer: Observer&lt;in T&gt;) {
+        // 不重复注册
+        if (wrappers[observer] != null) {
+            return
+        }
+        val wrapper = DefaultWrapper(observer)
+        wrappers[observer] = wrapper
+        super.observe(owner, wrapper)
+    }
+
+    open fun observeSticky(owner: LifecycleOwner, observer: Observer&lt;T&gt;) {
+        super.observe(owner, observer)
+    }
+
+    override fun observeForever(observer: Observer&lt;in T&gt;) {
+        // 不重复注册
+        if (wrappers[observer] != null) {
+            return
+        }
+        val wrapper = DefaultWrapper(observer)
+        wrappers[observer] = wrapper
+        super.observeForever(wrapper)
+    }
+
+    fun observeStickyForever(observer: Observer&lt;T&gt;) {
+        super.observeForever(observer)
+    }
+
+    override fun removeObserver(observer: Observer&lt;in T&gt;) {
+        val wrapper = wrappers[observer]
+        if (wrapper != null) {
+            super.removeObserver(wrapper)
+            wrappers.remove(observer)
+        } else {
+            val iterator = wrappers.iterator()
+            run find@{
+                while (iterator.hasNext()) {
+                    val data = iterator.next()
+                    if (data.value == observer) {
+                        wrappers.remove(data.key)
+                        return@find
+                    }
+                }
+            }
+            super.removeObserver(observer)
+        }
+    }
+
+    inner class DefaultWrapper(observer: Observer&lt;in T&gt;) : BusWrapper(observer) {
+        override fun onChanged(t: T?) {
+            if (lastVersion &gt;= version) {
+                return
+            }
+
+            lastVersion = version
+            observer.onChanged(t)
+        }
+    }
+
+    abstract inner class BusWrapper(val observer: Observer&lt;in T&gt;) : Observer&lt;T&gt; {
+        var lastVersion = version
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">不论是 observe 或者 observeForever 都会加入到 wrappers 里进行管理，然后在 remove 时通过遍历，找到对应 observer 的 wrapper，再进行移除，如此一来，问题也都解决了。同时也处理了同一个 observer 不重复 observe 的问题。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">思考</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在这样进行修改的时候，我就发现有点麻烦了，外部传入的 observer 都要经过 LiveBus 进行转换，转换成相应的 wrapper 才调用 LiveData 的 observe 方法，其实 LiveData 内部就已经针对 observer 进行管理了。而现在的 LiveBus 为了实现 LiveData notSticky 的效果，把每一个 observer 都做了 wrapper 转换，导致外部的 observer 在 LiveBus 内部都需要再管理一遍。
+那么能不能直接就调用 LiveData.observe 方法，传入一个 observer，是否粘性由 observer 自身决定。
+按照这个思路，我重写了 BusLiveData 类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">open class BusLiveData&lt;T&gt; : MutableLiveData&lt;T&gt;() {
+
+    abstract inner class NotStickyObserver : Observer&lt;T&gt; {
+
+        private var observerVersion: Int = version
+
+        override fun onChanged(t: T) {
+            if (observerVersion &gt;= version ) {
+                return
+            }
+            onRealChanged(t)
+            observerVersion = version
+        }
+
+        abstract fun onRealChanged(t: T)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">为了获取 version，必须要把包名命名为 androidx.lifecycle，同时 NotStickyObserver 必须为 BusLiveData 的内部类，并且是 inner 的。那这样的话，就导致外面的类就无法使用 NotStickyObserver了，所以需要 BusLiveData 自身来生成 Observer：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">open class BusLiveData&lt;T&gt; : MutableLiveData&lt;T&gt;() {
+
+    fun getNotStickyObserver(onChanged: (T) -&gt; Unit): NotStickyObserver {
+        return object : NotStickyObserver() {
+            override fun onRealChanged(t: T) {
+                onChanged(t)
+            }
+        }
+    }
+
+    fun observeNotSticky(owner: LifecycleOwner, onChanged: (T) -&gt; Unit) {
+        observe(owner, getNotStickyObserver(onChanged))
+    }
+
+    abstract inner class NotStickyObserver : Observer&lt;T&gt; {
+
+        private var observerVersion: Int = version
+
+        override fun onChanged(t: T) {
+            if (observerVersion &gt;= version ) {
+                return
+            }
+            onRealChanged(t)
+            observerVersion = version
+        }
+
+        abstract fun onRealChanged(t: T)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">添加一个 getNotStickyObserver 方法，返回非粘性的 observer，如有需要可以接收，方便后续手动 remove。结合 LiveData 自身的使用方式，添加一个 observeNotSticky，自动生成一个 NotStickyObserver 并 observe。
+现在就只有这样的一个初步方案，不知使用起来是否可行，有待验证。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">调试</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 LiveBus 监听，很难调试相应的代码：监听的地方可以通过事件类名找到相应的代码，<strong style="font-weight:bold;color:#111111;">但是无法得知是哪里 post 出这个事件的</strong>。所以打算直接把 LiveBus 里的 post 方法去掉：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object LiveBus {
+
+    private val busMap by lazy { ConcurrentHashMap&lt;Class&lt;*&gt;, BusLiveData&lt;*&gt;&gt;() }
+
+    private fun &lt;T&gt; bus(clazz: Class&lt;T&gt;) = busMap.getOrPut(clazz) { BusLiveData&lt;T&gt;() }
+
+    @Suppress(&quot;UNCHECKED_CAST&quot;)
+    @JvmStatic
+    fun &lt;T&gt; with(clazz: Class&lt;T&gt;) = bus(clazz) as BusLiveData&lt;T&gt;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">只提供 with 方法，返回 BusLiveData，然后手动 postValue。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">LiveBus.with(String.class).postValue(&quot;Hello world&quot;);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这样的话就比较方便调试了，但是代码会多一些，具体哪种方式好，还得依赖具体的场景吧。同时无法限制 postValue 的使用了，由外部自己调用的，那么就又可能就会出现在子线程调用 setValue 的场景了。
+想来想去，貌似也没有十全十美的方案，只能说针对自己的场景选取最合适的方式，头发又少了<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/mh118.gif" style="max-width:100%;height:auto;border-radius:4px;"></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="LiveBus 之思考">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

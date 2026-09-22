@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 保活实践 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2018-08-16 · 约 5328 字</div>
+  <h1>Android 保活实践</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">作为 Android 开发者，当提到“保活”时，心中的滋味可谓是五味杂陈。互联网上也有各种“黑科技”来达到相应的目的。若是普通的应用，我是十分拒绝进行保活的，当用户不需要你了，还要偷偷地活着，做一些事情。最近参与开发的一款 App 是跟地图相关的，有着「录轨迹」的功能，当用户开启录制功能后，即使退出应用到后台，也是期望能够继续录制的，所以便研究了一番保活，并实践了一下，最后效果也还不错。
+说下总体方案：<strong style="font-weight:bold;color:#111111;">1 像素 Activity 、音频播放、前台服务</strong>。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先，监听锁屏相关的广播：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class ScreenReceiver {
+    private static final String TAG = &quot;ScreenReceiver&quot;;
+
+    private Context mContext;
+    // 锁屏亮屏广播接收器
+    private ScreenBroadcastReceiver mScreenReceiver;
+    // 屏幕状态改变回调接口
+    private ScreenStateListener mStateReceiverListener;
+
+    public ScreenReceiver(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public void register(ScreenStateListener mStateReceiverListener) {
+        this.mStateReceiverListener = mStateReceiverListener;
+        // 动态启动广播接收器
+        this.mScreenReceiver = new ScreenBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(Intent.ACTION_USER_PRESENT);
+        mContext.registerReceiver(mScreenReceiver, filter);
+    }
+
+    public void unRegister() {
+        mContext.unregisterReceiver(mScreenReceiver);
+    }
+
+    public class ScreenBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            LogUtils.e(TAG, &quot;ScreenBroadcastReceiver onReceive() action: &quot; + action);
+            if (mStateReceiverListener == null) {
+                return;
+            }
+            if (Intent.ACTION_SCREEN_ON.equals(action)) {
+                // 亮屏
+                mStateReceiverListener.onScreenOn();
+            } else if (Intent.ACTION_SCREEN_OFF.equals(action)) {
+                // 息屏
+                mStateReceiverListener.onScreenOff();
+            } else if (Intent.ACTION_USER_PRESENT.equals(action)) {
+                // 解锁
+                mStateReceiverListener.onUserPresent();
+            }
+        }
+    }
+
+    public interface ScreenStateListener {
+        /**
+         * 屏幕亮屏
+         */
+        void onScreenOn();
+
+        /**
+         * 屏幕息屏
+         */
+        void onScreenOff();
+
+        /**
+         * 用户解锁
+         */
+        void onUserPresent();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">保活管理类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class KeepAliveManager {
+
+    public static final String BUSINESS_NAME_RECORD = &quot;BUSINESS_NAME_RECORD&quot;;
+
+    @StringDef({BUSINESS_NAME_RECORD})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface KeepAliveName {}
+
+    private static KeepAliveManager keepAliveManager = new KeepAliveManager();
+
+    private ScreenReceiver screenReceiver;
+
+    private MediaPlayer mMediaPlayer;
+
+    /**
+     * 记录需要保活的业务功能名称
+     * 优点:
+     * 1、不同业务的生命周期不同，避免不同业务之间需要通知当前状态、状态变更
+     * 2、当没有业务需要保活app时，自动关闭保活
+     * 3、用HashSet是因为它不允许add相同元素，如果添加相同元素也只会保存一份
+     */
+    private Set&lt;String&gt; needAliveBusinessName = new HashSet&lt;&gt;();
+
+    private KeepAliveManager() {
+    }
+
+    public static KeepAliveManager getInstance() {
+        return keepAliveManager;
+    }
+
+    /**
+     * 在需要保活的业务启动时 开启
+     */
+    public void start(@KeepAliveName String businessName) {
+
+        needAliveBusinessName.add(businessName);
+
+        if (screenReceiver != null) {
+            //不需要重复保活
+            return;
+        }
+
+        screenReceiver = new ScreenReceiver(MucangConfig.getContext());
+        screenReceiver.register(new ScreenReceiver.ScreenStateListener() {
+            @Override
+            public void onScreenOn() {
+                ScreenManager.getInstance().finishActivity();
+            }
+
+            @Override
+            public void onScreenOff() {
+                ScreenManager.getInstance().startActivity();
+                playMusic();
+            }
+
+            @Override
+            public void onUserPresent() {
+                if (mMediaPlayer != null) {
+                    mMediaPlayer.stop();
+                }
+            }
+        });
+
+    }
+
+    public void stop(@KeepAliveName String businessName) {
+        needAliveBusinessName.remove(businessName);
+
+        // 当没有业务功能需要保活时，需要退出保活监听
+        if (needAliveBusinessName.size() == 0) {
+
+            if (screenReceiver != null) {
+                screenReceiver.unRegister();
+                screenReceiver = null;
+            }
+        }
+    }
+
+    private void playMusic() {
+        mMediaPlayer = MediaPlayer.create(MucangConfig.getContext(), R.raw.silent);
+        mMediaPlayer.setLooping(true);
+        mMediaPlayer.start();
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">很简单的一个单例类，调用 start 方法传入对应的业务启动保活，保活只会在锁屏时开启。当没有处于需要保活的业务场景时，则不会启动保活。
+然后看到 ScreenManager：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class ScreenManager {
+    private static final String TAG = &quot;ScreenManager&quot;;
+    private Context mContext;
+    private static ScreenManager mScreenManager;
+    private WeakReference&lt;Activity&gt; mActivityRef;
+
+    private ScreenManager() {
+        mContext = MucangConfig.getContext();
+    }
+
+    public static ScreenManager getInstance() {
+        if (mScreenManager == null) {
+            mScreenManager = new ScreenManager();
+        }
+        return mScreenManager;
+    }
+
+    public void setSingleActivity(Activity mActivity) {
+        mActivityRef = new WeakReference&lt;&gt;(mActivity);
+    }
+
+    public void startActivity() {
+        LogUtils.e(TAG, &quot;start LockScreenActivity...&quot;);
+        Intent intent = new Intent(mContext, LockScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+    }
+
+    public void finishActivity() {
+        LogUtils.e(TAG, &quot;finish LockScreenActivity...&quot;);
+        if (mActivityRef != null) {
+            Activity mActivity = mActivityRef.get();
+            if (mActivity != null) {
+                mActivity.finish();
+            }
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">主要功能就是启动、关闭一个 1 像素的 Activity。
+看下 LockScreenActivity：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 自定义锁屏activity
+ * 注:
+ * 1、锁屏时启动，用于将可能处于后台的进程拉到前台，降低被 Low Memory Killer 清理的概率
+ * 2、若此时本应用的进程已经处于前台进程，再加强一下也有利于保活
+ */
+public class LockScreenActivity extends FragmentActivity {
+
+    private static final String TAG = &quot;LockScreenActivity&quot;;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        LogUtils.e(TAG, &quot;LockScreenActivity onCreate()&quot;);
+
+        Window mWindow = getWindow();
+        mWindow.setGravity(Gravity.LEFT | Gravity.TOP);
+        WindowManager.LayoutParams attrParams = mWindow.getAttributes();
+        attrParams.x = 0;
+        attrParams.y = 0;
+        attrParams.height = 1;
+        attrParams.width = 1;
+        mWindow.setAttributes(attrParams);
+
+        ScreenManager.getInstance().setSingleActivity(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LogUtils.e(TAG, &quot;LockScreenActivity onDestroy()&quot;);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">同时，录制轨迹的服务使用 startForeground 方式。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class RecordService extends Service {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        startForeground(1, createNotification(&quot;记录轨迹中&quot;, &quot;正在后台记录轨迹&quot;));
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">结合以上代码，可以达到不错的保活效果了。可以看到，代码比较克制，只在特定需要保活的业务场景才开启保活，绝不会在后台不经用户同意做一些“恶心”的事情。另外，锁屏播放无声音乐会比较耗电，需要优化，可以在一段时间内播放一次。同时播放音乐可能会与有些音乐、视频 App 的播放冲突，从而达不到保活效果，这些都是可优化的方向。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参考：<a href="https://segmentfault.com/a/1190000006251859" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 进程保活招式大全</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 保活实践">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

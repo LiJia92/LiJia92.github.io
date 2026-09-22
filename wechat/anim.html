@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>记一次动画实践 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-12-12 · 约 9647 字</div>
+  <h1>记一次动画实践</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">废话少说，先上效果图：
+<video src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/%E8%A7%86%E9%A2%91%E5%8A%A8%E7%94%BB%20.mp4" width="264" height="460" controls="controls">
+Your browser does not support the video tag.
+</video>
+得如何实现这样的效果呢？</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先，将动画拆分几个独立的部分：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「芳草地考场」横轴从左侧移动到中间，纵轴移动到标题栏，字体同时变小；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「切换考场」纵轴移动到标题栏，距离右侧边距变斤，字体同时变小；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「标题栏」背景渐变，图标颜色变化；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「考场横向列表」缩小，左移靠边，同时能吸顶；</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">现在来考虑具体要怎么做。做开始想到的就是 CoordinatorLayout + CollapsingToolbarLayout 来实现，Google 后发现实现的效果与预期不同，又没有足够的时间去研究，所以抛弃了此方案，打算直接自己写。那么要如何写呢？动画无非是由一系列的状态组合起来的，当滑动 100dp 时，界面这样展示；当滑动 200dp 时，界面那样展示。思路就很明确了：直接监听页面滑动，根据滑动的距离，来展示界面所有的元素。那么剩下的，便是根据滑动距离，来做 4 个部分动画元素的展示了。
+最终实现的 xml 布局如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;android.support.design.widget.CoordinatorLayout
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:background=&quot;#F7FBFF&quot;&gt;
+
+    &lt;android.support.design.widget.AppBarLayout
+        android:id=&quot;@+id/appBarLayout&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;
+        app:elevation=&quot;0dp&quot;&gt;
+
+        &lt;ImageView
+            android:id=&quot;@+id/bgView&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;375dp&quot;
+            android:layout_marginBottom=&quot;-217dp&quot;
+            android:scaleType=&quot;fitXY&quot;
+            android:src=&quot;@drawable/jiakao_ke3_exam_route_unbuy_banner&quot;
+            app:layout_scrollFlags=&quot;scroll&quot; /&gt;
+
+        &lt;LinearLayout
+            android:id=&quot;@+id/videoLl&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;12dp&quot;
+            android:layout_marginTop=&quot;68dp&quot;
+            android:layout_marginRight=&quot;-12dp&quot;
+            android:background=&quot;@drawable/bg_white_corner_5dp&quot;
+            android:orientation=&quot;vertical&quot;
+            android:paddingBottom=&quot;12dp&quot;
+            tools:ignore=&quot;MissingPrefix&quot;&gt;
+
+            &lt;include
+                android:id=&quot;@+id/tipView&quot;
+                layout=&quot;@layout/exam_route_line_top_tip&quot;
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;36dp&quot;
+                android:layout_marginRight=&quot;12dp&quot;
+                android:visibility=&quot;invisible&quot; /&gt;
+
+            &lt;android.support.v7.widget.RecyclerView
+                android:id=&quot;@+id/placeRv&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_marginTop=&quot;20dp&quot;
+                android:clipToPadding=&quot;false&quot;
+                android:paddingRight=&quot;27dp&quot; /&gt;
+
+        &lt;/LinearLayout&gt;
+
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+
+    &lt;android.support.v4.widget.NestedScrollView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:clipToPadding=&quot;false&quot;
+        android:paddingBottom=&quot;80dp&quot;
+        android:scrollbars=&quot;none&quot;
+        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+
+        &lt;include layout=&quot;@layout/layout_exam_video_unbuy_bottom&quot; /&gt;
+
+    &lt;/android.support.v4.widget.NestedScrollView&gt;
+
+    &lt;RelativeLayout
+        android:id=&quot;@+id/titleRl&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;68dp&quot;
+        android:fitsSystemWindows=&quot;true&quot;
+        app:layout_behavior=&quot;.paid_video.behavior.ExamTitleBehavior&quot;&gt;
+
+        &lt;ImageView
+            android:id=&quot;@+id/backIv&quot;
+            android:layout_width=&quot;50dp&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_marginLeft=&quot;1dp&quot;
+            android:layout_marginTop=&quot;20dp&quot;
+            android:scaleType=&quot;centerInside&quot;
+            android:src=&quot;@drawable/core__title_bar_back_icon&quot;
+            android:tint=&quot;#FFFFFFFF&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/locationTv&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_alignParentRight=&quot;true&quot;
+            android:layout_marginTop=&quot;20dp&quot;
+            android:layout_marginRight=&quot;22dp&quot;
+            android:gravity=&quot;center_vertical&quot;
+            android:includeFontPadding=&quot;false&quot;
+            android:text=&quot;北京&quot;
+            android:textColor=&quot;#FFFFFFFF&quot;
+            android:textSize=&quot;14dp&quot; /&gt;
+
+        &lt;ImageView
+            android:id=&quot;@+id/locationIv&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_marginTop=&quot;20dp&quot;
+            android:layout_marginRight=&quot;5dp&quot;
+            android:layout_toLeftOf=&quot;@id/locationTv&quot;
+            android:src=&quot;@drawable/jiakao__ic_exam_route_video_dizhi&quot;
+            android:tint=&quot;#FFFFFFFF&quot; /&gt;
+
+    &lt;/RelativeLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/titleTv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;48dp&quot;
+        android:layout_marginLeft=&quot;28dp&quot;
+        android:layout_marginTop=&quot;230dp&quot;
+        android:ellipsize=&quot;marquee&quot;
+        android:focusable=&quot;true&quot;
+        android:focusableInTouchMode=&quot;true&quot;
+        android:gravity=&quot;center&quot;
+        android:marqueeRepeatLimit=&quot;marquee_forever&quot;
+        android:maxWidth=&quot;200dp&quot;
+        android:singleLine=&quot;true&quot;
+        android:textColor=&quot;#000&quot;
+        android:textSize=&quot;21sp&quot;
+        android:textStyle=&quot;bold&quot;
+        app:layout_behavior=&quot;.paid_video.behavior.ExamPlaceNameBehavior&quot;
+        tools:text=&quot;芳草地考场&quot; /&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/switchPlaceTv&quot;
+        android:layout_width=&quot;106dp&quot;
+        android:layout_height=&quot;32dp&quot;
+        android:layout_gravity=&quot;right&quot;
+        android:layout_marginTop=&quot;238dp&quot;
+        android:layout_marginRight=&quot;15dp&quot;
+        android:background=&quot;@drawable/bg_shape_ff8149_ff2803_r100&quot;
+        android:gravity=&quot;center&quot;
+        android:text=&quot;切换考场 &gt;&quot;
+        android:textColor=&quot;#ffffff&quot;
+        android:textSize=&quot;16sp&quot;
+        app:layout_behavior=&quot;.paid_video.behavior.SwitchPlaceBehavior&quot; /&gt;
+
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面逐一来解析。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">bgView 是最上面的背景图，高度 375dp，「考场横向列表」卡片需要覆盖一部分在上面，AppBarLayout 是继承自 LinearLayout 的，所以加了个 <strong style="font-weight:bold;color:#111111;">android:layout_marginBottom=&quot;-217dp&quot;</strong> 以此来实现覆盖效果。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">当滑到最大值时，顶部的 tipView 与 placeRv 需要吸顶，所以二者组合为一个 LinearLayout，同时只给 bgView 设置 **app:layout_scrollFlags=&quot;scroll&quot;**，便可实现吸顶。因为整个界面是通栏，所以在动画结束状态，videoLl 需要设置一个 **android:layout_marginTop=&quot;68dp&quot;**，使其正好处于标题栏之下。参考<a href="http://lastwarmth.win/2019/03/12/scroll/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 滑动吸顶效果</a>。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「芳草地考场」、「切换考场」、「标题栏」需要在页面最上层展示，所以直接写到 CoordinatorLayout 最外层。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">「芳草地考场」、「切换考场」 的 marginTop 都是依据设计稿写死的值，使其正好处于 AppBarLayout 的某个位置，不能轻易改。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">NestedScrollView include 底部的列表布局，进行嵌套滑动。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">ok，现在静态界面写好了，下面就是要根据页面滑动来进行元素展示了。CoordinatorLayout 直接子孩子可以直接使用 Behavior，这样可以将 4 个动画块分开，非直接子孩子则使用监听的方式。
+「芳草地考场」Behavior：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class ExamPlaceNameBehavior(context: Context, attr: AttributeSet) : CoordinatorLayout.Behavior&lt;TextView&gt;(context, attr) {
+
+    private val dp230 = DimenUtils.dp2px(230F)
+    private val startLeftMargin = DimenUtils.dp2px(28F)
+    private val topMarginGap = dp230 - DimenUtils.dp2px(20F)
+
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: TextView, dependency: View): Boolean {
+        return dependency is AppBarLayout
+    }
+
+    override fun onDependentViewChanged(parent: CoordinatorLayout, child: TextView, dependency: View): Boolean {
+        if (dependency is AppBarLayout) {
+            val offset = abs(dependency.top)
+            var progress = offset / MAX_OFFSET
+            if (progress &gt; 1) {
+                progress = 1F
+            }
+            if (progress &lt; 0) {
+                progress = 0F
+            }
+            val maxMargin = (DimenUtils.getScreenWidth() - child.width) / 2
+            (child.layoutParams as CoordinatorLayout.LayoutParams).leftMargin =
+                    (startLeftMargin + (maxMargin - startLeftMargin) * progress).toInt()
+            (child.layoutParams as CoordinatorLayout.LayoutParams).topMargin = (dp230 - topMarginGap * progress).toInt()
+            child.isSelected = progress == 0F
+            child.textSize = 21 - 4 * progress
+            child.requestLayout()
+            return true
+        }
+        return false
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">「切换考场」Behavior：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class SwitchPlaceBehavior(context: Context, attr: AttributeSet) : CoordinatorLayout.Behavior&lt;TextView&gt;(context, attr) {
+
+    private val dp15 = DimenUtils.dp2px(15F)
+    private val dp32 = DimenUtils.dp2px(32F)
+    private val dp106 = DimenUtils.dp2px(106F)
+    private val dp238 = DimenUtils.dp2px(238F)
+
+    private val widthGap = DimenUtils.dp2px(106F - 86F)
+    private val heightGap = DimenUtils.dp2px(32F - 28F)
+    private val rightMarginGap = DimenUtils.dp2px(15F - 12F)
+    private val topMarginGap = DimenUtils.dp2px(238F - 30F)
+
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: TextView, dependency: View): Boolean {
+        return dependency is AppBarLayout
+    }
+
+    override fun onDependentViewChanged(parent: CoordinatorLayout, child: TextView, dependency: View): Boolean {
+        if (dependency is AppBarLayout) {
+            val offset = abs(dependency.top)
+            var progress = offset / MAX_OFFSET
+            if (progress &gt; 1) {
+                progress = 1F
+            }
+            if (progress &lt; 0) {
+                progress = 0F
+            }
+            (child.layoutParams as ViewGroup.MarginLayoutParams).width = (dp106 - widthGap * progress).toInt()
+            (child.layoutParams as ViewGroup.MarginLayoutParams).height = (dp32 - heightGap * progress).toInt()
+            (child.layoutParams as ViewGroup.MarginLayoutParams).rightMargin = (dp15 - rightMarginGap * progress).toInt()
+            (child.layoutParams as ViewGroup.MarginLayoutParams).topMargin = (dp238 - topMarginGap * progress).toInt()
+            child.textSize = 16 - 2 * progress
+            child.requestLayout()
+            return true
+        }
+        return false
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">「标题栏」Behavior：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class ExamTitleBehavior(context: Context, attr: AttributeSet) : CoordinatorLayout.Behavior&lt;RelativeLayout&gt;(context, attr) {
+
+    override fun layoutDependsOn(parent: CoordinatorLayout, child: RelativeLayout, dependency: View): Boolean {
+        return dependency is AppBarLayout
+    }
+
+    override fun onDependentViewChanged(parent: CoordinatorLayout, child: RelativeLayout, dependency: View): Boolean {
+        if (dependency is AppBarLayout) {
+            val offset = abs(dependency.top)
+            var progress = offset / MAX_OFFSET
+            if (progress &gt; 1) {
+                progress = 1F
+            }
+            if (progress &lt; 0) {
+                progress = 0F
+            }
+            val activity = ActivityUtils.findActivity(child)
+            child.setBackgroundColor(Color.argb((progress * 255).toInt(), 255, 255, 255))
+            if (progress &gt; 0.5) {
+                StatusBarUtils.setStatusBarTransparentBg(activity, true)
+                child.backIv.setColorFilter(Color.parseColor(&quot;#333333&quot;))
+            } else {
+                child.backIv.setColorFilter(Color.parseColor(&quot;#ffffff&quot;))
+                StatusBarUtils.setStatusBarTransparentBg(activity, false)
+            }
+            return true
+        }
+        return false
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">「考场横向列表」监听：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, y -&gt;
+    val offset = abs(y)
+    var progress = offset / MAX_OFFSET
+    if (progress &gt; 1) {
+        progress = 1F
+    }
+    if (progress &lt; 0) {
+        progress = 0F
+    }
+    if ((placeRv.tag as? Float) != progress) {
+        if (ExamRouteLineTopTipModel.needClose()) {
+            (placeRv.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+                    (DimenUtils.dp2px(20F) - DimenUtils.dp2px(8F) * progress).toInt()
+        } else {
+            (placeRv.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+                    (DimenUtils.dp2px(56F) - DimenUtils.dp2px(48F) * progress).toInt()
+        }
+        (videoLl.layoutParams as ViewGroup.MarginLayoutParams).leftMargin =
+                (DimenUtils.dp2px(12F) * (1 - progress)).toInt()
+
+        if (progress == 1F) {
+            if (tipView.visibility == View.INVISIBLE) {
+                tipView.visibility = View.VISIBLE
+            }
+            videoLl.setBackgroundResource(R.drawable.white)
+        } else {
+            if (tipView.visibility == View.VISIBLE) {
+                tipView.visibility = View.INVISIBLE
+            }
+            videoLl.setBackgroundResource(R.drawable.bg_white_corner_5dp)
+        }
+        placeRv.tag = progress
+        (placeRv.adapter as? ExamVideoUnbuyAdapter)?.setProgress(progress)
+    }
+})
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">tipView 通过 <strong style="font-weight:bold;color:#111111;">ExamRouteLineTopTipModel.needClose()</strong> 判断是否需要展示，两种状态的 margin 不一致，需要区分开。另外，<strong style="font-weight:bold;color:#111111;">CoordinatorLayout 有子孩子变化，都会回调到 OnOffsetChangedListener</strong>，所以需要保存 progress，避免一直调用方法。
+因为需求太具体，文章写起来不宜碎碎念，就只帖了代码，记录一下，以后碰到类似需求，有思路去做。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="记一次动画实践">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 动画序列的实现 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-02-02 · 约 10034 字</div>
+  <h1>Android 动画序列的实现</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">老规矩，上需求：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/animation.gif" style="max-width:100%;height:auto;border-radius:4px;">
+这个 Gif 里有众多的动画效果，怎么实现呢？</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">拆分效果</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">整体的动画效果大致可以分为 3 个：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">右上角小车移动的动画</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">图片缩放动画及文字展示的动画</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">左侧 Logo 及底部文字的动画</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">拆分完之后，依次来实现。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">小车轨迹动画</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目基于高德地图，小车绘制的路线必须是实际路线的样子，然后车头还要跟着路线进行旋转，里面的细节还是挺多的。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">如何绘制路线？
+使用高德自带的 Api 很难实现这样的效果，所以采取的方案是：利用高德地图绘制出路线，然后将路线中的 GPS 点映射成为屏幕中的坐标点，这些坐标点是基于 Android 手机屏幕的，所以可以直接传入到 Path 中，然后利用 Path 进行绘制，这样绘制出来的图形遍与真实的路线一致了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">小车如何移动旋转？
+小车的移动显然与路线的绘制保持一致，小车的中心点即是路线最新画出来的点。至于角度，则是根据前面 N 个点的平均点，与后面 N 个点的平均点进行连线所形成的的夹角来得到。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val pastCenter = Point()  // 过去 N 个点的平均点
+var totalX = 0
+var totalY = 0
+for (index in startIndex..newIndex) {
+    totalX += traceDataList!![index].x
+    totalY += traceDataList!![index].y
+}
+pastCenter.x = totalX / (newIndex - startIndex + 1)
+pastCenter.y = totalY / (newIndex - startIndex + 1)
+
+val lastCenter = Point()  // 未来 N 个点的平均点
+totalX = 0
+totalY = 0
+for (index in newIndex..endIndex) {
+    totalX += traceDataList!![index].x
+    totalY += traceDataList!![index].y
+}
+lastCenter.x = totalX / (endIndex - newIndex + 1)
+lastCenter.y = totalY / (endIndex - newIndex + 1)
+val angle = (lastCenter.y - pastCenter.y).toFloat() / (lastCenter.x - pastCenter.x)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">求得角度之后，将其转化为 Canvas 使用的角度进行绘制小车 Bitmap 即可。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">图片缩放动画，文字展示的动画</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Gif 演示图中有 5 张图片，对应了 5 个文字展示动画。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第一张图对应里程、时间动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第二张图对应速度、海拔动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第三、四张图对应描述文字动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第五张图对应推广文字动画。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">将每张图的动画仔细拆分：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第一张图：里程文字 alpha 渐变 -&gt; 里程数据从右往左展示 -&gt; 时间文字 alpha 渐变 -&gt; 时间数据从右往左展示。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第二张图：速度文字从上往下展示 -&gt; 速度数据从左往右展示 -&gt; 海拔文字从上往下展示 -&gt; 海拔数据从左往右展示。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第三、四张图：整体从左往右逐渐揭露展示。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">第五张图：整体 alpha 渐变。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">那么如何将这么些动画组织起来呢？它就像事件流一样，1 执行完了执行 2，2 执行完了执行 3。。。
+Android View 提供一个 animate() 方法，它会返回一个 ViewPropertyAnimator 对象，它提供了很多动画方法进行调用，并且有点像建造者模式，可以链式调用，最后写起来就像这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 展示里程、时间动画
+ */
+private fun startFirstPageAnimation() {
+    firstView.distanceLl.animate()
+            .alphaBy(0F)
+            .alpha(1F)
+            .withEndAction {
+                firstView.distanceTv.animate()
+                        .translationXBy(firstView.distanceTv.measuredWidth.toFloat())
+                        .translationX(0F)
+                        .withEndAction {
+                            firstView.timeLl.animate()
+                                    .alphaBy(0F)
+                                    .alpha(1F)
+                                    .withEndAction {
+                                        firstView.timeTv.animate()
+                                                .translationXBy(firstView.timeTv.measuredWidth.toFloat())
+                                                .translationX(0F)
+                                                .withEndAction {
+                                                    hideView(firstView)
+                                                }
+                                                .setDuration(240L)
+                                                .start()
+                                    }
+                                    .setDuration(240L)
+                                    .start()
+                        }
+                        .setDuration(240L)
+                        .start()
+            }
+            .setDuration(240L)
+            .start()
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">顺带贴一下 firstView 的布局：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+    android:id=&quot;@+id/firstAnimationRoot&quot;
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_gravity=&quot;right|bottom&quot;
+    android:layout_marginBottom=&quot;24dp&quot;
+    android:layout_marginRight=&quot;24dp&quot;
+    android:gravity=&quot;right&quot;
+    android:orientation=&quot;vertical&quot;
+    tools:background=&quot;#c000ffff&quot;&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/distanceLl&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:gravity=&quot;center_vertical&quot;&gt;
+
+        &lt;View
+            android:layout_width=&quot;24dp&quot;
+            android:layout_height=&quot;1dp&quot;
+            android:background=&quot;@color/vyg__white&quot;/&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;4dp&quot;
+            android:text=&quot;总里程&quot;
+            android:textColor=&quot;@color/vyg__white&quot;
+            android:textSize=&quot;8sp&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/distanceTv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:textColor=&quot;@color/vyg__white&quot;
+        android:textSize=&quot;22sp&quot;
+        tools:text=&quot;8765KM&quot;/&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/timeLl&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginTop=&quot;14dp&quot;
+        android:gravity=&quot;center_vertical&quot;&gt;
+
+        &lt;View
+            android:layout_width=&quot;24dp&quot;
+            android:layout_height=&quot;1dp&quot;
+            android:background=&quot;@color/vyg__white&quot;/&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:layout_marginLeft=&quot;4dp&quot;
+            android:text=&quot;总时间&quot;
+            android:textColor=&quot;@color/vyg__white&quot;
+            android:textSize=&quot;8sp&quot;/&gt;
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/timeTv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:textColor=&quot;@color/vyg__white&quot;
+        android:textSize=&quot;12sp&quot;
+        tools:text=&quot;01:23:89&quot;/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">利用 withEndAction 方法很方便的在动画结束后执行某个操作，而不用加监听。但是这样动画多了就会产生「回调地狱」，看起来不太舒服...但是也没想到其他好的方法，姑且只能这样了。
+第二张图动画代码也和这个类似就不帖了。看下第三张揭露动画：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 展示文字描述动画
+ */
+private fun startDescPageAnimation(view: View) {
+    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
+        val animator = ViewAnimationUtils.createCircularReveal(view, 0, 0, 0F, DimenUtils.dp2px(240F).toFloat())
+        animator.duration = 160L
+        animator.start()
+        animator.removeAllListeners()
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                hideView(view)
+            }
+        })
+    } else {
+        view.animate()
+                .alphaBy(0F)
+                .alpha(1F)
+                .withEndAction {
+                    hideView(view)
+                }
+                .setDuration(160L)
+                .start()
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">直接使用的 createCircularReveal 来创建动画，若是在 5.0 以下，则直接展示个 alpha 渐变动画。
+最后一张图的动画就是 alpha 渐变，也没啥好说的。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">ok，每一页的动画都准备好了，如何将他们组织起来呢？
+首先，需要将每一页元素添加到界面上进行展示。如果需求是固定的 5 组图文，可以直接将布局写死到代码里，可是数量不是固定的。图片是根据路线的数据来取的。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">如果没有图片，则返回默认三张图，并展示 1、2、5 对应的文本动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">如果只有一张或三张，则使用返回的图片，并展示 1、2、5 对应的文本动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">如果只有两张，则使用返回的图片，并展示 1、2 对应的文本动画。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">如果有大于三张，则使用返回的图片，固定展示 1、2、5 的文本动画，多的图片展示 3、4 的动画。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以：图片的数量和下面展示的文本数量并不是一致的，要将图片动画和文本动画拆开。为了统一控制，最好保持一个动画触发入口。再看到 Gif 图，基本上文本动画执行完准备消失时，图片动画开始。所以我的做法是：统一一个入口，管理文本动画，当文本动画要消失时，触发图片动画。若数量不对应，则不执行图片动画。下面贴代码：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">图片容器添加所有的图片</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 填充图片内容
+ */
+private fun fillPicContent(picList: MutableList&lt;Any&gt;) {
+    picContainer.removeAllViews()
+    picList.forEach {
+        val imageView = ImageView(context)
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        if (it is VygImage) {
+            AsImage.show(it.detail).into(imageView)
+        } else {
+            AsImage.show(it).into(imageView)
+        }
+        picContainer.addView(imageView, 0)
+    }
+}
+</code></pre>
+<ol start="2" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">文本容器添加所有的文本</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 填充文本内容
+ */
+private fun fillTextContent(route: VygRoute, picList: MutableList&lt;Any&gt;) {
+    firstView.timeTv.text = route.showTime
+    firstView.distanceTv.setTextWithEmpty(route.distance / 1000.00, &quot;%.1fkm&quot;)
+    secondView.speedTv.setTextWithEmpty(route.avgSpeed.toDouble(), &quot;%.1fkm/h&quot;)
+    secondView.altTv.setTextWithEmpty(route.maxAlt, &quot;%.0fm&quot;)
+
+    textContainer.removeAllViews()
+    textContainer.addView(firstView, 0)
+    textContainer.addView(secondView, 0)
+
+    val picSize = picList.size
+    /*
+     * 1 张或 3 张图片，展示 1、2、5 的样式
+     * 2 张，，展示 1、2 的样式
+     * 4 张或以上，固定展示 1、2、5，中间 3、4 展示图片打点描述的样式
+     */
+    if (picSize == 1 || picSize == 3) {
+        showTime = (BASE_DURATION - LAST_PAGE_DURATION - 2 * HIDE_DURATION) / 3
+        textContainer.addView(lastView, 0)
+
+    } else if (picSize == 4) {
+        showTime = (BASE_DURATION - LAST_PAGE_DURATION - DESC_PAGE_DURATION - 3 * HIDE_DURATION) / 4
+        val desc = LayoutInflater.from(context).inflate(R.layout.vyg__route_video_share_desc_page, textContainer, false)
+        textContainer.addView(desc, 0)
+        textContainer.addView(lastView, 0)
+
+        setPointDesc(picList, 2, desc, route)
+
+    } else if (picSize == 5) {
+        showTime = (BASE_DURATION - LAST_PAGE_DURATION - DESC_PAGE_DURATION * 2 - 4 * HIDE_DURATION) / 5
+        val desc1 = LayoutInflater.from(context).inflate(R.layout.vyg__route_video_share_desc_page, textContainer, false)
+        val desc2 = LayoutInflater.from(context).inflate(R.layout.vyg__route_video_share_desc_page, textContainer, false)
+        textContainer.addView(desc1, 0)
+        textContainer.addView(desc2, 0)
+        textContainer.addView(lastView, 0)
+
+        setPointDesc(picList, 2, desc1, route)
+        setPointDesc(picList, 3, desc2, route)
+
+    } else {
+        showTime = (BASE_DURATION - HIDE_DURATION) / 2
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">showTime 为文本动画执行完之后的展示时间，因为动画总时长为 10 秒，文本内容越多，每个文本展示的时间就越短，所以需要计算 showTime，展示时间到了之后就进行隐藏：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 展示隐藏动画
+ */
+private fun hideView(view: View) {
+    handler.postDelayed({
+        if (!isPlaying) {
+            return@postDelayed
+        }
+
+        showPicAnimation()
+        view.animate()
+                .alphaBy(1F)
+                .alpha(0F)
+                .setDuration(600L)
+                .withEndAction {
+                    textAnimationIndex--
+                    startAnimation()
+                }
+                .start()
+    }, showTime)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">隐藏的时候触发图片动画：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 展示图片缩放动画
+ */
+private fun showPicAnimation() {
+    picAnimationIndex--
+    if (picAnimationIndex == 0) {
+        return
+    }
+
+    val view = picContainer.getChildAt(picAnimationIndex)
+    view?.let {
+        it.pivotX = 0F
+        it.pivotY = picContainer.measuredHeight / 2F
+        it.animate()
+                .scaleXBy(1F)
+                .scaleX(0F)
+                .scaleYBy(1F)
+                .scaleY(0F)
+                .alphaBy(1F)
+                .alpha(0F)
+                .setDuration(HIDE_DURATION)
+                .start()
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">textAnimationIndex 为当前展示文本动画的 index，picAnimationIndex 为当前展示图片动画的 index。
+然后提供一个入口，触发所有的动画：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 播放动画
+ */
+fun play() {
+    isPlaying = true
+    picAnimationIndex = picContainer.childCount
+    textAnimationIndex = textContainer.childCount - 1
+    resetAnimationStatus()
+    startLeftAnimation()
+    startAnimation()
+}
+
+/**
+ * 开始动画
+ */
+private fun startAnimation() {
+    if (!isPlaying) {
+        return
+    }
+
+    if (textAnimationIndex &lt; 0 || textAnimationIndex &gt;= textContainer.childCount) {
+        textAnimationIndex = 0
+        animationEnded()
+        return
+    }
+    val view = textContainer.getChildAt(textAnimationIndex)
+    when (view) {
+        firstView -&gt; {
+            startFirstPageAnimation()
+        }
+        secondView -&gt; {
+            startSecondPageAnimation(textAnimationIndex != 0)
+        }
+        lastView -&gt; {
+            startLastPageAnimation()
+        }
+        else -&gt; {
+            startDescPageAnimation(view)
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过取文本容器的孩子，判断是什么 View 来执行相应的动画，那么第二部分的动画就算是完成了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">左侧 Logo 动画</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个在第二部分动画完成之后便不是什么问题了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 展示左侧 Logo、时间、起点动画
+ */
+private fun startLeftAnimation() {
+    leftRoot.bgView.animate()
+            .translationXBy(dpMinus44)
+            .translationX(0F)
+            .setDuration(160L)
+            .start()
+
+    handler.postDelayed({
+        leftRoot.logoTv.animate()
+                .translationYBy(dpMinus118)
+                .translationY(0F)
+                .withEndAction {
+                    leftRoot.dayTv.animate()
+                            .translationYBy(dp22)
+                            .translationY(0F)
+                            .setDuration(400L)
+                            .start()
+                    leftRoot.dateTv.animate()
+                            .translationYBy(dpMinus8)
+                            .translationY(0F)
+                            .withEndAction {
+                                leftRoot.endCityLl.animate()
+                                        .alphaBy(0F)
+                                        .alpha(1F)
+                                        .setDuration(240L)
+                                        .start()
+                            }
+                            .setDuration(400L)
+                            .start()
+                }
+                .setDuration(160L)
+                .start()
+    }, 80L)
+}
+</code></pre>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">如何停止播放</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所有的动画执行时间为 10 秒，当动画开始后，切换到别的 Tab 或页面时，动画应该停止播放，并且恢复到初始状态，然后点击播放按钮能正常从头开始播放。
+为了解决这个问题，引入一个变量记录当前正在播放动画的 View，利用 withStartAction 方法即可。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">firstView.distanceLl.animate()
+        .alphaBy(0F)
+        .alpha(1F)
+        .withStartAction {
+            currentAnimationView = firstView.distanceLl
+        }
+        .setDuration(240L)
+        .start()
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当页面切换时，停止动画并重置所有的 View 的状态：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 播放停止重置界面展示
+ */
+private fun resetInitStatus() {
+    currentAnimationView?.animate()?.cancel()
+
+    leftRoot.bgView.translationX = 0F
+    leftRoot.logoTv.translationY = 0F
+    leftRoot.endCityLl.alpha = 1F
+    leftRoot.dayTv.translationY = 0F
+    leftRoot.dateTv.translationY = 0F
+
+    var picView = picContainer.getChildAt(picAnimationIndex)
+    picView?.animate()?.cancel()
+    picView = picContainer.getChildAt(picContainer.childCount - 1)
+    picView?.scaleX = 1F
+    picView?.scaleY = 1F
+    picView?.alpha = 1F
+
+    val view = textContainer.getChildAt(textAnimationIndex)
+    view?.animate()?.cancel()
+    view?.visibility = View.INVISIBLE
+    firstView.visibility = View.VISIBLE
+    firstView.alpha = 1F
+    firstView.distanceLl.alpha = 1F
+    firstView.distanceTv.translationX = 0F
+    firstView.timeLl.alpha = 1F
+    firstView.timeTv.translationX = 0F
+}
+</code></pre>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">小结</h3>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">View 的逐渐显示效果，可以在 View 外层套一层 ViewGroup，然后利用 translate 来实现。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">animate() 后面的动画使用 alphaBy、translationXBy 等方法时，需要在动画开始的时候将 View 对应的属性设置成相应的值，否则动画会错误的执行（提前结束等）。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">动画很多，做的时候要细心，将动画一个个拆分开来，然后逐一攻破。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">优化点：能否将 animate() 改造成 RxJava 类似的调用链，避免回调地狱呢？</li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 动画序列的实现">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

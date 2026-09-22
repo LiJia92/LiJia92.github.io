@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android感悟之造轮子 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-09-12 · 约 7867 字</div>
+  <h1>Android感悟之造轮子</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近项目要添加一个点赞的效果，类似<a href="http://www.jianshu.com/p/03fdcfd3ae9c" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">这篇文章所说</a>，其实效果是差不多的，便打算直接拿来用了，感谢这位大大制作的轮子~</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">而后自己思考了一下，怎么样的轮子别人用起来才方便呢？为了实现<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">方便</code>，其实我们能做的事情有很多，这里说一下自己的感悟。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面我便拿着我之前写的一个自定义弧形SeekBar来说明，将其抽成一个三方库要做哪些事。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前的代码结构是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel1.png" style="max-width:100%;height:auto;border-radius:4px;">
+引用的时候是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel2.png" style="max-width:100%;height:auto;border-radius:4px;">
+这显然是非常笨重的引用方式，那么改如何改进呢？</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Library</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">第一个最先想到的自然是将代码抽成一个library。然后项目要引用时候，直接gradle添加依赖即可。
+选择<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">New Module</code>，选择<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Android Library</code>即可，然后将代码放在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">src/main/java/包名</code>文件夹下，添加<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">compile project(&#39;:library&#39;)</code>依赖即可。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/09/wheel3.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">精简引用方式</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前的代码要用，我需要xml中引入三个自定义View，显得很繁杂。站在使用者的角度，若是只用引入一个自定义View，便简单多了。
+至于球的大小，球的颜色等独立的属性，通过自定义属性来进行设置即可。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面上一下修改后的代码，ArcSeekBarParent类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class ArcSeekBarParent extends FrameLayout implements SeekBarBallView.OnSmoothScrollListener {
+
+    private PointF pointF1;                     // 起始点
+    private PointF pointF2;                     // 控制点
+    private PointF pointF3;                     // 终止点
+    private PointF circleCenter;                // 球的坐标
+    private int top;
+    private int right;
+    private int bottom;
+    private int left;
+    private float currentX;                     // 当前x坐标，用于控制圆球位置
+    private final static float LEVEL = 6f;      // 设置档次
+    private int currentLevel = 1;               // 当前档次
+
+    private OnProgressChangedListener listener; // 档次改变的监听
+    private Context context;
+
+    private SeekBarBallView ball;               // 球
+    private SeekBarArcView arc;                 // 弧
+    private int ballSize;                       // 球的大小
+    private String ballColor;                   // 球的颜色
+    private int arcWidth;                       // 弧的宽度
+    private String arcColor;                    // 弧的颜色
+
+    public ArcSeekBarParent(Context context) {
+        super(context);
+        init();
+    }
+
+    public ArcSeekBarParent(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ArcSeekBarParent);
+        ballSize = array.getDimensionPixelSize(R.styleable.ArcSeekBarParent_ballSize, 30);
+        arcWidth = array.getDimensionPixelSize(R.styleable.ArcSeekBarParent_arcWidth, 10);
+        ballColor = array.getString(R.styleable.ArcSeekBarParent_ballColor);
+        arcColor = array.getString(R.styleable.ArcSeekBarParent_arcColor);
+        array.recycle();
+        init();
+    }
+
+    private void init() {
+        pointF1 = new PointF();
+        pointF2 = new PointF();
+        pointF3 = new PointF();
+        circleCenter = new PointF();
+
+        // 添加弧线View
+        if (arcColor == null) {
+            arcColor = &quot;#000000&quot;;      // 当没有设置颜色时候，默认使用黑色
+        }
+        arc = new SeekBarArcView(context, arcColor, arcWidth);
+        arc.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addView(arc);
+
+        // 添加球View
+        if (ballColor == null) {
+            ballColor = &quot;#FFFFFF&quot;;      // 当没有设置颜色时候，默认使用白色
+        }
+        ball = new SeekBarBallView(context, ballColor, ballSize);
+        ball.setListener(this);
+        addView(ball);
+    }
+
+    public void setListener(OnProgressChangedListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        this.left = left;
+        this.top = top;
+        this.right = right;
+        this.bottom = bottom;
+        pointF1.set(0, bottom - top - 30);
+        pointF2.set((right - left) / 2, -(bottom - top) / 4);
+        pointF3.set(right, bottom - top - 30);
+        currentX = (right - left) / LEVEL;
+        changeBallLayout(currentX);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                float downX = event.getX();
+                float downY = event.getY();
+                float distance = (downX - circleCenter.x) * (downX - circleCenter.x) + (downY - circleCenter.y) * (downY - circleCenter.y);
+                // 计算到圆球中心的距离，考虑20的误差
+                return !(distance - (ball.getMeasuredWidth() / 2 + 20) * (ball.getMeasuredWidth() / 2 + 20) &gt; 0);
+            case MotionEvent.ACTION_MOVE:
+                float moveX = event.getX();
+                currentX = moveX; // 通过x坐标改变圆球的位置
+                changeBallLayout(currentX);
+                currentLevel = getLevel(moveX);
+                if (listener != null) {
+                    listener.OnProgressChanged(currentLevel);
+                }
+                break;
+            default:
+                // 当手指移出或者离开View时，圆球平滑滑到最近的档次
+                ball.smoothScrollLevel((int) currentX, (int) ((right - left) / LEVEL * currentLevel - currentX));
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * 改变球的位置
+     *
+     * @param currentX 横坐标
+     */
+    private void changeBallLayout(float currentX) {
+        float t = (currentX / (right - left));
+        float x = (1 - t) * (1 - t) * pointF1.x + 2 * (t) * (1 - t) * pointF2.x + t * t * pointF3.x;
+        float y = (1 - t) * (1 - t) * pointF1.y + 2 * (t) * (1 - t) * pointF2.y + t * t * pointF3.y;
+        circleCenter.set(x, y);
+        ball.layout((int) (circleCenter.x - ball.getMeasuredWidth() / 2), (int) (circleCenter.y - ball.getMeasuredWidth() / 2), (int) (circleCenter.x + ball.getMeasuredWidth() / 2), (int) (circleCenter.y + ball.getMeasuredWidth() / 2));
+    }
+
+    /**
+     * 计算档次
+     *
+     * @param x 横坐标
+     * @return 档次
+     */
+    private int getLevel(float x) {
+        float ratio = (x / (right - left)) * LEVEL;
+        // 计算距离哪个档次最近
+        int result = new BigDecimal(ratio).setScale(0, BigDecimal.ROUND_HALF_UP).intValue();
+        if (result &lt; 1) {
+            result = 1;
+        } else if (result &gt; (LEVEL - 1)) {
+            result = (int) (LEVEL - 1);
+        }
+        return result;
+    }
+
+    @Override
+    public void onSmoothScroll(int currentX) {
+        changeBallLayout(currentX);
+    }
+
+    /**
+     * 滑动接口
+     */
+    public interface OnProgressChangedListener {
+        void OnProgressChanged(int level);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">SeekBarArcView类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class SeekBarArcView extends View {
+
+    private Paint paint;
+    private Path path;
+    private PointF pointF1;     // 起始点
+    private PointF pointF2;     // 控制点
+    private PointF pointF3;     // 终止点
+    private String arcColor;    // 弧的颜色
+    private int arcWidth;       // 弧的宽度
+
+    public SeekBarArcView(Context context, String arcColor, int arcWidth) {
+        super(context);
+        this.arcColor = arcColor;
+        this.arcWidth = arcWidth;
+        init();
+    }
+
+    private void init() {
+        paint = new Paint();
+        path = new Path();
+        pointF1 = new PointF();
+        pointF2 = new PointF();
+        pointF3 = new PointF();
+        // 初始化画笔
+        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.parseColor(arcColor));
+        paint.setStrokeWidth(arcWidth);
+        paint.setStyle(Paint.Style.STROKE);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        pointF1.set(0, bottom - top - 30);
+        pointF2.set((right - left) / 2, -(bottom - top) / 4);
+        pointF3.set(right, bottom - top - 30);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        // 画2阶贝塞尔曲线
+        path.moveTo(pointF1.x, pointF1.y);
+        path.quadTo(pointF2.x, pointF2.y, pointF3.x, pointF3.y);
+        canvas.drawPath(path, paint);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">SeekBarBallView类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class SeekBarBallView extends View {
+
+    private Paint paint;
+    private Scroller scroller;
+    private int ballSize;
+    private String ballColor;
+    private OnSmoothScrollListener listener;
+
+    public SeekBarBallView(Context context, String ballColor, int ballSize) {
+        super(context);
+        this.ballColor = ballColor;
+        this.ballSize = ballSize;
+        init(context);
+    }
+
+    private void init(Context context) {
+        scroller = new Scroller(context);
+        paint = new Paint();
+        paint.setFlags(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(Color.parseColor(ballColor));
+        paint.setStyle(Paint.Style.FILL);
+    }
+
+    public void setListener(OnSmoothScrollListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int spec = MeasureSpec.makeMeasureSpec(ballSize, MeasureSpec.EXACTLY);
+        setMeasuredDimension(spec, spec);
+    }
+
+    @Override
+    public void computeScroll() {
+        if (scroller.computeScrollOffset()) {
+            if (listener != null) {
+                listener.onSmoothScroll(scroller.getCurrX());
+                postInvalidate();
+            }
+        }
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        canvas.drawCircle(getMeasuredWidth() / 2, getMeasuredWidth() / 2, getMeasuredWidth() / 2, paint);
+    }
+
+    /**
+     * 平滑滑动
+     *
+     * @param start    起始值
+     * @param distance 滑动距离
+     */
+    public void smoothScrollLevel(int start, int distance) {
+        scroller.startScroll(start, 0, distance, 0, 200);
+        postInvalidate();
+    }
+
+    public interface OnSmoothScrollListener {
+        void onSmoothScroll(int currentX);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">以及自定义属性attr.xml：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;resources&gt;
+    &lt;declare-styleable name=&quot;ArcSeekBarParent&quot;&gt;
+        &lt;attr name=&quot;ballColor&quot; format=&quot;string&quot; /&gt;
+        &lt;attr name=&quot;ballSize&quot; format=&quot;dimension&quot; /&gt;
+        &lt;attr name=&quot;arcWidth&quot; format=&quot;dimension&quot; /&gt;
+        &lt;attr name=&quot;arcColor&quot; format=&quot;string&quot; /&gt;
+    &lt;/declare-styleable&gt;
+&lt;/resources&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">修改后，在使用的时候只用这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;com.android.lovesixgod.library.ArcSeekBarParent
+        android:id=&quot;@+id/seek_bar&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;100dp&quot;
+        android:layout_marginTop=&quot;40dp&quot;
+        android:background=&quot;@color/colorAccent&quot;
+        app:arcColor=&quot;#000000&quot;
+        app:arcWidth=&quot;3dp&quot;
+        app:ballColor=&quot;#00ffff&quot;
+        app:ballSize=&quot;30dp&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">相比之前简单了不少。
+代码中再设置档次改变的监听响应即可直接使用了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">ArcSeekBarParent seekBar = (ArcSeekBarParent) findViewById(R.id.seek_bar);
+seekBar.setListener(new ArcSeekBarParent.OnProgressChangedListener() {
+    @Override
+    public void OnProgressChanged(int level) {
+        textView.setText(String.valueOf(level));
+    }
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">代码已更新至<a href="https://github.com/LiJia92/CustomArcSeekBar" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Github</a>。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android感悟之造轮子">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

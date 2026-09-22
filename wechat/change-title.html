@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android实现渐变title栏 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-03-02 · 约 4710 字</div>
+  <h1>Android实现渐变title栏</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近用美团外卖点餐看到这样一个效果：</p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/change-title1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">顶部的title栏伴随着滑动有这样的一个效果，看起来很不错。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">正好项目中可能需要用到，于是打算自己实现一波。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">后面在百度、谷歌之后，发现ToolBar+CoordinatorLayout可以很轻易的实现这种效果。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是在项目中，并没有采用Android新特性的一些东西，所以就得基于目前状况想办法了。</p>
+<hr style="margin:34px 0;border:0;border-top:1px solid #e8e8e8;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">先上一下最终的效果图：</p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/03/change-title2.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目中并没有使用ToolBar这种控件，而是全部自己写的xml文件当做title，整个页面又是由ListView构成。顶部的遮罩背景是添加的一个HeaderView。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">贴一下这个页面的布局：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:id=&quot;@+id/root&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:background=&quot;#ffffff&quot;
+    android:orientation=&quot;vertical&quot;&gt;
+
+    &lt;ListView
+        android:id=&quot;@+id/share_list&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:divider=&quot;@null&quot;
+        android:scrollbars=&quot;none&quot; /&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;vertical&quot;&gt;
+
+        &lt;FrameLayout
+            android:id=&quot;@+id/profile_header&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;@dimen/activity_head_normal_height&quot;
+            android:background=&quot;#00ffffff&quot;&gt;
+
+            &lt;ImageView
+                android:id=&quot;@+id/profile_play_entry&quot;
+                android:layout_width=&quot;40dp&quot;
+                android:layout_height=&quot;40dp&quot;
+                android:layout_gravity=&quot;center_vertical|right&quot;
+                android:scaleType=&quot;center&quot;
+                android:src=&quot;@drawable/play_entry&quot; /&gt;
+
+            &lt;TextView
+                android:id=&quot;@+id/profile_page&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_gravity=&quot;center&quot;
+                android:text=&quot;我的&quot;
+                android:textColor=&quot;#ffffff&quot;
+                android:textSize=&quot;16sp&quot; /&gt;
+
+        &lt;/FrameLayout&gt;
+
+        &lt;View
+            android:id=&quot;@+id/divider&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;1px&quot;
+            android:background=&quot;@color/dark_gray&quot; /&gt;
+
+    &lt;/LinearLayout&gt;
+
+&lt;/FrameLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用了一个布局固定在顶部，利用FrameLayout进行遮盖。那么要怎么样实现图中的效果呢？</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">起初，我是想着自定义View，然后重写onTouchEvent事件，但是后面考虑到滑动距离，上滑、下滑等等很多可能性之后，可能需要各种各样的逻辑判断，会显得非常复杂，所以便放弃了这种思路。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">后面考虑到，其实我只需要获得到ListView顶端滑出屏幕的纵向距离，然后计算alpha值，赋给title的父布局应该就可以实现了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">若是使用ScrollView，则会有个方法getScrollY可以直接获得到滑出的Y值，但是ListView我试了一下，获得的Y值总是0，所以得另想办法了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在网上找到这样的一个方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public int getScrollY() {
+    View c = mListView.getChildAt(0);
+    if (c == null) {
+        return 0;
+    }
+    int firstVisiblePosition = mListView.getFirstVisiblePosition();
+    int top = c.getTop();
+    return -top + firstVisiblePosition * c.getHeight() ;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">就是通过item高度，以及第一个child的top值来计算出滑出的距离。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">结合这个思路，写出如下代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private AbsListView.OnScrollListener mScrollListener = new AbsListView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE &amp;&amp; !nothingToLoad) {
+                // 如果到达最后一行
+                if (shareList.getLastVisiblePosition() == shareList.getAdapter().getCount() - 1) {
+                    loadMore(); // 加载更多
+                }
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            float scrollY = getScrollY();
+            float alpha = getAlpha(scrollY);
+            profilePage.setAlpha(alpha);
+            if (alpha &gt; 0.5) { // alpha &gt; 0.5设置黑色图标
+                if (isWhite) {
+                    entryPlay.setImageResource(R.drawable.play_entry1);
+                    profilePage.setTextColor(Color.BLACK);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(entryPlay, &quot;alpha&quot;, 0.5f, 1);
+                    animator.setDuration(1000);
+                    animator.start();
+                }
+                isWhite = false;
+            } else { // 否则设置白色
+                if (!isWhite) {
+                    entryPlay.setImageResource(R.drawable.play_entry);
+                    profilePage.setTextColor(Color.WHITE);
+                    ObjectAnimator animator = ObjectAnimator.ofFloat(entryPlay, &quot;alpha&quot;, 0.5f, 1);
+                    animator.setDuration(1000);
+                    animator.start();
+                }
+                isWhite = true;
+            }
+            if (Math.abs(alpha - 1) &lt; 0.03) {
+                divider.setVisibility(View.VISIBLE);
+            } else {
+                divider.setVisibility(View.GONE);
+            }
+            header.setBackgroundColor(Color.argb((int) (alpha * 255), 255, 255, 255));
+        }
+    };
+
+    /**
+     * 计算ListView顶部滑动Y值
+     *
+     * @return
+     */
+    public float getScrollY() {
+        float scrollY;
+        View c = shareList.getChildAt(0);
+        if (c == null) {
+            return 0;
+        }
+        int firstVisiblePosition = shareList.getFirstVisiblePosition();
+        int top = c.getTop();
+        if (firstVisiblePosition &gt; 0) {
+            scrollY = mHeaderView.getHeight() - getResources().getDimension(R.dimen.activity_head_normal_height); // 当HeaderView完全滑出时，alpha值为1，直接设置其高度值
+        } else {
+            scrollY = -top;
+        }
+        if (scrollY &gt; mHeaderView.getHeight() - getResources().getDimension(R.dimen.activity_head_normal_height)) {
+            scrollY = mHeaderView.getHeight() - getResources().getDimension(R.dimen.activity_head_normal_height);
+        }
+        return scrollY;
+    }
+
+    /**
+     * 根据滑动Y值计算alpha值
+     *
+     * @param scrollY
+     * @return
+     */
+    public float getAlpha(float scrollY) {
+        if (mHeaderView.getHeight() != 0) {
+            return scrollY / (mHeaderView.getHeight() - getResources().getDimension(R.dimen.activity_head_normal_height));
+        }
+        return 0;
+    }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">activity_head_normal_height就是title栏的高度，所以能够滑动的最高距离是ListView的HeaderView的高度减去title的高度，当滑出高度大于这个高度，alpha直接就等于1了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过上述代码，即可实现之前的效果了。</p>
+<hr style="margin:34px 0;border:0;border-top:1px solid #e8e8e8;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">疑问：</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">当HeaderView完全滑出的时候，c.getHeight() != mHeaderView.getHeight()，按理说c应该是跟mHeaderView是一致的；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">在滑动过程中，白色变黑色如何能够让它更自然的过渡呢（图标、文字）？目前是alpha = 0.5这个阈值，直接由白变黑，由黑变白，显得不太自然。</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">欢迎网友们一起探讨~</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android实现渐变title栏">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Support 库，注意你的版本号 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-12-15 · 约 4974 字</div>
+  <h1>Support 库，注意你的版本号</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目开发，引进了一个新的三方库，导致之前能运行的代码出现问题，错误堆栈：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">FATAL EXCEPTION: main
+Process: com.lijia.app.catering.dev, PID: 29387
+java.lang.NoClassDefFoundError: android.support.v4.animation.AnimatorCompatHelper
+    at android.support.v7.widget.DefaultItemAnimator.resetAnimation(DefaultItemAnimator.java:514)
+    at android.support.v7.widget.DefaultItemAnimator.animateAdd(DefaultItemAnimator.java:217)
+    at android.support.v7.widget.SimpleItemAnimator.animateAppearance(SimpleItemAnimator.java:114)
+    at android.support.v7.widget.RecyclerView.animateAppearance(RecyclerView.java:3243)
+    at android.support.v7.widget.RecyclerView.access$800(RecyclerView.java:147)
+    at android.support.v7.widget.RecyclerView$4.processAppeared(RecyclerView.java:436)
+    at android.support.v7.widget.ViewInfoStore.process(ViewInfoStore.java:249)
+    at android.support.v7.widget.RecyclerView.dispatchLayoutStep3(RecyclerView.java:3098)
+    at android.support.v7.widget.RecyclerView.dispatchLayout(RecyclerView.java:2917)
+    at android.support.v7.widget.RecyclerView.onLayout(RecyclerView.java:3283)
+    at android.view.View.layout(View.java)
+    at android.view.ViewGroup.layout(ViewGroup.java)
+    at android.widget.LinearLayout.setChildFrame(LinearLayout.java)
+    at android.widget.LinearLayout.layoutVertical(LinearLayout.java)
+    at android.widget.LinearLayout.onLayout(LinearLayout.java)
+    ...
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">即是在 v4 包中找不到类：AnimatorCompatHelper。Google 了一下，发现这个类在 v4 包版本 26 以上就被剔除了，而 RecyclerView 引用了这个类。所以先查看下依赖，来看看自己依赖的 v4 版本。执行命令：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">./gradlew app:dependencies --configuration cateringDevCompile
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">因为我的 buildVariant 很多，这里利用 configuration 参数指定一个 variant，缩减编译的时间。
+给出的 Log 如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">cateringDevCompile - Classpath for compiling the cateringDev sources.
+\--- project :ui-jch
+     +--- org.jetbrains.kotlin:kotlin-android-extensions-runtime:1.2.0
+     |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.2.0
+     |         \--- org.jetbrains:annotations:13.0
+     +--- project :ui-common-portrait
+     |    +--- project :appcommon
+     |    |    +--- com.yanzhenjie:recyclerview-swipe:1.0.2
+     |    |    |    \--- com.android.support:recyclerview-v7:23.4.0
+     |    |    |         +--- com.android.support:support-annotations:23.4.0 -&gt; 26.1.0
+     |    |    |         \--- com.android.support:support-v4:23.4.0 -&gt; 26.1.0 (*)
+     |    |    +--- com.jph.takephoto:takephoto_library:3.0.1
+     |    |    |    +--- com.android.support:support-v4:24.0.0 -&gt; 26.1.0 (*)
+     |    |    |    +--- com.soundcloud.android.crop:lib_crop:1.0.0
+     |    |    |    |    +--- com.android.support:support-v4:23.0.1 -&gt; 26.1.0 (*)
+     |    |    |    |    \--- com.android.support:support-annotations:23.0.1 -&gt; 26.1.0
+     |    |    |    \--- com.darsh.multipleimageselect:multipleimageselect:1.0.4
+     |    |    |         +--- com.android.support:appcompat-v7:23.1.1 -&gt; 26.1.0
+     |    |    |         |    +--- com.android.support:support-annotations:26.1.0
+     |    |    |         |    +--- com.android.support:support-v4:26.1.0 (*)
+     |    |    |         |    +--- com.android.support:support-vector-drawable:26.1.0
+     |    |    |         |    |    +--- com.android.support:support-annotations:26.1.0
+     |    |    |         |    |    \--- com.android.support:support-compat:26.1.0 (*)
+     |    |    |         |    \--- com.android.support:animated-vector-drawable:26.1.0
+     |    |    |         |         +--- com.android.support:support-vector-drawable:26.1.0 (*)
+     |    |    |         |         \--- com.android.support:support-core-ui:26.1.0 (*)
+     |    |    |         \--- com.github.bumptech.glide:glide:3.6.0
+     |    |    +--- me.alzz:kosp:1.0.0
+     |    |    |    +--- org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.51 -&gt; 1.2.0
+     |    |    |    |    \--- org.jetbrains.kotlin:kotlin-stdlib:1.2.0 (*)
+     |    |    |    \--- com.android.support:appcompat-v7:26.1.0 (*)
+     |    |    +--- com.lijia.lib:modservice:7.1.0-SNAPSHOT
+     |    |    |    +--- com.lijia:useragent:7.1.0-SNAPSHOT
+     |    |    |    |    +--- com.lijia.lib:modcore:7.1.0-SNAPSHOT
+     |    |    |    |    |    +--- com.android.support:support-annotations:25.0.1 -&gt; 26.1.0
+     |    |    |    |    |    \--- com.lijia.lib:common:7.1.0-SNAPSHOT
+     |    |    |    |    |         +--- com.android.support:design:23.2.1 -&gt; 23.3.0
+     |    |    |    |    |         |    +--- com.android.support:appcompat-v7:23.3.0 -&gt; 26.1.0 (*)
+     |    |    |    |    |         |    +--- com.android.support:support-v4:23.3.0 -&gt; 26.1.0 (*)
+     |    |    |    |    |         |    \--- com.android.support:recyclerview-v7:23.3.0 -&gt; 23.4.0 (*)
+     |    |    |    |    |         \--- com.tencent.bugly:crashreport:latest.release -&gt; 2.6.6.1
+     |    |    |    |    \--- com.lijia.lib:common:7.1.0-SNAPSHOT (*)
+     |    |    +--- com.lijia.lib:webserver:7.0.0
+     |    |    \--- org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.0 (*)
+     |    \--- com.tencent.mm.opensdk:wechat-sdk-android-without-mta:1.4.0
+(*) - dependencies omitted (listed previously)
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">分析</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到自己依赖的 support 库都是 23 24版本的，所以不会导致问题，但是加上依赖<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">me.alzz:kosp</code>之后，依赖的 support v7 版本是 26.1.0，而 v7 库又依赖了 v4 库，所以 v4 库被升到了 26.1.0，但是用到的 Recycleview 在 design 包中，版本号是 23.3.0，依赖的一个库<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">com.yanzhenjie:recyclerview-swipe</code>将其升到了 23.4.0，所以 Recycleview 的版本和 support-v4 的版本是对应不上的，才导致的这个问题。所以将依赖的 design 包升级到 26 即可解决问题。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">compile &#39;com.android.support:design:26.1.0&#39;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">出现这个问题的原因就是 support 各种库的版本不一致。一般不容易出现这个问题，但是我的项目 <strong style="font-weight:bold;color:#111111;">进行模块化，将代码分为了很多模块，对应到不同的工程，不同的 Module，导致 gradle 文件是分散的，经常改了这处忘了那处。这里写下这篇文章也是加深下印象，也给自己提个醒，以后一定要注意 support 库的版本号，不然有可能导致崩溃</strong>。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">题外话</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">gradle 插件升级 3.0.0 之后执行查找依赖变化了，执行命令后返回的 Log 如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">cateringDevCompile - Compile dependencies for &#39;cateringDev&#39; sources (deprecated: use &#39;cateringDevImplementation&#39; instead). (n)
+No dependencies
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">换成：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">./gradlew app:dependencies --configuration cateringDevImplementation
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">返回的 Log 如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">cateringDevImplementation - Implementation only dependencies for &#39;cateringDev&#39; sources. (n)
+\--- project ui-jch (n)
+
+(n) - Not resolved (configuration is not meant to be resolved)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">无法直观的看到依赖树，这个时候直接去掉 configuration，然后执行，可以看到所有编译的依赖树，然后选取你要的 buildVariant 即可，比如：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">./gradlew app:dependencies --configuration cateringDevDebugCompileClasspath
+</code></pre></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Support 库，注意你的版本号">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

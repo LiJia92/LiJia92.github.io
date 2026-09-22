@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android Notification使用小记 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-01-11 · 约 7945 字</div>
+  <h1>Android Notification使用小记</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">介绍</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近的项目中，需要用到Notification。上一下效果图：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/01/notification1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先，学习一下关于Notification的基本知识。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">状态通知栏主要涉及到2个类：  Notification 和 NotificationManager 。
+Notification为通知信息类，它里面对应了通知栏的各个属性。
+NotificationManager ：  是状态栏通知的管理类，负责发通知、清除通知等操作。
+注意：NotificationManager 是一个系统Service，必须通过 getSystemService(NOTIFICATION_SERVICE)方法来获取：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">自定义Notification大致分为以下几步：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">自定义布局；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">使用NotificationCompat.Builder创建Notification。使用RemoteViews填充自定义布局，然后通过setContent()添加到Builder中；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">使用广播，添加按钮点击事件；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">NotificationManager.notify()将Notification显示到手机状态栏。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面结合代码进行说明。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">代码</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">第一步，对应于Notification的布局文件：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:gravity=&quot;center&quot;
+    android:orientation=&quot;horizontal&quot;&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/music_cover&quot;
+        android:layout_width=&quot;64dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:scaleType=&quot;centerCrop&quot;
+        android:src=&quot;@drawable/mia&quot; /&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_weight=&quot;1&quot;
+        android:gravity=&quot;center&quot;
+        android:orientation=&quot;vertical&quot;&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/music_name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:ellipsize=&quot;end&quot;
+            android:singleLine=&quot;true&quot;
+            android:text=&quot;无与伦比的美丽&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/singer_name&quot;
+            android:layout_width=&quot;wrap_content&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:ellipsize=&quot;end&quot;
+            android:singleLine=&quot;true&quot;
+            android:text=&quot;苏打绿&quot; /&gt;
+    &lt;/LinearLayout&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/pause&quot;
+        android:layout_width=&quot;48dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:scaleType=&quot;centerCrop&quot;
+        android:src=&quot;@drawable/button_pause&quot; /&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/play&quot;
+        android:layout_width=&quot;48dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:scaleType=&quot;centerCrop&quot;
+        android:src=&quot;@drawable/button_play&quot;
+        android:visibility=&quot;gone&quot; /&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/next&quot;
+        android:layout_width=&quot;48dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;8dp&quot;
+        android:scaleType=&quot;centerCrop&quot;
+        android:src=&quot;@drawable/btn_next&quot; /&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/delete&quot;
+        android:layout_width=&quot;48dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginLeft=&quot;8dp&quot;
+        android:layout_marginRight=&quot;8dp&quot;
+        android:scaleType=&quot;centerCrop&quot;
+        android:src=&quot;@drawable/search_delete&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">布局文件很简单，不做过多叙述。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">再来看到Notification的创建。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class PlayerService extends Service {
+    // 广播Action
+    private final static String NOTIFICATION_PLAY_ACTION = &quot;com.notifications.intent.action.PlayClick&quot;;
+    private final static String NOTIFICATION_PAUSE_ACTION = &quot;com.notifications.intent.action.PauseClick&quot;;
+    private final static String NOTIFICATION_NEXT_ACTION = &quot;com.notifications.intent.action.NextClick&quot;;
+    private final static String NOTIFICATION_DELETE_ACTION = &quot;com.notifications.intent.action.DeleteClick&quot;;
+    // 自定义Notification
+    private NotificationManager mNotificationManager = null;
+    private PendingIntent contentIntent;
+    private NotificationCompat.Builder builder;
+    private Notification notification;
+    private RemoteViews contentView; // 自定义Notification，接收布局
+    private PlayerService service = this;
+    private BroadcastReceiver onClickReceiver; // 注册广播接收点击事件
+
+    @Override
+    public void onCreate() {
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MusicPlayActivity.class), 0);
+        contentView = new RemoteViews(getPackageName(), R.layout.custom_notification);
+        builder = new NotificationCompat.Builder(this);
+        notification = builder
+                .setContentIntent(contentIntent)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.mia)
+                .setContent(contentView)
+                .build();
+        notification.flags = Notification.FLAG_NO_CLEAR; // 注意Flag，会影响是否能cancel
+
+        // 播放
+        Intent playIntent = new Intent(NOTIFICATION_PLAY_ACTION);
+        PendingIntent play = PendingIntent.getBroadcast(this, 0, playIntent, 0);
+        contentView.setOnClickPendingIntent(R.id.play, play);
+        // 暂停
+        Intent pauseIntent = new Intent(NOTIFICATION_PAUSE_ACTION);
+        PendingIntent pause = PendingIntent.getBroadcast(this, 0, pauseIntent, 0);
+        contentView.setOnClickPendingIntent(R.id.pause, pause);
+        // 下一首
+        Intent nextIntent = new Intent(NOTIFICATION_NEXT_ACTION);
+        PendingIntent next = PendingIntent.getBroadcast(this, 0, nextIntent, 0);
+        contentView.setOnClickPendingIntent(R.id.next, next);
+        // 关闭
+        Intent deleteIntent = new Intent(NOTIFICATION_DELETE_ACTION);
+        final PendingIntent delete = PendingIntent.getBroadcast(this, 0, deleteIntent, 0);
+        contentView.setOnClickPendingIntent(R.id.delete, delete);
+
+        // Notification中按钮点击事件需注册广播
+        onClickReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                switch (action) {
+                    case NOTIFICATION_PLAY_ACTION:
+                        contentView.setViewVisibility(R.id.play, View.GONE);
+                        contentView.setViewVisibility(R.id.pause, View.VISIBLE);
+                        if (!service.isPlaying()) {
+                            service.resume(); // 继续播放
+                        }
+                        mNotificationManager.notify(PLAYING_NOTIFY_ID, notification);
+                        break;
+                    case NOTIFICATION_PAUSE_ACTION:
+                        contentView.setViewVisibility(R.id.pause, View.GONE);
+                        contentView.setViewVisibility(R.id.play, View.VISIBLE);
+                        if (service.isPlaying()) {
+                            service.pause(); // 暂停
+                        }
+                        mNotificationManager.notify(PLAYING_NOTIFY_ID, notification);
+                        break;
+                    case NOTIFICATION_NEXT_ACTION:
+                        service.next(); // 下一首
+                        break;
+                    case NOTIFICATION_DELETE_ACTION:
+                        service.stop();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(NOTIFICATION_PLAY_ACTION);
+        filter.addAction(NOTIFICATION_PAUSE_ACTION);
+        filter.addAction(NOTIFICATION_NEXT_ACTION);
+        filter.addAction(NOTIFICATION_DELETE_ACTION);
+        registerReceiver(onClickReceiver, filter);
+    }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">播放音乐使用的自然是Service了。于是我定义了PlayerService继承自Service，声明相应的变量，然后在onCreate()中进行初始化。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们可以看到，代码中使用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">RemoteViews</code>填充了布局，并将其设置到Notification创建的Builder中。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">RemoteViews不同于View，它不能通过findViewById()来获取View控件。它里面的控件的点击事件必须通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">setOnClickPendingIntent()</code>来进行设置。它有2个参数，1个是控件ID，另外1个是进行处理的PendingIntent。PendingIntent的创建必须通过广播的方式来实现。重复下上面的代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Intent playIntent = new Intent(NOTIFICATION_PLAY_ACTION);
+PendingIntent play = PendingIntent.getBroadcast(this, 0, playIntent, 0);
+contentView.setOnClickPendingIntent(R.id.play, play);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后在广播的onReceive()方法中，判断是哪个控件被点击。然后执行相应的逻辑。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">记得广播一定要先注册才能使用。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最后，便是将Notification显示到手机了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">final Track track = getCurrentEntry().getTrack();
+ImageLoader.getInstance().loadImage(track.getUrl(), new SimpleImageLoadingListener() {
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                    contentView.setImageViewBitmap(R.id.music_cover, loadedImage);
+                    contentView.setTextViewText(R.id.music_name, track.getName());
+                    contentView.setTextViewText(R.id.singer_name, track.getSinger());
+                    mNotificationManager.notify(PLAYING_NOTIFY_ID, notification);
+                }
+            });
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Track是我进行音乐播放的一个Model类。包含一些播放音乐的基本信息。这里我是通过的Universal-Image-Loader进行图片加载。在其加载成功后的回调中，通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">setTextViewText()</code>等类似方法给控件设值。也是有2个参数，第1个是控件Id，第二个便是要设置的值。
+最后通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mNotificationManager.notify(PLAYING_NOTIFY_ID, notification)</code>将Notification显示到手机。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">经过上述几个步骤，自定义Notification便能显示到手机了，并且具备点击事件。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Tips</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">自定义布局仅支持FrameLayout、LinearLayout、RelativeLayout三种布局控件和AnalogClock、Chronometer、Button、ImageButton、ImageView、ProgressBar、TextView、ViewFlipper、ListView、GridView、StackView和AdapterViewFlipper这些显示控件，不支持这些类的子类或Android提供的其他控件，否则会引起ClassNotFoundException异常。
+之前播放的按钮打算用ToggleButton，使用之后发现显示不了，后面才找到原因。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Notification属于系统级别的组件，使用了RemoteViews的setViewVisibility()、setTextViewText()等方法后，必须通知系统重绘才能更新UI，最简单的方式就是重新notify一下。只要传入的Id一样，就会覆盖掉之前的通知。
+在播放、暂停按钮切换的时候，就碰到这个问题，一直不能显示，加上notify语句后就能正常执行了。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">关于Notification的取消。
+使用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mNotificationManager.cancel(PLAYING_NOTIFY_ID)</code>即可。但是一定要注意Notification的flag。这里补充下Notification的标识符。
+提醒标志符成员：
+Notification.FLAG_SHOW_LIGHTS              //三色灯提醒，在使用三色灯提醒时候必须加该标志符
+Notification.FLAG_ONGOING_EVENT          //发起正在运行事件（活动中）
+Notification.FLAG_INSISTENT   //让声音、振动无限循环，直到用户响应 （取消或者打开）
+Notification.FLAG_ONLY_ALERT_ONCE  //发起Notification后，铃声和震动均只执行一次
+Notification.FLAG_AUTO_CANCEL      //用户单击通知后自动消失
+Notification.FLAG_NO_CLEAR          //只有全部清除时，Notification才会清除 ，不清楚该通知(QQ的通知无法清除，就是用的这个)
+Notification.FLAG_FOREGROUND_SERVICE    //表示正在运行的服务
+我当时使用的FLAG_FOREGROUND_SERVICE，导致cancel一直关闭不了Notification，更换flag后就能关闭了。</li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android Notification使用小记">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

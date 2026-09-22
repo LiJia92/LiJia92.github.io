@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>录屏权限 clone 使用 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2023-03-07 · 约 2999 字</div>
+  <h1>录屏权限 clone 使用</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在<a href="http://lastwarmth.win/2023/02/28/screen-record-1/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">关于录屏权限的问题</a>一文中，通过与 Launcher 的结合，实现了权限无感自动申请的功能。这没过几天，就有反馈说有问题：<strong style="font-weight:bold;color:#111111;">开始录屏的时候会有权限申请弹窗一闪而过</strong>。
+最初怀疑是平板性能差，会打开一个 activity，然后马上消失，由于性能问题导致这样的“一闪而过”。但研究下来发现这个怀疑不成立。通过调试知道了<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MediaProjectionManager.createScreenCaptureIntent()</code>返回的 intent 对应的 activity 是 MediaProjectionPermissionActivity。于是查看其代码，在 onCreate 方法中有这样的片段：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">try {
+    if (mService.hasProjectionPermission(mUid, mPackageName)) {
+        setResult(RESULT_OK, getMediaProjectionIntent(mUid, mPackageName));
+        finish();
+        return;
+    }
+} catch (RemoteException e) {
+    Log.e(TAG, &quot;Error checking projection permissions&quot;, e);
+    finish();
+    return;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">即如果有权限，则直接设置 RESULT_OK 并且 finish 掉。
+如果没权限，则走到下面了：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">View dialogTitleView = View.inflate(this, R.layout.media_projection_dialog_title, null);
+TextView titleText = (TextView) dialogTitleView.findViewById(R.id.dialog_title);
+titleText.setText(dialogTitle);
+
+mDialog = new AlertDialog.Builder(this)
+        .setCustomTitle(dialogTitleView)
+        .setMessage(dialogText)
+        .setPositiveButton(R.string.media_projection_action_text, this)
+        .setNegativeButton(android.R.string.cancel, this)
+        .setOnCancelListener(this)
+        .create();
+
+mDialog.create();
+mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setFilterTouchesWhenObscured(true);
+
+final Window w = mDialog.getWindow();
+w.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+w.addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
+
+mDialog.show();
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">会展示一个弹窗，这个弹窗便是权限申请的弹窗。并且这个弹窗默认是<strong style="font-weight:bold;color:#111111;">可以外部点击消失</strong>的。
+所以这个逻辑便是这样的：如果有权限则直接返回结果，是不会弹窗的。如果弹窗了，则一定是判断没权限。
+那为什么这个弹窗出来后马上就消失了？起初怀疑发送模拟点击坐标不对，导致点到了外面的部分，弹窗便消失了。可后面检查代码，压根就没有发送模拟点击的广播（只会在启屏的时候发送一次广播，真正录制的时候不会发送）。可这个弹窗为什么就消失了呢？
+排查了很久也没找到原因，而且办公室无法复现，这就很尴尬了，可问题还是需要解决的。
+由上面的分析可知，肯定是打开了权限申请的 activity 才会导致弹窗展示出来。那如果我不申请权限了呢？利用上文末尾说到的 clone 的方式。于是改造了一下代码，在启屏页申请权限，然后将 intent 保存起来，真正要录屏时再使用 clone 方法重新生成一个 intent 传入进去。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == Activity.RESULT_OK) {
+        Manager.setMediaProjectionCloneData(data);
+    }
+}
+
+fun startRecord() {
+    if (Manager.mediaProjectionCloneData == null) {
+        // 正常申请权限...
+    } else {
+        realStart(Manager.mediaProjectionCloneData!!.clone() as Intent)
+    }
+}
+
+private fun realStart(data: Intent) {
+    mp?.stop()
+    mp = mediaProjectionManager!!.getMediaProjection(Activity.RESULT_OK, data)
+    virtualDisplay = mp?.createVirtualDisplay(
+        &quot;ScreenCapture&quot;, videoWidth, videoHeight, metrics.densityDpi,
+        DisplayManager.VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR, mediaRecorder?.surface, null, null
+    )
+    mediaRecorder?.start()
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">注意每次 mp 的创建，使用完之后一定要注意调用 stop 方法，不然下次再使用时会导致崩溃：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">java.lang.IllegalStateException: Cannot start already started MediaProjection
+    at android.os.Parcel.readException(Parcel.java:1692)
+    at android.os.Parcel.readException(Parcel.java:1637)
+    at android.media.projection.IMediaProjection$Stub$Proxy.start(IMediaProjection.java:140)
+    at android.media.projection.MediaProjection.&lt;init&gt;(MediaProjection.java:59)
+    at android.media.projection.MediaProjectionManager.getMediaProjection(MediaProjectionManager.java:102)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">字面意思很明显了，所以用完一定要记得 stop，下次才能继续 clone 进行使用。这种方式需要至少同意一次录屏权限，如果没有 Launcher 的帮助，做不到自动授权的情况下，在 App 启动的时候只申请一次问题应该也不大，后续使用就利用 clone 的方式即可。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="录屏权限 clone 使用">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

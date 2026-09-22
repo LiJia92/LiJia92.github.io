@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android实现任务队列：一个入口一个出口、一个入口两个出口 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-05-27 · 约 8388 字</div>
+  <h1>Android实现任务队列：一个入口一个出口、一个入口两个出口</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前言</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在我的<a href="http://lastwarmth.win/2016/02/23/single-thread-queue/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android实现简易轻量下载器：单线程任务队列</a>文章中，有提到过任务队列。当时是需要下载，实现一个简单的单线程任务队列即可。
+最近项目中也需要用到任务队列，并且有2种需求：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">动态礼物动画：在用户送完动态礼物之后，会在界面上展现一个动画。界面上一次最多能执行1个动画，动画按顺序执行。即：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">一个入口一个出口</code>。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">静态礼物动画：在用户送完静态礼物之后，会在界面上展现一个动画。界面上一次最多能并列执行2个动画，动画按顺序执行。即：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">一个入口两个出口</code>。
+同样都是任务队列，只不过一个是只有一个出口，另一个有两个出口。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">动态礼物动画</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参照着之前那篇文章，很快就写出来了。
+动态礼物单体类<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftModel</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class DynamicGiftModel implements GiftModel {
+
+    private GifImageView gifImageView;
+    private GifDrawable gifDrawable;
+    private DynamicGiftListener listener;
+
+    public DynamicGiftModel(GifDrawable gifDrawable, GifImageView gifImageView, DynamicGiftListener listener) {
+        this.gifDrawable = gifDrawable;
+        this.gifImageView = gifImageView;
+        this.listener = listener;
+    }
+
+    @Override
+    public void startAnimation(final GiftAnimationEndListener nextListener) {
+        if (listener != null) {
+            listener.beforeDynamicAnimation();
+        }
+        gifImageView.setImageDrawable(gifDrawable);
+        gifDrawable.addAnimationListener(new AnimationListener() {
+            @Override
+            public void onAnimationCompleted(int loopNumber) {
+                if (loopNumber == (gifDrawable.getLoopCount() - 1)) {
+                    if (listener != null) {
+                        listener.afterDynamicAnimation();
+                    }
+                    gifDrawable.recycle();
+                    if (nextListener != null) {
+                        nextListener.onGiftAnimationEnd();
+                    }
+                }
+
+            }
+        });
+    }
+
+    public interface DynamicGiftListener {
+        void beforeDynamicAnimation();
+
+        void afterDynamicAnimation();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">动态礼物队列类<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGift</code>:</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class DynamicGift {
+
+    private static DynamicGift instance = new DynamicGift();
+    private DynamicGiftExecutor executor;
+
+    public static DynamicGift getInstance() {
+        if (instance == null) {
+            instance = new DynamicGift();
+        }
+
+        return instance;
+    }
+
+    private DynamicGift() {
+        executor = new DynamicGiftExecutor();
+    }
+
+    /**
+     * 动画队列，顺序执行
+     */
+    class DynamicGiftExecutor implements GiftAnimationEndListener {
+
+        final ArrayDeque&lt;DynamicGiftModel&gt; mTasks = new ArrayDeque&lt;&gt;();
+        DynamicGiftModel mActive;
+
+        public void execute(final DynamicGiftModel model) {
+            mTasks.offer(model);
+            if (mActive == null) {
+                scheduleNext();
+            }
+        }
+
+        protected synchronized void scheduleNext() {
+            if ((mActive = mTasks.poll()) != null) {
+                mActive.startAnimation(this);
+            }
+        }
+
+        @Override
+        public void onGiftAnimationEnd() {
+            scheduleNext();
+        }
+    }
+
+    /**
+     * 往队列中添加动画对象
+     *
+     * @param gifImageView imageView
+     * @param gifDrawable  gif图
+     * @param listener     监听
+     */
+    public void addGifAnimation(GifImageView gifImageView, GifDrawable gifDrawable, DynamicGiftModel.DynamicGiftListener listener) {
+        executor.execute(new DynamicGiftModel(gifDrawable, gifImageView, listener));
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">说明一下：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">GifImageView</code>就是用来播放gif的ImageView，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">GifDrawable</code>就是gif对应的drawable，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftListener</code>就是动画执行前后的回调。
+可以看到，我们通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">execute()</code>将一个<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftModel</code>任务放入到队列中，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftModel</code>调用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">startAnimation()</code>便能开始动画了。<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftExecutor</code>与那篇博客中的类似。只不过我这里做了一些修改：下载中使用的Runnable，他是同步的，在执行完之后会自动去取一下。但是在这里，动画执行是异步的，我在调用完<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">startAnimation()</code>之后就会立即返回，所以需要一个监听（GiftAnimationEndListener）在动画执行完毕之后才去执行<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">scheduleNext()</code>操作，即取下一个任务。
+GiftAnimationEndListener代码很简单：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface GiftAnimationEndListener {
+    void onGiftAnimationEnd();
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">调用如下代码将任务添加到队列便能顺序播放动画了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">DynamicGift.getInstance().addGifAnimation(gifImageView, gifDrawable, listener);
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">静态礼物动画</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">静态礼物因为有两个出口，之前没思考过，所以花了一些时间。
+静态礼物单体类<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">DynamicGiftModel</code>:</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class StaticGiftModel implements GiftModel {
+
+    private StaticGiftListener listener;
+    private PushGift gift;
+    private boolean over;
+
+    public StaticGiftModel(PushGift gift, StaticGiftListener listener) {
+        this.gift = gift;
+        this.listener = listener;
+    }
+
+    public boolean isOver() {
+        return over;
+    }
+
+    public void setOver(boolean over) {
+        this.over = over;
+    }
+
+    @Override
+    public void startAnimation(final GiftAnimationEndListener nextListener) {
+        if (listener != null) {
+            listener.startStaticAnimation(this, gift, nextListener);
+        }
+    }
+
+    public interface StaticGiftListener {
+        void startStaticAnimation(StaticGiftModel giftModel, PushGift gift, GiftAnimationEndListener nextListener);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">静态礼物队列类<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">StaticGift</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class StaticGift {
+
+    private static StaticGift instance = new StaticGift();
+    private StaticGiftExecutor executor;
+
+    public static StaticGift getInstance() {
+        if (instance == null) {
+            instance = new StaticGift();
+        }
+
+        return instance;
+    }
+
+    private StaticGift() {
+        executor = new StaticGiftExecutor();
+    }
+
+    /**
+     * 动画队列，2个出口，顺序执行
+     */
+    class StaticGiftExecutor implements GiftAnimationEndListener {
+
+        final ArrayDeque&lt;StaticGiftModel&gt; mTasks = new ArrayDeque&lt;&gt;();
+        StaticGiftModel mActive1;
+        StaticGiftModel mActive2;
+
+        public void execute(final StaticGiftModel model) {
+            mTasks.offer(model);
+            if (mActive1 == null) {
+                mActive1 = mTasks.poll();
+                if (mActive1 != null) {
+                    mActive1.startAnimation(this);
+                }
+            } else if (mActive2 == null) {
+                mActive2 = mTasks.poll();
+                if (mActive2 != null) {
+                    mActive2.startAnimation(this);
+                }
+            }
+        }
+
+        @Override
+        public void onGiftAnimationEnd() {
+            if (mActive1 != null &amp;&amp; mActive1.isOver()) {
+                mActive1 = mTasks.poll();
+                if (mActive1 != null) {
+                    mActive1.startAnimation(this);
+                }
+            }
+            if (mActive2 != null &amp;&amp; mActive2.isOver()) {
+                mActive2 = mTasks.poll();
+                if (mActive2 != null) {
+                    mActive2.startAnimation(this);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 添加任务
+     *
+     * @param gift     推送的Gift内容
+     * @param listener 回调
+     */
+    public void addNumAnimation(PushGift gift, StaticGiftModel.StaticGiftListener listener) {
+        executor.execute(new StaticGiftModel(gift, listener));
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，我在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">StaticGiftExecutor</code>中定义了2个变量<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mActive1</code>、<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mActive2</code>，他们即代表两个出口。在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">execute</code>中先判断<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mActive1</code>是否为空，是则取出元素给它，让它执行动画。否则判断<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mActive2</code>是否为空，是则取出元素给它，让它执行动画。
+因为有两个出口，队列并不知道我的下一个任务要在哪个出口执行，所以具体的播放逻辑不能写在其中，所以我将具体的播放逻辑设计在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">StaticGiftListener.startStaticAnimation()</code>的中，由调用的用户自行实现，并且在动画结束时，我需要回调队列的接口，来通知队列某某出口的动画执行完毕了。
+实现片段代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+     * 执行静态礼物动画
+     *
+     * @param gift
+     * @param nextListener
+     */
+    @Override
+    public void startStaticAnimation(final StaticGiftModel giftModel, PushGift gift, final GiftAnimationEndListener nextListener) {
+        if (holder.staticLayout1.getVisibility() == View.GONE) {
+            holder.staticLayout1.setVisibility(View.VISIBLE);
+            holder.staticGiftUserNick1.setText(gift.getUserNick());
+            holder.staticGiftDesc1.setText(gift.getDescription());
+            showIcon(gift.getUserIcon(), holder.staticGiftUserIcon1);
+            // 获取对应礼物的本地下载路径
+            String fileName = CommonUtils.MD5(gift.getGiftIcon());
+            File savePath = new File(GiftManager.getInstance().getDownloadDir(), fileName);
+            String path = &quot;file://&quot; + savePath.getAbsolutePath();
+            ImageLoader.getInstance().displayImage(path, holder.staticGiftIcon1);
+            holder.staticGiftView1.setListener(new StaticGiftView.StaticGiftAnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    holder.staticLayout1.setVisibility(View.GONE);
+                    giftModel.setOver(true);
+                    nextListener.onGiftAnimationEnd();
+                }
+            });
+            holder.staticGiftView1.setNum(Integer.valueOf(gift.getNum()));
+        } else if (holder.staticLayout2.getVisibility() == View.GONE) {
+            holder.staticLayout2.setVisibility(View.VISIBLE);
+            holder.staticGiftUserNick2.setText(gift.getUserNick());
+            holder.staticGiftDesc2.setText(gift.getDescription());
+            showIcon(gift.getUserIcon(), holder.staticGiftUserIcon2);
+            // 获取对应礼物的本地下载路径
+            String fileName = CommonUtils.MD5(gift.getGiftIcon());
+            File savePath = new File(GiftManager.getInstance().getDownloadDir(), fileName);
+            String path = &quot;file://&quot; + savePath.getAbsolutePath();
+            ImageLoader.getInstance().displayImage(path, holder.staticGiftIcon2);
+            holder.staticGiftView2.setListener(new StaticGiftView.StaticGiftAnimationListener() {
+                @Override
+                public void onAnimationEnd() {
+                    holder.staticLayout2.setVisibility(View.GONE);
+                    giftModel.setOver(true);
+                    nextListener.onGiftAnimationEnd();
+                }
+            });
+            holder.staticGiftView2.setNum(Integer.valueOf(gift.getNum()));
+        }
+    }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">静态礼物动画实现类StaticGiftView：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class StaticGiftView extends TextView {
+
+    private int current = 1;
+    private int num;
+    private StaticGiftAnimationListener listener;
+    private Animation scaleAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.gift_scale);
+
+    public StaticGiftView(Context context) {
+        super(context);
+    }
+
+    public StaticGiftView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public StaticGiftView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    public void setListener(StaticGiftAnimationListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+        startAnimation(scaleAnimation);
+    }
+
+    @Override
+    protected void onAnimationEnd() {
+        super.onAnimationEnd();
+        current++;
+        if (current &lt;= num) {
+            setText(&quot;X &quot; + current);
+            startAnimation(scaleAnimation);
+        } else {
+            current = 1;
+            if (listener != null) {
+                listener.onAnimationEnd();
+            }
+        }
+    }
+
+    public interface StaticGiftAnimationListener {
+        void onAnimationEnd();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">静态礼物是通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">StaticGiftView</code>的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">setNum()</code>方法来显示动画的，就是显示一个数量递增，同时伴随着缩放的动画。
+页面布局中有<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">staticLayout1</code>和<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">staticLayout2</code>，分别代表两个执行动画的布局，通过判断<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">getVisibility()</code>是否为<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">GONE</code>来决定是否将动画分发给这个布局。在动画开始时，将布局设置成VISIBLE，在动画结束后，再将布局设置成GONE。
+我通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">setOver(true)</code>来告知队列某某出口的动画执行完毕，然后队列回调到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">onGiftAnimationEnd()</code>中，继续取出任务分配给有空的出口。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">调用如下代码将任务添加到队列便能顺序播放动画了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">StaticGift.getInstance().addNumAnimation(pushGift, listener);
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">待优化</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">代码之间的依赖很重，任务队列直接依赖到了前端的UI组件，需要解耦。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">若是增加至三个、四个或是更多个出口，代码就得一直添加<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mActive</code>了，不利于拓展。</li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android实现任务队列：一个入口一个出口、一个入口两个出口">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

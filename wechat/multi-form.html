@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 实现大文件分片上传 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-07-12 · 约 6807 字</div>
+  <h1>Android 实现大文件分片上传</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目中有视频上传的功能，但一直没做断点续传，针对大视频上传不友好，最近的版本需求将断点续传加上了，服务端采用的是 multipart/form-data 编码方式来实现，那么客户端也依照这个方式来做就好了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">multipart/form-data</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">multipart/form-data 方式用于大数据 Post 请求，用做分片正好合适。它对数据有一定的格式，参照示例：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">POST http://www.example.com HTTP/1.1
+Content-Type:multipart/form-data; boundary=----WebKitFormBoundaryrGKCBY7qhFd3TrwA
+
+------WebKitFormBoundaryrGKCBY7qhFd3TrwA
+Content-Disposition: form-data; name=&quot;text&quot;
+
+title
+------WebKitFormBoundaryrGKCBY7qhFd3TrwA
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;chrome.png&quot;
+Content-Type: image/png
+
+PNG ... content of chrome.png ...
+------WebKitFormBoundaryrGKCBY7qhFd3TrwA--
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">每部分都是以<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">--boundary</code>开始，紧接着是内容描述信息，然后是回车，最后是字段具体内容（文本或二进制）。如果传输的是文件，还要包含文件名和文件类型信息。消息主体最后以<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">--boundary--</code>标示结束。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">原生实现</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">如果使用 Android 原生 HttpUrlConnection 来拼接数据，参照<a href="https://blog.csdn.net/lmj623565791/article/details/23781773" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">从原理角度解析Android （Java） http 文件上传</a>贴出部分代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private static final String BOUNDARY = &quot;----WebKitFormBoundaryT1HoybnYeFOGFlBR&quot;;
+ 
+/**
+ * 
+ * @param params
+ *            传递的普通参数
+ * @param uploadFile
+ *            需要上传的文件名
+ * @param fileFormName
+ *            需要上传文件表单中的名字
+ * @param newFileName
+ *            上传的文件名称，不填写将为uploadFile的名称
+ * @param urlStr
+ *            上传的服务器的路径
+ * @throws IOException
+ */
+public void uploadForm(Map&lt;String, String&gt; params, String fileFormName,
+        File uploadFile, String newFileName, String urlStr)
+        throws IOException {
+    if (newFileName == null || newFileName.trim().equals(&quot;&quot;)) {
+        newFileName = uploadFile.getName();
+    }
+
+    StringBuilder sb = new StringBuilder();
+    /**
+     * 普通的表单数据
+     */
+    for (String key : params.keySet()) {
+        sb.append(&quot;--&quot; + BOUNDARY + &quot;\r\n&quot;);
+        sb.append(&quot;Content-Disposition: form-data; name=\&quot;&quot; + key + &quot;\&quot;&quot;
+                + &quot;\r\n&quot;);
+        sb.append(&quot;\r\n&quot;);
+        sb.append(params.get(key) + &quot;\r\n&quot;);
+    }
+    /**
+     * 上传文件的头
+     */
+    sb.append(&quot;--&quot; + BOUNDARY + &quot;\r\n&quot;);
+    sb.append(&quot;Content-Disposition: form-data; name=\&quot;&quot; + fileFormName
+            + &quot;\&quot;; filename=\&quot;&quot; + newFileName + &quot;\&quot;&quot; + &quot;\r\n&quot;);
+    sb.append(&quot;Content-Type: image/jpeg&quot; + &quot;\r\n&quot;);// 如果服务器端有文件类型的校验，必须明确指定ContentType
+    sb.append(&quot;\r\n&quot;);
+
+    byte[] headerInfo = sb.toString().getBytes(&quot;UTF-8&quot;);
+    byte[] endInfo = (&quot;\r\n--&quot; + BOUNDARY + &quot;--\r\n&quot;).getBytes(&quot;UTF-8&quot;);
+    System.out.println(sb.toString());
+    URL url = new URL(urlStr);
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setRequestMethod(&quot;POST&quot;);
+    conn.setRequestProperty(&quot;Content-Type&quot;,
+            &quot;multipart/form-data; boundary=&quot; + BOUNDARY);
+    conn.setRequestProperty(&quot;Content-Length&quot;, String
+            .valueOf(headerInfo.length + uploadFile.length()
+                    + endInfo.length));
+    conn.setDoOutput(true);
+
+    OutputStream out = conn.getOutputStream();
+    InputStream in = new FileInputStream(uploadFile);
+    out.write(headerInfo);
+
+    byte[] buf = new byte[1024];
+    int len;
+    while ((len = in.read(buf)) != -1)
+        out.write(buf, 0, len);
+
+    out.write(endInfo);
+    in.close();
+    out.close();
+    if (conn.getResponseCode() == 200) {
+        System.out.println(&quot;上传成功&quot;);
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">拼接好字符串之后，转成 byte 数组，然后写入到 http connection 中即可。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">OkHttp 实现</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目中有基于 OkHttp 封装网络请求，但是不支持 multipart/form-data，那么便根据 OkHttp 自己实现一个吧。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">// Http 请求 Client
+private val client: OkHttpClient = OkHttpClient().newBuilder()
+        .connectTimeout(0, TimeUnit.MILLISECONDS)
+        .writeTimeout(60 * 1000, TimeUnit.MILLISECONDS)
+        .readTimeout(60 * 1000, TimeUnit.MILLISECONDS)
+        .build()
+
+/**
+ * 分片上传，采用 OkHttp MultipartBody
+ */
+fun uploadPart(data: ByteArray, uploadId: String, key: String, partNumber: Int, progressListener: ProgressListener?):
+        String? {
+    val requestBody = VideoUploadRequestBody.create(MediaType.parse(&quot;video/mp4&quot;), data, progressListener)
+    val multipartBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(&quot;filename&quot;, key, requestBody)
+            .addFormDataPart(&quot;uploadId&quot;, uploadId)
+            .addFormDataPart(&quot;key&quot;, key)
+            .addFormDataPart(&quot;partNumber&quot;, partNumber.toString())
+            .addFormDataPart(&quot;partSize&quot;, data.size.toString())
+            .build()
+    val url = RequestUtils.buildFullUrl(apiHost, &quot;/api/open/upload/part.htm&quot;, signKey, extraParams)
+
+    val request = Request.Builder()
+            .url(url)
+            .post(multipartBody)
+            .build()
+
+    val response = client.newCall(request).execute()
+    return response.body()?.string()
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">利用 MultipartBody.addFormDataPart 可以很方便的添加参数，而不用自己拼接了。<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MultipartBody.FORM</code>即对应<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">multipart/form-data</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static final MediaType FORM = MediaType.get(&quot;multipart/form-data&quot;)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">针对 client 返回的 response，想要获取数据只需要调用：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">response.body()?.string()
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是<strong style="font-weight:bold;color:#111111;">此方法只能调用一次，调用之后 client 会关闭通道</strong>，这让我在调试返回结果的时候浪费不少时间。
+data 作为数据来源，可以从 File 中读取：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 获取某一片对应的二进制数据
+ * PART_SIZE：每一片的大小
+ *
+ * @param partSize 当前第几片
+ * @param file 文件对象
+ *
+ * @return 对应片段的二进制数据流
+ */
+private fun getPartData(partSize: Int, file: File): ByteArray? {
+    val result = ByteArray(PART_SIZE)
+    var accessFile: RandomAccessFile? = null
+    try {
+        accessFile = RandomAccessFile(file, &quot;r&quot;)
+        accessFile.seek((partSize - 1L) * PART_SIZE)
+        return when (val readSize = accessFile.read(result)) {
+            -1 -&gt; null
+            PART_SIZE -&gt; result
+            else -&gt; {
+                val tempArray = ByteArray(readSize)
+                System.arraycopy(result, 0, tempArray, 0, readSize)
+                tempArray
+            }
+        }
+    } catch (e: IOException) {
+        LogUtils.e(TAG, e.toString())
+    } finally {
+        IOUtils.close(accessFile)
+    }
+    return null
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此，数据便能使用 multipart/form-data Post 到服务器了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">进度监听</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到上述示例中的 VideoUploadRequestBody：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class VideoUploadRequestBody(val contentType: MediaType?, val data: ByteArray, val listener: ProgressListener?)
+    : RequestBody() {
+
+    companion object {
+        @JvmStatic
+        fun create(contentType: MediaType?, data: ByteArray, listener: ProgressListener?): RequestBody {
+            return VideoUploadRequestBody(contentType, data, listener)
+        }
+    }
+
+    override fun contentType(): MediaType? {
+        return contentType
+    }
+
+    @Throws(IOException::class)
+    override fun contentLength(): Long {
+        return data.size.toLong()
+    }
+
+    @Throws(IOException::class)
+    override fun writeTo(sink: BufferedSink) {
+        var localSink = sink
+        if (listener != null) {
+            localSink = Okio.buffer(CountSink(localSink))
+        }
+
+        localSink.writeAll(Okio.source(ByteArrayInputStream(data)))
+        // 必须添加 flush，不然最后一片会上传失败
+        localSink.flush()
+    }
+
+    private inner class CountSink(delegate: Sink) : ForwardingSink(delegate) {
+
+        internal var bytesWritten = 0L
+        internal var contentLength = 0L
+
+        @Throws(IOException::class)
+        override fun write(source: Buffer, byteCount: Long) {
+            super.write(source, byteCount)
+            if (contentLength == 0L) {
+                contentLength = contentLength()
+            }
+            bytesWritten += byteCount
+
+            listener?.onProgress(bytesWritten, contentLength, bytesWritten == contentLength)
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">继承 RequestBody，在每一次 write 的时候回调一下，BufferedSink writeAll 方法内部会每次写入 8192 字节。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">@Override
+public long writeAll(Source source) throws IOException {
+    if (source == null) { throw new IllegalArgumentException(&quot;source == null&quot;); }
+    long totalBytesRead = 0;
+    for (long readCount; (readCount = source.read(buffer, Segment.SIZE)) != -1; ) {
+        totalBytesRead += readCount;
+        emitCompleteSegments();
+    }
+    return totalBytesRead;
+}
+
+final class Segment {
+  /** The size of all segments in bytes. */
+  static final int SIZE = 8192;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以每写入 8192 字节会回调一次，对于进度监听有特殊需求的，可自行修改 writeTo 方法。
+这个回调只是针对单片的，还需要一个针对整个文件的回调：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">// 当前上传的是第几片
+private var currentPart = 0
+// 上传文件的 size
+private var size = 0L
+
+override fun onProgress(currentLength: Long, contentLength: Long, complete: Boolean) {
+    val progress = (currentPart - 1) * PART_SIZE + currentLength
+    listener?.onProgress(progress, size, progress == size)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">如此，整个文件上传的进度监听即实现了。
+注：要实现断点续传，则需要在每个分片上传完之后保存到本地数据库，然后续传的时候根据数据库保存的最新片段取出数据进行上传。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://imququ.com/post/four-ways-to-post-data-in-http.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">四种常见的 POST 提交数据方式</a>
+<a href="https://blog.csdn.net/lmj623565791/article/details/23781773" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">从原理角度解析Android （Java） http 文件上传</a>
+<a href="https://juejin.im/post/5a524eef518825732c536025" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">OkHttp踩坑记：为何 response.body().string() 只能调用一次？</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 实现大文件分片上传">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

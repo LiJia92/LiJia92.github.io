@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>一次 Python 工具编写的经历《一》 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2020-09-15 · 约 3619 字</div>
+  <h1>一次 Python 工具编写的经历《一》</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">背景</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近的项目涉及到硬件，硬件由工厂生产，生产之后需要连接到电脑，然后执行检测程序。检测程序需要做两件事：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">检测硬件的可用性；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">从硬件获取到硬件编号，拿到编号后去服务器请求一个序列号；</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">拿到序列号后告知标签打印机进行打印。</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">后面硬件装箱时，贴上此标签，通过服务器就可以知道一个序列号对应的具体硬件是哪一个了（排除人为标签贴错的情况）。那么，现在就是需要做这样的一个检测工具，运行在 windows 平台。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">准备</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">工具的第一部分，已经由另一个同事做得差不多了，我只需要在基础上进行拓展就行。同事选用的语言是 python，我也是好久没碰过了，这次完善工具，浪费了颇多时间，必须记录一下。我选用的 IDE 是 PyCharm，也是由 JetBrains 出品的，与 Android Studio 一套风格，上手容易。py 文件拷入到工程，然后 import 一大堆的三方库，完毕后工程如期跑起来了。与硬件的通信也是基于串口的，采用的库是 serial。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">import serial
+import serial.tools.list_ports
+
+# 列出所有的串口
+port_list = list(serial.tools.list_ports.comports())
+if len(port_list) &lt;= 0:
+    print(&quot;未发现串口&quot;)
+    QMessageBox.warning(self, &#39;警告&#39;, &#39;未发现串口&#39;, QMessageBox.Yes)
+    return
+self.cb_comname.clear()
+for port in port_list:
+    self.com_dict[&quot;%s&quot; % port[0]] = &quot;%s&quot; % port[1]
+    # 添加到下拉选择框中
+    self.cb_comname.addItem(port[0])
+
+# 打开串口
+serialPort = self.cb_comname.currentText()
+baudRate = 115200
+self.port_open(serialPort, baudRate)
+self.timer_rec.start(10)
+
+# 定义 timer_rec，每 10 毫秒读取一次数据
+self.timer_rec = QTimer(self)
+self.timer_rec.timeout.connect(self.read_data)
+
+# 解析数据
+def read_data(self):
+    if self.openFlag == True:
+        n = self.port.inWaiting()
+        if n &gt; 0:
+            data1 = self.port.read(1)
+            if self.bytes2hex(data1) == &#39;0xa5&#39;:
+                data2 = self.port.read(1)
+                if self.bytes2hex(data2) == &#39;0x5a&#39;:
+                    zhenlength = self.port.read(1)
+                    zhenType = self.port.read(1)
+                    if zhenType == b&#39;\x10&#39; or zhenType == b&#39;\x11&#39;:
+                        data = data1 + data2 + zhenlength + zhenType + self.port.read(60)
+                    if zhenType == b&#39;\x08&#39;:
+                        data = data1 + data2 + zhenlength + zhenType + self.port.read(44)
+                    if self.saveFlag == True:
+                        if (self.f.closed == False):
+                            self.f.write(self.bytestohex(data) + &#39;\n&#39;)
+                    head = None
+                    if zhenType == b&#39;\x10&#39;:
+                        head = StructConverter.encoding(data, Signal1)
+                    if zhenType == b&#39;\x11&#39;:
+                        head = StructConverter.encoding(data, Signal2)
+                        self.txt_show.setText(self.bytestohex(data))
+                    if zhenType == b&#39;\x08&#39;:
+                        head = StructConverter.encoding(data, Signal3)
+                    
+                    # 解析数据搞事情
+                    ...
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">获取硬件编号</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">现在需要从硬件获取到编码，通过 serial 打开的串口发送一个指令到硬件即可，指令是个 byte 数组，在 python 中可以这样写：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">data = bytearray(b&#39;\xff\xff\xff\xff&#39;)
+self.port.write(data)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">b 代表是 byte，后面的 \xff 是字节，根据已经定制好的协议，写入相应的数据即可。然后收到的数据进行解析得到硬件编号。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># 获取设备号
+data = &quot;&quot;.join([&#39;{:x}&#39;.format(int(i)) for i in head.carSn])
+self.txt_sn.setText(data)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">head.carSn 是个 byte 数组，通过** &#39;{:x}&#39;.format 转换成 hex string 进行输出 **。eg：0x33 0xff 0xda 0x5 0x52 0x53 0x36 0x35 0x43 0x39 0x10 0x43 -&gt; 33ffda55253363543391043。
+因为 App 也是需要拿到这个硬件号去做唯一匹配的，所以 App 和这个 python 工具的转换公式必须是一样，贴下 App 中如何转换：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">StringBuilder builder = new StringBuilder();
+for (int i = 0; i &lt; 12; i++) {
+    int a = data.readUnsignedByte();
+    builder.append(Integer.toHexString(a));
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">注意 Java byte 是有符号的，需要转成无符号进行 hex 转换：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public final int readUnsignedByte() throws IndexOutOfBoundsException {
+    return read() &amp; 0xff;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">进过测试，双端通过同一硬件转换出来的 hex string 是一致的，达到目标。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">获取序列号</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">拿到硬件编号需要获取序列号，走网络请求，引入 requests 库。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">import requests
+
+# 发送请求获取序列号
+url = &quot;http://request.url.html&quot;
+d = {&#39;paramA&#39;: A, &#39;paramB&#39;: B, &#39;paramC&#39;: C}
+response = requests.post(url, data=d)
+if response.status_code == requests.codes.ok:
+    # 解析序列号
+    result = response.json().get(&#39;data&#39;)
+    num = result.get(&#39;serialNum&#39;)
+    qrCode = result.get(&#39;qrCode&#39;)
+    self.txt_number.setText(num)
+    self.do_print(num, qrCode)
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 post 请求，指定 data 参数，便可发送请求了。利用 .json() 便可将结果转成 json 串，然后 get 到相应的数据。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">检测逻辑</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在获取序列号之前，还需要先检测数据项是否可用，通过 key value 形式定义一个如下结构：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># 检查项列表
+checkList = {&#39;检测项1&#39;: 0,
+             &#39;检测项2&#39;: 0,
+             &#39;检测项3&#39;: 0,
+             ...
+             }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">每次开始检测时，把数据全部置为 0，然后数据每变化一次，加1，最终只有变化次数 &gt;= 2 的才有效。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;"># global 关键字，可在函数中改变全局变量的值
+global checkList
+
+# 检测项1
+old = self.check1.toPlainText()
+new = hex(head.check1)
+if new != old:
+    checkList[&#39;check1&#39;] = checkList[&#39;check1&#39;] + 1
+self.check1.setText(new)
+
+# 遍历找到不符合的值，提醒
+for key in checkList:
+    if checkList[key] &lt; 2:
+        self.box = QMessageBox(QMessageBox.Information, &#39;提示&#39;, key + &quot;未通过检测&quot;)
+        jump = self.box.addButton(&quot;跳过检测&quot;, QMessageBox.YesRole)
+        self.box.addButton(&quot;确定&quot;, QMessageBox.NoRole)
+        self.box.exec()
+        # 点击的是 jump 按钮
+        if self.box.clickedButton() == jump:
+            # 强制跳过检测
+            checkList[key] = 2
+        print(key + &quot;未通过检测&quot;)
+        return
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下一步便是打印了，欲知后事如何，且听下回分解。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="一次 Python 工具编写的经历《一》">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

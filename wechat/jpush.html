@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android接入JPush（极光推送） · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-04-05 · 约 6936 字</div>
+  <h1>Android接入JPush（极光推送）</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目中需要有推送功能，技术负责人最后决定使用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">极光推送</code>，活被分配给我了，于是我便接了一波，在此小记一下~</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在极光推送的<a href="http://docs.jpush.io/guideline/android_guide/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">官方文档</a>中，已经有了较详细的说明了，这里只做一下简单的摘录。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">三分钟快速Demo</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在极光推送的官方文档中，有<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">三分钟快速Demo</code>，我也是从demo入手。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">创建开发者账号</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">接过sdk的同学应该都知道，再使用第三方的服务的时候，总会需要先注册一个<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">开发者账号</code>。
+要创建极光推送开发者帐号，请访问<a href="http://jpush.cn" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">极光推送官方网站</a>。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush1.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">创建应用</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用注册账号登录，进入极光控制台后，点击<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">创建应用</code>。创建帐号进入极光推送后，首先显示的是创建应用的界面。填上你的应用程序的名称，以及 Android包名这二顶就可以了。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush2.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">下载应用Example</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">点击<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">下载Android Example</code>。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush3.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">启动项目</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下载后得到一个Zip，可直接解压导入到Android Studio中，然后编译运行项目，安装到手机运行即可。gradle配置可能需要依据你当前开发极其做些修改。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush4.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">推送消息</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">填写要推送的内容，选择推送对象，点击发送即可推送消息了。这时手机便能接受到推送的消息了。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush5.png" style="max-width:100%;height:auto;border-radius:4px;">
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/04/jpush6.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">接入JPush到实际项目</h2>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">导入sdk</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在官网上下载sdk，然后导入到项目中：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">解压缩 jpush-sdk_v2.x.y.zip 集成压缩包</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">libs/jpush-sdk-release2.x.y.jar</code>到工程 libs/ 目录下</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">libs/armeabi/libjpush2xy.so</code>到工程 libs/armeabi 目录下</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">libs/armeabi-v7a/libjpush.so</code>到工程 libs/armeabi-v7a 目录下</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">res/drawable-hdpi</code>中的资源文件到工程的 res/drawable-hdpi/ 目录下</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">复制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">res/layout</code>中的布局文件到工程的 res/layout/ 目录下</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">其中5和6，其实是可以忽略的，我导入的时候看了下，这是极光推送默认的布局，在集成的时候，项目肯定会有自己的布局，需要自己去自定义，本身的默认布局是用不到的。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">配置AndroidManifest.xml</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参考官网的示例xml中进行配置<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AndroidManifest.xml</code>，这里贴一下官网的示例：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?
+&lt;manifest xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+     package=&quot;您应用的包名&quot;
+     android:versionCode=&quot;205&quot;
+     android:versionName=&quot;2.0.5&quot;
+     &gt;
+     &lt;uses-sdk android:minSdkVersion=&quot;11&quot; android:targetSdkVersion=&quot;17&quot; /&gt;
+     &lt;!-- Required 自定义用来收发消息的相关权限 --&gt;
+     &lt;permission
+         android:name=&quot;${applicationId}.permission.JPUSH_MESSAGE&quot;
+         android:protectionLevel=&quot;signature&quot; /&gt;
+
+     &lt;!-- Required 一些系统要求的权限，如访问网络等--&gt;
+     &lt;uses-permission android:name=&quot;${applicationId}.permission.JPUSH_MESSAGE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.RECEIVE_USER_PRESENT&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.READ_PHONE_STATE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.WRITE_SETTINGS&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.VIBRATE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.MOUNT_UNMOUNT_FILESYSTEMS&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.ACCESS_WIFI_STATE&quot; /&gt;
+
+     &lt;!-- Optional for location --&gt;
+     &lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.CHANGE_WIFI_STATE&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.ACCESS_LOCATION_EXTRA_COMMANDS&quot; /&gt;
+     &lt;uses-permission android:name=&quot;android.permission.CHANGE_NETWORK_STATE&quot; /&gt;
+
+     &lt;application
+         android:icon=&quot;@drawable/ic_launcher&quot;
+         android:label=&quot;@string/app_name&quot;&gt;
+
+         &lt;!-- Required SDK核心功能--&gt;
+         &lt;activity
+             android:name=&quot;cn.jpush.android.ui.PushActivity&quot;
+             android:configChanges=&quot;orientation|keyboardHidden&quot;
+             android:theme=&quot;@android:style/Theme.NoTitleBar&quot;
+             android:exported=&quot;false&quot;&gt;
+             &lt;intent-filter&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.ui.PushActivity&quot; /&gt;
+                 &lt;category android:name=&quot;android.intent.category.DEFAULT&quot; /&gt;
+                 &lt;category android:name=&quot;${applicationId}&quot; /&gt;
+             &lt;/intent-filter&gt;
+         &lt;/activity&gt;
+
+         &lt;!-- Required SDK核心功能--&gt;
+         &lt;service
+             android:name=&quot;cn.jpush.android.service.DownloadService&quot;
+             android:enabled=&quot;true&quot;
+             android:exported=&quot;false&quot; &gt;
+         &lt;/service&gt;
+
+         &lt;!-- Required SDK 核心功能--&gt;
+         &lt;!-- option since 2.0.5 可配置PushService的android:process参数 将JPush服务配置为一个独立进程 --&gt;
+         &lt;!-- 如：android:process=&quot;:remote&quot; --&gt;
+         &lt;service
+             android:name=&quot;cn.jpush.android.service.PushService&quot;
+             android:enabled=&quot;true&quot;
+             android:exported=&quot;false&quot;&gt;
+             &lt;intent-filter&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.REGISTER&quot; /&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.REPORT&quot; /&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.PushService&quot; /&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.PUSH_TIME&quot; /&gt;
+
+             &lt;/intent-filter&gt;
+         &lt;/service&gt;
+
+         &lt;!-- Required SDK 核心功能 since 1.8.0 --&gt;
+         &lt;service
+             android:name=&quot;cn.jpush.android.service.DaemonService&quot;
+             android:enabled=&quot;true&quot;
+             android:exported=&quot;true&quot;&gt;
+             &lt;intent-filter &gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.DaemonService&quot; /&gt;
+                 &lt;category android:name=&quot;${applicationId}&quot;/&gt;
+             &lt;/intent-filter&gt;
+         &lt;/service&gt;
+
+         &lt;!-- Required SDK核心功能--&gt;
+         &lt;receiver
+             android:name=&quot;cn.jpush.android.service.PushReceiver&quot;
+             android:enabled=&quot;true&quot;
+             android:exported=&quot;false&quot;&gt;
+             &lt;intent-filter android:priority=&quot;1000&quot;&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY&quot; /&gt; &lt;!--Required 显示通知栏 --&gt;
+                 &lt;category android:name=&quot;${applicationId}&quot; /&gt;
+             &lt;/intent-filter&gt;
+             &lt;intent-filter&gt;
+                 &lt;action android:name=&quot;android.intent.action.USER_PRESENT&quot; /&gt;
+                 &lt;action android:name=&quot;android.net.conn.CONNECTIVITY_CHANGE&quot; /&gt;
+             &lt;/intent-filter&gt;
+             &lt;!-- Optional --&gt;
+             &lt;intent-filter&gt;
+                 &lt;action android:name=&quot;android.intent.action.PACKAGE_ADDED&quot; /&gt;
+                 &lt;action android:name=&quot;android.intent.action.PACKAGE_REMOVED&quot; /&gt;
+                 &lt;data android:scheme=&quot;package&quot; /&gt;
+             &lt;/intent-filter&gt;
+         &lt;/receiver&gt;
+
+         &lt;!-- Required SDK核心功能--&gt;
+         &lt;receiver android:name=&quot;cn.jpush.android.service.AlarmReceiver&quot; /&gt;
+
+         &lt;!-- User defined. 用户自定义的广播接收器--&gt;
+         &lt;receiver
+             android:name=&quot;您自己定义的Receiver&quot;
+             android:enabled=&quot;true&quot;&gt;
+             &lt;intent-filter&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.REGISTRATION&quot; /&gt; &lt;!--Required 用户注册SDK的intent--&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.MESSAGE_RECEIVED&quot; /&gt; &lt;!--Required 用户接收SDK消息的intent--&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.NOTIFICATION_RECEIVED&quot; /&gt; &lt;!--Required 用户接收SDK通知栏信息的intent--&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.NOTIFICATION_OPENED&quot; /&gt; &lt;!--Required 用户打开自定义通知栏的intent--&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK&quot; /&gt; &lt;!--Optional 用户接受Rich Push Javascript 回调函数的intent--&gt;
+                 &lt;action android:name=&quot;cn.jpush.android.intent.CONNECTION&quot; /&gt;&lt;!-- 接收网络变化 连接/断开 since 1.6.3 --&gt;
+                 &lt;category android:name=&quot;${applicationId}&quot; /&gt;
+             &lt;/intent-filter&gt;
+         &lt;/receiver&gt;
+
+         &lt;!-- Required . Enable it you can get statistics data with channel --&gt;
+         &lt;meta-data android:name=&quot;JPUSH_CHANNEL&quot; android:value=&quot;developer-default&quot;/&gt;
+         &lt;meta-data android:name=&quot;JPUSH_APPKEY&quot; android:value=&quot;您应用applicationId对应的appKey&quot; /&gt; &lt;!-- &lt;/&gt;值来自开发者平台取得的AppKey--&gt;
+     &lt;/application&gt;
+&lt;/manifest&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">其中注意：</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">标注<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Required</code>为必须的</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">包名</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">AppKey</li>
+</ul>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">初始化</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在Application中初始化JPush。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class ExampleApplication extends Application {
+    @Override
+    public void onCreate() {
+      super.onCreate();
+      JPushInterface.setDebugMode(true);
+      JPushInterface.init(this);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此，JPush便已全部集成完毕。至于自定义通知布局，以及Notification的点击响应，后面再说了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">问题</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">我是小米的测试机，在接收推送消息的时候，必须要启动应用的时候才会收到推送的消息。后面才知道，是有些手机需要<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">允许应用自启动</code>。修改之后便可在没启动应用的时候也能收到推送消息了。<a href="http://docs.jpush.io/guideline/faq/#android" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">点这里</a>传送常见问题。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">所感</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">作为一款比较大众的产品，肯定是不会有很多坑的（不然也没那么多人会用它了），在其官方文档的说明上，一般都会有相应的说明。在看文档的时候，一定要<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">仔细</code>，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">仔细</code>，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">仔细</code>，重要的事情说三遍~</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android接入JPush（极光推送）">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

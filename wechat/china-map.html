@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 绘制中国地图 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-01-25 · 约 5532 字</div>
+  <h1>Android 绘制中国地图</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近的版本有这样一个需求：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/TIM%E5%9B%BE%E7%89%8720190125141415.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">有 3 个要素：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">中国地图</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">高亮省区</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">中心显示数字</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">面对这样一个需求，该如何实现呢？</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">高德地图</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">因为项目是基于高德地图来做的，所以很自然而然的想到了高德。但是当查阅高德地图相关 Api 后，发现并没有能够实现这样需求的方法，所以只能另寻他法了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">图片叠加</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">让设计师出图，实现第一个要素开发成本极低。至于<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">高亮省区</code>，也是继续让设计师出图，与全国地图分辨率保持一致，为每个省区设计一张高亮的图，其他地方透明，这样算下来设计师得出 35 张图。若不考虑性能，将图片无脑叠加倒也可以实现。但是作为 Android 开发都知道，这样的一张不算小的图片加载到手机里，占用的内存怕是个庞然大物，更别谈极端情况下要叠加 35 张这样的大图了。
+优化下叠加方案：将高亮的省区做成小图，一个包含了省区所有区域的矩形，省区内部高亮，其他区域透明，这样图变小了，但是就得计算小图相对于全国大图的相对位置，对于每个小图都得计算一个比例。同时，绘制高亮省区时可以每次都只取2张图进行叠加，叠加完后释放一张图再加载另一张图，而不用一次性全部加载在内存中。这种方案想想是 ok 的，但是感觉依然还是很麻烦。于是继续探索~</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">SVG Path</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">其实网上有很多文章也是有类似的需求，简单搜一下就发现了 SVG 这个解决方案了。看了一眼，便决定就是它了！
+SVG：可缩放矢量图形（英语：Scalable Vector Graphics，SVG）是一种基于可扩展标记语言（XML），用于描述二维矢量图形的图形格式。**<path>**元素是 SVG 基本形状中最强大的一个，它不仅能创建其他基本形状，还能创建更多其他形状。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">SVG Path 用 Android 绘制</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这里先贴一下我找的北京市的 Path 数据：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;svg height=&quot;475&quot; width=&quot;565&quot;&gt;
+    &lt;path id=&quot;Beijing&quot; d=&quot;M421.139,189.75L420.782,186.894L419.95,184.989L425.045,182.863L425.426,181.18L424.23699999999997,176.413H422.56899999999996L415.90299999999996,172.964L412.21299999999997,176.654C412.21299999999997,176.654,411.08799999999997,183.239,411.381,181.534C411.66999999999996,179.82999999999998,407.688,185.822,407.688,185.822L407.094,190.108L407.926,192.371L412.807,191.537L416.5,192.608L418.284,190.941L421.139,189.75Z&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这里要注意一点：<strong style="font-weight:bold;color:#111111;">SVG Path 里的数据都是在一个固定宽高的矩形里的坐标集合，所以当 Android View 与 SVG 的宽高不一致时，需要进行缩放。</strong>注意下面代码中的 scale 属性：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 计算地图边界
+ * 1.黑龙江是中国最东，最北的省份
+ * 2.新疆是中国最西的省份
+ * 3.海南是中国最南的省份
+ */
+private fun computeBounds() {
+    val hljRF = RectF()
+    xPaths[HEILONGJIANG_CODE]?.computeBounds(hljRF, true)
+
+    val hnRF = RectF()
+    xPaths[HAINAN_CODE]?.computeBounds(hnRF, true)
+
+    mapWidth = hljRF.right
+    mapHeight = hnRF.bottom
+}
+
+override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    val speSize = View.MeasureSpec.getSize(widthMeasureSpec)
+    scale = speSize / mapWidth
+    setMeasuredDimension(speSize, (speSize * mapHeight / mapWidth).toInt())
+}
+
+override fun onDraw(canvas: Canvas) {
+    super.onDraw(canvas)
+    // 缩放画布
+    canvas.scale(scale, scale)
+    ...
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">再来看到 Path 里有一些 M、L、Z 等字符，这些都是 Path 元素里的指令，后面紧跟的数字即是坐标。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">M x,y 移动指令，映射 Path 中的 moveTo
+L x,y 画直线指令，映射 Path 中的 lineTo
+H x   画水平线指令，映射 Path 中的 lineTo，不过要使用上一个坐标的 y
+V y  画垂直线指令，映射 Path 中的 lineTo，不过要使用上一个坐标的 x
+C x1,y1,x2,y2,x,y 三次贝塞尔曲线指令，映射 Path 中的 cubicTo
+S x2,y2,x,y 跟在 C 指令后面使用，用 C 指令的结束点做控制点，映射 cubicTo
+Q x1,y1,x,y 二次贝塞尔曲线指令，映射 quadTo
+T x,y 跟在 Q 指令后面使用，使用 Q 的 x,y 做控制点，映射 quadTo
+Z path 关闭指令，映射 close</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">注意<strong style="font-weight:bold;color:#111111;">小写指令为使用相对坐标</strong>，下面 2 行 Path 得到的结果是一样的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">M421.139,189.75L420.782,186.894
+M421.139,189.75l-0.357,-2.856
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">基于 Android Path 实现不了小写指令的那种效果，所以只能使用大写指令。这里贴一下一个将 SVG Path 转成 Android Path 的工具类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 仅限大写指令转换
+ */
+public class SvgPathToAndroidPath {
+    private int svgPathLenght = 0;
+    private String svgPath = null;
+    private int mIndex;
+    private List&lt;Integer&gt; cmdPositions = new ArrayList&lt;&gt;();
+    /**
+     * M x,y
+     * L x,y
+     * H x
+     * V y
+     * C x1,y1,x2,y2,x,y
+     * Q x1,y1,x,y
+     * S x2,y2,x,y
+     * T x,y
+     * */
+    public Path parser(String svgPath) {
+        this.svgPath = svgPath;
+        svgPathLenght = svgPath.length();
+        mIndex = 0;
+        Path lPath = new Path();
+        lPath.setFillType(Path.FillType.WINDING);
+        //记录最后一个操作点
+        PointF lastPoint = new PointF();
+        findCommand();
+        for (int i = 0; i &lt; cmdPositions.size(); i++) {
+            Integer index = cmdPositions.get(i);
+            switch (svgPath.charAt(index)) {
+                case &#39;M&#39;: {
+                    String ps[] = findPoints(i);
+                    lastPoint.set(Float.parseFloat(ps[0]), Float.parseFloat(ps[1]));
+                    lPath.moveTo(lastPoint.x, lastPoint.y);
+                }
+                break;
+                case &#39;L&#39;: {
+                    String ps[] = findPoints(i);
+                    lastPoint.set(Float.parseFloat(ps[0]), Float.parseFloat(ps[1]));
+                    lPath.lineTo(lastPoint.x, lastPoint.y);
+                }
+                break;
+                case &#39;H&#39;: {//基于上个坐标在水平方向上划线，因此y轴不变
+                    String ps[] = findPoints(i);
+                    lastPoint.set(Float.parseFloat(ps[0]), lastPoint.y);
+                    lPath.lineTo(lastPoint.x, lastPoint.y);
+                }
+                break;
+                case &#39;V&#39;: {//基于上个坐标在水平方向上划线，因此x轴不变
+                    String ps[] = findPoints(i);
+                    lastPoint.set(lastPoint.x, Float.parseFloat(ps[0]));
+                    lPath.lineTo(lastPoint.x, lastPoint.y);
+                }
+                break;
+                case &#39;C&#39;: {//3次贝塞尔曲线
+                    String ps[] = findPoints(i);
+                    lastPoint.set(Float.parseFloat(ps[4]), Float.parseFloat(ps[5]));
+                    lPath.cubicTo(Float.parseFloat(ps[0]), Float.parseFloat(ps[1]), Float.parseFloat(ps[2]), Float.parseFloat(ps[3]), Float.parseFloat(ps[4]), Float.parseFloat(ps[5]));
+                }
+                break;
+                case &#39;S&#39;: {//一般S会跟在C或是S命令后面使用，用前一个点做起始控制点
+                    String ps[] = findPoints(i);
+                    lPath.cubicTo(lastPoint.x,lastPoint.y,Float.parseFloat(ps[0]), Float.parseFloat(ps[1]), Float.parseFloat(ps[2]), Float.parseFloat(ps[3]));
+                    lastPoint.set(Float.parseFloat(ps[2]), Float.parseFloat(ps[3]));
+                }
+                break;
+                case &#39;Q&#39;: {//二次贝塞尔曲线
+                    String ps[] = findPoints(i);
+                    lastPoint.set(Float.parseFloat(ps[2]), Float.parseFloat(ps[3]));
+                    lPath.quadTo(Float.parseFloat(ps[0]), Float.parseFloat(ps[1]), Float.parseFloat(ps[2]), Float.parseFloat(ps[3]));
+                }
+                break;
+                case &#39;T&#39;: {//T命令会跟在Q后面使用，用Q的结束点做起始点
+                    String ps[] = findPoints(i);
+                    lPath.quadTo(lastPoint.x,lastPoint.y,Float.parseFloat(ps[0]), Float.parseFloat(ps[1]));
+                    lastPoint.set(Float.parseFloat(ps[0]), Float.parseFloat(ps[1]));
+                }
+                break;
+                break;
+                case &#39;Z&#39;: {//结束
+                    lPath.close();
+                }
+                break;
+            }
+        }
+        return lPath;
+    }
+
+    private String[] findPoints(int cmdIndexInPosition) {
+        int cmdIndex = cmdPositions.get(cmdIndexInPosition);
+        String pointString = svgPath.substring(cmdIndex + 1, cmdPositions.get(cmdIndexInPosition + 1));
+        return pointString.split(&quot;,&quot;);
+    }
+
+    private void findCommand() {
+        cmdPositions.clear();
+        while (mIndex &lt; svgPathLenght) {
+            char c = svgPath.charAt(mIndex);
+            if (&#39;A&#39; &lt;= c &amp;&amp; c &lt;= &#39;Z&#39;) {
+                cmdPositions.add(mIndex);
+            }
+            ++mIndex;
+        }
+    }
+}
+</code></pre>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">实现</h3>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">利用工具类获取每个省区的 Android Path，全部绘制一遍，即可绘制出全国地图（优化：高亮的省区这一步不绘制，避免绘制两次）。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">针对高亮省区，调整画笔颜色再绘制一遍即可。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">显示数量：这个目前没想到什么好方法，只能让<strong style="font-weight:bold;color:#111111;">设计师参照地图宽高比</strong>标出每个中心点的位置，就像这样：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/TIM%E5%9B%BE%E7%89%8720190125155849.png" style="max-width:100%;height:auto;border-radius:4px;">
+然后手动算出每个点的横纵坐标占比，再进行绘制。绘制数量计算坐标时仍要考虑 scale 属性。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://www.jianshu.com/p/69d76d02a872" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 上绘制中国省份地图</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://www.jianshu.com/p/c9b283adf550" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">SVG <path> 转 Android Canvas Path</a></li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 绘制中国地图">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

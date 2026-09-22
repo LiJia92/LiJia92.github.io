@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Fragment 问题小结 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-01-10 · 约 5317 字</div>
+  <h1>Fragment 问题小结</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">ViewPager 用来做多 Tab 处理已经是十分常见的了，ViewPager 需要一个 Fragment List 来生成 Adapter，这些 Fragment 有时是完全一样的，界面元素、展示风格都一致，只是数据源不一致。通过抽象的思想，很容易写出基类，类似这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">abstract class BaseListFragment : BaseFragment&lt;MyData&gt;() {
+
+    override fun requestHttpData(pageModel: PageModel?): MutableList&lt;MyData&gt; {
+        return getData()
+    }
+
+    abstract fun getData(): MutableList&lt;MyData&gt;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后在创建 Fragment List 时，使用匿名类实现<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">getData()</code>方法来获取数据。就像这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">viewPager.adapter = object : FragmentPagerAdapter(fragmentManager) {
+    override fun getItem(position: Int): BaseListFragment {
+        when (position) {
+            0 -&gt; {
+                if (fragment == null) {
+                    fragment = object : BaseListFragment() {
+                        override fun getData(): MutableList&lt;MyData&gt; {
+                            // 获取数据
+                        }
+                    }
+                }
+                return fragment!!
+            }
+            
+            ...
+        }
+    }
+
+    ...
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是这样会编译不过：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">Fragments should be static such that they can be re-instantiated by the system, and anonymous classes are not static.</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后加上<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">@SuppressLint(&quot;ValidFragment&quot;)</code>注解，可以编译过了，但是运行的时候仍然报错。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">Fragment null must be a public static class to be  properly recreated from instance state.</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">异常是在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">BackStackRecord.doAddOp()</code>抛出的，看到源码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private void doAddOp(int containerViewId, Fragment fragment, String tag, int opcmd) {
+    final Class fragmentClass = fragment.getClass();
+    final int modifiers = fragmentClass.getModifiers();
+    if (fragmentClass.isAnonymousClass() || !Modifier.isPublic(modifiers)
+            || (fragmentClass.isMemberClass() &amp;&amp; !Modifier.isStatic(modifiers))) {
+        throw new IllegalStateException(&quot;Fragment &quot; + fragmentClass.getCanonicalName()
+                + &quot; must be a public static class to be  properly recreated from&quot;
+                + &quot; instance state.&quot;);
+    }
+
+    fragment.mFragmentManager = mManager;
+
+    if (tag != null) {
+        if (fragment.mTag != null &amp;&amp; !tag.equals(fragment.mTag)) {
+            throw new IllegalStateException(&quot;Can&#39;t change tag of fragment &quot;
+                    + fragment + &quot;: was &quot; + fragment.mTag
+                    + &quot; now &quot; + tag);
+        }
+        fragment.mTag = tag;
+    }
+
+    if (containerViewId != 0) {
+        if (containerViewId == View.NO_ID) {
+            throw new IllegalArgumentException(&quot;Can&#39;t add fragment &quot;
+                    + fragment + &quot; with tag &quot; + tag + &quot; to container view with no id&quot;);
+        }
+        if (fragment.mFragmentId != 0 &amp;&amp; fragment.mFragmentId != containerViewId) {
+            throw new IllegalStateException(&quot;Can&#39;t change container ID of fragment &quot;
+                    + fragment + &quot;: was &quot; + fragment.mFragmentId
+                    + &quot; now &quot; + containerViewId);
+        }
+        fragment.mContainerId = fragment.mFragmentId = containerViewId;
+    }
+
+    addOp(new Op(opcmd, fragment));
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">抛出异常的 3 个条件：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">匿名类</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">访问域不是 Public</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">是 成员类，但是访问域不是 Static</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">抛出来的异常也很明显了：Fragment 必须 public static 的类，以便系统可以用初始状态重建。这也和 Fragment newIntance 使用 setArguments 不谋而合。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static MyFragment newInstance() {
+    MyFragment fragment = new MyFragment(String param1, String param2);
+    Bundle args = new Bundle();
+    args.putString(ARG_PARAM1, param1);
+    args.putString(ARG_PARAM2, param2);
+    fragment.setArguments(args);
+    return fragment;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Fragmnet 经常会被销毁重新实例化，Android Framework 只会调用 Fragment 无参的构造函数。如果直接将参数放到构造函数里，那么 Framework 在重建 Fragment 就会丢失这些参数了。
+再看下 Fragment 的实例化：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static Fragment instantiate(Context context, String fname, @Nullable Bundle args) {
+    try {
+        Class&lt;?&gt; clazz = sClassMap.get(fname);
+        if (clazz == null) {
+            // Class not found in the cache, see if it&#39;s real, and try to add it
+            clazz = context.getClassLoader().loadClass(fname);
+            sClassMap.put(fname, clazz);
+        }
+        Fragment f = (Fragment) clazz.getConstructor().newInstance();
+        if (args != null) {
+            args.setClassLoader(f.getClass().getClassLoader());
+            f.setArguments(args);
+        }
+        return f;
+    } catch (ClassNotFoundException e) {
+        throw new InstantiationException(&quot;Unable to instantiate fragment &quot; + fname
+                + &quot;: make sure class name exists, is public, and has an&quot;
+                + &quot; empty constructor that is public&quot;, e);
+    } catch (java.lang.InstantiationException e) {
+        throw new InstantiationException(&quot;Unable to instantiate fragment &quot; + fname
+                + &quot;: make sure class name exists, is public, and has an&quot;
+                + &quot; empty constructor that is public&quot;, e);
+    } catch (IllegalAccessException e) {
+        throw new InstantiationException(&quot;Unable to instantiate fragment &quot; + fname
+                + &quot;: make sure class name exists, is public, and has an&quot;
+                + &quot; empty constructor that is public&quot;, e);
+    } catch (NoSuchMethodException e) {
+        throw new InstantiationException(&quot;Unable to instantiate fragment &quot; + fname
+                + &quot;: could not find Fragment constructor&quot;, e);
+    } catch (InvocationTargetException e) {
+        throw new InstantiationException(&quot;Unable to instantiate fragment &quot; + fname
+                + &quot;: calling Fragment constructor caused an exception&quot;, e);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看吧，很清晰了，用的反射取到默认的构造函数，然后创建实例，使用 setArguments 设置参数。
+小结一下：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">不能使用匿名 Fragment</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">不能使用非 public static 的 Fragment</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">参数传递使用 setArguments</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">那么再回到题头：基类已经有了，怎么样减少类的创建呢？不想再写多个子类。
+我的方法是：写一个通用类，在 Fragment 创建后，setAction 来设置 getData 操作。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class CommonListFragment : BaseFragment&lt;MyData&gt;() {
+
+    private var getData: (() -&gt; MutableList&lt;MyData&gt;)? = null
+
+    override fun requestHttpData(pageModel: PageModel?): MutableList&lt;MyData&gt;? {
+        return getData?.invoke()
+    }
+
+    fun setAction(action: () -&gt; MutableList&lt;MyData&gt;) {
+        getData = action
+    }
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">题外话</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">遇到 Activity 后台被杀，然后自动重建的问题。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class DetailActivity : BaseActivity() {
+
+    private var fragment: DetailFragment? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.fragment_container_activity)
+        try {
+            val bundle = savedInstanceState ?: intent.extras
+            val showShareGuide = bundle.getBoolean(KEY_SHOW_SHARE_GUIDE, false)
+            fragment = DetailFragment.newInstance(showShareGuide)
+            supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+        } catch (e: Exception) {
+            ToastUtils.toast(e.message)
+            finish()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(fragment?.arguments)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 setArguments 设置 KEY_SHOW_SHARE_GUIDE 参数到 DetailFragment，然后操作界面后把 KEY_SHOW_SHARE_GUIDE 从 true 置为了 false。App 进入后台被杀之后，重建回来的 KEY_SHOW_SHARE_GUIDE 会还是 true。
+将 onSaveInstanceState 改为如下，问题解决。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">override fun onSaveInstanceState(outState: Bundle?) {
+    outState?.putBoolean(KEY_SHOW_SHARE_GUIDE, fragment?.arguments?.getBoolean(KEY_SHOW_SHARE_GUIDE) ?: false)
+    super.onSaveInstanceState(outState)
+}
+</code></pre></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Fragment 问题小结">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

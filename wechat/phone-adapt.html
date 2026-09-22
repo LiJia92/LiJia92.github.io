@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>「小米MIX2」全面屏适配 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2018-09-13 · 约 4619 字</div>
+  <h1>「小米MIX2」全面屏适配</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">有这样一个需求：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113729.png" style="max-width:100%;height:auto;border-radius:4px;">
+作为一个 Android 开发者，首先想到的就是用 PopupWindow 来实现。底部阴影的高度固定，剩余的高度全部填充到 PopupWindow，然后调用 PopupWindow 的 showAsDropDown 让它在应用标题栏下面显示就行了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先适配全面屏，在 AndroidManifest.xml 中添加如下代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;meta-data android:name=&quot;android.max_aspect&quot; android:value=&quot;2.1&quot; /&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">大体代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class FilterPopup(val context: Activity) : PopupWindow(context) {
+
+    init {
+        val root = View.inflate(context, R.layout.popup, null) as LinearLayout
+        width = ViewGroup.LayoutParams.MATCH_PARENT
+        height = ViewGroup.LayoutParams.WRAP_CONTENT
+        contentView = root
+        // 省略...
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">本以为就结束了，结果在我的「小米MIX2」手机上显示有问题，底部会有一条白边，十分难受。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2018/09/13/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180913113734.jpg" style="max-width:100%;height:auto;border-radius:4px;">
+于是我尝试把 height 设置成 MATCH_PARENT，白边是没了，但是整个 PopupWindow 占据了整个屏幕的高度，直接覆盖住了应用的标题栏。
+于是我开始设置 root 的 paddingTop 为标题栏的高度，嗯，显示刚刚好。可是在全国加点击事件时就尴尬了：点击事件给 PopupWindow 吃掉了。如果只有一个按钮，可以在 PopupWindow 上面覆盖个同样位置的 View fake 一下，可是标题栏还有搜索，想想比较麻烦就打消这个念头了。
+设置 MATCH_PARENT 不行，我直接设置真正的高度行不行呢？
+参照界面：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">height = 屏幕高度 - 状态栏高度 - 标题栏高度 - 导航栏高度（如果有显示导航栏）
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">获取屏幕高度：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">context.resources.displayMetrics.heightPixels
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">获取状态栏高度：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Resources.getSystem().getDimensionPixelSize(Resources.getSystem().getIdentifier(&quot;status_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;));
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">标题栏高度是写死的 48dp。
+然后就是判断是否有导航栏，有也要减去导航栏的高度：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">fun getNavigationBarHeight(wm: WindowManager): Int {
+    if (!isNavigationBarShow(wm)) {
+        return 0
+    }
+    val resources = context.resources
+    val resourceId = resources.getIdentifier(&quot;navigation_bar_height&quot;, &quot;dimen&quot;, &quot;android&quot;)
+    return resources.getDimensionPixelSize(resourceId)
+}
+
+fun isNavigationBarShow(wm: WindowManager): Boolean {
+    val display = wm.defaultDisplay
+    val size = Point()
+    val realSize = Point()
+    display.getSize(size)
+    display.getRealSize(realSize)
+    return realSize.y != size.y
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">嗯，如果一切真这么顺利就不会有这篇文章了。
+首先获取屏幕高度就一直是错误的。方法返回 2030，可「小米MIX2」的高度是 2160 像素，差了 130。只能用如下方法才能获取到 2160：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val outMetrics = DisplayMetrics()
+context.windowManager.defaultDisplay.getRealMetrics(outMetrics)
+outMetrics.heightPixels
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">关于刚刚的 130，经查阅正好是导航栏的高度。可我手机当前是全面屏手势的模式，没有显示导航栏，所以，还得判断是否是全面屏。又查阅了一番：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 判断设备是否存在NavigationBar
+ *
+ * @return true 存在, false 不存在
+ */
+public static boolean deviceHasNavigationBar() {
+    boolean haveNav = false;
+    try {
+        Class&lt;?&gt; windowManagerGlobalClass = Class.forName(&quot;android.view.WindowManagerGlobal&quot;);
+        Method getWmServiceMethod = windowManagerGlobalClass.getDeclaredMethod(&quot;getWindowManagerService&quot;);
+        getWmServiceMethod.setAccessible(true);
+        Object iWindowManager = getWmServiceMethod.invoke(null);
+
+        Class&lt;?&gt; iWindowManagerClass = iWindowManager.getClass();
+        Method hasNavBarMethod = iWindowManagerClass.getDeclaredMethod(&quot;hasNavigationBar&quot;);
+        hasNavBarMethod.setAccessible(true);
+        haveNav = (Boolean) hasNavBarMethod.invoke(iWindowManager);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return haveNav;
+}
+
+public static boolean miuiNavigationGestureEnabled(Context context) {
+    try {
+        return Settings.Global.getInt(context.getContentResolver(), &quot;force_fsg_nav_bar&quot;) != 0;
+    } catch (Settings.SettingNotFoundException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">获取导航栏高度的方法返回的值倒是准确的，可是 isNavigationBarShow 方法则是一直返回的 true，即使我当前是全面屏手势模式，没有显示导航栏。
+最后整合一下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val outMetrics = DisplayMetrics()
+context.windowManager.defaultDisplay.getRealMetrics(outMetrics)
+var height  = outMetrics.heightPixels - SystemUtils.getStateBarHeight() - DimenUtils.dp2px(48)
+
+if (SystemUtils.deviceHasNavigationBar() &amp;&amp; !SystemUtils.miuiNavigationGestureEnabled(context)) {
+    height -= SystemUtils.getNavigationBarHeight(context.windowManager)
+}
+
+this.height = height
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">如此在我手机上，能够完美运行了。但是针对其他厂商的全面屏，还需要判断 Rom 类型，再判断是否开启全面屏手势，本文在此不做详细描述，可自行 Google。
+这里贴下 oppo 手机全面屏是否开启的方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private static final String NAVIGATION_GESTURE = &quot;navigation_gesture_on&quot;;
+private static final int NAVIGATION_GESTURE_OFF = 0;
+
+public static boolean vivoNavigationGestureEnabled(Context context) {
+    int val = Settings.Secure.getInt(context.getContentResolver(), NAVIGATION_GESTURE, NAVIGATION_GESTURE_OFF);
+    return val != NAVIGATION_GESTURE_OFF;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是这样针对不同的 Rom 要做很多种判断，总感觉不靠谱。后面找到一种方式来判断是否展示导航栏：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 判断是否显示导航栏
+ */
+private fun isNavigationBarExist(activity: Activity): Boolean {
+    val vp = activity.window.decorView as? ViewGroup
+    if (vp != null) {
+        for (i in 0 until vp.childCount) {
+            if (vp.getChildAt(i).id != NO_ID &amp;&amp; &quot;navigationBarBackground&quot; == activity.resources.getResourceEntryName(vp.getChildAt(i).id)) {
+                return true
+            }
+        }
+    }
+    return false
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">经测试，在我的 MIX2 及同事的华为手机上，展示正常，在一些测试机上展示也 ok，便先采取这种方式了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参考：
+<a href="http://www.miui.com/thread-13296153-1-1.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">MIX2 获取屏幕高度Bug</a>
+<a href="http://www.miui.com/thread-13012674-1-1.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">判断用户是否打开了全面屏手势</a>
+<a href="https://blog.csdn.net/xx326664162/article/details/52438706" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android获取系统的硬件信息、系统版本以及如何检测ROM类型</a>
+<a href="https://blog.csdn.net/weelyy/article/details/79284332" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android APP适配全面屏手机的技术要点</a>
+<a href="https://juejin.im/post/5bb5c4e75188255c72285b54" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android全面屏虚拟导航栏适配</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="「小米MIX2」全面屏适配">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

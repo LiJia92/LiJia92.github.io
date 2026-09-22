@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Retrofit 学习小结 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-11-15 · 约 13317 字</div>
+  <h1>Retrofit 学习小结</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前的一篇文章<a href="http://lastwarmth.win/2016/06/23/retrofit/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Retrofit初识</a>尝试用了下 Retrofit。说来惭愧，到现在才写这篇文章。由于项目中没有使用的缘故，一直停留在了解的程度。最近自己学习做了个<a href="https://github.com/LiJia92/Gank" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Gank</a>客户端，一点点学习当前主流的技术，今天研究了下 Retrofit 的源码，颇有感触，便记录下来。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">使用</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">关于正常的使用，参考之前的那篇文章。这里再写一下结合 RxJava 的使用。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">定义接口：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface GankService {
+
+    @GET(&quot;day/{year}/{month}/{day}&quot;)
+    Observable&lt;GankDailyResult&gt; getDailyData(@Path(&quot;year&quot;) int year, @Path(&quot;month&quot;) int month, @Path(&quot;day&quot;) int day);
+
+    @GET(&quot;data/{type}/{count}/{page}&quot;)
+    Observable&lt;GankCategoryResult&gt; getCategoryData(@Path(&quot;type&quot;) String type, @Path(&quot;count&quot;) int count, @Path(&quot;page&quot;) int page);
+}
+</code></pre>
+<ol start="2" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">初始化 Retrofit，生成代理对象：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Retrofit retrofit = new Retrofit.Builder()
+        .baseUrl(BASE_GANK_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        .client(okHttpClient.build())
+        .build();
+
+mService = retrofit.create(GankService.class);
+</code></pre>
+<ol start="3" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">调用接口：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">GankRequestManager.getInstance().getCategory(type, PAGE_SIZE, mPage)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Consumer&lt;GankCategoryResult&gt;() {
+            @Override
+            public void accept(GankCategoryResult gankCategoryResult) throws Exception {
+                mPage++;
+                if (mView != null) {
+                    mView.showList(type, gankCategoryResult.results);
+                }
+            }
+        });
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">动态代理</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在项目中我们只定义了接口，并没有实现，后面却能直接调用接口，这不得不借助 Java 的动态代理特性。Retrofit 即是使用动态代理来生成代理对象：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public &lt;T&gt; T create(final Class&lt;T&gt; service) {
+    Utils.validateServiceInterface(service);
+    if (validateEagerly) {
+      eagerlyValidateMethods(service);
+    }
+    return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class&lt;?&gt;[] { service },
+        new InvocationHandler() {
+          private final Platform platform = Platform.get();
+
+          @Override public Object invoke(Object proxy, Method method, @Nullable Object[] args)
+              throws Throwable {
+            // If the method is a method from Object then defer to normal invocation.
+            if (method.getDeclaringClass() == Object.class) {
+              return method.invoke(this, args);
+            }
+            if (platform.isDefaultMethod(method)) {
+              return platform.invokeDefaultMethod(method, service, proxy, args);
+            }
+            ServiceMethod&lt;Object, Object&gt; serviceMethod =
+                (ServiceMethod&lt;Object, Object&gt;) loadServiceMethod(method);
+            OkHttpCall&lt;Object&gt; okHttpCall = new OkHttpCall&lt;&gt;(serviceMethod, args);
+            return serviceMethod.callAdapter.adapt(okHttpCall);
+          }
+        });
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Proxy.newProxyInstance</code>来生成代理对象，当调用接口时，会回调到 invoke 方法中，然后生成 OkHttpCall 对象，用于后面真正的发起网络请求。OkHttpCall 是 okhttp 的核心类，这里不做过多讲述。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Android 通过 Handler 回调主线程</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">普通调用 Retrofit 的形式是这样的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">call.enqueue(new Callback&lt;String&gt;() {
+    @Override
+    public void onResponse(Call&lt;String&gt; call, Response&lt;String&gt; response) {
+
+    }
+    @Override
+    public void onFailure(Call&lt;String&gt; call, Throwable t) {
+
+    }
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">回调中即是在主线程，我们可以用于更新 UI，这是如何做到的呢？回到 Retrofit 的构建：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public Retrofit build() {
+  if (baseUrl == null) {
+    throw new IllegalStateException(&quot;Base URL required.&quot;);
+  }
+
+  okhttp3.Call.Factory callFactory = this.callFactory;
+  if (callFactory == null) {
+    callFactory = new OkHttpClient();
+  }
+
+  Executor callbackExecutor = this.callbackExecutor;
+  if (callbackExecutor == null) {
+    callbackExecutor = platform.defaultCallbackExecutor();
+  }
+
+  // Make a defensive copy of the adapters and add the default Call adapter.
+  List&lt;CallAdapter.Factory&gt; adapterFactories = new ArrayList&lt;&gt;(this.adapterFactories);
+  adapterFactories.add(platform.defaultCallAdapterFactory(callbackExecutor));
+
+  // Make a defensive copy of the converters.
+  List&lt;Converter.Factory&gt; converterFactories = new ArrayList&lt;&gt;(this.converterFactories);
+
+  return new Retrofit(callFactory, baseUrl, converterFactories, adapterFactories,
+      callbackExecutor, validateEagerly);
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">platform 是如何生成的呢？看到 Retrofit.Builder：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Builder(Platform platform) {
+    this.platform = platform;
+    ...
+}
+
+public Builder() {
+    this(Platform.get());
+}
+
+Builder(Retrofit retrofit) {
+    ...
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">再来看 Platform：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private static Platform findPlatform() {
+    try {
+      Class.forName(&quot;android.os.Build&quot;);
+      if (Build.VERSION.SDK_INT != 0) {
+        return new Android();
+      }
+    } catch (ClassNotFoundException ignored) {
+    }
+    try {
+      Class.forName(&quot;java.util.Optional&quot;);
+      return new Java8();
+    } catch (ClassNotFoundException ignored) {
+    }
+    return new Platform();
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">显然，在 Android 中会返回 Android（）：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">static class Android extends Platform {
+    @Override public Executor defaultCallbackExecutor() {
+      return new MainThreadExecutor();
+    }
+
+    @Override CallAdapter.Factory defaultCallAdapterFactory(@Nullable Executor callbackExecutor) {
+      if (callbackExecutor == null) throw new AssertionError();
+      return new ExecutorCallAdapterFactory(callbackExecutor);
+    }s MainThreadExecutor implements Executor {
+      private final Handler handler = new Handler(Looper.getMainLooper());
+
+      @Override public void execute(Runnable r) {
+        handler.post(r);
+      }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到没， Android platform 会初始化一个绑定 MainLooper 的 Handler，很清晰了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">@Override public void enqueue(final Callback&lt;T&gt; callback) {
+  checkNotNull(callback, &quot;callback == null&quot;);
+
+  delegate.enqueue(new Callback&lt;T&gt;() {
+    @Override public void onResponse(Call&lt;T&gt; call, final Response&lt;T&gt; response) {
+      callbackExecutor.execute(new Runnable() {
+        @Override public void run() {
+          if (delegate.isCanceled()) {
+            // Emulate OkHttp&#39;s behavior of throwing/delivering an IOException on cancellation.
+            callback.onFailure(ExecutorCallbackCall.this, new IOException(&quot;Canceled&quot;));
+          } else {
+            callback.onResponse(ExecutorCallbackCall.this, response);
+          }
+        }
+      });
+    }
+
+    @Override public void onFailure(Call&lt;T&gt; call, final Throwable t) {
+      callbackExecutor.execute(new Runnable() {
+        @Override public void run() {
+          callback.onFailure(ExecutorCallbackCall.this, t);
+        }
+      });
+    }
+  });
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">回调中的 Runnable 则是由 Handler 发出的，显然是在主线程了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">CallAdapterFactory</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">使用 RxJava，会有 RxJava2CallAdapter 类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">final class RxJava2CallAdapter&lt;R&gt; implements CallAdapter&lt;R, Object&gt; {
+    private final Type responseType;
+    private final @Nullable
+    Scheduler scheduler;
+    private final boolean isAsync;
+    private final boolean isResult;
+    private final boolean isBody;
+    private final boolean isFlowable;
+    private final boolean isSingle;
+    private final boolean isMaybe;
+    private final boolean isCompletable;
+
+    RxJava2CallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
+                       boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
+                       boolean isCompletable) {
+        this.responseType = responseType;
+        this.scheduler = scheduler;
+        this.isAsync = isAsync;
+        this.isResult = isResult;
+        this.isBody = isBody;
+        this.isFlowable = isFlowable;
+        this.isSingle = isSingle;
+        this.isMaybe = isMaybe;
+        this.isCompletable = isCompletable;
+    }
+
+    @Override
+    public Type responseType() {
+        return responseType;
+    }
+
+    @Override
+    public Object adapt(Call&lt;R&gt; call) {
+        Observable&lt;Response&lt;R&gt;&gt; responseObservable = isAsync
+                ? new CallEnqueueObservable&lt;&gt;(call)
+                : new CallExecuteObservable&lt;&gt;(call);
+
+        Observable&lt;?&gt; observable;
+        if (isResult) {
+            observable = new ResultObservable&lt;&gt;(responseObservable);
+        } else if (isBody) {
+            observable = new BodyObservable&lt;&gt;(responseObservable);
+        } else {
+            observable = responseObservable;
+        }
+
+        if (scheduler != null) {
+            observable = observable.subscribeOn(scheduler);
+        }
+
+        if (isFlowable) {
+            return observable.toFlowable(BackpressureStrategy.LATEST);
+        }
+        if (isSingle) {
+            return observable.singleOrError();
+        }
+        if (isMaybe) {
+            return observable.singleElement();
+        }
+        if (isCompletable) {
+            return observable.ignoreElements();
+        }
+        return observable;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 <strong style="font-weight:bold;color:#111111;">adapt</strong> 方法来生成目标的对象。使用 RxJava 则是生成 Observable。返回的 observable 只有在发生订阅关系时才会调用请求。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">@SchedulerSupport(SchedulerSupport.NONE)
+@Override
+public final void subscribe(Observer&lt;? super T&gt; observer) {
+    ObjectHelper.requireNonNull(observer, &quot;observer is null&quot;);
+    try {
+        observer = RxJavaPlugins.onSubscribe(this, observer);
+
+        ObjectHelper.requireNonNull(observer, &quot;Plugin returned null Observer&quot;);
+        // 请求真正发生的地方
+        subscribeActual(observer);
+    } catch (NullPointerException e) { // NOPMD
+        throw e;
+    } catch (Throwable e) {
+        Exceptions.throwIfFatal(e);
+        // can&#39;t call onError because no way to know if a Disposable has been set or not
+        // can&#39;t call onSubscribe because the call might have set a Subscription already
+        RxJavaPlugins.onError(e);
+
+        NullPointerException npe = new NullPointerException(&quot;Actually not, but can&#39;t throw other exceptions due to RS&quot;);
+        npe.initCause(e);
+        throw npe;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">subscribeActual 则是请求真正发生的地方：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">protected abstract void subscribeActual(Observer&lt;? super T&gt; observer);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过 RxJava2CallAdapter 返回的 observable 是 CallEnqueueObservable 或 CallExecuteObservable：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">final class CallEnqueueObservable&lt;T&gt; extends Observable&lt;Response&lt;T&gt;&gt; {
+    private final Call&lt;T&gt; originalCall;
+
+    CallEnqueueObservable(Call&lt;T&gt; originalCall) {
+        this.originalCall = originalCall;
+    }
+
+    @Override protected void subscribeActual(Observer&lt;? super Response&lt;T&gt;&gt; observer) {
+        // Since Call is a one-shot type, clone it for each new observer.
+        Call&lt;T&gt; call = originalCall.clone();
+        retrofit2.adapter.rxjava2.CallEnqueueObservable.CallCallback&lt;T&gt; callback = new retrofit2.adapter.rxjava2.CallEnqueueObservable.CallCallback&lt;&gt;(call, observer);
+        observer.onSubscribe(callback);
+        // 异步调用
+        call.enqueue(callback);
+    }
+
+    private static final class CallCallback&lt;T&gt; implements Disposable, Callback&lt;T&gt; {
+        private final Call&lt;?&gt; call;
+        private final Observer&lt;? super Response&lt;T&gt;&gt; observer;
+        boolean terminated = false;
+
+        CallCallback(Call&lt;?&gt; call, Observer&lt;? super Response&lt;T&gt;&gt; observer) {
+            this.call = call;
+            this.observer = observer;
+        }
+
+        @Override public void onResponse(Call&lt;T&gt; call, Response&lt;T&gt; response) {
+            if (call.isCanceled()) return;
+
+            try {
+                observer.onNext(response);
+
+                if (!call.isCanceled()) {
+                    terminated = true;
+                    observer.onComplete();
+                }
+            } catch (Throwable t) {
+                if (terminated) {
+                    RxJavaPlugins.onError(t);
+                } else if (!call.isCanceled()) {
+                    try {
+                        observer.onError(t);
+                    } catch (Throwable inner) {
+                        Exceptions.throwIfFatal(inner);
+                        RxJavaPlugins.onError(new CompositeException(t, inner));
+                    }
+                }
+            }
+        }
+
+        @Override public void onFailure(Call&lt;T&gt; call, Throwable t) {
+            if (call.isCanceled()) return;
+
+            try {
+                observer.onError(t);
+            } catch (Throwable inner) {
+                Exceptions.throwIfFatal(inner);
+                RxJavaPlugins.onError(new CompositeException(t, inner));
+            }
+        }
+
+        @Override public void dispose() {
+            call.cancel();
+        }
+
+        @Override public boolean isDisposed() {
+            return call.isCanceled();
+        }
+    }
+}
+
+final class CallExecuteObservable&lt;T&gt; extends Observable&lt;Response&lt;T&gt;&gt; {
+    private final Call&lt;T&gt; originalCall;
+
+    CallExecuteObservable(Call&lt;T&gt; originalCall) {
+        this.originalCall = originalCall;
+    }
+
+    @Override protected void subscribeActual(Observer&lt;? super Response&lt;T&gt;&gt; observer) {
+        // Since Call is a one-shot type, clone it for each new observer.
+        Call&lt;T&gt; call = originalCall.clone();
+        observer.onSubscribe(new retrofit2.adapter.rxjava2.CallExecuteObservable.CallDisposable(call));
+
+        boolean terminated = false;
+        try {
+            // 同步调用
+            Response&lt;T&gt; response = call.execute();
+            if (!call.isCanceled()) {
+                observer.onNext(response);
+            }
+            if (!call.isCanceled()) {
+                terminated = true;
+                observer.onComplete();
+            }
+        } catch (Throwable t) {
+            Exceptions.throwIfFatal(t);
+            if (terminated) {
+                RxJavaPlugins.onError(t);
+            } else if (!call.isCanceled()) {
+                try {
+                    observer.onError(t);
+                } catch (Throwable inner) {
+                    Exceptions.throwIfFatal(inner);
+                    RxJavaPlugins.onError(new CompositeException(t, inner));
+                }
+            }
+        }
+    }
+
+    private static final class CallDisposable implements Disposable {
+        private final Call&lt;?&gt; call;
+
+        CallDisposable(Call&lt;?&gt; call) {
+            this.call = call;
+        }
+
+        @Override public void dispose() {
+            call.cancel();
+        }
+
+        @Override public boolean isDisposed() {
+            return call.isCanceled();
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">异步调用 call.enqueue，同步调用 call.execute，这也正是 okhttp 的使用方法，所以 Retrofit 的核心仍是 okhttp，只不过做了更好的封装。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当我们不使用 RxJava 时，会有默认的 ExecutorCallAdapterFactory 类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">final class ExecutorCallAdapterFactory extends CallAdapter.Factory {
+    final Executor callbackExecutor;
+
+    ExecutorCallAdapterFactory(Executor callbackExecutor) {
+        this.callbackExecutor = callbackExecutor;
+    }
+
+    @Override
+    public CallAdapter&lt;?, ?&gt; get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+        if (getRawType(returnType) != Call.class) {
+            return null;
+        }
+        final Type responseType = Utils.getCallResponseType(returnType);
+        return new CallAdapter&lt;Object, Call&lt;?&gt;&gt;() {
+            @Override
+            public Type responseType() {
+                return responseType;
+            }
+
+            @Override
+            public Call&lt;Object&gt; adapt(Call&lt;Object&gt; call) {
+                return new ExecutorCallbackCall&lt;&gt;(callbackExecutor, call);
+            }
+        };
+    }
+
+    static final class ExecutorCallbackCall&lt;T&gt; implements Call&lt;T&gt; {
+    final Executor callbackExecutor;
+    final Call&lt;T&gt; delegate;
+
+    ExecutorCallbackCall(Executor callbackExecutor, Call&lt;T&gt; delegate) {
+        this.callbackExecutor = callbackExecutor;
+        this.delegate = delegate;
+    }
+
+    @Override
+    public void enqueue(final Callback&lt;T&gt; callback) {
+        checkNotNull(callback, &quot;callback == null&quot;);
+
+        delegate.enqueue(new Callback&lt;T&gt;() {
+            @Override
+            public void onResponse(Call&lt;T&gt; call, final Response&lt;T&gt; response) {
+                callbackExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (delegate.isCanceled()) {
+                            // Emulate OkHttp&#39;s behavior of throwing/delivering an IOException on cancellation.
+                            callback.onFailure(ExecutorCallbackCall.this, new IOException(&quot;Canceled&quot;));
+                        } else {
+                            callback.onResponse(ExecutorCallbackCall.this, response);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call&lt;T&gt; call, final Throwable t) {
+                callbackExecutor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onFailure(ExecutorCallbackCall.this, t);
+                    }
+                });
+            }
+        });
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">还有一个 DefaultCallAdapterFactory，只有在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">callbackExecutor == null</code>的条件才会创建这个类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">final class DefaultCallAdapterFactory extends CallAdapter.Factory {
+    static final CallAdapter.Factory INSTANCE = new retrofit2.DefaultCallAdapterFactory();
+
+    @Override
+    public CallAdapter&lt;?, ?&gt; get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+        if (getRawType(returnType) != Call.class) {
+            return null;
+        }
+
+        final Type responseType = Utils.getCallResponseType(returnType);
+        return new CallAdapter&lt;Object, Call&lt;?&gt;&gt;() {
+            @Override public Type responseType() {
+                return responseType;
+            }
+
+            @Override public Call&lt;Object&gt; adapt(Call&lt;Object&gt; call) {
+                return call;
+            }
+        };
+    }
+}
+
+CallAdapter.Factory defaultCallAdapterFactory(@Nullable Executor callbackExecutor) {
+    if (callbackExecutor != null) {
+        return new ExecutorCallAdapterFactory(callbackExecutor);
+    }
+    return retrofit2.DefaultCallAdapterFactory.INSTANCE;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过适配器模式，可是适配各种使用场景，当我们有特定的需求，自定义 CallAdapterFactory 即可。Converter 也是类似的原理。当配置多个 Converter 或者 CallAdapter 时，只有第一个生效。如下代码 RxJava2CallAdapterFactory 生效。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+.addCallAdapterFactory(Java8CallAdapterFactory.create())
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">设计模式</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Retrofit 中使用到的设计模式不可谓不多。</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">建造者模式：这个模式相信大家都很熟悉了。Retrofit 算是比较复杂的一个类了，直接创建一个 Retrofit 将会在碰到这些用不到的方法上困惑，建造者模式提供了一个很好的思路。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">装饰模式：不管内部多么复杂，在使用时只需要围绕 Retrofit 类就够了。简化了开发者的学习成本，易于使用。另外封装了系统内部类的关系，对内是高内聚的，对外是松耦合的。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">代理模式：动态代理创建接口实现类，接口的调用都由 OkHttpCall 来执行。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">工厂模式：源码中可是有不少的 Factory。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">适配器模式：CallAdapter 通过泛型定义 adapt 方法，开发者可自定义 CallAdapter 实现 adapt 方法来返回自己想要的对象。</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">T adapt(Call&lt;R&gt; call);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当然，不止于这几种模式，只是这几种是我能直观感受到的，再一次感叹 Retrofit 设计的妙处！</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">设计模式的魅力便在于此，尽管它很复杂，但是开发者使用起来却很简单，也很容易拓展实现自定义需求，好的框架应当如此，努力学习吧！</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Retrofit 学习小结">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

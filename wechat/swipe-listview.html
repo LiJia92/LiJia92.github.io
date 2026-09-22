@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android仿QQ实现ListView滑动删除 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2015-11-14 · 约 12546 字</div>
+  <h1>Android仿QQ实现ListView滑动删除</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前言</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">手机QQ应该是很普及的App了，看到QQ消息栏对话框列表的每个子项左滑的时候会弹出删除、置顶图标。like this：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/swipe-listview1.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+于是突发奇想：想要自己实现一个这样的效果。
+很显然的，这样的效果实现要依赖Android的事件分发机制，于是我先从Android事件分发入手。对于事件分发还不太熟悉的朋友可以参考<a href="http://lijia92.github.io/2015/11/14/touch-event/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android事件分发机制学习</a>。
+下面开工！</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">List Item</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首先，针对ListView的每个Item自定义一个MyItemLayout。代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyItemLayout extends LinearLayout {
+
+    // content View
+    private LinearLayout contentView;
+    // menu View
+    private LinearLayout menuView;
+    // content View的布局参数对象
+    private LayoutParams contentLayout;
+    // 菜单是否打开
+    private boolean isMenuOpen;
+    // contentView最小的leftMargin
+    private int minLeftMargin;
+    // contentView最大的leftMargin
+    private int maxLeftMargin = 0;
+    // 滑动类
+    private Scroller mScroller = null;
+
+    public MyItemLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        contentLayout = new LayoutParams(getScreenWidth(), LayoutParams.WRAP_CONTENT);
+        mScroller = new Scroller(context);
+    }
+
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()) {
+            setLeftMargin(mScroller.getCurrX());
+            postInvalidate();
+        }
+    }
+
+    /**
+     * Scroller平滑打开Menu
+     */
+    public void smoothOpenMenu() {
+        isMenuOpen = true;
+        mScroller.startScroll(contentLayout.leftMargin, 0, minLeftMargin - contentLayout.leftMargin, 0, 350);
+        postInvalidate();
+    }
+
+    /**
+     * Scroller平滑关闭Menu
+     */
+    public void smoothCloseMenu() {
+        isMenuOpen = false;
+        mScroller.startScroll(contentLayout.leftMargin, 0, maxLeftMargin - contentLayout.leftMargin, 0, 350);
+        postInvalidate();
+    }
+
+    /**
+     * 在布局inflate完成后调用
+     */
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        // 第一个孩子是contentView
+        contentView = (LinearLayout) getChildAt(0);
+        // 第二个孩子是MenuView
+        menuView = (LinearLayout) getChildAt(1);
+        // 最小的leftMargin为负的menuView宽度
+        ViewGroup.LayoutParams lp = menuView.getLayoutParams();
+        minLeftMargin = -lp.width;
+    }
+
+    /**
+     * 获取屏幕宽度
+     * @return
+     */
+    private int getScreenWidth() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    /**
+     * 给contentView设置leftMargin
+     * @param leftMargin
+     */
+    public void setLeftMargin(int leftMargin) {
+        // 控制leftMargin不越界
+        if (leftMargin &gt; maxLeftMargin) {
+            leftMargin = maxLeftMargin;
+        }
+        if (leftMargin &lt; minLeftMargin) {
+            leftMargin = minLeftMargin;
+        }
+        contentLayout.leftMargin = leftMargin;
+        // 通过设置leftMargin，达到menu显示的效果
+        contentView.setLayoutParams(contentLayout);
+    }
+
+    /**
+     * 获取menuView宽度
+     * @return
+     */
+    public int getMenuWidth() {
+        return -minLeftMargin;
+    }
+
+    /**
+     * Menu是否打开
+     * @return
+     */
+    public boolean isMenuOpen() {
+        return isMenuOpen;
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">每个Item有2个直接子节点，第一个是contentView，第二个是menuView。通过设置contentView的leftMargin，达到显示Menu的效果。初始时，leftMargin为0，Menu完全隐藏。当滑动时，leftMargin逐渐缩小（因为是负数），当leftMargin等于minLeftMargin时，Menu完全显示。
+本来有种想法（参考<a href="http://blog.csdn.net/guolin_blog/article/details/8714621" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">郭霖大神的博客</a>）是采用线程Sleep的方式来达到滑动效果的。代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private class ScrollTask extends AsyncTask&lt;Integer, Integer, Integer&gt; {
+
+        @Override
+        protected Integer doInBackground(Integer... speed) {
+            int leftMargin = contentLayout.leftMargin;
+            while (true) {
+                leftMargin = leftMargin - speed[0];
+                if (leftMargin &gt; maxLeftMargin) {
+                    leftMargin = maxLeftMargin;
+                    break;
+                }
+                if (leftMargin &lt; minLeftMargin) {
+                    leftMargin = minLeftMargin;
+                    break;
+                }
+                publishProgress(leftMargin);
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            isMenuOpen = speed[0] &gt; 0;
+            return leftMargin;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... leftMargin) {
+            contentLayout.leftMargin = leftMargin[0];
+            contentView.setLayoutParams(contentLayout);
+        }
+
+        @Override
+        protected void onPostExecute(Integer leftMargin) {
+            contentLayout.leftMargin = leftMargin;
+            contentView.setLayoutParams(contentLayout);
+        }
+    }
+
+public void toOpenMenu() {
+        new ScrollTask().execute(30);
+    }
+
+    public void toCloseMenu() {
+        new ScrollTask().execute(-30);
+    }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">但是后面产生的实际效果不太好，滑动的时候总是有点卡顿的感觉，于是便弃用了，后面还是采用的Scroller类。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面贴上每个Item的布局：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;com.lastwarmth.mylistview.MyItemLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;horizontal&quot;&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/content&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;horizontal&quot;
+        android:paddingBottom=&quot;4dp&quot;
+        android:paddingLeft=&quot;8dp&quot;
+        android:paddingTop=&quot;4dp&quot;&gt;
+
+        &lt;de.hdodenhof.circleimageview.CircleImageView
+            android:id=&quot;@+id/profile_image&quot;
+            android:layout_width=&quot;56dp&quot;
+            android:layout_height=&quot;56dp&quot;
+            app:civ_border_color=&quot;#FF000000&quot;
+            app:civ_border_width=&quot;1dp&quot; /&gt;
+
+        &lt;LinearLayout
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:layout_marginLeft=&quot;16dp&quot;
+            android:layout_marginTop=&quot;4dp&quot;
+            android:orientation=&quot;vertical&quot;&gt;
+
+            &lt;TextView
+                android:id=&quot;@+id/group_name&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:text=&quot;群名称&quot; /&gt;
+
+            &lt;TextView
+                android:id=&quot;@+id/qq_content&quot;
+                android:layout_width=&quot;wrap_content&quot;
+                android:layout_height=&quot;wrap_content&quot;
+                android:layout_marginTop=&quot;8dp&quot;
+                android:singleLine=&quot;true&quot;
+                android:text=&quot;聊天内容&quot; /&gt;
+
+        &lt;/LinearLayout&gt;
+    &lt;/LinearLayout&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/menu&quot;
+        android:layout_width=&quot;240dp&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:orientation=&quot;horizontal&quot;&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/to_top&quot;
+            style=&quot;@style/menu_text_style&quot;
+            android:layout_width=&quot;80dp&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:background=&quot;@android:color/darker_gray&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;置顶&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/had_read&quot;
+            style=&quot;@style/menu_text_style&quot;
+            android:layout_width=&quot;80dp&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:background=&quot;@android:color/holo_orange_light&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;标为已读&quot; /&gt;
+
+        &lt;TextView
+            android:id=&quot;@+id/delete&quot;
+            style=&quot;@style/menu_text_style&quot;
+            android:layout_width=&quot;80dp&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:background=&quot;@android:color/holo_red_light&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;删除&quot; /&gt;
+    &lt;/LinearLayout&gt;
+
+&lt;/com.lastwarmth.mylistview.MyItemLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">content id即是第一个子节点，menu id为第二个子节点。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Adapter</h2>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyAdapter extends BaseAdapter {
+    private List&lt;MyModel&gt; data;
+    private Context mContext;
+
+    public MyAdapter(List&lt;MyModel&gt; data, Context mContext) {
+        this.data = data;
+        this.mContext = mContext;
+    }
+
+    @Override
+    public int getCount() {
+        if (data != null) {
+            return data.size();
+        }
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        if (data != null) {
+            return data.get(position);
+        }
+        return null;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(final int position, View contentView, ViewGroup parent) {
+        ViewHolder holder;
+        if (contentView == null) {
+            holder = new ViewHolder();
+            contentView = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+            holder.imageView = (CircleImageView) contentView.findViewById(R.id.profile_image);
+            holder.groupName = (TextView) contentView.findViewById(R.id.group_name);
+            holder.content = (TextView) contentView.findViewById(R.id.qq_content);
+            holder.toTop = (TextView) contentView.findViewById(R.id.to_top);
+            holder.hadRead = (TextView) contentView.findViewById(R.id.had_read);
+            holder.delete = (TextView) contentView.findViewById(R.id.delete);
+            contentView.setTag(holder);
+        } else {
+            holder = (ViewHolder) contentView.getTag();
+        }
+        MyModel myModel = (MyModel) getItem(position);
+        holder.groupName.setText(myModel.getGroupName());
+        holder.content.setText(myModel.getContent());
+        Picasso.with(mContext)
+                .load(myModel.getImageUrl())
+                .placeholder(R.mipmap.lb_zjtx)
+                .into(holder.imageView);
+        final MyItemLayout finalContentView = (MyItemLayout) contentView;
+        holder.toTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, &quot;已置顶&quot;, Toast.LENGTH_SHORT).show();
+                finalContentView.smoothCloseMenu();
+            }
+        });
+        holder.hadRead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, &quot;已阅读&quot;, Toast.LENGTH_SHORT).show();
+                finalContentView.smoothCloseMenu();
+            }
+        });
+        holder.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                data.remove(position);
+                finalContentView.smoothCloseMenu();
+                notifyDataSetChanged();
+                Toast.makeText(mContext, &quot;已删除&quot;, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return contentView;
+    }
+
+    private static class ViewHolder {
+        CircleImageView imageView;
+        TextView groupName;
+        TextView content;
+        TextView toTop;
+        TextView hadRead;
+        TextView delete;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Adapter类比较简单，这里不做过多的赘述。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Model类</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">MyModel类主要是为了模仿QQ会话写的一个类。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyModel {
+
+    String imageUrl; // 头像Url
+    String groupName; // 群名称
+    String content; // 聊天内容
+
+    public MyModel(String imageUrl, String groupName, String content) {
+        this.imageUrl = imageUrl;
+        this.groupName = groupName;
+        this.content = content;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">自定义ListView</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面便是最关键的一个：自定义ListView，覆写onTouchEvent方法，实现滑动删除。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyListView extends ListView {
+
+    // 滑动速度追踪类
+    private VelocityTracker mVelocityTracker;
+    // ACTION_DOWN的坐标
+    private float xDown;
+    private float yDown;
+    // 判断横滑、竖滑的最小值
+    private int MAX_Y = 5;
+    private int MAX_X = 3;
+    // 当前点击的position
+    private int mTouchPosition;
+    // 当前点击的item View
+    private MyItemLayout mTouchView;
+    // 当前触摸状态
+    private int mTouchState = TOUCH_STATE_NONE;
+    private static final int TOUCH_STATE_NONE = 0; //ACTION_DOWN时设置的状态
+    private static final int TOUCH_STATE_X = 1; //横滑
+    private static final int TOUCH_STATE_Y = 2; //竖滑
+
+    public MyListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        MAX_X = dp2px(MAX_X);
+        MAX_Y = dp2px(MAX_Y);
+    }
+
+    /**
+     * 创建VelocityTracker对象，并将触摸事件加入到VelocityTracker当中
+     *
+     * @param event
+     */
+    private void createVelocityTracker(MotionEvent event) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
+    }
+
+    /**
+     * 获取手指在滑动的速度
+     *
+     * @return 滑动速度，以每秒钟移动了多少像素值为单位
+     */
+    private int getScrollVelocity() {
+        mVelocityTracker.computeCurrentVelocity(1000);
+        int velocity = (int) mVelocityTracker.getXVelocity();
+        return Math.abs(velocity);
+    }
+
+    /**
+     * 回收VelocityTracker对象
+     */
+    private void recycleVelocityTracker() {
+        mVelocityTracker.recycle();
+        mVelocityTracker = null;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return super.onInterceptTouchEvent(ev);
+    }
+
+    /**
+     * 触摸事件的控制
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (ev.getAction() != MotionEvent.ACTION_DOWN &amp;&amp; mTouchView == null) {
+            return super.onTouchEvent(ev);
+        }
+        // 加入触摸跟踪类
+        createVelocityTracker(ev);
+        float moveX;
+        float moveY;
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                int prevPosition = mTouchPosition;
+                xDown = ev.getX();
+                yDown = ev.getY();
+                mTouchState = TOUCH_STATE_NONE;
+                mTouchPosition = pointToPosition((int) xDown, (int) yDown);
+                // 当前点击的Item正好是已经显示Menu的Item
+                if (prevPosition == mTouchPosition &amp;&amp; mTouchView != null &amp;&amp; mTouchView.isMenuOpen()) {
+                    mTouchState = TOUCH_STATE_X;
+                    return true; // 返回true表示接受了ACTION_DOWN，那么后面的事件依然会分发给MyListView
+                }
+                View view = getChildAt(mTouchPosition - getFirstVisiblePosition());
+                // 点击的Item不是正在显示Menu的Item，则直接关闭Menu
+                if (mTouchView != null &amp;&amp; mTouchView.isMenuOpen()) {
+                    mTouchView.smoothCloseMenu();
+                    mTouchView = null;
+                    return false; // 返回false，那么后面的事件全部会接收不到
+                }
+                if (view instanceof MyItemLayout) {
+                    mTouchView = (MyItemLayout) view;
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                moveX = ev.getX() - xDown;
+                moveY = ev.getY() - yDown;
+                if (mTouchState == TOUCH_STATE_X) {
+                    // 如果是横滑，则设置leftMargin
+                    if (!mTouchView.isMenuOpen()) {
+                        mTouchView.setLeftMargin((int) moveX);
+                    } else {
+                        mTouchView.setLeftMargin((int) (moveX - mTouchView.getMenuWidth()));
+                    }
+                    return true;
+                } else if (mTouchState == TOUCH_STATE_NONE) {
+                    // 设置横滑还是竖滑
+                    if (Math.abs(moveY) &gt; MAX_Y) {
+                        mTouchState = TOUCH_STATE_Y;
+                    } else if (Math.abs(moveX) &gt; MAX_X) {
+                        mTouchState = TOUCH_STATE_X;
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                moveX = ev.getX() - xDown;
+                if (mTouchState == TOUCH_STATE_X) {
+                    // 若滑动的距离是Menu宽度的一半，或者左滑速度大于200,
+                    if (-moveX &gt; mTouchView.getMenuWidth() / 2 || (moveX &lt; 0 &amp;&amp; getScrollVelocity() &gt; 200)) {
+                        // 若Menu是关闭的
+                        if (!mTouchView.isMenuOpen()) {
+                            // 滑动打开Menu
+                            mTouchView.smoothOpenMenu();
+                        }
+                    } else {
+                        // 滑动关闭Menu
+                        mTouchView.smoothCloseMenu();
+                        mTouchView = null;
+                        mTouchPosition = -1;
+                    }
+                    recycleVelocityTracker();
+                    return true;
+                }
+                break;
+        }
+        return super.onTouchEvent(ev);
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getContext().getResources().getDisplayMetrics());
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在这个项目中，触摸事件分以下几种情况：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">当前没有Menu正在显示</li>
+</ol>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_DOWN记录相关信息，准备接收ACTION_MOVE、ACTION_UP事件。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_MOVE中，判断是横滑还是竖滑。若是横滑，则调用setLeftMargin()，这个时候若一直滑动，Menu会慢慢地显示出来。后面会返回true，主要是为了拦截最后的super.onTouchEvent(ev)不执行。若是竖滑，则直接调用super.onTouchEvent(ev)，这个时候若一直滑动，则是ListView的上下滑动了。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_UP中，我们只需要判断是否要显示，若显示则调用smoothOpenMenu()，并返回true（这里返回true或者false都没有实际的意义）。若是不需要，则直接super.onTouchEvent(ev)。</li>
+</ul>
+<ol start="2" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">当前有Menu正在显示</li>
+</ol>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_DOWN，若当前点击的Item不是Menu正在显示的Item，那么直接smoothCloseMenu()，并且返回false。返回false后MOVE、UP等事件会统统不接收。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">若是正在点击的Item，那么首先设置为横滑，并且返回true，等待后续的触摸事件。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_MOVE因为在DOWN的时候设置了mTouchState = TOUCH_STATE_X;那么会执行到if内部，因为Menu正在显示，所以不会调用setLeftMargin()，并且直接返回true，即后面的super.onTouchEvent(ev)也不会调用。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">ACTION_UP中判断Menu是否要关闭，若关闭则调用smoothCloseMenu()，并且返回true。若是不需要，则直接返回super.onTouchEvent(ev)。</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这里是复杂的地方，需要对各种情况进行判断，然后执行相应的逻辑。我写了好多次，改过好多次QAQ...</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">Tips</h2>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">在ACTION_DOWN的分支中，返回false会直接截断后面MOVE、UP等事件的接收。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">在ACTION_MOVE与ACTION_UP的返回值，为true为false，并没有特别实际的效果，仅仅是为了返回，以此来截断super.onTouchEvent(ev)的执行。</li>
+</ul>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">最后</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面上效果图：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2015/11/swipe-listview2.png" alt="这里写图片描述" style="max-width:100%;height:auto;border-radius:4px;">
+看起来效果也还不错，是吧？</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><font size=5><a href="https://github.com/LiJia92/MyListView" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">源码下载</a></font></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android仿QQ实现ListView滑动删除">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

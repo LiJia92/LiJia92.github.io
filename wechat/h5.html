@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android H5 与原生交互那点事 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-05-16 · 约 7465 字</div>
+  <h1>Android H5 与原生交互那点事</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">鉴于 H5 丰富的表现力，产品决定将项目中的某个详情页改为 H5 展示，评论、点赞仍由原生实现，于是便需要原生与 H5 交互。之前对于这块少有涉及，恰巧合作的前端同事对于这块也不太熟悉，所以耗时良久。现在功能做得差不多了，稍微记录一下。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">原生</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">先看下 WebView 的设置：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class VygWebView(context: Context, attr: AttributeSet) : BaseWebView(context, attr) {
+
+    private var callback: JSCallback? = null
+    private var isDestroyed: Boolean = false
+
+    init {
+        addJavascriptInterface(VygJavaScriptInterface(), &quot;voyagerApp&quot;)
+        setWebContentsDebuggingEnabled(true)
+        settings.allowFileAccess = true
+        settings.allowFileAccessFromFileURLs = true
+        settings.allowUniversalAccessFromFileURLs = true
+    }
+
+    /**
+     * 注册js回调监听器
+     */
+    fun registerJSCallback(callback: JSCallback) {
+        this.callback = callback
+    }
+
+    /**
+     * 将消息发送给 WebView 来处理
+     */
+    fun sendMessageToWeb(message: String) {
+        if (isDestroyed) {
+            return
+        }
+        if (Config.isDebug()) {
+            LogUtils.e(&quot;MessageParser&quot;, &quot;sendMessageToWeb:$message&quot;)
+        }
+        val function = &quot;javascript:window.receiveMessage($message)&quot;
+        if (MainThreadUtils.isMainThread()) {
+            loadUrl(function)
+        } else {
+            MainThreadUtils.post(Runnable {
+                if (isDestroyed) {
+                    return@Runnable
+                }
+                loadUrl(function)
+            })
+        }
+    }
+
+    override fun destroy() {
+        super.destroy()
+        isDestroyed = true
+        callback = null
+    }
+
+    inner class VygJavaScriptInterface {
+        @JavascriptInterface
+        fun sendMessage(message: String) {
+            if (isDestroyed) {
+                return
+            }
+            callback?.onReceiveWebMessage(message)
+        }
+    }
+
+    interface JSCallback {
+        fun onReceiveWebMessage(message: String)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所有的交互全部通过 Json 字符串来进行，双端协定对 Json 的解析规则。本地通过添加 VygJavaScriptInterface 实现 sendMessage 方法，来接受 H5 传递过来的消息，通过 sendMessageToWeb 向 H5 发送消息。
+定义消息体如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class MessageEntity : Serializable {
+    /**
+     * 消息id
+     */
+    var id: String? = null
+    /**
+     * 消息类型
+     */
+    var type: String? = null
+    /**
+     * 版本号
+     */
+    var version: Int? = null
+
+    /**
+     * 消息内容
+     */
+    var content: Any? = null
+
+    /**
+     * 额外透传信息
+     */
+    var extraData: String? = null
+
+    fun toJSONString(): String {
+        return JSON.toJSONString(this)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面来看消息解析：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">abstract class MessageParser(private val activity: VygBaseActivity, private val webView: VygWebView,
+                             private val listener: MessageParser.MessageHandedListener?) : VygWebView.JSCallback {
+
+    private val TAG = &quot;MessageParser&quot;
+
+    override fun onReceiveWebMessage(message: String) {
+        if (StringUtils.isEmpty(message)) {
+            return
+        }
+        if (Config.isDebug()) {
+            LogUtils.e(TAG, message)
+        }
+        parse(message)
+    }
+
+    private fun parse(message: String) {
+        Config.execute {
+            try {
+                doParse(message)
+            } catch (t: Throwable) {
+                LogUtils.e(TAG, t.localizedMessage)
+            }
+        }
+    }
+
+    /**
+     * 这个json可能很大，放到异步去处理
+     */
+    @Throws(JSONException::class)
+    private fun doParse(message: String) {
+        val obj = JSON.parseObject(message)
+        val type = obj.getString(&quot;type&quot;)
+        if (StringUtils.isEmpty(type)) {
+            return
+        }
+
+        val version = try {
+            obj.getInteger(&quot;version&quot;)
+        } catch (t: Throwable) {
+            1
+        }
+
+        val e = getEvents(type)
+        if (e == null) {
+            MainThreadUtils.post(Runnable {
+                if (activity.hasDestroyed()) {
+                    return@Runnable
+                }
+                if (version != null &amp;&amp; version &gt; NATIVE_WEB_VERSION) {
+                    // 提示更新
+                    notifyUpdateApp()
+                } else {
+                    // 什么也不做
+                }
+            })
+            return
+        }
+
+        val entity = MessageEntity()
+        entity.type = type
+        try {
+            entity.id = obj.getString(&quot;id&quot;)
+        } catch (t: Throwable) {
+        }
+
+        entity.version = version
+        try {
+            entity.extraData = obj.getString(&quot;extraData&quot;)
+        } catch (t: Throwable) {
+        }
+
+        var content: String? = null
+        try {
+            content = obj.getString(&quot;content&quot;)
+        } catch (t: Throwable) {
+        }
+
+        if (StringUtils.isEmpty(content) || e.clazz == null) {
+            entity.content = null
+        } else {
+            // Content 为字符串类型直接赋值
+            if (String::class.java.isAssignableFrom(e.clazz)) {
+                entity.content = content
+            } else {
+                try {
+                    entity.content = JSON.parseObject(content, e.clazz)
+                } catch (t: Throwable) {
+                    LogUtils.e(TAG, t.localizedMessage)
+                }
+            }
+        }
+        if (activity.hasDestroyed()) {
+            return
+        }
+        MainThreadUtils.post(Runnable {
+            if (activity.hasDestroyed()) {
+                return@Runnable
+            }
+            MessageHandler(e, entity, activity, webView).handle()
+            listener?.onMessageHanded(entity)
+        })
+    }
+
+    protected abstract fun getEvents(type: String): Events?
+
+    /**
+     * 提示更新app
+     */
+    private fun notifyUpdateApp() {
+
+    }
+
+    interface MessageHandedListener {
+        fun onMessageHanded(message: MessageEntity)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">getEvents 为根据消息 type 来取得具体的消息体 Content 类型及处理消息的类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public final class Events {
+
+    public final String eventName;
+    public final Class&lt;?&gt; clazz;
+    public final Class&lt;? extends MessageHandler.HandleCallback&gt; callback;
+
+    public Events(String name, Class&lt;?&gt; clazz,
+            Class&lt;? extends MessageHandler.HandleCallback&gt; callback) {
+        this.eventName = name;
+        this.clazz = clazz;
+        this.callback = callback;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到消息处理类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class MessageHandler(private val events: Events, private val entity: MessageEntity, private val activity: VygBaseActivity, private val webView: VygWebView) {
+
+    private val TAG = &quot;MessageHandler&quot;
+
+    fun handle() {
+        try {
+            events.callback?.newInstance()?.handleMessage(entity, entity.content, activity, webView)
+        } catch (t: Throwable) {
+            LogUtils.e(TAG, t.localizedMessage)
+        }
+    }
+
+    interface HandleCallback {
+        fun handleMessage(entity: MessageEntity, obj: Any?, activity: VygBaseActivity, webView: VygWebView)
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">举例一个具体的消息处理类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class LoadImageHandler : MessageHandler.HandleCallback {
+
+    private val TAG = &quot;LoadImageHandler&quot;
+
+    override fun handleMessage(entity: MessageEntity, obj: Any?, activity: VygBaseActivity, webView: VygWebView) {
+        if (obj != null &amp;&amp; obj is LoadImageEntity) {
+            if (UriUtils.isNetUrl(obj.url)) {
+                AsImage.downloadFile(obj.url).loadListener(object : ImageLoadListener&lt;File&gt; {
+                    override fun onLoadingStarted(imageUri: String?, view: View?) {
+                        LogUtils.e(TAG, &quot;onLoadingStarted:$imageUri&quot;)
+                    }
+
+                    override fun onLoadingFailed(imageUri: String?, view: View?, t: Throwable?): Boolean {
+                        LogUtils.e(TAG, &quot;onLoadingFailed:$imageUri&quot;)
+                        return true
+                    }
+
+                    override fun onLoadingComplete(imageUri: String?, view: View?, loaded: File?): Boolean {
+                        loaded?.let {
+                            obj.uri = &quot;file://&quot; + it.absolutePath
+                            webView.sendMessageToWeb(entity.toJSONString())
+                        }
+                        return true
+                    }
+                }).download()
+            }
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">根据修改页面的业务，定义所有的 Event：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object ArticleEvents {
+
+    private val events = HashMap&lt;String, Events&gt;()
+
+    operator fun get(eventName: String): Events? {
+        return events[eventName]
+    }
+
+    init {
+        events[HTML_FINISH_LOAD] = Events(HTML_FINISH_LOAD, null, HtmlFinishLoadHandler::class.java)
+        events[CONTENT_FINISH_LOAD] = Events(CONTENT_FINISH_LOAD, null, ContentFinishLoadHandler::class.java)
+
+        events[PROTOCOL] = Events(PROTOCOL, String::class.java, ProtocolHandler::class.java)
+        events[PLAY_VIDEO] = Events(PLAY_VIDEO, String::class.java, PlayVideoHandler::class.java)
+        events[IMAGE_BROWSE] = Events(IMAGE_BROWSE, String::class.java, ImageBrowseHandler::class.java)
+        events[LOAD_IMAGE] = Events(LOAD_IMAGE, LoadImageEntity::class.java, LoadImageHandler::class.java)
+    }
+
+    object EventName {
+        const val HTML_FINISH_LOAD = &quot;htmlFinishLoad&quot;           // H5 加载完
+        const val LOAD_ARTICLE_CONTENT = &quot;articleContent&quot;       // 发送 Content 给 H5 填充
+        const val CONTENT_FINISH_LOAD = &quot;contentFinishLoad&quot;     // Content 加载完
+        const val UPDATE_COMMENT_COUNT = &quot;updateCommentCount&quot;   // 更新回复数
+
+        const val PROTOCOL = &quot;ProtocolPageJump&quot;                 // 协议
+        const val PLAY_VIDEO = &quot;playVideo&quot;                      // 播放视频
+        const val IMAGE_BROWSE = &quot;imgBrowse&quot;                    // 大图浏览
+        const val LOAD_IMAGE = &quot;loadImg&quot;                        // 加载图片
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">消息解析这一套流程便完成了，根据 type 找到对应的消息处理类，然后传入 Content 进行处理。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">H5</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">H5 除了界面渲染之外，还需要根据约定实现相关的方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">getNativeData: function() {
+    var me = this;
+    window.receiveMessage = function(data) {
+        var type = data.type;
+        var content = data.content;
+
+        if (type == &#39;articleContent&#39;) {
+            me.handleArticleData(content);
+        } else if (type == &#39;loadImg&#39;) {
+            me.handleImgData(content);
+        } else if (type == &#39;updateCommentCount&#39;) {
+            me.handleReplyCount(content);
+        }else if(type == &#39;changeOffset&#39;){
+            me.handleUploadImg(content)
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后调用原生方法时，也是组装好 Message，然后调用 sendMessage 方法即可：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">// 个人中心
+$(&#39;[data-type=&quot;user&quot;]&#39;).click(function() {
+    var uid = $(this).attr(&#39;data-uid&#39;);
+    var wxToken = $(this).attr(&#39;data-wxToken&#39;);
+    var link = `https://voyager.nav.cn/user/homePage?id=${uid}&amp;wxToken=${wxToken}`;
+    var params = JSON.stringify({ id: 1, type: &#39;ProtocolPageJump&#39;, content: link });
+
+    voyagerApp.sendMessage(params);
+})
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">至此两端的交互体系大体完成。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">小坑</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">最好使用本地 html 文件来完成交互，可以比较方便的加载本地图片，前缀加上&quot;file://&quot;，同时 WebView 需要设置（具体效用尚未研究）：</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">settings.allowFileAccess = true
+settings.allowFileAccessFromFileURLs = true
+settings.allowUniversalAccessFromFileURLs = true
+</code></pre>
+<ol start="2" style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">H5 调用本地方法需要 voyager.sendMessage，iOS 则是 voyager_sendMessage。</li>
+</ol>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://blog.csdn.net/carson_ho/article/details/52693322" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android：最全面的 Webview 详解</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://blog.csdn.net/carson_ho/article/details/64904691" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android：你要的WebView与 JS 交互方式 都在这里了</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://blog.csdn.net/carson_ho/article/details/64904635" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android：你不知道的 WebView 使用漏洞</a></li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android H5 与原生交互那点事">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

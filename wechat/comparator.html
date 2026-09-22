@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Java 中的 Comparator · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-12-20 · 约 4289 字</div>
+  <h1>Java 中的 Comparator</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近写过一个界面，涉及到排序。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/12/20/%E9%80%89%E5%8C%BA_293.png" style="max-width:100%;height:auto;border-radius:4px;">
+用到了 Collections 中的 sort 方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Collections.sort(mData, new Comparator&lt;BookMemberReport&gt;() {
+    @Override
+    public int compare(BookMemberReport lhs, BookMemberReport rhs) {
+        if (sortFlag == SORT_FLAG_SALE_DESCENDING) {
+            return (int) (rhs.saleAmount - lhs.saleAmount);
+        } else if (sortFlag == SORT_FLAG_SALE_ASCENDING) {
+            return (int) (lhs.saleAmount - rhs.saleAmount);
+        } else if (sortFlag == SORT_FLAG_COUNT_DESCENDING) {
+            return rhs.orderCount - lhs.orderCount;
+        } else if (sortFlag == SORT_FLAG_COUNT_ASCENDING) {
+            return lhs.orderCount - rhs.orderCount;
+        }
+        return 0;
+    }
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">Collections 根据传入的 Comparator 进行排序。刚开始写的时候通过不停的试，把正确的结果给试出来了。但是对于其原理却不是很清晰，今天便稍微扒一扒其源码。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static &lt;T&gt; void sort(List&lt;T&gt; list, Comparator&lt;? super T&gt; c) {
+    if (list.getClass() == ArrayList.class) {
+        Arrays.sort(((ArrayList) list).elementData, 0, list.size(), (Comparator) c);
+        return;
+    }
+
+    Object[] a = list.toArray();
+    Arrays.sort(a, (Comparator)c);
+    ListIterator&lt;T&gt; i = list.listIterator();
+    for (int j=0; j&lt;a.length; j++) {
+        i.next();
+        i.set((T)a[j]);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">跟到 Arrays.sort() 方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static &lt;T&gt; void sort(T[] a, Comparator&lt;? super T&gt; c) {
+    if (c == null) {
+        sort(a);
+    } else {
+        if (LegacyMergeSort.userRequested)
+            legacyMergeSort(a, c);
+        else
+            TimSort.sort(a, 0, a.length, c, null, 0, 0);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在 else 分支中还有一个分支，看到 userRequested：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Old merge sort implementation can be selected (for
+ * compatibility with broken comparators) using a system property.
+ * Cannot be a static boolean in the enclosing class due to
+ * circular dependencies. To be removed in a future release.
+ */
+static final class LegacyMergeSort {
+    // Android-changed: Never use circular merge sort.
+    private static final boolean userRequested = false;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以所有的排序应该都是走的 TimSort 分支。但是这不影响研究 Comparator 接口的原理，进入到 legacyMergeSort：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/** To be removed in a future release. */
+private static &lt;T&gt; void legacyMergeSort(T[] a, Comparator&lt;? super T&gt; c) {
+    T[] aux = a.clone();
+    if (c==null)
+        mergeSort(aux, a, 0, a.length, 0);
+    else
+        mergeSort(aux, a, 0, a.length, 0, c);
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">继续跟进：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Src is the source array that starts at index 0
+ * Dest is the (possibly larger) array destination with a possible offset
+ * low is the index in dest to start sorting
+ * high is the end index in dest to end sorting
+ * off is the offset into src corresponding to low in dest
+ * To be removed in a future release.
+ */
+private static void mergeSort(Object[] src,
+                              Object[] dest,
+                              int low, int high, int off,
+                              Comparator c) {
+    int length = high - low;
+
+    // Insertion sort on smallest arrays
+    if (length &lt; INSERTIONSORT_THRESHOLD) {
+        for (int i=low; i&lt;high; i++)
+            for (int j=i; j&gt;low &amp;&amp; c.compare(dest[j-1], dest[j])&gt;0; j--)
+                swap(dest, j, j-1);
+        return;
+    }
+
+    // Recursively sort halves of dest into src
+    int destLow  = low;
+    int destHigh = high;
+    low  += off;
+    high += off;
+    int mid = (low + high) &gt;&gt;&gt; 1;
+    mergeSort(dest, src, low, mid, -off, c);
+    mergeSort(dest, src, mid, high, -off, c);
+
+    // If list is already sorted, just copy from src to dest.  This is an
+    // optimization that results in faster sorts for nearly ordered lists.
+    if (c.compare(src[mid-1], src[mid]) &lt;= 0) {
+       System.arraycopy(src, low, dest, destLow, length);
+       return;
+    }
+
+    // Merge sorted halves (now in src) into dest
+    for(int i = destLow, p = low, q = mid; i &lt; destHigh; i++) {
+        if (q &gt;= high || p &lt; mid &amp;&amp; c.compare(src[p], src[q]) &lt;= 0)
+            dest[i] = src[p++];
+        else
+            dest[i] = src[q++];
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到第一个 if 语句，看到 INSERTIONSORT_THRESHOLD 变量：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Tuning parameter: list size at or below which insertion sort will be
+ * used in preference to mergesort.
+ * To be removed in a future release.
+ */
+private static final int INSERTIONSORT_THRESHOLD = 7;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">即只要是数组个数小于 7 的，直接走 if 语句进行排序，然后返回。重点：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">for (int i=low; i&lt;high; i++)
+    for (int j=i; j&gt;low &amp;&amp; c.compare(dest[j-1], dest[j])&gt;0; j--)
+        swap(dest, j, j-1);
+return;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">即第 j-1 个元素跟 j 进行比较，通过 compare 返回的值，如果大于 0，则进行交换。看到 compare 接口：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * @param o1 the first object to be compared.
+ * @param o2 the second object to be compared.
+ * @return a negative integer, zero, or a positive integer as the
+ *         first argument is less than, equal to, or greater than the
+ *         second.
+ * @throws NullPointerException if an argument is null and this
+ *         comparator does not permit null arguments
+ * @throws ClassCastException if the arguments&#39; types prevent them from
+ *         being compared by this comparator.
+ */
+int compare(T o1, T o2);
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以很清晰了，<strong style="font-weight:bold;color:#111111;">如果 compare 返回的值大于 0，那么就会将这 2 个元素交换，即将大元素放在前面进行降序，反之则是正序。</strong>
+文中代码基于 Android-25，Android-26 中已经剔除 LegacyMergeSort。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public static &lt;T&gt; void sort(T[] a, Comparator&lt;? super T&gt; c) {
+    if (c == null) {
+        sort(a);
+    } else {
+        // Android-changed: LegacyMergeSort is no longer supported
+        // if (LegacyMergeSort.userRequested)
+        //     legacyMergeSort(a, c);
+        // else
+            TimSort.sort(a, 0, a.length, c, null, 0, 0);
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">虽然分析选取的代码并不会执行，但是丝毫不影响研究 Comparator 的原理。无论源码怎么变化，只要 Comparator 接口不变，那么它的原理便会始终是这样的。抛弃复杂的，选取简单的，使源码阅读起来更为快捷。好了，简单的阅读完了，可以阅读一下复杂的 TimSort.sort 了。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Java 中的 Comparator">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

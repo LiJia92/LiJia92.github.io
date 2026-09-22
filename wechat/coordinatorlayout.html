@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>CoordinatorLayout之Behavior认识 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-03-31 · 约 14511 字</div>
+  <h1>CoordinatorLayout之Behavior认识</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">背景</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目开发中，我们经常有滑动控件固定某一个部分在顶部的需求，效果类似这样：</p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/ListviewHack-listview-1.gif" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Material Design</code>出来之前，我们可能会有方案一：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">给 ListView C 添加一个HeadView（包含A、B），然后另外准备一个外部的B在屏幕顶部，一开始不可见。ListView当前滚动高度超过A的高度时，显示外部的B；滚动高度小于A时隐藏外部的B。</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">正如我此时的项目中的一样，但是项目中的B是一个搜索框，类似这样：</p>
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/04/01/%E9%80%89%E5%8C%BA_031.png" style="max-width:100%;height:auto;border-radius:4px;">
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到 B 的构成是相对复杂的，B 相关的事件操作也会写 2 遍，很显然的会导致整个代码结构非常臃肿，所以需要寻找方案二。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">嵌套滚动机制</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在我早些的一篇文章<a href="http://lastwarmth.win/2016/02/17/material-design/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">使用Android新特性：Material Design</a>中有说起一个控件：<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">CoordinatorLayout</code>。它是一个增强型的 FrameLayout。它的作用有两个：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">作为一个布局的根布局</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">最后一个为子视图之间相互协调手势效果的一个协调布局</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">为子视图协调手势效果主要是基于 Android 的嵌套滚动机制。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">所谓嵌套滚动其实就是界面布局中包含一个可滚动的列表和一个不可滚动的View，这样在滚动列表时，首先将不可滚动View移出屏幕或移进屏幕，待不可滚动View固定时，才会继续滚动滚动列表的内容。</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">关于嵌套滚动机制更详细的一些说明有很多文章都说的不错，稍后会在参考中放出链接。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">实例</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们知道可以通过<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Behavior</code>来实现各种嵌套滑动效果。最为典型的就是<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">AppBarLayout中的ScrollingViewBehavior</code>。很经典的示例代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+
+&lt;android.support.design.widget.CoordinatorLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:background=&quot;@android:color/background_light&quot;
+    android:fitsSystemWindows=&quot;true&quot;
+    &gt;
+
+    &lt;android.support.design.widget.AppBarLayout
+        android:id=&quot;@+id/main.appbar&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;300dp&quot;
+        android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;
+        android:fitsSystemWindows=&quot;true&quot;
+        &gt;
+
+        &lt;android.support.design.widget.CollapsingToolbarLayout
+            android:id=&quot;@+id/main.collapsing&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            app:layout_scrollFlags=&quot;scroll|exitUntilCollapsed&quot;
+            android:fitsSystemWindows=&quot;true&quot;
+            app:contentScrim=&quot;?attr/colorPrimary&quot;
+            app:expandedTitleMarginStart=&quot;48dp&quot;
+            app:expandedTitleMarginEnd=&quot;64dp&quot;
+            &gt;
+
+            &lt;ImageView
+                android:id=&quot;@+id/main.backdrop&quot;
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;match_parent&quot;
+                android:scaleType=&quot;centerCrop&quot;
+                android:fitsSystemWindows=&quot;true&quot;
+                android:src=&quot;@drawable/material_flat&quot;
+                app:layout_collapseMode=&quot;parallax&quot;
+                /&gt;
+
+            &lt;android.support.v7.widget.Toolbar
+                android:id=&quot;@+id/main.toolbar&quot;
+                android:layout_width=&quot;match_parent&quot;
+                android:layout_height=&quot;?attr/actionBarSize&quot;
+                app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot;
+                app:layout_collapseMode=&quot;pin&quot;
+                /&gt;
+        &lt;/android.support.design.widget.CollapsingToolbarLayout&gt;
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+
+    &lt;android.support.v4.widget.NestedScrollView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;
+        &gt;
+
+        &lt;TextView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;wrap_content&quot;
+            android:textSize=&quot;20sp&quot;
+            android:lineSpacingExtra=&quot;8dp&quot;
+            android:text=&quot;@string/lorem&quot;
+            android:padding=&quot;@dimen/activity_horizontal_margin&quot;
+            /&gt;
+    &lt;/android.support.v4.widget.NestedScrollView&gt;
+
+    &lt;android.support.design.widget.FloatingActionButton
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_margin=&quot;@dimen/activity_horizontal_margin&quot;
+        android:src=&quot;@drawable/ic_comment_24dp&quot;
+        app:layout_anchor=&quot;@id/main.appbar&quot;
+        app:layout_anchorGravity=&quot;bottom|right|end&quot;
+        /&gt;
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过给滑动控件设置<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;</code>来实现控制 ToolBar 隐藏或消失的效果。但是这个 Behavior 是依赖于 AppBarLayout 的，换成其他的控件将会失效。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">尝试一</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">基于我的情况，我的Header可能是这样的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;LinearLayout&gt;
+    &lt;!-- 展示库存的HeaderA --&gt;
+    &lt;!-- 展示过滤搜索的HeaderB --&gt;
+&lt;/LinearLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">所以我期初的做法是定义 Behavior ,然后通过依赖让 LinearLayout 与 RecyclerView 联动。
+布局代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;android.support.design.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:id=&quot;@+id/activity_behavior&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;android.support.v7.widget.RecyclerView
+        android:id=&quot;@+id/recycler&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:background=&quot;@color/colorAccent&quot;
+        app:layout_behavior=&quot;com.study.lijia.coordinatorlayoutdemo.RecyclerBehavior&quot; /&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:orientation=&quot;vertical&quot;
+        app:layout_behavior=&quot;com.study.lijia.coordinatorlayoutdemo.HeaderBehavior&quot;&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;56dp&quot;
+            android:background=&quot;#4400ff00&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;Header A&quot;
+            android:textSize=&quot;18sp&quot; /&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;48dp&quot;
+            android:background=&quot;#4400ffff&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;Header B&quot;
+            android:textSize=&quot;16sp&quot; /&gt;
+
+    &lt;/LinearLayout&gt;
+
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">HeaderBehavior：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class HeaderBehavior extends CoordinatorLayout.Behavior&lt;View&gt; {
+
+    private View childA;    // Header A
+    private View childB;    // Header B
+
+    private int childAHeight;
+    private int childBHeight;
+
+    public HeaderBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
+        if (child instanceof LinearLayout) {
+            LinearLayout dependent = (LinearLayout) child;
+            if (dependent.getChildCount() == 2) {
+                childA = dependent.getChildAt(0);
+                childB = dependent.getChildAt(1);
+                childAHeight = childA.getHeight();
+                childBHeight = childB.getHeight();
+            }
+        }
+        return target instanceof RecyclerView;
+    }
+
+    @Override
+    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
+        if (dy &gt; 0) { //表示向上滚动
+            float trY = child.getY() - dy &lt;= -childAHeight ? -childAHeight : child.getTranslationY() - dy;
+            child.setY(trY);
+            child.setTag(dy);
+        } else if (dy &lt; 0) { //向下滚动
+            if (target instanceof RecyclerView) {
+                int scrollY = getScrollY((RecyclerView) target);
+                if (scrollY == 0) {
+                    if (target.getTranslationY() &lt; childBHeight) {
+                        child.setTag(dy);
+                    } else {
+                        float trY = child.getY() - dy &gt;= 0 ? 0 : child.getY() - dy;
+                        child.setY(trY);
+                        child.setTag(dy);
+                    }
+                }
+            }
+        }
+    }
+
+//    @Override
+//    public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
+//        ((NestedScrollView) child).fling((int)velocityY);
+//        return true;
+//    }
+
+    private int getScrollY(RecyclerView target) {
+        RecyclerView recyclerView = target;
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int position = layoutManager.findFirstVisibleItemPosition();
+        View firstVisiableChildView = layoutManager.findViewByPosition(position);
+        int itemHeight = firstVisiableChildView.getHeight();
+        return (position) * itemHeight - firstVisiableChildView.getTop();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">RecyclerBehavior：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class RecyclerBehavior extends CoordinatorLayout.Behavior&lt;RecyclerView&gt; {
+
+    private Context context;
+    private View childA;    // Header A
+    private View childB;    // Header B
+
+    private int childAHeight;
+    private int childBHeight;
+
+    public RecyclerBehavior(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+    @Override
+    public boolean layoutDependsOn(CoordinatorLayout parent, RecyclerView child, View dependency) {
+        if (dependency instanceof LinearLayout) {
+            LinearLayout dependent = (LinearLayout) dependency;
+            if (dependent.getChildCount() == 2) {
+                childA = dependent.getChildAt(0);
+                childB = dependent.getChildAt(1);
+                childAHeight = childA.getHeight();
+                childBHeight = childB.getHeight();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onDependentViewChanged(CoordinatorLayout parent, RecyclerView child, View dependency) {
+        int y = (int) (dependency.getY() + dependency.getBottom());
+        Log.e(&quot;TAG&quot;, &quot;y:&quot; + y);
+        int z;
+        if (y &gt; childBHeight) {
+            child.setTranslationY(y);
+        } else {
+            if (dependency.getTag() != null) {
+                int x = (int) child.getTranslationY();
+                z = x - (int) (dependency.getTag());
+                if (z &lt; 0) {
+                    z = 0;
+                } else if (z &gt; childBHeight + childAHeight) {
+                    z = childAHeight + childBHeight;
+                }
+                Log.e(&quot;TAG&quot;, &quot;z:&quot; + z);
+                child.setTranslationY(z);
+            }
+        }
+        return true;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最后实现的效果可以说基本满足了。但是当发生<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Fling</code>滑动时，便会很容易出现问题。因为上面的Header LinearLayout并没有处理Fling的操作。后面我自定义<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">LinearLayoutWithFling</code>利用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">OverScroller</code>来实现<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Fling</code>但是结果并不如意。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">尝试二</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">自定义实现<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">NestedScrollingParent</code>接口的 LinearLayout ,然后内部来处理 RecyclerView 的滑动。布局代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;com.study.lijia.coordinatorlayoutdemo.StickyNavLayout
+    android:id=&quot;@+id/activity_behavior&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;TextView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;56dp&quot;
+        android:background=&quot;#4400ff00&quot;
+        android:gravity=&quot;center&quot;
+        android:text=&quot;Header A&quot;
+        android:textSize=&quot;18sp&quot; /&gt;
+
+    &lt;TextView
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;48dp&quot;
+        android:background=&quot;#4400ffff&quot;
+        android:gravity=&quot;center&quot;
+        android:text=&quot;Header B&quot;
+        android:textSize=&quot;16sp&quot; /&gt;
+
+    &lt;android.support.v7.widget.RecyclerView
+        android:id=&quot;@+id/recycler&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:background=&quot;@color/colorAccent&quot; /&gt;
+
+&lt;/com.study.lijia.coordinatorlayoutdemo.StickyNavLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">StickyNavLayout如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class StickyNavLayout extends LinearLayout implements NestedScrollingParent {
+
+    private NestedScrollingParentHelper parentHelper = new NestedScrollingParentHelper(this);
+    private View mTop;
+    private View mNav;
+    private View thirdView;
+    private int mTopViewHeight;
+    private OverScroller mScroller;
+    private VelocityTracker mVelocityTracker;
+    private int mTouchSlop;
+    private int mMaximumVelocity, mMinimumVelocity;
+    private float mLastY;
+    private boolean mDragging;
+
+    public StickyNavLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        setOrientation(LinearLayout.VERTICAL);
+
+        mScroller = new OverScroller(context);
+        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
+        mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
+        mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        mTop = getChildAt(0);
+        mNav = getChildAt(1);
+        thirdView = getChildAt(2);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        mTopViewHeight = mTop.getMeasuredHeight();
+
+        //上面测量的结果是viewPager的高度只能占满父控件的剩余空间
+        //重新设置viewPager的高度
+        ViewGroup.LayoutParams layoutParams = thirdView.getLayoutParams();
+        layoutParams.height = getMeasuredHeight() - mNav.getMeasuredHeight();
+        Log.e(&quot;TAG&quot;, &quot;height:&quot; + layoutParams.height);
+        thirdView.setLayoutParams(layoutParams);
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        Log.e(&quot;TAG&quot;, &quot;y:&quot; + y);
+        //限制滚动范围
+        if (y &lt; 0) {
+            y = 0;
+        }
+        if (y &gt; mTopViewHeight) {
+            y = mTopViewHeight;
+        }
+        super.scrollTo(x, y);
+    }
+
+    @Override
+    public void computeScroll() {
+        if (mScroller.computeScrollOffset()) {
+            scrollTo(0, mScroller.getCurrY());
+            invalidate();
+        }
+    }
+
+    public void fling(int velocityY) {
+        mScroller.fling(0, getScrollY(), 0, velocityY, 0, 0, 0, mTopViewHeight);
+        invalidate();
+    }
+
+//实现NestedScrollParent接口-------------------------------------------------------------------------
+
+    @Override
+    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+        return true;
+    }
+
+    @Override
+    public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
+        parentHelper.onNestedScrollAccepted(child, target, nestedScrollAxes);
+    }
+
+    @Override
+    public void onStopNestedScroll(View target) {
+        parentHelper.onStopNestedScroll(target);
+    }
+
+    @Override
+    public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+    }
+
+    @Override
+    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+        boolean hiddenTop = dy &gt; 0 &amp;&amp; getScrollY() &lt; mTopViewHeight;
+        boolean showTop = dy &lt; 0 &amp;&amp; getScrollY() &gt;= 0 &amp;&amp; !ViewCompat.canScrollVertically(target, -1);
+
+        if (hiddenTop || showTop) {
+            scrollBy(0, dy);
+            consumed[1] = dy;
+        }
+    }
+
+    //boolean consumed:子view是否消耗了fling
+    //返回值：自己是否消耗了fling。可见，要消耗只能全部消耗
+    @Override
+    public boolean onNestedFling(View target, float velocityX, float velocityY, boolean consumed) {
+        Log.e(&quot;onNestedFling&quot;, &quot;called&quot;);
+        return false;
+    }
+
+    //返回值：自己是否消耗了fling。可见，要消耗只能全部消耗
+    @Override
+    public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
+        Log.e(&quot;onNestedPreFling&quot;, &quot;called&quot;);
+        if (getScrollY() &lt; mTopViewHeight) {
+            fling((int) velocityY);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int getNestedScrollAxes() {
+        return parentHelper.getNestedScrollAxes();
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">达到的效果姑且不错，但是当我想要加入下拉刷新<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SwipeRefreshLayout</code>的时候，感觉不是很好加。<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SwipeRefreshLayout</code>也是基于嵌套滑动机制的一个下拉刷新类，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">StickyNavLayout</code>与<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SwipeRefreshLayout</code>要共同处理 RecyclerView 的滑动事件，会冲突。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">方案三--回归本质</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当几经尝试后，感觉还是对原理没摸清，于是回过头来看 AppBarLayout 的 Behavior 。结果我特喵的发现<strong style="font-weight:bold;color:#111111;">AppBarLayout 就是 LinearLayout</strong>，很符合我的项目实情。然后利用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">layout_scrollFlags</code>来控制<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Header A</code>的显示、隐藏，并且加入下拉刷新也很方便，最后便采用了原生的方法了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;android.support.design.widget.CoordinatorLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;&gt;
+
+    &lt;android.support.design.widget.AppBarLayout
+        android:id=&quot;@+id/activity_behavior&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:background=&quot;@null&quot;
+        android:orientation=&quot;vertical&quot;&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;56dp&quot;
+            android:background=&quot;#4400ffff&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;Header A&quot;
+            android:textSize=&quot;18sp&quot;
+            app:layout_scrollFlags=&quot;scroll&quot; /&gt;
+
+        &lt;TextView
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;48dp&quot;
+            android:background=&quot;#4400ff00&quot;
+            android:gravity=&quot;center&quot;
+            android:text=&quot;Header B&quot;
+            android:textSize=&quot;16sp&quot; /&gt;
+
+    &lt;/android.support.design.widget.AppBarLayout&gt;
+
+    &lt;android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        app:layout_behavior=&quot;@string/appbar_scrolling_view_behavior&quot;&gt;
+
+        &lt;android.support.v7.widget.RecyclerView
+            android:id=&quot;@+id/recycler&quot;
+            android:layout_width=&quot;match_parent&quot;
+            android:layout_height=&quot;match_parent&quot;
+            android:background=&quot;@color/colorAccent&quot; /&gt;
+
+    &lt;/android.support.v4.widget.SwipeRefreshLayout&gt;
+
+&lt;/android.support.design.widget.CoordinatorLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下拉刷新加载 RecyclerView 那里实际效果看起来很怪，最后调整将 SwipeRefreshLayout 作为根节点， CoordinatorLayout 作为其子 View ，这个时候下拉刷新会有问题，因为2者都实现了 NestedScrollParent 接口，采取的方法是监听 AppBarLayout 的 offset，根据这个值来是否禁用 SwipeRefreshLayout。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        if (verticalOffset &gt;= 0) {
+            mRefreshLayout.setEnabled(true);
+        } else {
+            mRefreshLayout.setEnabled(false);
+        }
+    }
+});
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://github.com/LiJia92/CoordinatorLayoutDemo" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">示例代码</a></p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">demo为了速成，很多代码都是从以下参考文章中直接拿的-。-</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="http://2bab.me/2014/12/16/ListView-%E4%B8%A4%E7%A7%8D%E5%9B%BA%E5%AE%9A%E6%A0%87%E5%A4%B4%E7%9A%84%E6%8A%80%E5%B7%A7/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">ListView 两种固定标头的技巧</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="http://ltlovezh.com/2016/08/07/Android-CoordinatorLayout%E5%92%8CBehavior/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android CoordinatorLayout和Behavior</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://www.aswifter.com/2015/11/12/mastering-coordinator/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">(译)掌握 Coordinator Layout</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="http://blog.csdn.net/qibin0506/article/details/50290421" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">CoordinatorLayout高级用法-自定义Behavior</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="http://blog.csdn.net/al4fun/article/details/53889075" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">NestedScrolling机制(二)——实例</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://my.oschina.net/smuswc/blog/612697" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">SwipeRefreshLayout 与 CoordinatorLayout 嵌套刷新</a></li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="CoordinatorLayout之Behavior认识">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

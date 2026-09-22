@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android实现简易轻量下载器：单线程任务队列 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-02-23 · 约 4760 字</div>
+  <h1>Android实现简易轻量下载器：单线程任务队列</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近的项目是一个与音乐相关的App，其中有一个功能：收藏喜欢的歌曲，在wifi的环境下自动下载。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">考虑到音乐歌曲都是3、4Mb的小文件，断点下载的功能便不需要了。因此只需要实现一个特别轻量、简单的下载管理类，进行管理即可。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最初的思路便是任务队列，单线程顺序执行，一个文件接着一个文件进行下载。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">之前看过AsyncTask的部分源码，其设计与我的想法类似，于是便借鉴着AsyncTask的源码，实现了一个特别简单、轻量的下载管理类。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">源码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class MyDownloadManager {
+
+    private static final String TAG = &quot;MyDownloadManager&quot;;
+    private File downloadDir; // 文件保存路径
+    private static MyDownloadManager instance; // 单例
+
+    // 单线程任务队列
+    public static Executor executor;
+    private static final ThreadFactory sThreadFactory = new ThreadFactory() {
+        private final AtomicInteger mCount = new AtomicInteger(1);
+
+        public Thread newThread(Runnable r) {
+            return new Thread(r, &quot;MyDownloadManager #&quot; + mCount.getAndIncrement());
+        }
+    };
+    private static final BlockingQueue&lt;Runnable&gt; sPoolWorkQueue = new LinkedBlockingQueue&lt;&gt;(128);
+    public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(1, 1, 1,
+            TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
+
+    private MyDownloadManager() {
+        // 初始化下载路径
+        downloadDir = new File(AndroidCacheUtils.getCacheDirFile(MiaApplication.getInstance()), &quot;download&quot;);
+        if (!downloadDir.exists()) {
+            downloadDir.mkdirs();
+        }
+        executor = new SerialExecutor();
+    }
+
+    /**
+     * 顺序执行下载任务
+     */
+    private static class SerialExecutor implements Executor {
+        final ArrayDeque&lt;Runnable&gt; mTasks = new ArrayDeque&lt;Runnable&gt;();
+        Runnable mActive;
+
+        public synchronized void execute(final Runnable r) {
+            mTasks.offer(new Runnable() {
+                public void run() {
+                    try {
+                        r.run();
+                    } finally {
+                        scheduleNext();
+                    }
+                }
+            });
+            if (mActive == null) {
+                scheduleNext();
+            }
+        }
+
+        protected synchronized void scheduleNext() {
+            if ((mActive = mTasks.poll()) != null) {
+                THREAD_POOL_EXECUTOR.execute(mActive);
+            }
+        }
+    }
+
+    /**
+     * 获取单例对象
+     *
+     * @return
+     */
+    public static MyDownloadManager getInstance() {
+        if (instance == null) {
+            instance = new MyDownloadManager();
+        }
+        return instance;
+    }
+
+    /**
+     * 添加下载任务
+     *
+     * @param path
+     */
+    public void addDownloadTask(final String path) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                download(path);
+            }
+        });
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param path
+     */
+    private void download(String path) {
+        String fileName = AndroidMD5.MD5(path);
+        File savePath = new File(downloadDir, fileName); // 下载文件路径
+        File finallyPath = new File(downloadDir, fileName + &quot;.mp3&quot;); // 下载完成后加入.mp3后缀
+        if (finallyPath.exists()) { // 文件存在则已下载
+            Log.i(TAG, &quot;file is existed&quot;);
+            return;
+        }
+        if (AndroidNetWorkUtils.isWifiDataEnable(MiaApplication.getInstance())) { // 如果是Wifi则开始下载
+            if (savePath.exists() &amp;&amp; savePath.delete()) { // 如果之前存在文件，证明没有下载完成，删掉重新创建
+                savePath = new File(downloadDir, fileName);
+            }
+            Log.i(TAG, &quot;download start&quot;);
+            try {
+                byte[] bs = new byte[1024];
+                int len;
+                URL url = new URL(path);
+                InputStream is = url.openStream();
+                OutputStream os = new FileOutputStream(savePath);
+                while ((len = is.read(bs)) != -1) {
+                    os.write(bs, 0, len);
+                }
+                os.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (savePath.renameTo(finallyPath)) { // 下载完成后重命名为.mp3文件
+                Log.i(TAG, &quot;download end&quot;);
+                EventBus.getDefault().post(new DownloadDoneEvent(path));
+            }
+        } else { // 不是wifi则不下载
+            Log.i(TAG, &quot;not wifi net, stop download&quot;);
+        }
+
+    }
+
+    /**
+     * 添加删除任务
+     *
+     * @param path
+     */
+    public void addDeleteTask(final String path) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                delete(path);
+            }
+        });
+    }
+
+    /**
+     * 删除本地文件
+     *
+     * @param path
+     */
+    private void delete(String path) {
+        String fileName = AndroidMD5.MD5(path);
+        File savePath = new File(downloadDir, fileName + &quot;.mp3&quot;);
+        Log.i(TAG, savePath.getPath());
+        if (savePath.exists()) {
+            if (savePath.delete()) {
+                Log.i(TAG, &quot;file is deleted&quot;);
+            }
+        }
+    }
+
+    /**
+     * 返回下载路径
+     *
+     * @return
+     */
+    public File getDownloadDir() {
+        return downloadDir;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">我们看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(1, 1, 1,TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);</code>，这句代码便是创建一个线程池。其方法源码及参数说明：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+     * Creates a new {@code ThreadPoolExecutor} with the given initial
+     * parameters and default rejected execution handler.
+     *
+     * @param corePoolSize the number of threads to keep in the pool, even
+     *        if they are idle, unless {@code allowCoreThreadTimeOut} is set
+     * @param maximumPoolSize the maximum number of threads to allow in the
+     *        pool
+     * @param keepAliveTime when the number of threads is greater than
+     *        the core, this is the maximum time that excess idle threads
+     *        will wait for new tasks before terminating.
+     * @param unit the time unit for the {@code keepAliveTime} argument
+     * @param workQueue the queue to use for holding tasks before they are
+     *        executed.  This queue will hold only the {@code Runnable}
+     *        tasks submitted by the {@code execute} method.
+     * @param threadFactory the factory to use when the executor
+     *        creates a new thread
+     * @throws IllegalArgumentException if one of the following holds:&lt;br&gt;
+     *         {@code corePoolSize &lt; 0}&lt;br&gt;
+     *         {@code keepAliveTime &lt; 0}&lt;br&gt;
+     *         {@code maximumPoolSize &lt;= 0}&lt;br&gt;
+     *         {@code maximumPoolSize &lt; corePoolSize}
+     * @throws NullPointerException if {@code workQueue}
+     *         or {@code threadFactory} is null
+     */
+    public ThreadPoolExecutor(int corePoolSize,
+                              int maximumPoolSize,
+                              long keepAliveTime,
+                              TimeUnit unit,
+                              BlockingQueue&lt;Runnable&gt; workQueue,
+                              ThreadFactory threadFactory) {
+        this(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue,
+             threadFactory, defaultHandler);
+    }
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这里我前三个参数传的都是1，既是最多只有1个线程。sPoolWorkQueue参数则是一个容量为128的任务队列，既最多能存放128个任务。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">下面我们看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SerialExecutor</code>的代码，它有一个Runnable队列mTasks ，不断的接受Runnable对象，并通过poll操作，每次取出顶部的Runnable进行执行。结合创建的单一线程池，便实现了我需要的简易、轻量的下载器。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android实现简易轻量下载器：单线程任务队列">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

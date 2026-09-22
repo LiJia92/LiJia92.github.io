@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 连接 USB 设备 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2020-11-27 · 约 11519 字</div>
+  <h1>Android 连接 USB 设备</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近项目中有需要连接 USB 设备，App 运行在平板之上，只有一个 type-c 接口，只能通过 type-c 转串口进行连接，所以 App 直接接触的是 USB 设备。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/WechatIMG60.png" style="max-width:100%;height:auto;border-radius:4px;">
+使用 USB 设备遵照<a href="https://developer.android.com/guide/topics/connectivity/usb/host?hl=zh-cn#java" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Google 官方文档</a>开发即可。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">配置清单</h2>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;manifest ...&gt;
+    &lt;uses-feature android:name=&quot;android.hardware.usb.host&quot; /&gt;
+    &lt;uses-sdk android:minSdkVersion=&quot;12&quot; /&gt;
+    ...
+    &lt;application&gt;
+        &lt;activity ...&gt;
+            ...
+            &lt;intent-filter&gt;
+                &lt;action android:name=&quot;android.hardware.usb.action.USB_DEVICE_ATTACHED&quot; /&gt;
+            &lt;/intent-filter&gt;
+
+            &lt;meta-data android:name=&quot;android.hardware.usb.action.USB_DEVICE_ATTACHED&quot;
+                android:resource=&quot;@xml/device_filter&quot; /&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">device_filter 可过滤具有指定属性的所有 USB 设备：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;resources&gt;
+    &lt;usb-device vendor-id=&quot;1234&quot; product-id=&quot;5678&quot; class=&quot;255&quot; subclass=&quot;66&quot; protocol=&quot;1&quot; /&gt;
+&lt;/resources&gt;
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">使用设备</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">发现连接的 USB 设备，具体方法是使用 Intent 过滤器在用户连接 USB 设备时接收通知，或者枚举已连接的 USB 设备。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">请求用户授予连接到 USB 设备的权限（如果尚未获得权限）。</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">通过在适当的接口端点读取和写入数据来与 USB 设备通信。</li>
+</ol>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object UsbDeviceManager {
+
+    private const val ACTION_USB_PERMISSION = &quot;com.android.example.USB_PERMISSION&quot;
+    private var usbManager: UsbManager? = null
+    private var serial: UsbSerialDevice? = null
+    private var listener: OnDeviceConnectListener? = null
+
+    @JvmStatic
+    fun open(context: Context, listener: OnDeviceConnectListener) {
+        this.listener = listener
+        usbManager = context.getSystemService(USB_SERVICE) as? UsbManager
+        usbManager?.let {
+            for (device in it.deviceList.values) {
+                if (UsbSerialDevice.isSupported(device)) {
+                    if (it.hasPermission(device)) {
+                        connect(device)
+                    } else {
+                        val filter = IntentFilter(ACTION_USB_PERMISSION)
+                        context.registerReceiver(usbReceiver, filter)
+                        val permissionIntent = PendingIntent.getBroadcast(
+                            context,
+                            0,
+                            Intent(ACTION_USB_PERMISSION),
+                            0
+                        )
+                        it.requestPermission(device, permissionIntent)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun connect(device: UsbDevice?) {
+        device?.let {
+            val connect = usbManager?.openDevice(device)
+            serial = UsbSerialDevice.createUsbSerialDevice(device, connect)
+            serial?.syncOpen()
+            serial?.setBaudRate(115200)
+            serial?.let {
+                listener?.onDeviceConnect(it)
+            }
+        }
+    }
+
+    private val usbReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (ACTION_USB_PERMISSION == action) {
+                val device = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE) as? UsbDevice
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    connect(device)
+                } else {
+                    LogUtils.e(
+                        &quot;UsbDeviceManager&quot;,
+                        &quot;permission denied for device $device&quot;
+                    )
+                }
+            }
+        }
+    }
+
+    interface OnDeviceConnectListener {
+        fun onDeviceConnect(serial: UsbSerialDevice)
+    }
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">封装</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">USB 有多种芯片，针对不同的芯片可能需要做识别，在 Github 上找到一个库<a href="https://github.com/felHR85/UsbSerial" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">UsbSerial</a>，针对 USB 设备做了许多的封装，硬件同事提供的转串口工具为 CH34X 系列，该库也支持。参照文档使用起来很方便。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class UsbDeviceCommunicator extends BaseCommunicator {
+
+    private static final int BufferSize = 32;
+
+    private UsbSerialDevice usbDevice;
+
+    @Override
+    public void open() {
+        UsbDeviceManager.open(MucangConfig.getContext(), new UsbDeviceManager.OnDeviceConnectListener() {
+            @Override
+            public void onDeviceConnect(@NotNull UsbSerialDevice serial) {
+                usbDevice = serial;
+                // Usb 串口读取 byte[] 是读满才返回，把 bufferSize 搞小点
+                mInputStream = new BufferedInputStream(serial.getInputStream(), BufferSize);
+                mOutputStream = new BufferedOutputStream(serial.getOutputStream());
+                startReadThread();
+            }
+        });
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        if (usbDevice != null) {
+            usbDevice.syncClose();
+        }
+    }
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">抽象</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">因为串口的不一致性，项目中有 3 中流传输方式：蓝牙、串口、USB。数据读取解析方式完全一致，所以抽象出 Communicator：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public interface Communicator {
+
+    /**
+     * 打开串口
+     */
+    void open() throws Exception;
+
+    /**
+     * 发送数据
+     */
+    @WorkerThread
+    void send(SendData sendData);
+
+    /**
+     * 处理接收的数据
+     *
+     * @param readBytes 只包含数据域数据
+     */
+    void parseData(ReadBytes readBytes);
+
+    /**
+     * 关闭串口
+     */
+    void close();
+
+    /**
+     * 释放资源
+     */
+    void release();
+
+    /**
+     * 大小端
+     *
+     * @return
+     */
+    boolean littleEndian();
+
+    /**
+     * 串口是否可用
+     */
+    boolean isAvailable();
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">BaseCommunicator：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public abstract class BaseCommunicator implements Communicator {
+
+    private static final String TAG = &quot;BaseCommunicator&quot;;
+
+    private static final long SEND_INTERVAL = 10;   // 避免多线程发送粘包，添加延时
+
+    protected BufferedInputStream mInputStream;     // 输入流，子类进行初始化
+    protected BufferedOutputStream mOutputStream;   // 输出流，子类进行初始化
+
+    private DefaultReadThread mReadThread;          // 读线程
+    private final SignalHandler signalHandler;      // 消息分发 handler
+    private long lastSendTime;                      // 上一次发包的时间
+
+    public BaseCommunicator() {
+        this.signalHandler = new SignalHandler();
+    }
+
+    @WorkerThread
+    @Override
+    public synchronized void send(SendData sendData) {
+        if (!isAvailable()) {
+            return;
+        }
+        if (interceptMessage(sendData.toBytes())) {
+            return;
+        }
+        try {
+            byte[] finalData = SerialProtocol.createProtocol(sendData.toBytes());
+            if (mOutputStream != null) {
+                long curTime = SystemClock.elapsedRealtime();
+                if (curTime - lastSendTime &gt;= SEND_INTERVAL) {
+                    lastSendTime = curTime;
+                } else {
+                    long delta = SEND_INTERVAL - (curTime - lastSendTime);
+                    SystemClock.sleep(delta);
+                    lastSendTime = SystemClock.elapsedRealtime();
+                }
+                mOutputStream.write(finalData, 0, finalData.length);
+                mOutputStream.flush();
+            }
+        } catch (Throwable e) {
+            LogUtils.e(TAG, &quot;sendData() error&quot;, e);
+        }
+    }
+
+    @Override
+    public void parseData(ReadBytes readBytes) {
+        readBytes.reset();
+        int msgType = readBytes.readUnsignedByte();
+        signalHandler.dispatchHandler(msgType, readBytes);
+    }
+
+    /**
+     * 当ota正在升级的时候不下发其他业务消息,ota升级优先级最高
+     */
+    private boolean interceptMessage(byte[] bytes) {
+        // 升级过程中
+        if (CommunicateManager.getInstance().isNeedInterceptor()) {
+            // 解析指令类型
+            int order = bytes[0] &amp; 0xff;
+            // 只放行 ota 指令
+            boolean isOtaOrder = SingleFirmwareUpgradeProcessor.isOtaOrder(order);
+            return !isOtaOrder;
+        }
+        return false;
+    }
+
+    @Override
+    public synchronized void close() {
+        if (mReadThread != null &amp;&amp; mReadThread.isAlive()) {
+            mReadThread.close();
+            mReadThread = null;
+        }
+        IOUtils.close(mInputStream);
+        IOUtils.close(mOutputStream);
+        lastSendTime = 0;
+    }
+
+    @Override
+    public synchronized void release() {
+        close();
+    }
+
+    @Override
+    public boolean isAvailable() {
+        if (mReadThread == null || !mReadThread.isAlive()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean littleEndian() {
+        return true;
+    }
+
+    /**
+     * 启动串口读线程
+     */
+    protected void startReadThread() {
+        mReadThread = new DefaultReadThread();
+        mReadThread.start();
+        LiveBus.post(new CommunicatorOpenSuccess());
+    }
+
+    /**
+     * 读满一个数组
+     */
+    private static void readFully(InputStream in, byte[] array, int off, int len) throws IOException {
+        if (len &lt; 0)
+            throw new IndexOutOfBoundsException();
+        int n = 0;
+        while (n &lt; len) {
+            int count = in.read(array, off + n, len - n);
+            if (count &lt; 0)
+                throw new EOFException();
+            n += count;
+        }
+    }
+
+    private static void readFully(InputStream in, byte[] array) throws IOException {
+        readFully(in, array, 0, array.length);
+    }
+
+    private static long crc(byte[] data) {
+        CRC32 crc = new CRC32();
+        crc.update(data);
+        return crc.getValue();
+    }
+
+    /**
+     * 默认读线程
+     */
+    private class DefaultReadThread extends Thread {
+
+        private volatile boolean mRunning = true;
+
+        DefaultReadThread() {
+        }
+
+        /**
+         * 读取一帧数据
+         */
+        private byte[] readFrame() throws IOException {
+            //header识别，一直识别到一帧为止，否则一直等待
+            byte h1, h2 = 0;
+            while (mRunning) {
+                h1 = (byte) mInputStream.read();
+                if (h2 == SerialProtocol.HEAD1 &amp;&amp; h1 == SerialProtocol.HEAD2) {
+                    break;
+                }
+                h2 = (byte) mInputStream.read();
+                if (h1 == SerialProtocol.HEAD1 &amp;&amp; h2 == SerialProtocol.HEAD2) {
+                    break;
+                }
+            }
+
+            //帧长
+            int length = mInputStream.read();
+
+            //数据
+            byte[] data = new byte[length - 5];
+            readFully(mInputStream, data);
+
+            //校验数据
+            byte[] crcArray = new byte[4];
+            readFully(mInputStream, crcArray);
+            ReadBytes readCrc = new ReadBytes(crcArray, littleEndian());
+            int crc = readCrc.readInt();
+
+            //结束数据
+            byte[] eof = new byte[2];
+            readFully(mInputStream, eof);
+
+            //crc校验
+            if (!(true || crc(data) == crc)) {
+                return null;
+            }
+            //结束符校验,其实这个要不要都无所谓,双重校验了
+            if (!(eof[0] == SerialProtocol.END &amp;&amp; eof[1] == SerialProtocol.END)) {
+                return null;
+            }
+            return data;
+        }
+
+        @Override
+        public void run() {
+            while (mRunning) {
+                try {
+                    if (mInputStream == null) {
+                        // 暂停一点时间，免得一直循环造成CPU占用率过高
+                        Thread.sleep(10);
+                        continue;
+                    }
+                    byte[] data = readFrame();
+                    if (data != null) {
+                        parseData(new ReadBytes(data, littleEndian()));
+                    }
+                } catch (Exception e) {
+                    LogUtils.e(TAG, &quot;DefaultReadThread exception: &quot;, e);
+                    if (e instanceof IOException) {
+                        mRunning = false;
+                        reconnect();
+                        LiveBus.post(new CommunicatorError());
+                        break;
+                    }
+                }
+            }
+        }
+
+        /**
+         * 重连
+         */
+        private void reconnect() {
+            CommunicateManager.getInstance().release();
+            MainThreadUtils.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    CommunicateManager.getInstance().start();
+                }
+            }, 1500);
+        }
+
+        /**
+         * 关闭读线程
+         */
+        void close() {
+            mRunning = false;
+            try {
+                this.interrupt();
+            } catch (Exception e) {
+                LogUtils.e(TAG, &quot;DefaultReadThread close: &quot;, e);
+            }
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">另外 2 个子类：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public class SerialBoxCommunicator extends BaseCommunicator {
+
+    private int mBaudRate;              // 串口波特率
+    private String mDevicePath;         // 串口地址
+    private SerialPort mSerialPort;     // 串口
+
+    public SerialBoxCommunicator(String devicePath, int baudRate) {
+        this.mDevicePath = devicePath;
+        this.mBaudRate = baudRate;
+    }
+
+    @Override
+    public void open() throws OpenSerialPortException {
+        if (mSerialPort != null) {
+            close();
+        }
+        try {
+            if (TextUtils.isEmpty(mDevicePath) || mBaudRate == 0) {
+                throw new RuntimeException(&quot;SerialPort hasn&#39;t been configured! (device=&quot;
+                        + mDevicePath + &quot;,baudRate=&quot; + mBaudRate);
+            }
+            mSerialPort = SerialPort.newBuilder(mDevicePath, mBaudRate).build();
+            SystemClock.sleep(100);
+            mInputStream = new BufferedInputStream(mSerialPort.getInputStream());
+            mOutputStream = new BufferedOutputStream(mSerialPort.getOutputStream());
+            startReadThread();
+        } catch (Exception e) {
+            // 清理数据
+            close();
+            // 抛出异常
+            throw new OpenSerialPortException(e);
+        }
+    }
+
+    @Override
+    public boolean isAvailable() {
+        if (mSerialPort == null) {
+            return false;
+        }
+        return super.isAvailable();
+    }
+}
+
+class BluetoothCommunicator extends BaseCommunicator implements BTDataReceiver.InputStreamChangedListener {
+
+    private final BTDataReceiver receiver = new BTDataReceiver(MucangConfig.getContext(), this);
+
+    @Override
+    public void open() {
+        receiver.start();
+        startReadThread();
+    }
+
+    @Override
+    public void send(SendData sendData) {
+        // 蓝牙模拟，只接收数据，不发送
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        receiver.destroy();
+    }
+
+    @Override
+    public void onInputStreamChanged(InputStream inputStream) {
+        this.mInputStream = new BufferedInputStream(inputStream);
+    }
+}
+</code></pre>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">小坑</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">UsbDeviceCommunicator 中，获取 mInputStream 时，包装 BufferedInputStream 使用的 bufferSize 设置为 32。三方库封装的 SerialInputStream 读取数据都是通过 usbConnection.bulkTransfer 来实现的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Performs a bulk transaction on the given endpoint.
+ * The direction of the transfer is determined by the direction of the endpoint.
+ *
+ * @param endpoint the endpoint for this transaction
+ * @param buffer buffer for data to send or receive
+ * @param offset the index of the first byte in the buffer to send or receive
+ * @param length the length of the data to send or receive. Before
+ *               {@value Build.VERSION_CODES#P}, a value larger than 16384 bytes
+ *               would be truncated down to 16384. In API {@value Build.VERSION_CODES#P}
+ *               and after, any value of length is valid.
+ * @param timeout in milliseconds, 0 is infinite
+ * @return length of data transferred (or zero) for success,
+ * or negative value for failure
+ */
+public int bulkTransfer(UsbEndpoint endpoint,
+        byte[] buffer, int offset, int length, int timeout) {
+    checkBounds(buffer, offset, length);
+    if (mContext.getApplicationInfo().targetSdkVersion &lt; Build.VERSION_CODES.P
+            &amp;&amp; length &gt; UsbRequest.MAX_USBFS_BUFFER_SIZE) {
+        length = UsbRequest.MAX_USBFS_BUFFER_SIZE;
+    }
+    return native_bulk_request(endpoint.getAddress(), buffer, offset, length, timeout);
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">length 代表的读取数据的长度，会堵塞，直到读满 buffer。</strong>而 FileInputStream 的 read 方法为：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/*
+ * @param      b     the buffer into which the data is read.
+ * @param      off   the start offset in array &lt;code&gt;b&lt;/code&gt;
+ *                   at which the data is written.
+ * @param      len   the maximum number of bytes to read.
+ * @return     the total number of bytes read into the buffer, or
+ *             &lt;code&gt;-1&lt;/code&gt; if there is no more data because the end of
+ *             the stream has been reached.
+ * @exception  IOException If the first byte cannot be read for any reason
+ * other than end of file, or if the input stream has been closed, or if
+ * some other I/O error occurs.
+ * @exception  NullPointerException If &lt;code&gt;b&lt;/code&gt; is &lt;code&gt;null&lt;/code&gt;.
+ * @exception  IndexOutOfBoundsException If &lt;code&gt;off&lt;/code&gt; is negative,
+ * &lt;code&gt;len&lt;/code&gt; is negative, or &lt;code&gt;len&lt;/code&gt; is greater than
+ * &lt;code&gt;b.length - off&lt;/code&gt;
+ * @see        java.io.InputStream#read()
+ */
+public int read(byte b[], int off, int len) throws IOException {
+    if (b == null) {
+        throw new NullPointerException();
+    } else if (off &lt; 0 || len &lt; 0 || len &gt; b.length - off) {
+        throw new IndexOutOfBoundsException();
+    } else if (len == 0) {
+        return 0;
+    }
+
+    int c = read();
+    if (c == -1) {
+        return -1;
+    }
+    b[off] = (byte)c;
+
+    int i = 1;
+    try {
+        for (; i &lt; len ; i++) {
+            c = read();
+            if (c == -1) {
+                break;
+            }
+            b[off + i] = (byte)c;
+        }
+    } catch (IOException ee) {
+    }
+    return i;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><strong style="font-weight:bold;color:#111111;">len 代表最大可读取的字节数，不会一直堵塞，直到读满 buffer。</strong> 所以需要将 BufferedInputStream 的 bufferSize 设置小一点（默认8192），否则使用默认值一直读满 8192 个字节会等待较久的时间，不符合每 200ms 发送一次 64 byte 的实际场景。
+另外，当没有 DevicePermission 时会弹窗，如果一直弹不太合适，所以有一个<a href="https://juejin.cn/post/6844903870368317447" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">绕过弹窗验证的思路</a>，可以参考一下，待验证。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 连接 USB 设备">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

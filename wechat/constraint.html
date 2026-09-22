@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 约束布局的使用 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2017-11-20 · 约 6229 字</div>
+  <h1>Android 约束布局的使用</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">习惯了用 LinearLayout、RelativeLayout 等布局，但是在某些界面的优化上这些布局很难做到。说下我项目中的实际例子：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2017/11/20/%E9%80%89%E5%8C%BA_254.png" style="max-width:100%;height:auto;border-radius:4px;">
+一件商品有品名、数量、单价、金额等几条属性，要显示在一行。 <strong style="font-weight:bold;color:#111111;">注意，图中金额属性没有显示全，但这不是本文要写的内容。当文本过长显示不下，这是个历史难题。</strong> 本文要讲述的是如何利用约束布局来优化界面的显示。
+看到图中，我们通长使用 LinearLayout 的 weight 属性，给每一列设置一个 weight，相信大多数人都是这么做的，就像这样：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:orientation=&quot;horizontal&quot;
+    android:paddingBottom=&quot;@dimen/margin_x_x_small&quot;
+    android:paddingLeft=&quot;@dimen/padding_middle_large&quot;
+    android:paddingRight=&quot;@dimen/padding_middle_large&quot;
+    android:paddingTop=&quot;@dimen/margin_x_x_small&quot;&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_weight=&quot;8&quot;
+        android:orientation=&quot;horizontal&quot;&gt;
+
+        ...
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/product_count_tv&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_weight=&quot;2&quot;
+        android:gravity=&quot;center_vertical|end&quot;
+        android:maxLines=&quot;1&quot;
+        android:textColor=&quot;@color/font_main&quot;
+        android:textSize=&quot;@dimen/font_body&quot;
+        tools:text=&quot;4000.00&quot; /&gt;
+
+    &lt;LinearLayout
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_weight=&quot;4&quot;
+        android:gravity=&quot;center&quot;
+        android:layout_gravity=&quot;center_vertical&quot;
+        android:orientation=&quot;vertical&quot;
+        android:paddingLeft=&quot;@dimen/margin_small&quot;&gt;
+
+        ...
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/total_amount_tv&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_weight=&quot;4&quot;
+        android:gravity=&quot;end|center_vertical&quot;
+        android:maxLines=&quot;1&quot;
+        android:paddingLeft=&quot;@dimen/margin_small&quot;
+        android:textColor=&quot;@color/font_main&quot;
+        android:textSize=&quot;@dimen/font_body&quot;
+        tools:text=&quot;4000.00&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">示例中的比例是8:2:4:4，标题与流水使用相同的比例。第一列与标题左对齐，后面几列与标题右对齐，这样写出来的界面效果会比较整洁。但是存在一种情况：商品名称很短，但是数量却很多。就像上图所示。那么数量所占的 2 / 18 的比例是无法显示出1000000这个数量的，商品名称又很短导致浪费很多空间，但是图中却完美显示了。原因就在于 <strong style="font-weight:bold;color:#111111;">约束布局</strong>，这也是本文的重点。
+直接贴出使用约束布局的XML：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;android.support.constraint.ConstraintLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;55dp&quot;
+    android:paddingBottom=&quot;@dimen/margin_x_x_small&quot;
+    android:paddingLeft=&quot;@dimen/padding_middle_large&quot;
+    android:paddingRight=&quot;@dimen/padding_middle_large&quot;
+    android:paddingTop=&quot;@dimen/margin_x_x_small&quot;&gt;
+
+    &lt;View
+        android:id=&quot;@+id/view_mask1&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;0dp&quot;
+        app:layout_constraintHorizontal_weight=&quot;8&quot;
+        app:layout_constraintLeft_toLeftOf=&quot;parent&quot;
+        app:layout_constraintRight_toLeftOf=&quot;@+id/view_mask2&quot; /&gt;
+
+    &lt;View
+        android:id=&quot;@+id/view_mask2&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;0dp&quot;
+        app:layout_constraintHorizontal_weight=&quot;2&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/view_mask1&quot;
+        app:layout_constraintRight_toLeftOf=&quot;@+id/view_mask3&quot; /&gt;
+
+    &lt;View
+        android:id=&quot;@+id/view_mask3&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;0dp&quot;
+        app:layout_constraintHorizontal_weight=&quot;4&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/view_mask2&quot;
+        app:layout_constraintRight_toLeftOf=&quot;@+id/view_mask4&quot; /&gt;
+
+    &lt;View
+        android:id=&quot;@+id/view_mask4&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;0dp&quot;
+        app:layout_constraintHorizontal_weight=&quot;4&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/view_mask3&quot;
+        app:layout_constraintRight_toRightOf=&quot;parent&quot; /&gt;
+
+    &lt;com.makeramen.roundedimageview.RoundedImageView
+        android:id=&quot;@+id/product_icon_iv&quot;
+        android:layout_width=&quot;45dp&quot;
+        android:layout_height=&quot;45dp&quot;
+        android:scaleType=&quot;center&quot;
+        app:riv_corner_radius=&quot;@dimen/round_view_circular&quot; /&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/product_name_ll&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;45dp&quot;
+        android:layout_marginLeft=&quot;@dimen/margin_x_x_x_small&quot;
+        android:layout_marginRight=&quot;@dimen/margin_x_x_x_small&quot;
+        android:gravity=&quot;center_vertical&quot;
+        android:orientation=&quot;vertical&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/product_icon_iv&quot;
+        app:layout_constraintRight_toLeftOf=&quot;@+id/product_count_tv&quot;&gt;
+
+        ...
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/product_count_tv&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;45dp&quot;
+        android:ellipsize=&quot;end&quot;
+        android:gravity=&quot;center_vertical|end&quot;
+        android:maxLines=&quot;1&quot;
+        android:textColor=&quot;@color/font_main&quot;
+        android:textSize=&quot;@dimen/font_body&quot;
+        app:layout_constraintRight_toRightOf=&quot;@+id/view_mask2&quot;
+        tools:text=&quot;4000.00&quot; /&gt;
+
+    &lt;LinearLayout
+        android:id=&quot;@+id/product_price_ll&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;45dp&quot;
+        android:layout_marginLeft=&quot;@dimen/margin_x_x_x_small&quot;
+        android:layout_marginStart=&quot;@dimen/margin_x_x_x_small&quot;
+        android:gravity=&quot;center&quot;
+        android:orientation=&quot;vertical&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/product_count_tv&quot;
+        app:layout_constraintRight_toRightOf=&quot;@+id/view_mask3&quot;&gt;
+
+        ...
+
+    &lt;/LinearLayout&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/total_amount_tv&quot;
+        android:layout_width=&quot;0dp&quot;
+        android:layout_height=&quot;45dp&quot;
+        android:layout_marginLeft=&quot;@dimen/margin_x_x_x_small&quot;
+        android:layout_marginStart=&quot;@dimen/margin_x_x_x_small&quot;
+        android:ellipsize=&quot;end&quot;
+        android:gravity=&quot;end|center_vertical&quot;
+        android:maxLines=&quot;1&quot;
+        android:textColor=&quot;@color/font_main&quot;
+        android:textSize=&quot;@dimen/font_body&quot;
+        app:layout_constraintLeft_toRightOf=&quot;@+id/product_price_ll&quot;
+        app:layout_constraintRight_toRightOf=&quot;@+id/view_mask4&quot;
+        tools:text=&quot;40000.00&quot; /&gt;
+
+&lt;/android.support.constraint.ConstraintLayout&gt;
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到约束布局的一些属性：layout_constraintLeft_toRightOf。布局的左边在谁的右边，字面意思，很好理解。其他类似的还有 layout_constraintRight_toRightOf 、layout_constraintRight_toLeftOf等等。看到上面最上层有几个 view_mask，这是用来做对齐的，因为标题和流水没有在一个布局里。商品列与 view_mask1 左对齐，其他几列与相应的 view_mask 右对齐。
+然后看一下布局的宽度属性，我都是设置的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">0dp</code>，这是因为在约束布局里，<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">0dp</code>代表<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MATCH_CONSTRAINT</code>，它会利用约束自动设置控件的宽度。那么<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MATCH_PARENT</code>去哪了？官网做了如下说明：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">Important: MATCH_PARENT is not supported for widgets contained in a ConstraintLayout, though similar behavior can be defined by using MATCH_CONSTRAINT with the corresponding left/right or top/bottom constraints being set to &quot;parent&quot;.</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MATCH_CONSTRAINT</code>则是实现本文效果的核心。我并不需要给每列属性设置宽度，我需要的仅仅是：品名在数量的左边，数量在品名的右边，当品名字符串很长时，它可以无限接近数量字符串，直到没有剩余空间。
+虽然只是一点小小的优化，但是能改进某些情况下界面的显示效果，好处还是有的，今后还是多尝试用用约束布局，但是我是肯定不会用拖拽来实现布局的╮(╯▽╰)╭。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参考：<a href="https://mp.weixin.qq.com/s/vI-fPaNoJ7ZBlZcMkEGdLQ" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">拒绝拖拽 使用ConstraintLayout优化你的布局吧</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 约束布局的使用">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

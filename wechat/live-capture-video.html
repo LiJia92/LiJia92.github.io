@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>【Android音视频开发】- 实时采集视频 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-10-20 · 约 19190 字</div>
+  <h1>【Android音视频开发】- 实时采集视频</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">前言</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过我的上一篇文章，可以知道直播大致有几个步骤：音视频采集 -&gt; 美颜/滤镜/特效处理 -&gt; 编码 -&gt; 封包 -&gt; 推流 -&gt; 分发 -&gt; 解码/渲染/播放。那么首先便从采集开始，这里我先做的视频采集。
+那么实时采集视频有哪些方案呢？</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">调研</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过各种调研，查阅文章，了解到目前Android实时采集视频大致有3种方式：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">通过Android Camera拍摄预览中设置setPreviewCallback实现onPreviewFrame接口，实时截取每一帧视频流数据</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">通过通过Android的MediaRecorder，在SetoutputFile函数中绑定LocalSocket实现</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">流媒体服务器方式，利用ffmpeg或GetStreamer等获取Camera视频</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过学习，大致了解了1，2两种方式的实现方式，但是对于第3种方式，暂时没有研究。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">spydroid</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当我们在接触一个全新领域的时候，最希望的是能实实在在看到一个demo产品，通过demo产品我们更容易理解其内在的原理。在网上看到了许多的开源项目，最后选择了<a href="https://github.com/fyhertz/spydroid-ipcamera" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">spydroid</a>，感觉它跟Android结合更紧密。更多的信息可以参考<a href="http://www.smarting.me/android-video-caputure.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android视频采集方案总结</a>。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">拷贝工程</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过github看到的项目是Eclipse结构，这里我把代码拷贝下来后，通过AS打开，配置一些信息后项目结构如下：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video1.png" style="max-width:100%;height:auto;border-radius:4px;"></p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="https://github.com/fyhertz/libstreaming" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">streaming</a>是作者封装的一套库。</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">A solution for streaming H.264, H.263, AMR, AAC using RTP on Android</p>
+</blockquote>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">运行</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">项目拷贝到AS后，有部分错误，修复后成功运行在MI 4LTE。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video2.png" style="max-width:100%;height:auto;border-radius:4px;">
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video3.png" style="max-width:100%;height:auto;border-radius:4px;">
+它可以通过http，也可以通过rtsp进行推流，打开rtsp推流的开关，首页会多了一个VLC的地址。
+我在Win 10上使用Chrome接收失败，打开网站后Connect一直连不上。所以采取的VLC方式。
+打开VLC输入首页提示的地址，即可看到推流成功了。
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2016/10/video4.png" style="max-width:100%;height:auto;border-radius:4px;">
+demo跑通后，便有了一个直观的感受，接下来便是看代码了。</p>
+<h3 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:30px 0 16px;font-size:17px;font-weight:bold;line-height:1.5;color:#111111;">代码</h3>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">从<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">SpydroidActivity</code>开始，会看到它连接了一个Service：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private ServiceConnection mRtspServiceConnection = new ServiceConnection() {
+
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        mRtspServer = (CustomRtspServer) ((RtspServer.LocalBinder)service).getService();
+        mRtspServer.addCallbackListener(mRtspCallbackListener);
+        mRtspServer.start();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {}
+
+};
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">RtspServer</code>中的start方法：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">public void start() {
+    if (!mEnabled || mRestart) stop();
+    if (mEnabled &amp;&amp; mListenerThread == null) {
+        try {
+            mListenerThread = new RequestListener();
+        } catch (Exception e) {
+            mListenerThread = null;
+        }
+    }
+    mRestart = false;
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">再看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">RequestListener</code>：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class RequestListener extends Thread implements Runnable {
+
+    private final ServerSocket mServer;
+
+    public RequestListener() throws IOException {
+        try {
+            mServer = new ServerSocket(mPort);
+            start();
+        } catch (BindException e) {
+            Log.e(TAG,&quot;Port already in use !&quot;);
+            postError(e, ERROR_BIND_FAILED);
+            throw e;
+        }
+    }
+
+    public void run() {
+        Log.i(TAG,&quot;RTSP server listening on port &quot;+mServer.getLocalPort());
+        while (!Thread.interrupted()) {
+            try {
+                new WorkerThread(mServer.accept()).start();
+            } catch (SocketException e) {
+                break;
+            } catch (IOException e) {
+                Log.e(TAG,e.getMessage());
+                continue;
+            }
+        }
+        Log.i(TAG,&quot;RTSP server stopped !&quot;);
+    }
+
+    public void kill() {
+        try {
+            mServer.close();
+        } catch (IOException e) {}
+        try {
+            this.join();
+        } catch (InterruptedException ignore) {}
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这是一个进程类，在构造方法中直接调用了Thread.start()，那么便会执行到run()方法。可以看到，初始化了一个ServerSocket，然后当有客户端连接后（通过VLC输入地址开始播放即是连接到这个ServerSocket），便会执行<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">WorkerThread</code>线程：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">class WorkerThread extends Thread implements Runnable {
+
+    private final Socket mClient;
+    private final OutputStream mOutput;
+    private final BufferedReader mInput;
+
+    // Each client has an associated session
+    private Session mSession;
+
+    public WorkerThread(final Socket client) throws IOException {
+        mInput = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        mOutput = client.getOutputStream();
+        mClient = client;
+        mSession = new Session();
+    }
+
+    public void run() {
+        Request request;
+        Response response;
+
+        Log.i(TAG, &quot;Connection from &quot;+mClient.getInetAddress().getHostAddress());
+
+        while (!Thread.interrupted()) {
+
+            request = null;
+            response = null;
+
+            // Parse the request
+            try {
+                request = Request.parseRequest(mInput);
+            } catch (SocketException e) {
+                // Client has left
+                break;
+            } catch (Exception e) {
+                // We don&#39;t understand the request :/
+                response = new Response();
+                response.status = Response.STATUS_BAD_REQUEST;
+            }
+
+            // Do something accordingly like starting the streams, sending a session description
+            if (request != null) {
+                try {
+                    response = processRequest(request);
+                }
+                catch (Exception e) {
+                    // This alerts the main thread that something has gone wrong in this thread
+                    postError(e, ERROR_START_FAILED);
+                    Log.e(TAG,e.getMessage()!=null?e.getMessage():&quot;An error occurred&quot;);
+                    e.printStackTrace();
+                    response = new Response(request);
+                }
+            }
+
+            // We always send a response
+            // The client will receive an &quot;INTERNAL SERVER ERROR&quot; if an exception has been thrown at some point
+            try {
+                response.send(mOutput);
+            } catch (IOException e) {
+                Log.e(TAG,&quot;Response was not sent properly&quot;);
+                break;
+            }
+
+        }
+
+        // Streaming stops when client disconnects
+        boolean streaming = isStreaming();
+        mSession.syncStop();
+        if (streaming &amp;&amp; !isStreaming()) {
+            postMessage(MESSAGE_STREAMING_STOPPED);
+        }
+        mSession.release();
+
+        try {
+            mClient.close();
+        } catch (IOException ignore) {}
+
+        Log.i(TAG, &quot;Client disconnected&quot;);
+
+    }
+
+    public Response processRequest(Request request) throws IllegalStateException, IOException {
+        Response response = new Response(request);
+
+        //Ask for authorization unless this is an OPTIONS request
+        if(!isAuthorized(request) &amp;&amp; !request.method.equalsIgnoreCase(&quot;OPTIONS&quot;))
+        {
+            response.attributes = &quot;WWW-Authenticate: Basic realm=\&quot;&quot;+SERVER_NAME+&quot;\&quot;\r\n&quot;;
+            response.status = Response.STATUS_UNAUTHORIZED;
+        }
+        else
+        {
+            /* ********************************************************************************** */
+            /* ********************************* Method DESCRIBE ******************************** */
+            /* ********************************************************************************** */
+            if (request.method.equalsIgnoreCase(&quot;DESCRIBE&quot;)) {
+
+                // Parse the requested URI and configure the session
+                mSession = handleRequest(request.uri, mClient);
+                mSessions.put(mSession, null);
+                mSession.syncConfigure();
+
+                String requestContent = mSession.getSessionDescription();
+                String requestAttributes =
+                        &quot;Content-Base: &quot; + mClient.getLocalAddress().getHostAddress() + &quot;:&quot; + mClient.getLocalPort() + &quot;/\r\n&quot; +
+                                &quot;Content-Type: application/sdp\r\n&quot;;
+
+                response.attributes = requestAttributes;
+                response.content = requestContent;
+
+                // If no exception has been thrown, we reply with OK
+                response.status = Response.STATUS_OK;
+
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************* Method OPTIONS ********************************* */
+            /* ********************************************************************************** */
+            else if (request.method.equalsIgnoreCase(&quot;OPTIONS&quot;)) {
+                response.status = Response.STATUS_OK;
+                response.attributes = &quot;Public: DESCRIBE,SETUP,TEARDOWN,PLAY,PAUSE\r\n&quot;;
+                response.status = Response.STATUS_OK;
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************** Method SETUP ********************************** */
+            /* ********************************************************************************** */
+            else if (request.method.equalsIgnoreCase(&quot;SETUP&quot;)) {
+                Pattern p;
+                Matcher m;
+                int p2, p1, ssrc, trackId, src[];
+                String destination;
+
+                p = Pattern.compile(&quot;trackID=(\\w+)&quot;, Pattern.CASE_INSENSITIVE);
+                m = p.matcher(request.uri);
+
+                if (!m.find()) {
+                    response.status = Response.STATUS_BAD_REQUEST;
+                    return response;
+                }
+
+                trackId = Integer.parseInt(m.group(1));
+
+                if (!mSession.trackExists(trackId)) {
+                    response.status = Response.STATUS_NOT_FOUND;
+                    return response;
+                }
+
+                p = Pattern.compile(&quot;client_port=(\\d+)-(\\d+)&quot;, Pattern.CASE_INSENSITIVE);
+                m = p.matcher(request.headers.get(&quot;transport&quot;));
+
+                if (!m.find()) {
+                    int[] ports = mSession.getTrack(trackId).getDestinationPorts();
+                    p1 = ports[0];
+                    p2 = ports[1];
+                } else {
+                    p1 = Integer.parseInt(m.group(1));
+                    p2 = Integer.parseInt(m.group(2));
+                }
+
+                ssrc = mSession.getTrack(trackId).getSSRC();
+                src = mSession.getTrack(trackId).getLocalPorts();
+                destination = mSession.getDestination();
+
+                mSession.getTrack(trackId).setDestinationPorts(p1, p2);
+
+                boolean streaming = isStreaming();
+                mSession.syncStart(trackId);
+                if (!streaming &amp;&amp; isStreaming()) {
+                    postMessage(MESSAGE_STREAMING_STARTED);
+                }
+
+                response.attributes = &quot;Transport: RTP/AVP/UDP;&quot; + (InetAddress.getByName(destination).isMulticastAddress() ? &quot;multicast&quot; : &quot;unicast&quot;) +
+                        &quot;;destination=&quot; + mSession.getDestination() +
+                        &quot;;client_port=&quot; + p1 + &quot;-&quot; + p2 +
+                        &quot;;server_port=&quot; + src[0] + &quot;-&quot; + src[1] +
+                        &quot;;ssrc=&quot; + Integer.toHexString(ssrc) +
+                        &quot;;mode=play\r\n&quot; +
+                        &quot;Session: &quot; + &quot;1185d20035702ca&quot; + &quot;\r\n&quot; +
+                        &quot;Cache-Control: no-cache\r\n&quot;;
+                response.status = Response.STATUS_OK;
+
+                // If no exception has been thrown, we reply with OK
+                response.status = Response.STATUS_OK;
+
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************** Method PLAY *********************************** */
+            /* ********************************************************************************** */
+            else if (request.method.equalsIgnoreCase(&quot;PLAY&quot;)) {
+                String requestAttributes = &quot;RTP-Info: &quot;;
+                if (mSession.trackExists(0))
+                    requestAttributes += &quot;url=rtsp://&quot; + mClient.getLocalAddress().getHostAddress() + &quot;:&quot; + mClient.getLocalPort() + &quot;/trackID=&quot; + 0 + &quot;;seq=0,&quot;;
+                if (mSession.trackExists(1))
+                    requestAttributes += &quot;url=rtsp://&quot; + mClient.getLocalAddress().getHostAddress() + &quot;:&quot; + mClient.getLocalPort() + &quot;/trackID=&quot; + 1 + &quot;;seq=0,&quot;;
+                requestAttributes = requestAttributes.substring(0, requestAttributes.length() - 1) + &quot;\r\nSession: 1185d20035702ca\r\n&quot;;
+
+                response.attributes = requestAttributes;
+
+                // If no exception has been thrown, we reply with OK
+                response.status = Response.STATUS_OK;
+
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************** Method PAUSE ********************************** */
+            /* ********************************************************************************** */
+            else if (request.method.equalsIgnoreCase(&quot;PAUSE&quot;)) {
+                response.status = Response.STATUS_OK;
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************* Method TEARDOWN ******************************** */
+            /* ********************************************************************************** */
+            else if (request.method.equalsIgnoreCase(&quot;TEARDOWN&quot;)) {
+                response.status = Response.STATUS_OK;
+            }
+
+            /* ********************************************************************************** */
+            /* ********************************* Unknown method ? ******************************* */
+            /* ********************************************************************************** */
+            else {
+                Log.e(TAG, &quot;Command unknown: &quot; + request);
+                response.status = Response.STATUS_BAD_REQUEST;
+            }
+        }
+        return response;
+
+    }
+
+    /**
+     * Check if the request is authorized
+     * @param request
+     * @return true or false
+     */
+    private boolean isAuthorized(Request request)
+    {
+        String auth = request.headers.get(&quot;authorization&quot;);
+        if(mUsername == null || mPassword == null || mUsername.isEmpty())
+            return true;
+
+        if(auth != null &amp;&amp; !auth.isEmpty())
+        {
+            String received = auth.substring(auth.lastIndexOf(&quot; &quot;)+1);
+            String local = mUsername+&quot;:&quot;+mPassword;
+            String localEncoded = Base64.encodeToString(local.getBytes(),Base64.NO_WRAP);
+            if(localEncoded.equals(received))
+                return true;
+        }
+
+        return false;
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这个类比较长，但是我只需关注<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">采集</code>。看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">processRequest方法</code>，当有Client连接后，便会有session了，然后打印一些配置之类的信息，最后看到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">mSession.syncStart(trackId)</code>，可以猜测这个方法便是开始采集、推流了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Starts a stream in a synchronous manner. &lt;br /&gt;
+ * Throws exceptions in addition to calling a callback.
+ * @param id The id of the stream to start
+ **/
+public void syncStart(int id) 			
+        throws CameraInUseException,
+        StorageUnavailableException,
+        ConfNotSupportedException,
+        InvalidSurfaceException,
+        UnknownHostException,
+        IOException {
+
+    Stream stream = id==0 ? mAudioStream : mVideoStream;
+    if (stream!=null &amp;&amp; !stream.isStreaming()) {
+        try {
+            InetAddress destination =  InetAddress.getByName(mDestination);
+            stream.setTimeToLive(mTimeToLive);
+            stream.setDestinationAddress(destination);
+            stream.start();
+            if (getTrack(1-id) == null || getTrack(1-id).isStreaming()) {
+                postSessionStarted();
+            }
+            if (getTrack(1-id) == null || !getTrack(1-id).isStreaming()) {
+                mHandler.post(mUpdateBitrate);
+            }
+        } catch (UnknownHostException e) {
+            postError(ERROR_UNKNOWN_HOST, id, e);
+            throw e;
+        } catch (CameraInUseException e) {
+            postError(ERROR_CAMERA_ALREADY_IN_USE , id, e);
+            throw e;
+        } catch (StorageUnavailableException e) {
+            postError(ERROR_STORAGE_NOT_READY , id, e);
+            throw e;
+        } catch (ConfNotSupportedException e) {
+            postError(ERROR_CONFIGURATION_NOT_SUPPORTED , id, e);
+            throw e;
+        } catch (InvalidSurfaceException e) {
+            postError(ERROR_INVALID_SURFACE , id, e);
+            throw e;
+        } catch (IOException e) {
+            postError(ERROR_OTHER, id, e);
+            throw e;
+        } catch (RuntimeException e) {
+            postError(ERROR_OTHER, id, e);
+            throw e;
+        }
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">参数id用来标识是音频，还是视频，最后执行到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">stream.start()</code>，其调用的是最顶层的Stream实现类<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MediaStream</code>的start方法。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/** Starts the stream. */
+public synchronized void start() throws IllegalStateException, IOException {
+
+    if (mDestination==null)
+        throw new IllegalStateException(&quot;No destination ip address set for the stream !&quot;);
+
+    if (mRtpPort&lt;=0 || mRtcpPort&lt;=0)
+        throw new IllegalStateException(&quot;No destination ports set for the stream !&quot;);
+
+    mPacketizer.setTimeToLive(mTTL);
+
+    if (mMode != MODE_MEDIARECORDER_API) {
+        encodeWithMediaCodec();
+    } else {
+        encodeWithMediaRecorder();
+    }
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，根据Mode选择<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">encodeWithMediaCodec</code>或是<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">encodeWithMediaRecorder</code>。
+然后看到其继承类的实现方法，这里我只关注了<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">VideoStream</code>的实现。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * Video encoding is done by a MediaRecorder.
+ */
+protected void encodeWithMediaRecorder() throws IOException {
+
+  Log.d(TAG,&quot;Video encoded using the MediaRecorder API&quot;);
+
+  // We need a local socket to forward data output by the camera to the packetizer
+  createSockets();
+
+  // Reopens the camera if needed
+  destroyCamera();
+  createCamera();
+
+  // The camera must be unlocked before the MediaRecorder can use it
+  unlockCamera();
+
+  try {
+    mMediaRecorder = new MediaRecorder();
+    mMediaRecorder.setCamera(mCamera);
+    mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+    mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+    mMediaRecorder.setVideoEncoder(mVideoEncoder);
+    mMediaRecorder.setPreviewDisplay(mSurfaceView.getHolder().getSurface());
+    mMediaRecorder.setVideoSize(mRequestedQuality.resX,mRequestedQuality.resY);
+    mMediaRecorder.setVideoFrameRate(mRequestedQuality.framerate);
+
+    // The bandwidth actually consumed is often above what was requested
+    mMediaRecorder.setVideoEncodingBitRate((int)(mRequestedQuality.bitrate*0.8));
+
+    // We write the ouput of the camera in a local socket instead of a file !			
+    // This one little trick makes streaming feasible quiet simply: data from the camera
+    // can then be manipulated at the other end of the socket
+    mMediaRecorder.setOutputFile(mSender.getFileDescriptor());
+
+    mMediaRecorder.prepare();
+    mMediaRecorder.start();
+
+  } catch (Exception e) {
+    throw new ConfNotSupportedException(e.getMessage());
+  }
+
+  // This will skip the MPEG4 header if this step fails we can&#39;t stream anything :(
+  InputStream is = mReceiver.getInputStream();
+  try {
+    byte buffer[] = new byte[4];
+    // Skip all atoms preceding mdat atom
+    while (!Thread.interrupted()) {
+      while (is.read() != &#39;m&#39;);
+      is.read(buffer,0,3);
+      if (buffer[0] == &#39;d&#39; &amp;&amp; buffer[1] == &#39;a&#39; &amp;&amp; buffer[2] == &#39;t&#39;) break;
+    }
+  } catch (IOException e) {
+    Log.e(TAG,&quot;Couldn&#39;t skip mp4 header :/&quot;);
+    stop();
+    throw e;
+  }
+
+  // The packetizer encapsulates the bit stream in an RTP stream and send it over the network
+  mPacketizer.setDestination(mDestination, mRtpPort, mRtcpPort);
+  mPacketizer.setInputStream(mReceiver.getInputStream());
+  mPacketizer.start();
+
+  mStreaming = true;
+
+}
+
+/**
+ * Video encoding is done by a MediaCodec.
+ */
+protected void encodeWithMediaCodec() throws RuntimeException, IOException {
+  if (mMode == MODE_MEDIACODEC_API_2) {
+    // Uses the method MediaCodec.createInputSurface to feed the encoder
+    encodeWithMediaCodecMethod2();
+  } else {
+    // Uses dequeueInputBuffer to feed the encoder
+    encodeWithMediaCodecMethod1();
+  }
+}
+
+/**
+ * Video encoding is done by a MediaCodec.
+ */
+@SuppressLint(&quot;NewApi&quot;)
+protected void encodeWithMediaCodecMethod1() throws RuntimeException, IOException {
+
+  Log.d(TAG,&quot;Video encoded using the MediaCodec API with a buffer&quot;);
+
+  // Updates the parameters of the camera if needed
+  createCamera();
+  updateCamera();
+
+  // Estimates the framerate of the camera
+  measureFramerate();
+
+  // Starts the preview if needed
+  if (!mPreviewStarted) {
+    try {
+      mCamera.startPreview();
+      mPreviewStarted = true;
+    } catch (RuntimeException e) {
+      destroyCamera();
+      throw e;
+    }
+  }
+
+  EncoderDebugger debugger = EncoderDebugger.debug(mSettings, mQuality.resX, mQuality.resY);
+  final NV21Convertor convertor = debugger.getNV21Convertor();
+
+  mMediaCodec = MediaCodec.createByCodecName(debugger.getEncoderName());
+  MediaFormat mediaFormat = MediaFormat.createVideoFormat(&quot;video/avc&quot;, mQuality.resX, mQuality.resY);
+  mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mQuality.bitrate);
+  mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);
+  mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,debugger.getEncoderColorFormat());
+  mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+  mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+  mMediaCodec.start();
+
+  Camera.PreviewCallback callback = new Camera.PreviewCallback() {
+    long now = System.nanoTime()/1000, oldnow = now, i=0;
+    ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();
+    @Override
+    public void onPreviewFrame(byte[] data, Camera camera) {
+      oldnow = now;
+      now = System.nanoTime()/1000;
+      if (i++&gt;3) {
+        i = 0;
+        //Log.d(TAG,&quot;Measured: &quot;+1000000L/(now-oldnow)+&quot; fps.&quot;);
+      }
+      try {
+        int bufferIndex = mMediaCodec.dequeueInputBuffer(500000);
+        if (bufferIndex&gt;=0) {
+          inputBuffers[bufferIndex].clear();
+          convertor.convert(data, inputBuffers[bufferIndex]);
+          mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
+        } else {
+          Log.e(TAG,&quot;No buffer available !&quot;);
+        }
+      } finally {
+        mCamera.addCallbackBuffer(data);
+      }				
+    }
+  };
+
+  for (int i=0;i&lt;10;i++) mCamera.addCallbackBuffer(new byte[convertor.getBufferSize()]);
+  mCamera.setPreviewCallbackWithBuffer(callback);
+
+  // The packetizer encapsulates the bit stream in an RTP stream and send it over the network
+  mPacketizer.setDestination(mDestination, mRtpPort, mRtcpPort);
+  mPacketizer.setInputStream(new MediaCodecInputStream(mMediaCodec));
+  mPacketizer.start();
+
+  mStreaming = true;
+
+}
+
+/**
+ * Video encoding is done by a MediaCodec.
+ * But here we will use the buffer-to-surface methode
+ */
+@SuppressLint({ &quot;InlinedApi&quot;, &quot;NewApi&quot; })
+protected void encodeWithMediaCodecMethod2() throws RuntimeException, IOException {
+
+  Log.d(TAG,&quot;Video encoded using the MediaCodec API with a surface&quot;);
+
+  // Updates the parameters of the camera if needed
+  createCamera();
+  updateCamera();
+
+  // Estimates the framerate of the camera
+  measureFramerate();
+
+  EncoderDebugger debugger = EncoderDebugger.debug(mSettings, mQuality.resX, mQuality.resY);
+
+  mMediaCodec = MediaCodec.createByCodecName(debugger.getEncoderName());
+  MediaFormat mediaFormat = MediaFormat.createVideoFormat(&quot;video/avc&quot;, mQuality.resX, mQuality.resY);
+  mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mQuality.bitrate);
+  mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);
+  mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
+  mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+  mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
+  Surface surface = mMediaCodec.createInputSurface();
+  ((SurfaceView)mSurfaceView).addMediaCodecSurface(surface);
+  mMediaCodec.start();
+
+  // The packetizer encapsulates the bit stream in an RTP stream and send it over the network
+  mPacketizer.setDestination(mDestination, mRtpPort, mRtcpPort);
+  mPacketizer.setInputStream(new MediaCodecInputStream(mMediaCodec));
+  mPacketizer.start();
+
+  mStreaming = true;
+
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">可以看到，整体实现有2个方式：</p>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">MediaRecorder采集数据，通过绑定LocalSocket来获取数据</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">利用Camera又分了2种方式：回调<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">onPreviewFrame</code>获取数据进行处理，或者直接输出到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">Surface</code></li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这与之前说到的不谋而合。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">问题</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过绑定LocalSocket的方式，我在运行（MI 4LTE Android 6.0.1）的时候出现了<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">MediaRecorder: start failed -38</code>的错误。经过Google，后面找到<a href="http://stackoverflow.com/questions/26990816/mediarecorder-issue-on-android-lollipop/27118142#27118142" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">解决方案</a>，setOutputFile时使用<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">ParcelFileDescriptor</code>。作者也在<a href="https://github.com/fyhertz/libstreaming" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">spydroid libstreaming</a>中提到了，并进行了修正。于是我拷贝最新的<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">libstreaming</code>到工程中，运行的依然出错：MediaRecorder: start failed -2147483648，这下我没招了QAQ。
+后面想到<code style="margin:0 2px;padding:2px 5px;background:#f2f3f5;color:#c7254e;border-radius:3px;font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:14px;word-break:break-all;">github issues</code>或许也有别人用的时候有这个问题呢，于是我便去看看。但是很不幸，说是在Android 5.0之后不能用MediaRecorder绑定LocalSocket的方式了==&gt;<a href="https://github.com/fyhertz/libstreaming/issues/227" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">issues#227</a>、<a href="https://github.com/fyhertz/libstreaming/issues/208" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">issues208</a>、<a href="https://github.com/fyhertz/libstreaming/issues/155" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">issues#155</a>。
+毕竟是好几年前的库了，之前Android都没出到5、6呢，后面作者也没有进行维护了，不过我在OPPA A31（Android 4.4.4）的环境下通过此种方式确实可以运行。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;"><a href="http://www.cnblogs.com/skyseraph/archive/2012/03/23/2415018.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 实时视频采集/编码/传输/解码/播放—方案调研（初）</a>
+<a href="http://www.cnblogs.com/skyseraph/archive/2012/03/31/2427593.html" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 实时视频采集—MediaRecoder录制</a>
+<a href="https://github.com/fyhertz/libstreaming" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">libstreaming</a>
+<a href="https://github.com/fyhertz/spydroid-ipcamera" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">spydroid-ipcamera</a>
+<a href="https://github.com/fyhertz/libstreaming-examples" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">libstreaming-examples</a></p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="【Android音视频开发】- 实时采集视频">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

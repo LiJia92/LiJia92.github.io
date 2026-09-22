@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>科二考试系统 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2021-07-08 · 约 1952 字</div>
+  <h1>科二考试系统</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">这是一个系列文章的开篇，尝试理解项目中用到的知识与结构，许多代码都是上级编写，我只能以我的能力尽量把东西说清楚，讲明白。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">目标</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">首选抛出一个目标，实现一个「科二考试系统」。这是一个 App，可以借助各种手段来评判这个学员是否按照考试规则进行考试，如果有错误的地方，需要扣分，扣分达到一定程度则考试不合格，下次再来。怎么来实现这样的目标呢？
+首先得有具体的考试规则。比如直角转弯需要打转向灯，在哪个地方如果没打灯就需要扣分。比如行驶中开车门，解安全带，曲线行驶压线了，这些都是需要扣分的。
+考试规则是最顶层的功能，为了实现这些规则，我们需要车辆信号（车速、挡位、灯信号等等）。信号可以通过车辆自身的 OBD，或者外接很多传感器来实现，比如挡位传感器，比如拓展口（外接一根线，连接到左转灯的灯泡里，就可以拿到左转灯亮、灭的信号了）等。
+那么还有一个难以解决的问题：如何判断车辆压线？以我个人的经验，我可能想到的就是通过摄像头拍照，然后结合图像识别技术来评判是否压线。但是这种必须得有真实的线，拍出的照片里得有「线」才能判断得出吧。那假设有一些「不存在的线」（比如电子栅栏）也需要进行判断呢？那就没辙了。所以有另外一种方案：基于「高精度定位」，将所有现实中的物体，映射到一个坐标系中，粗略将车子抽象成一个矩形，那么车辆压线就可以认作是：在一个坐标系中，矩形与线段是否触碰，这就可以理解为是个数学题了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">高精度定位</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">那么这个高精度定位，一定得是「高精度」。普通的地图 App 比如高德、百度，定位精度相信大家都知道，差不多有好几米的误差，这种精度肯定是无法使用的。那么如何实现高精度定位呢？其实已经有很成熟的方案了：<strong style="font-weight:bold;color:#111111;">差分定位技术</strong>。在网上找到一篇大概能看得懂的文章：<a href="https://blog.csdn.net/bit_kaki/article/details/81185384" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">GNSS原理及技术（三）——差分定位技术</a>。
+基于此我的理解就是：A（基站）获取到经纬度（正常的 GPS 定位系统，误差较大）之后，把一些数据发送给 B（流动站），B 结合这些数据，以及自身获取到的经纬度，进行差分运算，可以消除很多导致定位不准确的外届因素（比如卫星钟钟差，电离层延迟等等），从而实现可达 1~3 厘米的高精度定位。只要基站不动，那么所有与这个基站连接的流动站都能获取到「相对于这个基站的高精度坐标」。使用高精度定位之后，需要将基站固定在某个位置，然后车辆基于这个位置的基站进行定位。同时将考场范围内所有项目需要的线、曲线，甚至是「不存在的线」，也都可以映射成高精度坐标点。这个时候就可以脑补了：一张地图上，画了许多的点、线，然后将车辆抽象成一个矩形，在这个地图上进行移动，来做各种评判。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">坐标系转换</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">那么如何构建这样的地图呢？我们需要将高精度定位拿到的经纬度，转化成设备屏幕上的像素点，从而画出相应的点、线。假设车辆刚进入直角转弯，地图应该是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG28874.png" style="max-width:100%;height:auto;border-radius:4px;">
+如果车辆准备离开直角转弯，地图应该是这样的：
+<img src="https://images-1258496336.cos.ap-chengdu.myqcloud.com/2021/WechatIMG28875.png" style="max-width:100%;height:auto;border-radius:4px;">
+科二考试是以考场为单位，一个考场里画几个项目，然后学员在里面练车，所以一个考场可以理解为就是一堆经纬度点的集合。采用<strong style="font-weight:bold;color:#111111;">高斯投影算法</strong>，将经纬度转化成平面坐标。由于安卓系统界面展示是左手坐标系，所以我们也将其转化成左手坐标系，将安卓界面往左旋转 90 度，以正北为 X 轴，正东为 Y 轴，然后选取一个基准点作为原点 Pos(0,0)，其他所有的点，也就都可以转化成 Pos(x,y) 了，给这个坐标系取名为「世界坐标系」。仅考虑北半球，纬度越大，x 越大。经度越大，y 越大。接下来，安卓界面左上角是原点，那么只需要将这个界面原点，与我们的地图原点，做个映射矩阵，后续所有的 Pos 便都可以映射成为界面上的像素点了，如此就可以将地图绘制在屏幕之上了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">碰撞检测</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">有了坐标系转化之后，安卓界面坐标仅仅用于绘制到屏幕上，所有的检测数据来源都依赖于高斯投影转化的平面坐标。基于平面坐标，我们可以建立点、线段、直线、向量、三角形、矩形等数学概念。利用向量的点乘、叉乘，三角形的三角函数，勾股定理等等，我们可以计算出很多我们需要的数据，进行碰撞检测自然不在话下了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">大体的知识体系便是如此了，欲知后事如何，且听下回分解~</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="科二考试系统">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

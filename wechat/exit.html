@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 结合 Unity 彻底退出应用 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2023-08-17 · 约 4851 字</div>
+  <h1>Android 结合 Unity 彻底退出应用</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">最近测试频繁出现一个问题：在登录页点关闭车机，倒计时结束后，应用卡住不动了，不一会便弹应用无响应的弹窗了。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">倒计时退出相关代码是这样的：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">fun LifecycleOwner.exitCountDown(viewBinding: LayoutExitAppBinding, onExit: () -&gt; Unit) {
+    lifecycleScope.launch {
+        flow {
+            for (i in 5 downTo 1) {
+                emit(i)
+                delay(1000)
+            }
+        }.onStart {
+            viewBinding.root.visibility = View.VISIBLE
+        }.onCompletion {
+            onExit()
+        }.collect {
+            viewBinding.countDownTv.text = it.toString()
+        }
+    }
+}
+
+private fun exitCountDown() {
+    exitCountDown(viewBinding.countDownCl) {
+        exit()
+    }
+}
+
+/**
+ * 退出
+ */
+private fun exit() {
+    finishUnity()
+    finish()
+}
+
+/**
+ * 主动退出登录页面，如果 Unity 页面还存活，要 finish 掉
+ */
+private fun finishUnity() {
+    val activity = weakReference?.get()
+    activity?.finish()
+}
+
+@JvmStatic
+fun launch(context: Context) {
+    val isUnityPage = isUnityPage(context)
+    if (isUnityPage == true) {
+        val activity = ActivityUtils.getActivity(context) ?: return
+        weakReference = WeakReference(activity)
+    }
+    ActivityUtils.startIntent(context, Intent(context, LoginActivity::class.java))
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">登录页启动时，会判断 context 是否是 Unity Activity，如果是的话，用 weakReference 保存起来。当需要退出时，调用各自的 finish 方法，从而退出应用。
+通过拉取 trace 日志，发现如下信息：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">&quot;main&quot; prio=5 tid=1 Native
+  | group=&quot;main&quot; sCount=1 dsCount=0 obj=0x752fa640 self=0xed585400
+  | sysTid=29419 nice=-10 cgrp=default sched=0/0 handle=0xf0303534
+  | state=S schedstat=( 814378259296 185199035946 982842 ) utm=65595 stm=15842 core=3 HZ=100
+  | stack=0xff47d000-0xff47f000 stackSize=8MB
+  | held mutexes=
+  kernel: __switch_to+0x8c/0xb4
+  kernel: hrtimer_nanosleep+0x98/0x13c
+  kernel: compat_SyS_nanosleep+0xa8/0x114
+  kernel: el0_svc_naked+0x24/0x28
+  native: #00 pc 00049560  /system/lib/libc.so (nanosleep+12)
+  native: #01 pc 003af7a3  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #02 pc 0041e0b7  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #03 pc 00261560  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libmonobdwgc-2.0.so (mono_chain_signal+180)
+  native: #04 pc 000713c0  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libmonobdwgc-2.0.so (???)
+  native: #05 pc 00001f71  /system/bin/app_process32 (InvokeUserSignalHandler+156)
+  native: #06 pc 0014b687  /system/lib/libart.so (_ZN3art12FaultManager11HandleFaultEiP7siginfoPv+222)
+  native: #07 pc 000170a4  /system/lib/libc.so (???)
+  native: #08 pc 002e28ce  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #09 pc 002e285f  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #10 pc 002a6ad9  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #11 pc 002a668b  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #12 pc 002a6671  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #13 pc 00205531  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #14 pc 0020545b  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #15 pc 00204b5d  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  native: #16 pc 00cc7acd  /data/app/cn.xx.xx.xx.xx-1/lib/arm/libunity.so (???)
+  at com.unity3d.player.NativeLoader.unload(Native method)
+  at com.unity3d.player.UnityPlayer.unloadNative(unavailable:-1)
+  at com.unity3d.player.UnityPlayer.destroy(unavailable:-1)
+  at com.unity3d.player.UnityPlayer.quit(unavailable:-1)
+  at cn.mucang.android.jiakaoyi.unity.activity.UnityMainActivity.finish(UnityMainActivity.java:92)</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">看到 Unity 代码，在 Unity Activity 退出的时候，会调用 UnityPlayer 的 destroy 方法，最后在 unload 方法时出现了 anr。libunity.so 也没法改，于是尝试使用另外的思路退出应用：<strong style="font-weight:bold;color:#111111;">直接手动杀进程</strong>。
+将 exit 方法改成如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private fun exit() {
+    Process.killProcess(Process.myPid())
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">倒计时结束后，App 确实会退出，但是立刻又会将 Unity Activity 给拉起来，这不符合预期，继续尝试。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private fun exit() {
+    System.exit(status)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">和之前的情况一致，再继续尝试。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private fun exit() {
+    moveTaskToBack(true)
+    exitProcess(1)    // kotlin 方法，实际也是调用的 System.exit
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">发现 App 确实正常退出了。但是当手动点击应用图标尝试启动时，App 直接从 Unity Activity 启动了，前置的起屏页等页面都没有执行。很奇怪，继续尝试。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">private fun exit() {
+    finishAffinity()
+    exitProcess(0)
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">如此之后，App 正常退出了。点击图标启动时，也是正常地从起屏页开始，问题终于解决。没想到，结合 Unity 的一个 App 退出的功能竟然花费了大量时间。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在当前场景（单进程）中，通过测试，exitProcess(0)、exitProcess(1)、Process.killProcess(Process.myPid()) 三个方法退出进程，并没有什么明显的不同。值得一提的是 exitProcess 方法会有 activity 正常退出的动画效果，相对平滑一点。而 killProcess 会直接顿一下，然后回到桌面。故采用的 exitProcess 方式。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">通过后续了解，大概知道一些东西：</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">System.exit() does not kill your app if you have more than one activity on the stack. What actually happens is that the process is killed and immediately restarted with one fewer activity on the stack. This is also what happens when your app is killed by the Force Close dialog, or even when you try to kill the process from DDMS. This is a fact that is entirely undocumented, to my knowledge.</p>
+</blockquote>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当栈里有超过一个 activity 时，System.exit() 并不会直接杀掉 App。它会立刻重启栈里的 fewer activity。这就和测试的现象吻合啊，会把 Unity Activity 给重启。但是这个并没有一个官方的文档解释，只是开发者的一个经验讲述。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当添加 moveTaskToBack 后，会将任务栈放到后台，这个时候再去结束进程就不会重新拉起 Activity 了。猜测是都处于后台了，就没有必要去重新拉起了。但是点击图标时，可能系统认为上一次不是正常退出，还保留着之前任务栈，于是会从最底部的 Activity 给重新启动。盲猜一把：如果结束进程的时间足够长，系统应该不会保留任务栈，从而将应用从起屏页重新打开。待测试。</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当使用 finishAffinity 方法时，它会将栈里的所有 activity 都 finish 掉，那么栈里超过一个 activity 的限制条件便不存在了，这个时候结束进程便可以正常结束了，App 重新启动也是正常启动了。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://stackoverflow.com/questions/17719634/how-to-exit-an-android-app-programmatically" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">How to exit an Android app programmatically?</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://stackoverflow.com/questions/2033914/is-quitting-an-application-frowned-upon" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Is quitting an application frowned upon?</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://blog.csdn.net/Chen_xiaobao/article/details/86641743" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Android 彻底关闭----退出程序</a></li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 结合 Unity 彻底退出应用">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

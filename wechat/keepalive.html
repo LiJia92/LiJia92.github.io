@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 保活设置适配 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-09-06 · 约 11230 字</div>
+  <h1>Android 保活设置适配</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">随着 Android 开发的越来越规范，那些“黑科技”的保活手段基本没什么用了，所以只能通过引导，让用户自己去设置相关保活的选项，就像 Rom 的白名单。只不过白名单是系统帮你设置，没有白名单就得自己去引导了。保活相关的一般包含<strong style="font-weight:bold;color:#111111;">自启动</strong>和<strong style="font-weight:bold;color:#111111;">防睡眠</strong>，当然功能在各个 Rom 的描述不尽相同，不用纠结于此。
+针对各大厂商，做了一些准备工作，如下。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">三星</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Galaxy S10+：SM-G9750，Android 9</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Galaxy Note8：SM-N9500，Android 8.0.0</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Galaxy Note9：SM-N9600，Android 8.1.0</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">C7：Android 8，Sumsang Experience 版本</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">S8：Android 8，Sumsang Experience 版本（没有自启动）</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">智能管理器-&gt;电池-&gt;未监视的应用程序-&gt;添加应用程序：添加后，应用处于后台时系统不会休眠应用
+智能管理器-&gt;自动运行应用程序：打开允许后，若应用后台一段时间未使用，仍有可能自动停止</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><a href="http://samsung.smarterapps.cn/index.php?app=home&mod=Index&act=samsung" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">三星云测平台</a></p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">小米</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">小米 MIX2：Android 9，MIUI 10.4.2</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">红米 NOTE7 Pro：Android 9</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">设置-&gt;授权管理-&gt;自启动管理-&gt;运行应用自启动
+设置-&gt;电量和性能-&gt;应用配置-&gt;设置应用的省电策略为<strong style="font-weight:bold;color:#111111;">无限制</strong></p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><a href="http://testit.miui.com/remote" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">小米云测平台</a></p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">vivo</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">X9：Android 6.0.1，Funtouch OS_3.0</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Y75A：Android 7.1.1，Funtouch OS_3.2</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">X21：Android 8.1.0，Funtouch OS_4.0</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">iQOO：Android 9，Funtouch OS_9</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">NEXS：Android 10，Funtouch OS_10 开发板</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">设置-&gt;更多设置-&gt;权限管理-&gt;权限Tab-&gt;自启动
+设置-&gt;电池-&gt;后台高耗电-&gt;打开开关允许应用高耗电时继续允许</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">X6A：Android 5.0.2，Funtouch OS_2.5</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">i 管家-&gt;软件管理-&gt;权限管理-&gt;自启动管理
+i 管家-&gt;省电管理-&gt;后台高耗电-&gt;打开开关允许应用高耗电时继续允许</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><a href="https://vcl.vivo.com.cn/#/machine/picking" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">vivo 云测平台</a></p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">oppo</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">A73：Android 7.1.1，ColorOS v5.2.1</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">手机管家-&gt;权限隐私-&gt;自启动管理
+设置-&gt;电池-&gt;应用速冻-&gt;关闭速冻开关</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;">oppo 云测平台需要开发者账号，还要银行卡、手持身份证等玩意，太麻烦，就没申请了，所以 oppo 看的比较少。</p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">华为</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Mate 9：Android 9，EMUI 9.1.0</li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">P10：Android 9，EMUI 9.1.0</li>
+</ol>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">设置-&gt;应用-&gt;应用启动管理-&gt;关闭自动管理，允许自启动，后台活动
+设置-&gt;电池-&gt;更多电池设置-&gt;？（云真机显示的没有应用，不确定是否有开关）</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">P10 Plus：Android 8.0，EMUI 8.0</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">手机管家-&gt;自启管理-&gt;允许自启动
+设置-&gt;电池-&gt;耗电排行-&gt;选中应用进入耗电详情-&gt;关闭高耗电提醒</p>
+<ul style="margin:0 0 22px;padding-left:24px;list-style-type:disc;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">Mate 9：Android 7.0，EMUI 5.0</li>
+</ul>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">手机管家-&gt;自启管理-&gt;允许自启动
+设置-&gt;电池-&gt;设置(右上角图标)-&gt;锁屏应用清理-&gt;关闭清理选项</p>
+<blockquote style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:24px 0;padding:14px 18px;border-left:3px solid #2b6cb0;background:#f7f9fc;"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 10px;font-size:15px;line-height:1.75;color:#5a6672;letter-spacing:.3px;word-break:break-word;"><a href="https://deveco.huawei.com/remotetest/devices/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">华为云测平台</a></p>
+</blockquote>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">代码</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">只看了几个主流平台，其实还想看看一加的，但是一加没找到云测平台，也没有一加真机，无奈作罢。下面上代码：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object KeepCompactUtil {
+
+    private val AUTO_START_INTENTS = arrayOf(
+            // 小米
+            Intent().setComponent(ComponentName(&quot;com.miui.securitycenter&quot;,
+                    &quot;com.miui.permcenter.autostart.AutoStartManagementActivity&quot;)),
+            // 华为
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.huawei.systemmanager/.startupmgr.ui.StartupNormalAppListActivity&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.huawei.systemmanager/.appcontrol.activity.StartupAppControlActivity&quot;)),
+
+            // 魅族
+            Intent().setComponent(ComponentName.unflattenFromString(&quot;com.meizu.safe/.SecurityCenterActivity&quot;)),
+
+            // 三星
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.autorun.ui.AutoRunActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.ram.AutoRunActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.appmanagement.AppManagementActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.autorun.ui.AutoRunActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.ram.AutoRunActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.appmanagement.AppManagementActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.cstyleboard.SmartManagerDashBoardActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.cstyleboard.SmartManagerDashBoardActivity&quot;)),
+            Intent().setComponent(ComponentName.unflattenFromString(
+                    &quot;com.samsung.android.sm_cn/.app.dashboard.SmartManagerDashBoardActivity&quot;)),
+            Intent().setComponent(ComponentName.unflattenFromString(
+                    &quot;com.samsung.android.sm/.app.dashboard.SmartManagerDashBoardActivity&quot;)),
+
+            // oppo
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.coloros.safecenter/.startupapp.StartupAppListActivity&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.coloros.safecenter/.permission.startupapp.StartupAppListActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.coloros.safecenter&quot;,
+                    &quot;com.coloros.privacypermissionsentry.PermissionTopActivity&quot;)),
+            Intent().setComponent(
+                    ComponentName.unflattenFromString(&quot;com.oppo.safe/.permission.startup.StartupAppListActivity&quot;)),
+
+            // vivo
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.vivo.permissionmanager/.activity.BgStartUpManagerActivity&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.iqoo.secure/.phoneoptimize.BgStartUpManager&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.vivo.permissionmanager/.activity.PurviewTabActivity&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.iqoo.secure/.ui.phoneoptimize.SoftwareManagerActivity&quot;)),
+
+            // 一加
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.oneplus.security/.chainlaunch.view.ChainLaunchAppListActivity&quot;)),
+
+            // 乐视
+            Intent().setComponent(
+                    ComponentName.unflattenFromString(&quot;com.letv.android.letvsafe/.AutobootManageActivity&quot;)),
+
+            // HTC
+            Intent().setComponent(
+                    ComponentName.unflattenFromString(&quot;com.htc.pitroad/.landingpage.activity.LandingPageActivity&quot;))
+    )
+
+    private val BATTERY_INTENTS = arrayOf(
+            // 小米
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.miui.powerkeeper/.ui.HiddenAppsContainerManagementActivity&quot;)),
+
+            // 华为
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.huawei.systemmanager/.power.ui.HwPowerManagerActivity&quot;)),
+
+            // 魅族
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.meizu.safe/.SecurityCenterActivity&quot;)),
+
+            // 三星
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.AppSleepListActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.BatteryActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.AppSleepListActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.BatteryActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.lool&quot;,
+                    &quot;com.samsung.android.sm.battery.ui.BatteryActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.lool&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.BatteryActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm&quot;,
+                    &quot;com.samsung.android.sm.ui.battery.BatteryActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.samsung.android.sm_cn&quot;,
+                    &quot;com.samsung.android.sm.ui.cstyleboard.SmartManagerDashBoardActivity&quot;)),
+
+            // oppo
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.coloros.safecenter/.appfrozen.activity.AppFrozenSettingsActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.coloros.oppoguardelf&quot;,
+                    &quot;com.coloros.powermanager.fuelgaue.PowerUsageModelActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.coloros.oppoguardelf&quot;,
+                    &quot;com.coloros.powermanager.fuelgaue.PowerSaverModeActivity&quot;)),
+            Intent().setComponent(ComponentName(&quot;com.coloros.oppoguardelf&quot;,
+                    &quot;com.coloros.powermanager.fuelgaue.PowerConsumptionActivity&quot;)),
+            Intent().setComponent(ComponentName
+                    .unflattenFromString(&quot;com.oppo.safe/.SecureSafeMainActivity&quot;)),
+
+            // vivo
+            Intent().setComponent(ComponentName(&quot;com.vivo.abe&quot;,
+                    &quot;com.vivo.applicationbehaviorengine.ui.ExcessivePowerManagerActivity&quot;)),
+            Intent().setComponent(ComponentName.unflattenFromString(&quot;com.iqoo.powersaving/.PowerSavingManagerActivity&quot;))
+    )
+
+    var brandAliveEnumList: List&lt;BrandAliveEnum&gt; = object : ArrayList&lt;BrandAliveEnum&gt;() {
+        init {
+            add(BrandAliveEnum.Huawei)
+            add(BrandAliveEnum.Xiaomi)
+            add(BrandAliveEnum.Oppo)
+            add(BrandAliveEnum.Vivo)
+            add(BrandAliveEnum.Samsung)
+            add(BrandAliveEnum.Meizu)
+            add(BrandAliveEnum.LeEco)
+            add(BrandAliveEnum.Smartisan)
+            add(BrandAliveEnum.Lenovo)
+            add(BrandAliveEnum.NONE)
+        }
+    }
+
+    /**
+     * @return 是否为三星s9 型号的手机
+     */
+    val isSamsungS9: Boolean
+        get() = (&quot;samsung&quot;.equals(Build.BRAND, ignoreCase = true) &amp;&amp; StringUtils.isNotEmpty(Build.MODEL)
+                &amp;&amp; Build.MODEL.startsWith(&quot;SM-G9&quot;))
+
+    val deviceEnum: BrandAliveEnum
+        get() {
+            if (&quot;Huawei&quot;.equals(Build.BRAND, ignoreCase = true) || &quot;HONOR&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Huawei
+            }
+            if (&quot;vivo&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Vivo
+            }
+            if (&quot;OPPO&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Oppo
+            }
+            if (&quot;Xiaomi&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Xiaomi
+            }
+            if (&quot;Meizu&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Meizu
+            }
+            if (&quot;samsung&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Samsung
+            }
+            if (&quot;smartisan&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Smartisan
+            }
+            if (&quot;LeEco&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.LeEco
+            }
+            if (&quot;Lenovo&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Lenovo
+            }
+            if (&quot;oneplus&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.Yijia
+            }
+            if (&quot;Sony&quot;.equals(Build.MANUFACTURER, ignoreCase = true)) {
+                return BrandAliveEnum.Sony
+            }
+            if (&quot;LG&quot;.equals(Build.MANUFACTURER, ignoreCase = true)) {
+                return BrandAliveEnum.LG
+            }
+            if (&quot;Coolpad&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                return BrandAliveEnum.NONE
+            }
+            return if (&quot;ZTE&quot;.equals(Build.BRAND, ignoreCase = true)) {
+                BrandAliveEnum.NONE
+            } else BrandAliveEnum.NONE
+
+        }
+
+    // 自启动
+    fun daemonSet(activity: Activity): Boolean {
+        for (intent in AUTO_START_INTENTS) {
+            if (activity.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                try {
+                    activity.startActivity(intent)
+                    return true
+                } catch (e: Exception) {
+                    LogUtils.e(&quot;KeepCompactUtil&quot;, e.toString())
+                    continue
+                }
+            }
+        }
+        return false
+    }
+
+    // 防睡眠
+    fun noSleepSet(activity: Activity): Boolean {
+        for (intent in BATTERY_INTENTS) {
+            if (activity.packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                try {
+                    activity.startActivity(intent)
+                    return true
+                } catch (e: Exception) {
+                    LogUtils.e(&quot;KeepCompactUtil&quot;, e.toString())
+                    continue
+                }
+            }
+        }
+        return false
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">直接罗列所有的 Intent，按页面相关性从大到小排列。比如，A-&gt;B-&gt;C，设置页面在 C，但是有的手机不支持打开 C 和 B，Intent 排序为 C&gt;B&gt;A。通过 resolveActivity 判断系统是否能处理此 Intent，跳转成功则 ok，若跳转失败则继续遍历，找到能跳转的 Intent，如果遍历完也没有找到，则返回 false 给出相应提示。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">小结</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">oppo vivo 的手机有点恶心，每次安装 debug 包还要弹窗让输密码，然后还自己捣鼓了权限啥的，限制三方应用进行跳转。
+vivo：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">Permission Denial: starting Intent { flg=0x10000000 cmp=com.vivo.abe/com.vivo.applicationbehaviorengine.ui.ExcessivePowerManagerActivity } from ProcessRecord{306679b 16047:cn.xxx.android.xxx/u0a605} (pid=16047, uid=10605) requires com.vivo.abe.permission.action.openhpactivity
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">oppo：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">java.lang.SecurityException: Permission Denial: starting Intent { flg=0x10000000 cmp=com.coloros.safecenter/.startupapp.StartupAppListActivity } from ProcessRecord{2255367 30192:cn.xxx.android.xxx/u0a697} (pid=30192, uid=10697) requires oppo.permission.OPPO_COMPONENT_SAFE
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">然后在 AndroidManifest 中添加相关的权限也无效的，因为<strong style="font-weight:bold;color:#111111;">只能系统应用申请，三方应用申请没用</strong>（oppo 同学内部询问大佬给出的回答）。针对 vivo，我选择跳到上一级页面，也可以跳，只不过需要用户手动再点一下。针对 oppo，我佛了，上一级页面也跳不了，只能到最初的设置页面，这跳到设置页面大多数用户都会一脸懵逼，所以干脆不跳了，直接返回 false，同时给好相应的引导。同时，<strong style="font-weight:bold;color:#111111;">申请了权限之后，好像 apk 安装会出问题（部分机型），反正没用，所以权限就不要加了</strong>。
+三星也值得说一下，一会是 sm，一会是 sm_cn，我也是佛了。一会是 ui.battery，一会是 battery.ui，索性直接进行排列组合搞了一波，所以三星的 Intent 就很多了。另外三星 S9 貌似是没有自启动的，所以可以考虑进行屏蔽。其实不屏蔽影响也不大，返回 false 给出提示即可，无奈老板的手机是 S9...</p>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">经过这次云测平台的使用，发现华为还是牛逼啊，三星也还不错，还支持 adb 命令（点个赞）。oppo vivo 就差太远了，小米更不用谈了，连可用的机型都没有。腾讯的 WeTest 机型倒是都有，但是要收费，这很腾讯。送的 30 分钟完全不够用好吗，而且每用一个机型至少 15 分钟，我的免费额度剩下 10 分钟就已经用不了了，无力吐槽。</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">参考</h2>
+<ol style="margin:0 0 22px;padding-left:24px;list-style-type:decimal;"><li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://blog.csdn.net/u014418171/article/details/98874962" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Intent跳转到[自启动]页面全网最全适配机型解决方案(持续更新)</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://stackoverflow.com/questions/49814755/denial-permission-oppo-component-safe" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">Denial permission OPPO_COMPONENT_SAFE</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://github.com/dirkam/backgroundable-android/issues/5" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">backgroundable-android</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;"><a href="https://stackoverflow.com/questions/48166206/how-to-start-power-manager-of-all-android-manufactures-to-enable-background-and" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">How to start Power Manager of all android manufactures to enable background and push notification?</a></li>
+<li style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 8px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;word-break:break-word;">[WeTest]（<a href="https://wetest.qq.com/cloud/n/remotedevicelist?test=remote）" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">https://wetest.qq.com/cloud/n/remotedevicelist?test=remote）</a></li>
+</ol></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 保活设置适配">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

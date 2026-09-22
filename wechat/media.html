@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android 获取手机媒体数据那些事 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2019-05-09 · 约 7465 字</div>
+  <h1>Android 获取手机媒体数据那些事</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">在上一篇文章 <a href="http://lastwarmth.win/2019/04/24/jetpack/" style="color:#2b6cb0;text-decoration:none;border-bottom:1px solid rgba(43,108,176,.35);word-break:break-all;">ViewModel + LiveData 初探</a> 中的场景中，有获取手机媒体数据的操作，界面上也要展示横竖屏，展示规则很简单：宽度不小于高度则定义为横屏，否则未竖屏。在我的小米 MIX2 上，不论手机如何拍照，返回的分辨率都是 4000:3000（根据相机设置中的画幅比例），不论你是横着拍还是竖着拍。所以当拿到 4000:3000 后就全部定义成横屏了，与实际不符。所以着手解决了一下，顺便整理下获取手机媒体数据的相关代码，方便日后使用。整体代码如下：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">object MediaDataUtils {
+
+    private const val TAG = &quot;MediaDataUtils&quot;
+
+    private val QUERY_URI = MediaStore.Files.getContentUri(&quot;external&quot;)
+
+    //=============================== 查询系统相册中的视频、图片 ================================
+    private const val ORDER_BY = MediaStore.MediaColumns.DATE_MODIFIED + &quot; DESC&quot;
+
+    private const val SELECTION_MEDIA_TYPE_WITHOUT_FOLDER = (
+            MediaStore.Files.FileColumns.MEDIA_TYPE + &quot;=?&quot;
+                    + &quot; AND &quot; + MediaStore.MediaColumns.SIZE + &quot;&gt;0&quot;)
+
+    private const val SELECTION_MEDIA_TYPE_WITH_FOLDER = (
+            MediaStore.Files.FileColumns.MEDIA_TYPE + &quot;=?&quot;
+                    + &quot; AND &quot;
+                    + &quot; bucket_id=?&quot;
+                    + &quot; AND &quot; + MediaStore.MediaColumns.SIZE + &quot;&gt;0&quot;)
+
+    private val PROJECTION = arrayOf(
+            MediaStore.MediaColumns._ID,
+            MediaStore.MediaColumns.DISPLAY_NAME,
+            MediaStore.MediaColumns.DATA,
+            MediaStore.MediaColumns.DATE_MODIFIED,
+            MediaStore.MediaColumns.SIZE,
+            MediaStore.MediaColumns.WIDTH,
+            MediaStore.MediaColumns.HEIGHT,
+            &quot;duration&quot;)
+
+    //=============================== 查询系统文件夹 ==================================
+    private const val SELECTION_MEDIA_TYPE_FOLDER = (
+            MediaStore.Files.FileColumns.MEDIA_TYPE + &quot;=?&quot;
+                    + &quot; AND &quot; + MediaStore.MediaColumns.SIZE + &quot;&gt;0&quot;
+                    + &quot;) GROUP BY (bucket_id&quot;)
+
+    private const val BUCKET_ORDER_BY = &quot;datetaken DESC&quot;
+
+    private val FOLDER_PROJECTION = arrayOf(
+            MediaStore.Files.FileColumns._ID,
+            &quot;bucket_id&quot;,
+            &quot;bucket_display_name&quot;,
+            MediaStore.MediaColumns.DATA,
+            &quot;COUNT(*) AS $COLUMN_COUNT&quot;)
+
+    /**
+     * 获取具体文件
+     */
+    @WorkerThread
+    @JvmStatic
+    fun getMediaData(isVideo: Boolean, folderItem: FolderItem? = null): List&lt;MediaDataItem&gt;? {
+        if (!PermissionUtils.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return null
+        }
+
+        val data = mutableListOf&lt;MediaDataItem&gt;()
+        val pair = getQueryArgs(false, isVideo, folderItem)
+        val cursor = MucangConfig.getContext().contentResolver.query(
+                QUERY_URI, PROJECTION, pair.first, pair.second, ORDER_BY)
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    val nameIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                    val pathIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                    val modifyIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATE_MODIFIED)
+                    val sizeIndex = cursor.getColumnIndex(MediaStore.MediaColumns.SIZE)
+                    val widthIndex = cursor.getColumnIndex(MediaStore.MediaColumns.WIDTH)
+                    val heightIndex = cursor.getColumnIndex(MediaStore.MediaColumns.HEIGHT)
+                    val durationIndex = cursor.getColumnIndex(&quot;duration&quot;)
+                    do {
+                        val file = MediaDataItem()
+                        file.isVideo = isVideo
+                        file.name = cursor.getString(nameIndex)
+                        file.path = cursor.getString(pathIndex)
+                        file.date = cursor.getLong(modifyIndex)
+                        file.size = cursor.getLong(sizeIndex)
+                        file.width = cursor.getInt(widthIndex)
+                        file.height = cursor.getInt(heightIndex)
+                        if (isVideo) {
+                            if (file.width == 0 || file.height == 0) {
+                                val widthHeight = readVideoPixel(file.path)
+                                if (widthHeight != null) {
+                                    file.width = widthHeight.first
+                                    file.height = widthHeight.second
+                                }
+                            }
+                        } else {
+                            val widthHeight = readImagePixel(file.path)
+                            if (widthHeight != null) {
+                                file.width = widthHeight.first
+                                file.height = widthHeight.second
+                            }
+                        }
+                        if (durationIndex &gt; -1) {
+                            file.duration = (cursor.getLong(durationIndex) / 1000F + 0.5).toLong()
+                        }
+                        data.add(file)
+                    } while (cursor.moveToNext())
+                }
+            } catch (e: Exception) {
+                LogUtils.e(TAG, e.toString())
+            } finally {
+                cursor.close()
+            }
+        }
+        return data
+    }
+
+    /**
+     * 获取文件夹
+     */
+    @WorkerThread
+    @JvmStatic
+    fun getFolderData(isVideo: Boolean): List&lt;FolderItem&gt;? {
+        if (!PermissionUtils.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return null
+        }
+
+        val data = mutableListOf&lt;FolderItem&gt;()
+        val pair = getQueryArgs(true, isVideo)
+        val cursor = MucangConfig.getContext().contentResolver.query(
+                QUERY_URI, FOLDER_PROJECTION, pair.first, pair.second, BUCKET_ORDER_BY)
+        if (cursor != null) {
+            try {
+                if (cursor.moveToFirst()) {
+                    // 全部文件夹
+                    val allFolder = FolderItem()
+                    allFolder.id = ALL_FOLDER_ID
+                    if (isVideo) {
+                        allFolder.name = &quot;全部视频&quot;
+                    } else {
+                        allFolder.name = &quot;全部照片&quot;
+                    }
+                    allFolder.selected = true
+                    data.add(allFolder)
+
+                    var count = 0
+                    val idIndex = cursor.getColumnIndex(&quot;bucket_id&quot;)
+                    val pathIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                    val nameIndex = cursor.getColumnIndex(&quot;bucket_display_name&quot;)
+                    val countIndex = cursor.getColumnIndex(AlbumLoader.COLUMN_COUNT)
+                    do {
+                        val folder = FolderItem()
+                        folder.id = cursor.getString(idIndex)
+                        folder.path = cursor.getString(pathIndex)
+                        folder.name = cursor.getString(nameIndex)
+                        folder.count = cursor.getInt(countIndex)
+                        data.add(folder)
+                        count += folder.count
+
+                        if (StringUtils.isEmpty(allFolder.path)) {
+                            allFolder.path = folder.path
+                        }
+
+                    } while (cursor.moveToNext())
+                    data.first().count = count
+                }
+            } catch (e: Exception) {
+                LogUtils.e(TAG, e.toString())
+            } finally {
+                cursor.close()
+            }
+        }
+        return data
+    }
+
+    /**
+     * getMediaData 时调用，根据是否视频、是否查询文件夹返回查询参数
+     *
+     * @return Pair：first-&gt;selection，second-&gt;args
+     */
+    private fun getQueryArgs(isQueryFolder: Boolean, isVideo: Boolean, folderItem: FolderItem? = null): Pair&lt;String, Array&lt;String&gt;&gt; {
+        if (isQueryFolder) {
+            return if (isVideo) {
+                Pair(SELECTION_MEDIA_TYPE_FOLDER, arrayOf(MEDIA_TYPE_VIDEO.toString()))
+            } else {
+                Pair(SELECTION_MEDIA_TYPE_FOLDER, arrayOf(MEDIA_TYPE_IMAGE.toString()))
+            }
+        }
+
+        if (folderItem?.id != null &amp;&amp; !folderItem.isAll()) {
+            return if (isVideo) {
+                Pair(SELECTION_MEDIA_TYPE_WITH_FOLDER, arrayOf(MEDIA_TYPE_VIDEO.toString(), folderItem.id!!))
+            } else {
+                Pair(SELECTION_MEDIA_TYPE_WITH_FOLDER, arrayOf(MEDIA_TYPE_IMAGE.toString(), folderItem.id!!))
+            }
+        }
+
+        return if (isVideo) {
+            Pair(SELECTION_MEDIA_TYPE_WITHOUT_FOLDER, arrayOf(MEDIA_TYPE_VIDEO.toString()))
+        } else {
+            Pair(SELECTION_MEDIA_TYPE_WITHOUT_FOLDER, arrayOf(MEDIA_TYPE_IMAGE.toString()))
+        }
+    }
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">利用我的小米 MIX2 使用 18:9 画幅比例竖屏拍摄的一张照片，在我的 Rom 里显示的是 4000:2000，将这张照片放到同事的华为手机里，显示的分辨率则是另外一个数，但是华为 Rom 里获取的高宽比例是一致的，宽：高 = 1 : 2，所以在我的手机里识别成横屏照片，在华为手机里识别为竖屏照片。所以仅仅使用 MediaStore.MediaColumns.WIDTH、MediaStore.MediaColumns.HEIGHT 获取的宽高是不准确的，需要一个更好的方案：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 读取图片的宽高信息，系统多媒体数据库保存的宽高信息是通过读取图片 ExifInterface 数据
+ * 某些手机拍照生成的 exif 数据不准，此处使用 BitmapDecode 的方式获取，经测试耗时可忽略不计
+ */
+@JvmStatic
+private fun readImagePixel(filePath: String?): Pair&lt;Int, Int&gt;? {
+    if (!FileUtils.exists(filePath)) {
+        return null
+    }
+    try {
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(filePath, options)
+        val width = options.outWidth
+        val height = options.outHeight
+        if (width &gt; 0 &amp;&amp; height &gt; 0) {
+            val exifInterface = ExifInterface(filePath)
+            val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL)
+            // 如果图片的旋转角度为 90 或者 270，则宽高互换
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90
+                    || orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                return Pair(height, width)
+            }
+            return Pair(width, height)
+        }
+
+    } catch (e: Exception) {
+        LogUtils.e(TAG, e.message)
+    }
+    return null
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当照片数量很多（我的手机 2200+ 张照片）时，遍历完耗时大概在 3 ~ 4 秒，在接受范围内吧。
+另外对于小米 MIX2 拍摄的视频数据，获取的宽高会是 0，所以也需要一种方案获取比例：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 读取视频的宽高数据
+ * 需要根据拍摄方向进行转换，有点耗时平均五六十毫秒
+ */
+@JvmStatic
+private fun readVideoPixel(filePath: String?): Pair&lt;Int, Int&gt;? {
+    if (!FileUtils.exists(filePath)) {
+        return null
+    }
+    val mmr = MediaMetadataRetriever()
+    try {
+        mmr.setDataSource(filePath)
+        val width = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toInt()
+                ?: 0
+        val height = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toInt()
+                ?: 0
+        val orientation = mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION).toInt()
+        if (width &gt; 0 &amp;&amp; height &gt; 0) {
+            if (orientation == 90 || orientation == 270) {
+                return Pair(height, width)
+            }
+            return Pair(width, height)
+        }
+    } catch (e: Exception) {
+        LogUtils.e(TAG, e.message)
+    } finally {
+        try {
+            mmr.release()
+        } catch (e: Throwable) {
+            LogUtils.e(TAG, e.message)
+        }
+    }
+    return null
+}
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">视频数量一般比较少，耗时问题暂时可以不考虑。使用此种方案后，照片、视频的横竖问题基本准确。Over~</p>
+<h2 style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:36px 0 18px;padding-left:12px;border-left:4px solid #2b6cb0;font-size:19px;font-weight:bold;line-height:1.5;color:#111111;">题外话</h2>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">当手机视频、照片数量特别多了之后，一次加载全部就耗时有些久了，手机里 50 多个视频耗时 2 秒多，2000 多张照片耗时 5 秒左右，所以需要调整成为分页加载。利用 limit + offset 来实现：</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">val order = ORDER_BY + &quot; limit &quot; + PAGE_SIZE + &quot; offset &quot; + (page - 1) * PAGE_SIZE
+</code></pre>
+<p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">有了分页就可能出现重复数据了（第一页加载完后，又拍了 2 张照片，下一页加载的数据会有 2 条重复），所以要<strong style="font-weight:bold;color:#111111;">注意去重</strong>。</p></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android 获取手机媒体数据那些事">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>

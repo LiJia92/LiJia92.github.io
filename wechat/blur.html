@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Android高斯模糊 · 公众号复制</title>
+<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}body{background:#eef0f3;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;padding-bottom:96px}.top{background:#fff;border-bottom:1px solid #e6e8eb;padding:16px 18px}.top .dt{font-size:12px;color:#9aa3ad;margin-bottom:6px}.top h1{margin:0 0 10px;font-size:17px;line-height:1.5;color:#111}.top .tip{margin:0;font-size:12px;line-height:1.75;color:#8a929b}.paper{max-width:680px;margin:0 auto;background:#fff;padding:24px 20px 34px;min-height:60vh}@media(min-width:700px){.paper{margin:18px auto;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.08)}}#doc{-webkit-user-select:text;user-select:text}.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:10px;max-width:680px;margin:0 auto;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.97);border-top:1px solid #e6e8eb}.btn{padding:12px 16px;border:1px solid #d8dde3;border-radius:8px;background:#fff;color:#333;font-size:14px;cursor:pointer}.btn.main{flex:1;border-color:#07c160;background:#07c160;color:#fff;font-weight:bold;font-size:15px}.btn:active{opacity:.72}.toast{position:fixed;left:50%;bottom:104px;transform:translateX(-50%);z-index:30;display:none;max-width:88vw;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.84);color:#fff;font-size:13px;line-height:1.6}.back{display:inline-block;margin-top:10px;font-size:12px;color:#2b6cb0;text-decoration:none}</style>
+</head>
+<body>
+<header class="top">
+  <div class="dt">2016-07-21 · 约 4425 字</div>
+  <h1>Android高斯模糊</h1>
+  <p class="tip">点底部「复制全文」→ 打开微信「订阅号助手」或公众号 → 新建图文 → 长按粘贴。<br>标题请用左侧「复制标题」单独复制（公众号标题是单独字段）。<br>未认证公众号的正文站外链接不可点击，重要链接建议放进「阅读原文」。</p>
+  <a class="back" href="./">← 返回文章列表</a>
+</header>
+<main class="paper"><div id="doc"><p style="font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Helvetica,'lucida grande','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;margin:0 0 22px;font-size:16px;line-height:1.8;color:#333333;letter-spacing:.4px;text-align:justify;word-break:break-word;">高斯模糊的工具类，摘录下来，免得以后找不着了。</p>
+<pre style="margin:0 0 22px;padding:15px 16px;background:#f6f8fa;border:1px solid #e5e9ef;border-radius:6px;overflow-x:auto;"><code style="font-family:Consolas,Monaco,Menlo,'Courier New',monospace;font-size:13px;line-height:1.7;color:#24292f;white-space:pre-wrap;word-break:break-word;background:none;padding:0;">/**
+ * 高斯模糊
+ * @param context
+ * @param sentBitmap
+ * @param radius 0 &lt; radius &lt;= 25
+ * @return
+ */
+@SuppressLint(&quot;NewApi&quot;)
+public static Bitmap fastBlur(Context context, Bitmap sentBitmap, int radius) {
+
+    if (Build.VERSION.SDK_INT &gt; 16) {
+        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+
+        final RenderScript rs = RenderScript.create(context);
+        final Allocation input = Allocation.createFromBitmap(rs,
+                sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                Allocation.USAGE_SCRIPT);
+        final Allocation output = Allocation.createTyped(rs,
+                input.getType());
+        final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs,
+                Element.U8_4(rs));
+        script.setRadius(radius);
+        script.setInput(input);
+        script.forEach(output);
+        output.copyTo(bitmap);
+        return bitmap;
+    }
+
+    // Stack Blur v1.0 from
+    // http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
+    //
+    // Java Author: Mario Klingemann &lt;mario at quasimondo.com&gt;
+    // http://incubator.quasimondo.com
+    // created Feburary 29, 2004
+    // Android port : Yahel Bouaziz &lt;yahel at kayenko.com&gt;
+    // http://www.kayenko.com
+    // ported april 5th, 2012
+
+    // This is a compromise between Gaussian Blur and Box blur
+    // It creates much better looking blurs than Box Blur, but is
+    // 7x faster than my Gaussian Blur implementation.
+    //
+    // I called it Stack Blur because this describes best how this
+    // filter works internally: it creates a kind of moving stack
+    // of colors whilst scanning through the image. Thereby it
+    // just has to add one new block of color to the right side
+    // of the stack and remove the leftmost color. The remaining
+    // colors on the topmost layer of the stack are either added on
+    // or reduced by one, depending on if they are on the right or
+    // on the left side of the stack.
+    //
+    // If you are using this algorithm in your code please add
+    // the following line:
+    //
+    // Stack Blur Algorithm by Mario Klingemann &lt;mario@quasimondo.com&gt;
+
+    Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+
+    if (radius &lt; 1) {
+        return (null);
+    }
+
+    int w = bitmap.getWidth();
+    int h = bitmap.getHeight();
+
+    int[] pix = new int[w * h];
+    bitmap.getPixels(pix, 0, w, 0, 0, w, h);
+
+    int wm = w - 1;
+    int hm = h - 1;
+    int wh = w * h;
+    int div = radius + radius + 1;
+
+    int r[] = new int[wh];
+    int g[] = new int[wh];
+    int b[] = new int[wh];
+    int rsum, gsum, bsum, x, y, i, p, yp, yi, yw;
+    int vmin[] = new int[Math.max(w, h)];
+
+    int divsum = (div + 1) &gt;&gt; 1;
+    divsum *= divsum;
+    int dv[] = new int[256 * divsum];
+    for (i = 0; i &lt; 256 * divsum; i++) {
+        dv[i] = (i / divsum);
+    }
+
+    yw = yi = 0;
+
+    int[][] stack = new int[div][3];
+    int stackpointer;
+    int stackstart;
+    int[] sir;
+    int rbs;
+    int r1 = radius + 1;
+    int routsum, goutsum, boutsum;
+    int rinsum, ginsum, binsum;
+
+    for (y = 0; y &lt; h; y++) {
+        rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+        for (i = -radius; i &lt;= radius; i++) {
+            p = pix[yi + Math.min(wm, Math.max(i, 0))];
+            sir = stack[i + radius];
+            sir[0] = (p &amp; 0xff0000) &gt;&gt; 16;
+            sir[1] = (p &amp; 0x00ff00) &gt;&gt; 8;
+            sir[2] = (p &amp; 0x0000ff);
+            rbs = r1 - Math.abs(i);
+            rsum += sir[0] * rbs;
+            gsum += sir[1] * rbs;
+            bsum += sir[2] * rbs;
+            if (i &gt; 0) {
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+            }
+        }
+        stackpointer = radius;
+
+        for (x = 0; x &lt; w; x++) {
+
+            r[yi] = dv[rsum];
+            g[yi] = dv[gsum];
+            b[yi] = dv[bsum];
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+
+            stackstart = stackpointer - radius + div;
+            sir = stack[stackstart % div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+
+            if (y == 0) {
+                vmin[x] = Math.min(x + radius + 1, wm);
+            }
+            p = pix[yw + vmin[x]];
+
+            sir[0] = (p &amp; 0xff0000) &gt;&gt; 16;
+            sir[1] = (p &amp; 0x00ff00) &gt;&gt; 8;
+            sir[2] = (p &amp; 0x0000ff);
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+
+            stackpointer = (stackpointer + 1) % div;
+            sir = stack[(stackpointer) % div];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+
+            yi++;
+        }
+        yw += w;
+    }
+    for (x = 0; x &lt; w; x++) {
+        rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+        yp = -radius * w;
+        for (i = -radius; i &lt;= radius; i++) {
+            yi = Math.max(0, yp) + x;
+
+            sir = stack[i + radius];
+
+            sir[0] = r[yi];
+            sir[1] = g[yi];
+            sir[2] = b[yi];
+
+            rbs = r1 - Math.abs(i);
+
+            rsum += r[yi] * rbs;
+            gsum += g[yi] * rbs;
+            bsum += b[yi] * rbs;
+
+            if (i &gt; 0) {
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+            } else {
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+            }
+
+            if (i &lt; hm) {
+                yp += w;
+            }
+        }
+        yi = x;
+        stackpointer = radius;
+        for (y = 0; y &lt; h; y++) {
+            // Preserve alpha channel: ( 0xff000000 &amp; pix[yi] )
+            pix[yi] = (0xff000000 &amp; pix[yi]) | (dv[rsum] &lt;&lt; 16)
+                    | (dv[gsum] &lt;&lt; 8) | dv[bsum];
+
+            rsum -= routsum;
+            gsum -= goutsum;
+            bsum -= boutsum;
+
+            stackstart = stackpointer - radius + div;
+            sir = stack[stackstart % div];
+
+            routsum -= sir[0];
+            goutsum -= sir[1];
+            boutsum -= sir[2];
+
+            if (x == 0) {
+                vmin[y] = Math.min(y + r1, hm) * w;
+            }
+            p = x + vmin[y];
+
+            sir[0] = r[p];
+            sir[1] = g[p];
+            sir[2] = b[p];
+
+            rinsum += sir[0];
+            ginsum += sir[1];
+            binsum += sir[2];
+
+            rsum += rinsum;
+            gsum += ginsum;
+            bsum += binsum;
+
+            stackpointer = (stackpointer + 1) % div;
+            sir = stack[stackpointer];
+
+            routsum += sir[0];
+            goutsum += sir[1];
+            boutsum += sir[2];
+
+            rinsum -= sir[0];
+            ginsum -= sir[1];
+            binsum -= sir[2];
+
+            yi += w;
+        }
+    }
+    bitmap.setPixels(pix, 0, w, 0, 0, w, h);
+    return (bitmap);
+}
+</code></pre></div></main>
+<div class="toast" id="toast"></div>
+<div class="bar">
+  <button class="btn" id="btnTitle" data-title="Android高斯模糊">复制标题</button>
+  <button class="btn main" id="btnCopy">复制全文</button>
+</div>
+<script>var doc=document.getElementById('doc');
+function toast(m,ms){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none'},ms||3600);}
+function flash(b,txt){var o=b.getAttribute('data-label')||b.textContent;b.setAttribute('data-label',o);b.textContent=txt;setTimeout(function(){b.textContent=o;},1800);}
+function legacy(){try{var r=document.createRange();r.selectNodeContents(doc);var s=window.getSelection();s.removeAllRanges();s.addRange(r);var ok=document.execCommand('copy');s.removeAllRanges();return ok;}catch(e){return false;}}
+function ok(b,txt){flash(b,txt);}
+function fail(){toast('自动复制失败：请长按正文，选择「全选」后再点「复制」');}
+function copyAll(b){
+  var html=doc.innerHTML,text=doc.innerText;
+  if(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write){
+    try{navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([text],{type:'text/plain'})})]).then(function(){ok(b,'已复制 ✓');},function(){legacy()?ok(b,'已复制 ✓'):fail();});return;}catch(e){}
+  }
+  legacy()?ok(b,'已复制 ✓'):fail();
+}
+function copyTitle(b){
+  var t=b.getAttribute('data-title');
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){ok(b,'已复制 ✓');},function(){toast('复制失败，请手动选择标题复制');});}
+  else{toast('当前浏览器不支持自动复制，请手动选择标题复制');}
+}
+document.getElementById('btnCopy').addEventListener('click',function(){copyAll(this);});
+document.getElementById('btnTitle').addEventListener('click',function(){copyTitle(this);});</script>
+</body>
+</html>
